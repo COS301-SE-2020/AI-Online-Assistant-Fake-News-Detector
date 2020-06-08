@@ -1,0 +1,19 @@
+{
+  "name": "nn_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "nn_server.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stuey61296/5Bits-Captsone.git"
+  },
+  "author": "5Bits",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Stuey61296/5Bits-Captsone/issues"
+  },
+  "homepage": "https://github.com/Stuey61296/5Bits-Captsone#readme"
+}
