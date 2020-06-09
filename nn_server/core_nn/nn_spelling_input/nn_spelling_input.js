@@ -1,6 +1,7 @@
 const nn_input = require('../nn_input/nn_input.js');
 const spellChecker = require('simple-spellchecker');
 
+const precision = 8;
 const wordRegex = /\b[^\s]+\b/g;
 
 // global in this file to prevent each class creating a new dictionary
@@ -31,7 +32,7 @@ class nn_spelling_input extends nn_input {
 	    });
 	});
 	if (wordCount > 0) {
-	    return spellingErrorCount / wordCount;
+	    return (spellingErrorCount / wordCount).toFixed(8);
 	} else {
 	    return 0;
 	}

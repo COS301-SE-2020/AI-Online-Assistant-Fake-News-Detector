@@ -15,5 +15,7 @@
   "bugs": {
     "url": "https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector/issues"
   },
-  "homepage": "https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector#readme"
+  "homepage": "https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector#readme",
+  "dependencies": {
+  }
 }

@@ -26,8 +26,8 @@ class nn_adjective_input extends nn_input {
 	    let words = sentence.match(wordRegex);
 	    words.forEach((word) => {
 		++wordCount;
-		let promise = checker.isAdjective(word);
-		await promise;
+		// todo
+		checker.isAdjective(word);
 	    });
 	});
 	return adjectiveCount / wordCount;	
