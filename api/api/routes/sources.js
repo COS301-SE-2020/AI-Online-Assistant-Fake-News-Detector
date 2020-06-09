@@ -9,9 +9,31 @@ const Source = require('../models/source');
  * @author Quinton Coetzee
  */
 router.get('/', (req, res, next)=>{
-    res.status(200).json({
-        message: 'Incoming get request'
-    });
+    Source.find()
+        .select('name tld _id')
+        .exec()
+        .then(docs=>{
+            const response = {
+                count: docs.length,
+                sources: docs.map(doc=>{
+                    return{
+                        name: doc.name,
+                        tld: doc.tld,
+                        rating: doc.rating,
+                        _id: doc._id,
+                        request:{
+                            type: 'GET',
+                            url: 'http://localhost:3000/sources/'+doc._id
+                        }
+                    }
+                })
+            };
+            res.status(200).json(response);
+        })
+        .catch(err=>{
+            console.log(err);
+            res.status(500).json({error: err})
+        });
 });
 /**
  * @description post request to create a new fake news sources
@@ -29,8 +51,17 @@ router.post('/', (req, res, next)=>{
         .then(result => {
         console.log(result);
         res.status(201).json({
-            message: 'Handling Source POST requests',
-            createdSource: result
+            message: 'Created source successfully',
+            createdSource: {
+                _id: result.id,
+                name: result.name,
+                tld: result.tld,
+                rating: result.rating,
+                request: {
+                    type: 'GET',
+                    url: 'http://localhost:3000/sources/'+result._id
+                }
+            }
         });
     })
     .catch(err => {
@@ -51,7 +82,7 @@ router.get('/:sourceId',(req, res, next)=>{
             if (doc) {
                 res.status(200).json({doc});
             } else {
-                res.status(404).json({message: 'No valid entry for provided ID'});
+                res.status(404).json({message: 'No database entry for provided ID'});
             }
         })
         .catch(err=>{
@@ -64,8 +95,20 @@ router.get('/:sourceId',(req, res, next)=>{
  * @author Quinton Coetzee
  */
 router.put('/:sourceId',(req, res, next)=>{
-    res.status(200).json({
-        message: 'Updated source rating!'
+    const id = req.params.sourceId;
+    const updateOps = {};
+    for(const ops of req.body){
+        updateOps[ops.propName] = ops.value;
+    }
+    Source.update({_id: id}, {$set: updateOps})
+    .exec()
+    .then(result=>{
+        console.log(result);
+        res.status(200).json(result);
+    })
+    .catch(err=>{
+        console.log(err);
+        res.status(500).json({error: err})
     });
 });
 /**
@@ -73,8 +116,15 @@ router.put('/:sourceId',(req, res, next)=>{
  * @author Quinton Coetzee
  */
 router.delete('/:sourceId',(req, res, next)=>{
-    res.status(200).json({
-        message: 'Removed Source!'
-    });
+    const id = req.params.sourceId;
+    Source.remove({_id: id})
+        .exec()
+        .then(result=>{
+            res.status(200).json(result)
+        })
+        .catch(err=>{
+            console.log(err);
+            res.status(500).json({error: err});
+        })
 });
 module.exports = router;
