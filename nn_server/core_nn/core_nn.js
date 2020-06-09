@@ -1,3 +1,5 @@
+const sentenceRegex = /[^\.\!\?]*[\.\!\?]/g;
+
 class core_nn {
     constructor(trainedModel) {
 	this.model = trainedModel;
@@ -13,15 +15,19 @@ class core_nn {
     }
 
     runModel(inputMethodResults) {
-	let total = 0.0;
-	inputMethodResults.forEach((value)=>{
-	    total += value;
-	});
-	return total / inputMethodResults.length;
+	if (inputMethodResults.length > 0) {
+	    let total = 0.0;
+	    inputMethodResults.forEach((value)=>{
+		total += value;
+	    });
+	    return total / inputMethodResults.length;
+	} else {
+	    return 0;
+	}
     }
     
     processText(text) {
-	let sentences = text.match(/[^\.\!\?]*[\.\!\?]/g); // splits text into array of sentences
+	let sentences = text.match(sentenceRegex); // splits text into array of sentences
 	let inputMethodResults = [];
 	let result = 0.0;
 
