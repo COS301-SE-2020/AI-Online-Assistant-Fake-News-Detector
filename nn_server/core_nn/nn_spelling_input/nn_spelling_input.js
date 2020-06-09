@@ -31,11 +31,11 @@ class nn_spelling_input extends nn_input {
 		spellingErrorCount += (!dictionaryUS.spellCheck(word) && !dictionaryGB.spellCheck(word));
 	    });
 	});
+	let result = 0.0;
 	if (wordCount > 0) {
-	    return (spellingErrorCount / wordCount).toFixed(8);
-	} else {
-	    return 0;
-	}
+	    result = spellingErrorCount / wordCount;
+	} 
+	return (result).toFixed(precision);
     }
 }
 

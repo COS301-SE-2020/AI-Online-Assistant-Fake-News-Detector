@@ -24,11 +24,11 @@ class nn_verbose_input extends nn_input {
 	    wordCount += sentence.match(wordRegex).length;
 	    verboseCount += wordy(sentence).length;
 	});
+	let result = 0.0;
 	if (wordCount > 0) {
-	    return (verboseCount / wordCount).toFixed(precision);;
-	} else {
-	    return 0;
+	    result = verboseCount / wordCount;
 	}
+	return (result).toFixed(precision);
     }
 }
 

@@ -1,9 +1,10 @@
+const precision = 8;
 const sentenceRegex = /[^\.\!\?]*[\.\!\?]/g;
 
 class core_nn {
     constructor(trainedModel) {
 	this.model = trainedModel;
-	this.inputMethods = [];
+	this.inputs = [];
     }
 
     importModel(trainedModel) {
@@ -14,35 +15,35 @@ class core_nn {
 	return this.model;
     }
 
-    runModel(inputMethodResults) {
-	if (inputMethodResults.length > 0) {
+    runModel(inputResults) {
+	let result = 0.0;
+	if (inputResults.length > 0) {
 	    let total = 0.0;
-	    inputMethodResults.forEach((value)=>{
+	    inputResults.forEach((value)=>{
 		total += value;
 	    });
-	    return total / inputMethodResults.length;
-	} else {
-	    return 0;
+	    result = total;
 	}
+	return (result).toFixed(precision);
     }
     
     processText(text) {
 	let sentences = text.match(sentenceRegex); // splits text into array of sentences
-	let inputMethodResults = [];
+	let inputResults = [];
 	let result = 0.0;
 
-	// get the result of each inputMethod and then get the result from the regression model
-	this.inputMethods.forEach((inputMethod) => {
-	    inputMethodResults.push(inputMethod(sentences));
-	    if (inputMethodResults.length === this.inputMethods.length) {
-		result = this.runModel(inputMethodResults);
+	// get the result of each input and then get the result from the regression model
+	this.inputs.forEach((input) => {
+	    inputResults.push(parseFloat(input.process(sentences)));
+	    if (inputResults.length === this.inputs.length) {
+		result = this.runModel(inputResults);
 	    }
 	});
 	return result;
     }
 
-    addInputMethod(inputMethod) {
-	this.inputMethods.push(inputMethod);
+    addInput(input) {
+	this.inputs.push(input);
     }
 }
 

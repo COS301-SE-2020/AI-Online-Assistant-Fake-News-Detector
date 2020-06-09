@@ -14,13 +14,9 @@ const server = express();
 // neural network for processing, currently mocked
 let core = new core_nn("mockModel");
 
-// neural network inputs processing classes being used
-let spellingInput = new nn_spelling_input();
-let verboseInput = new nn_verbose_input();
-
 // add input processing methods
-core.addInputMethod(spellingInput.process);
-core.addInputMethod(verboseInput.process);
+core.addInput(new nn_spelling_input());
+core.addInput(new nn_verbose_input());
 
 // configure express to use body-parser as middle-ware
 server.use(bodyParser.urlencoded({extended: false}));
