@@ -1,23 +1,25 @@
 {
-  "name": "api_server",
-  "version": "1.0.0",
-  "description": "",
+  "name": "fake_news_api_server",
+  "version": "0.0.1",
+  "description": "Fake news detector api server. 5Bits Capstone Project",
   "main": "api_server.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.5.0",
+    "express": "^4.17.1",
+    "jquery": "^3.5.1",
+    "nodemon": "^2.0.4",
+    "popper.js": "^1.16.1"
+  },
+  "devDependencies": {},
   "scripts": {
-    "test": "mocha"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon api_server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Stuey61296/5Bits-Captsone.git"
+    "url": "https://github.com/Stuey61296/5Bits-Captsone/tree/master/api_server"
   },
   "author": "5Bits",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Stuey61296/5Bits-Captsone/issues"
-  },
-  "homepage": "https://github.com/Stuey61296/5Bits-Captsone#readme",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1"
-  }
+  "license": "ISC"
 }
