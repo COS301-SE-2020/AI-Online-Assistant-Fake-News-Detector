@@ -28,6 +28,7 @@ All communication throughout the system will be facilitated through the API. The
 | ```201```  |Valid request without response in body.|
 | ```400```  |Bad request. Request body is likely incomplete|
 | ```401```  |Unauthorized request. Request token is likely incorrect or missing|
+| ```503```  |Cannot connect|
 
 ---
 
