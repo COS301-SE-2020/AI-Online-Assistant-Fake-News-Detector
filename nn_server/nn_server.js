@@ -6,7 +6,12 @@ const port = 8082;
 
 const server = express();
 
-const nn_process = new core_nn("mockModel");
+// neural network for processing
+const core = new core_nn("mockModel");
+
+// add input processing methods
+core.addInputMethod((sentences)=>{return sentences.length});
+core.addInputMethod((sentences)=>{return sentences.length / 2});
 
 // Configure express to use body-parser as middle-ware.
 server.use(bodyParser.urlencoded({extended: false}));
@@ -20,7 +25,7 @@ server.post('/api/check', (req, res) => {
 	typeof req.body.content === 'string')
     {
 	res.status(200).send(
-	    '{"result":' + nn_process.processText(req.body.content) + '}'
+	    '{"result":' + core.processText(req.body.content) + '}'
 	);
     } else {
 	res.sendStatus(400);
