@@ -20,7 +20,7 @@ server.post('/api/check', (req, res) => {
 	typeof req.body.content === 'string')
     {
 	res.status(200).send(
-	    '{"result":' + nn_process.processText(JSON.stringify(req.body.content)) + '}'
+	    '{"result":' + nn_process.processText(req.body.content) + '}'
 	);
     } else {
 	res.sendStatus(400);
