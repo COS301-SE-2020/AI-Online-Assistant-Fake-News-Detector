@@ -190,7 +190,6 @@ api.delete("/sources/:sourceId", (req, res, next) => {
  */
 
 api.get("/facts", (req, res, next) => {
-  console.log("Hello");
   let request = http.request(
     {
       host: "localhost",
@@ -257,11 +256,11 @@ api.post("/facts", (req, res, next) => {
 });
 
 /**
- * @description base get request route. Reroutes the api call to the api server, gets all specific fact from the db
+ * @description base get request route. Reroutes the api call to the api server, gets specific fact from the db
  * @author Stuart Barclay
  */
 
-api.get("/fact/:factId", (req, res, next) => {
+api.get("/facts/:factId", (req, res, next) => {
   let request = http.request(
     {
       host: "localhost",
