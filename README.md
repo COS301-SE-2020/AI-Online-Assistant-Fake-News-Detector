@@ -8,7 +8,7 @@ The Fake News Detector is a tool to be used by both *News Consumers* and *News D
 ### Team Members
 | Profile | Student Nr. | Description |
 |---------|-------------|-------------|
-|[Stuart Barclay]()|15015069||
+|[Stuart Barclay](https://stuey61296.github.io/)|15015069|Outgoing, always willing to help and committed. I am a BIT student that loves to learn! I prefer working with backend technologies but love the challenge of a front-end as well.|
 |[Quinton Coetzee](https://quintoncoetzee.github.io/)|18028510|Passionate BIT student skilled at both back-end and front-end. Interests include *Artificial Intellegence*, *Photography* and *Graphic Design*.|
 |[Alistair Payn]()|14272289||
 |[Danré Retief]()|14126461||
