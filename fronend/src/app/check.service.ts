@@ -14,6 +14,6 @@ export class CheckService {
 			type: 'source',
 			content: content
 		}
-		return this.http.post('https://jsonplaceholder.typicode.com/posts', body)
+		return this.http.get<any>('http://localhost:8080/api/sources/' + content, { observe: 'response' })
 	}
 }
