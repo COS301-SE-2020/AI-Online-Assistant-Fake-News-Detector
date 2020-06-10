@@ -97,7 +97,7 @@ router.get("/:sourceId", (req, res, next) => {
 router.put("/:sourceId", (req, res, next) => {
   const id = req.params.sourceId;
   const updateOps = {};
-  for (const ops of req.body) {
+  for (const ops of Object.keys(req.body)) {
     updateOps[ops.propName] = ops.value;
   }
   Source.update({ _id: id }, { $set: updateOps })
@@ -111,6 +111,7 @@ router.put("/:sourceId", (req, res, next) => {
       res.status(500).json({ error: err });
     });
 });
+
 /**
  * @description delete request to delete a known fake news source
  * @author Quinton Coetzee

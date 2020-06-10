@@ -7,16 +7,14 @@ var cors = require("cors");
 // Root path of server
 const root = require("./Util/path");
 
-const APIRoutes = require("./routes/api");
+const API = require("./routes/APIv1");
 
 //Static files like css or js frontend.
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(express.static(path.join(root, "Content")));
 server.use(express.static(path.join(root, "/node_modules/bootstrap/dist")));
-server.use(express.static(path.join(root, "Content")));
-server.use(express.static(path.join(root, "Content")));
 
-server.use("/API", APIRoutes);
+server.use("/API", API);
 
 server.get("/", (req, res, next) => {
   res.status(200).sendFile(path.join(root, "Views", "index.html"));
