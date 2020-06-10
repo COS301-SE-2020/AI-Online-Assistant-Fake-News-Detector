@@ -1,0 +1,33 @@
+<mat-form-field class="example-form-field">
+  <mat-label>Source/URL</mat-label>
+  <input matInput type="text" [(ngModel)]="value">
+  <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+
+  <div class="example-button-row">
+    <button mat-raised-button (click)="clickCheck()">Check</button>
+    <button mat-raised-button color="primary" (click)="clickReport()">Report</button>
+    <button mat-raised-button color="accent" (click)="clickFind()">Analytics</button>
+  </div>
+
+
+
+<mat-card class="example-card" *ngIf="checkReturn">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>Fake</mat-card-title>
+    <mat-card-subtitle>URL: {{value}}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+  <mat-card-content>
+    <p>
+      The URL points to news that was determined to be fake by our engine.
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>Query</button>
+    <button mat-button (click)="checkReturn=false">Dismiss</button>
+  </mat-card-actions>
+</mat-card>
