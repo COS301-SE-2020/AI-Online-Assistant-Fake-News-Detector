@@ -71,3 +71,29 @@ No body will be returned by this endpoint.
 ---
 
 # Database
+
+---
+
+# Node Packages
+## Development Packages
+|Name|Description|Version|
+|---|--------|-----|
+|Nodemon| Used to reload the server after every save. Saves time and speeds up development|2.0.4|
+\
+## Front-end Packages
+|Name|Description|Version|
+|---|--------|----|
+|bootstrap|Styling and display enhancement package|4.5|
+|jQuery|Creates an easier waay to manipulate the DOM|3.5.1|
+|popper.js|Creates an easier waay to manipulate the DOM, it is used in conjunction with Bootstrap|1.16.1|
+\
+## Back-end Packages
+|Name|Description|Version|
+|---|--------|----|
+|body-parser|Encodes and Decodes parsed data|1.19|
+|CORS|Reduces the difficulties that can be experienced with CORS when making ajax calls|2.8.5|
+|express|A middleware framework making development more streamlined|4.17.1|
+|mocha|A javascript library used for automated testing|7.2.0|
+|mongoose|The framework we are using for the database|5.9.18|
+|morgan||1.10|
+
