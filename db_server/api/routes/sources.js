@@ -75,7 +75,6 @@ router.post("/", (req, res, next) => {
  */
 router.get("/:sourceId", (req, res, next) => {
   const id = req.params.sourceId;
-  console.log(id);
   Source.findById(id)
     .exec()
     .then((doc) => {
