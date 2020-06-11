@@ -1,9 +1,11 @@
-const http = require('http');
+const http = require("http");
 
-const app = require('./app');
+const app = require("./app");
 
 const port = process.env.PORT || 3000;
 
 const server = http.createServer(app);
 
-server.listen(port);
+let listener = server.listen(port, () => {
+  console.log("DB_Server listening on port " + listener.address().port);
+});
