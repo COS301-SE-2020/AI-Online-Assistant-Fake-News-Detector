@@ -26,12 +26,16 @@ api.get("/sources", (req, res, next) => {
     },
     (response) => {
       response.setEncoding("utf8");
+      let responseString = "";
       response.on("data", (chunk) => {
-        res.status(response.statusCode).send(chunk);
+        responseString += chunk;
+      });
+
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
       });
     }
   );
-
   request.on("error", (e) => {
     let error = new Error(e.message);
     error.status = 500;
@@ -67,8 +71,13 @@ api.post("/sources", (req, res, next) => {
     },
     (response) => {
       response.setEncoding("utf8");
+      let responseString = "";
       response.on("data", (chunk) => {
-        res.status(response.statusCode).send(chunk);
+        responseString += chunk;
+      });
+
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
       });
     }
   );
@@ -97,12 +106,16 @@ api.get("/sources/:sourceId", (req, res, next) => {
     },
     (response) => {
       response.setEncoding("utf8");
+      let responseString = "";
       response.on("data", (chunk) => {
-        res.status(response.statusCode).send(chunk);
+        responseString += chunk;
+      });
+
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
       });
     }
   );
-
   request.on("error", (e) => {
     let error = new Error(e.message);
     error.status = 500;
@@ -139,8 +152,13 @@ api.put("/sources/:sourceId", (req, res, next) => {
     },
     (response) => {
       response.setEncoding("utf8");
+      let responseString = "";
       response.on("data", (chunk) => {
-        res.status(response.statusCode).send(chunk);
+        responseString += chunk;
+      });
+
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
       });
     }
   );
@@ -169,8 +187,13 @@ api.delete("/sources/:sourceId", (req, res, next) => {
     },
     (response) => {
       response.setEncoding("utf8");
+      let responseString = "";
       response.on("data", (chunk) => {
-        res.status(response.statusCode).send(chunk);
+        responseString += chunk;
+      });
+
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
       });
     }
   );
@@ -190,7 +213,6 @@ api.delete("/sources/:sourceId", (req, res, next) => {
  */
 
 api.get("/facts", (req, res, next) => {
-  console.log("Hello");
   let request = http.request(
     {
       host: "localhost",
@@ -200,8 +222,13 @@ api.get("/facts", (req, res, next) => {
     },
     (response) => {
       response.setEncoding("utf8");
+      let responseString = "";
       response.on("data", (chunk) => {
-        res.status(response.statusCode).send(chunk);
+        responseString += chunk;
+      });
+
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
       });
     }
   );
@@ -241,8 +268,13 @@ api.post("/facts", (req, res, next) => {
     },
     (response) => {
       response.setEncoding("utf8");
+      let responseString = "";
       response.on("data", (chunk) => {
-        res.status(response.statusCode).send(chunk);
+        responseString += chunk;
+      });
+
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
       });
     }
   );
@@ -257,11 +289,11 @@ api.post("/facts", (req, res, next) => {
 });
 
 /**
- * @description base get request route. Reroutes the api call to the api server, gets all specific fact from the db
+ * @description base get request route. Reroutes the api call to the api server, gets specific fact from the db
  * @author Stuart Barclay
  */
 
-api.get("/fact/:factId", (req, res, next) => {
+api.get("/facts/:factId", (req, res, next) => {
   let request = http.request(
     {
       host: "localhost",
@@ -271,8 +303,13 @@ api.get("/fact/:factId", (req, res, next) => {
     },
     (response) => {
       response.setEncoding("utf8");
+      let responseString = "";
       response.on("data", (chunk) => {
-        res.status(response.statusCode).send(chunk);
+        responseString += chunk;
+      });
+
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
       });
     }
   );
@@ -301,8 +338,13 @@ api.delete("/facts/:factId", (req, res, next) => {
     },
     (response) => {
       response.setEncoding("utf8");
+      let responseString = "";
       response.on("data", (chunk) => {
-        res.status(response.statusCode).send(chunk);
+        responseString += chunk;
+      });
+
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
       });
     }
   );

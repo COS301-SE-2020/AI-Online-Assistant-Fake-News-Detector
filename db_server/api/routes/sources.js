@@ -96,11 +96,7 @@ router.get("/:sourceId", (req, res, next) => {
  */
 router.put("/:sourceId", (req, res, next) => {
   const id = req.params.sourceId;
-  const updateOps = {};
-  for (const ops of Object.keys(req.body)) {
-    updateOps[ops.propName] = ops.value;
-  }
-  Source.update({ _id: id }, { $set: updateOps })
+  Source.updateOne({ _id: id }, { $set: req.body })
     .exec()
     .then((result) => {
       console.log(result);
