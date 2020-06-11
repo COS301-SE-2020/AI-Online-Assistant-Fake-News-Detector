@@ -4,8 +4,8 @@
   "description": "Fake news detector api server. 5Bits Capstone Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon api_server.js"
+    "test": "mocha",
+    "start": "concurrently \"nodemon api_server.js\" \"nodemon ../db_server/db_server.js\""
   },
   "author": "5Bits",
   "license": "ISC",
@@ -17,9 +17,15 @@
     "jquery": "^3.5.1",
     "mongoose": "^5.9.18",
     "morgan": "^1.10.0",
-    "popper.js": "^1.16.1"
+    "popper.js": "^1.16.1",
+    "swagger-ui-dist": "^3.26.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "concurrently": "^5.2.0",
+    "mocha": "^8.0.1",
+    "nodemon": "^2.0.4",
+    "should": "^13.2.3"
   }
 }

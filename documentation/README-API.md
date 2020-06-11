@@ -28,6 +28,7 @@ All communication throughout the system will be facilitated through the API. The
 | ```201```  |Valid request without response in body.|
 | ```400```  |Bad request. Request body is likely incomplete|
 | ```401```  |Unauthorized request. Request token is likely incorrect or missing|
+| ```503```  |Cannot connect|
 
 ---
 
@@ -70,3 +71,29 @@ No body will be returned by this endpoint.
 ---
 
 # Database
+
+---
+
+# Node Packages
+## Development Packages
+|Name|Description|Version|
+|---|--------|-----|
+|Nodemon| Used to reload the server after every save. Saves time and speeds up development|2.0.4|
+
+## Front-end Packages
+|Name|Description|Version|
+|---|--------|----|
+|bootstrap|Styling and display enhancement package|4.5|
+|jQuery|Creates an easier waay to manipulate the DOM|3.5.1|
+|popper.js|Creates an easier waay to manipulate the DOM, it is used in conjunction with Bootstrap|1.16.1|
+
+## Back-end Packages
+|Name|Description|Version|
+|---|--------|----|
+|body-parser|Node.js body parsing middleware.|1.19|
+|CORS|CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.|2.8.5|
+|express|Fast, unopinionated, minimalist middleware web framework for node|4.17.1|
+|mocha|A javascript library used for automated testing|7.2.0|
+|mongoose|Mongoose is a MongoDB object modeling tool designed to work in an asynchronous environment. Mongoose supports both promises and callbacks.|5.9.18|
+|morgan|HTTP request logger middleware for node.js|1.10|
+
