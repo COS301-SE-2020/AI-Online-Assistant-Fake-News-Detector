@@ -4,7 +4,7 @@
   "description": "RESTful API for Fake News Detector",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "nodemon db_server.js"
   },
   "author": "Quinton Coetzee",
@@ -16,6 +16,9 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.0.1",
     "nodemon": "^2.0.4"
   }
 }
