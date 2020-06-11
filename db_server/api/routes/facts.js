@@ -57,8 +57,8 @@ router.post('/', (req, res, next)=>{
                     request: {
                         type: "GET",
                         url: "http://localhost:3000/facts/" + result._id,
-                    }
-                }
+                    },
+                },
             });
         })
         .catch((err)=>{

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const factSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     statement: { type: String, required: true},
-    popularity: { type: Number, required: false }
+    popularity: { type: Number, required: true }
 });
 
 module.exports = mongoose.model('Fact', factSchema);
