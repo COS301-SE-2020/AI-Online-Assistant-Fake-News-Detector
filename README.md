@@ -11,5 +11,5 @@ The Fake News Detector is a tool to be used by both *News Consumers* and *News D
 |[Stuart Barclay]()|15015069||
 |[Quinton Coetzee](https://quintoncoetzee.github.io/)|18028510|Passionate BIT student skilled at both back-end and front-end. Interests include *Artificial Intellegence*, *Photography* and *Graphic Design*.|
 |[Alistair Payn]()|14272289||
-|[Danré Retief]()|14126461||
+|[Danré Retief]()|14126461|BScIT student, full-stack developer with a knack for creative problem solving and front-end frameworks.|
 |[Thato Tshukudu](https://taydos.github.io/)|18010408|BIT student with core strength in front-end.|
