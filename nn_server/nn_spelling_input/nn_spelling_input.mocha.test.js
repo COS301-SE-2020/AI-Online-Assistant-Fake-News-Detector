@@ -1,4 +1,4 @@
-const nn_spelling_input = require('../nn_spelling_input.js');
+const nn_spelling_input = require('./nn_spelling_input.js');
 var assert = require('assert');
 
 var correctSingleSentence = ["There are no spelling errors in this sentence."];

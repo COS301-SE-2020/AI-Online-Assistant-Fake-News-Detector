@@ -4,7 +4,7 @@
   "description": "",
   "main": "nn_server.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha $(find . -name '*mocha.test.js')"
   },
   "repository": {
     "type": "git",

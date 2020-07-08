@@ -1,4 +1,4 @@
-const nn_spelling_input = require('../nn_verbose_input.js');
+const nn_spelling_input = require('./nn_verbose_input.js');
 var assert = require('assert');
 
 var normalSingleSentence = ["This sentence is not verbose."];
