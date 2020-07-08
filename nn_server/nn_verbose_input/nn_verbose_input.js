@@ -1,7 +1,6 @@
 const nn_input = require('../nn_input/nn_input.js');
 const wordy = require('too-wordy');
 
-const precision = 8;
 const wordRegex = /\b[^\s]+\b/g;
 
 /**
@@ -28,7 +27,7 @@ class nn_verbose_input extends nn_input {
 	if (wordCount > 0) {
 	    result = verboseCount / wordCount;
 	}
-	return (result).toFixed(precision);
+	return result;
     }
 }
 

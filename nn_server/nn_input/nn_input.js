@@ -10,4 +10,3 @@ class nn_input {
 }
 
 module.exports = nn_input;
-
