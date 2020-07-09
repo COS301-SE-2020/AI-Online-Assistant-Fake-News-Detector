@@ -12,7 +12,6 @@ describe("nn_server API", () => {
 	    .send({"type": "text",
 		   "content": "The text to check."})
 	    .end((err, res) => {
-		console.log(res);
 		expect(err).to.be.null;
 		res.should.have.status(200);
 		res.body.should.be.a("object");
@@ -27,7 +26,6 @@ describe("nn_server API", () => {
 	    .send({"type": "text",
 		   "content": 0})
 	    .end((err, res) => {
-		console.log(res);
 		expect(err).to.be.null;
 		res.should.have.status(400);
 		res.body.should.be.a("object");
