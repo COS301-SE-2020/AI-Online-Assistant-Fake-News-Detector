@@ -10,7 +10,7 @@ const Source = require("../models/source");
  */
 router.get("/", (req, res, next) => {
   Source.find()
-    .select("name tld _id")
+    .select("name tld _id rating")
     .exec()
     .then((docs) => {
       const response = {
@@ -23,6 +23,7 @@ router.get("/", (req, res, next) => {
             _id: doc._id,
             request: {
               type: "GET",
+              description: "URL to get specific source",
               url: "http://localhost:3000/sources/" + doc._id,
             },
           };
@@ -31,25 +32,25 @@ router.get("/", (req, res, next) => {
       res.status(200).json(response);
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({ error: err });
     });
-});
-/**
- * @description post request to create a new fake news sources
- * @author Quinton Coetzee
- */
-router.post("/", (req, res, next) => {
-  const source = new Source({
-    _id: new mongoose.Types.ObjectId(),
-    name: req.body.name,
-    tld: req.body.tld,
-    rating: req.body.rating,
   });
-  source
+  /**
+   * @description post request to create a new fake news sources
+   * @author Quinton Coetzee
+   */
+  router.post("/", (req, res, next) => {
+    const source = new Source({
+      _id: new mongoose.Types.ObjectId(),
+      name: req.body.name,
+      tld: req.body.tld,
+      rating: req.body.rating,
+    });
+    source
     .save()
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       res.status(201).json({
         message: "Created source successfully",
         createdSource: {
@@ -59,13 +60,14 @@ router.post("/", (req, res, next) => {
           rating: result.rating,
           request: {
             type: "GET",
+            description: 'URL to get new source',
             url: "http://localhost:3000/sources/" + result._id,
           },
         },
       });
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({ error: err });
     });
 });
@@ -76,17 +78,25 @@ router.post("/", (req, res, next) => {
 router.get("/:sourceId", (req, res, next) => {
   const id = req.params.sourceId;
   Source.findById(id)
+    .select('name tld rating _id')
     .exec()
     .then((doc) => {
-      console.log("From Database", doc);
+      // console.log("From Database", doc);
       if (doc) {
-        res.status(200).json({ doc });
+        res.status(200).json({ 
+          source: doc,
+          request: {
+            type: 'GET',
+            description: 'URL to get all sources',
+            url: 'http://localhost:3000/sources/'
+          }  
+        });
       } else {
         res.status(404).json({ message: "No database entry for provided ID" });
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({ error: err });
     });
 });
@@ -99,11 +109,17 @@ router.put("/:sourceId", (req, res, next) => {
   Source.updateOne({ _id: id }, { $set: req.body })
     .exec()
     .then((result) => {
-      console.log(result);
-      res.status(200).json(result);
+      res.status(200).json({
+        message: 'Source Rating Updated',
+        request: {
+          type: 'GET',
+          description: 'URL to get updated source',
+          url: 'http://localhost:3000/sources/'+id
+        } 
+      });
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({ error: err });
     });
 });
@@ -117,10 +133,12 @@ router.delete("/:sourceId", (req, res, next) => {
   Source.remove({ _id: id })
     .exec()
     .then((result) => {
-      res.status(200).json(result);
+      res.status(200).json({
+        message: "Source deleted"
+      });
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({ error: err });
     });
 });
