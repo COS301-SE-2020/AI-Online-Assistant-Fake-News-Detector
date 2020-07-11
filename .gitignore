@@ -1,0 +1,3 @@
+/nn_server/node_modules/*
+/db_server/node_modules/*
+/authentication_server/node_modules/*
