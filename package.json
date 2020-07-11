@@ -1,22 +1,25 @@
 {
-   "name": "ai-online-assistant-fake-news-detector",
-   "version": "1.0.0",
-   "description": "A tool for identifying fake news articles.",
-   "scripts": {
-      "test": "mocha --exit $(find . -name '*mocha.test.js')"
-   },
-   "repository": {
-      "type": "git",
-      "url": "git+https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector.git"
-   },
-   "author": "5Bits",
-   "license": "ISC",
-   "bugs": {
-      "url": "https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector/issues"
-   },
-   "homepage": "https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector#readme",
-   "dependencies": {
-      "mocha": "^8.0.1",
-      "nn_server": "file:nn_server"
-   }
+  "name": "ai-online-assistant-fake-news-detector",
+  "version": "1.0.0",
+  "description": "A tool for identifying fake news articles.",
+  "scripts": {
+    "test": "mocha --exit '**/*.mocha.test.js'",
+    "build": "npm install "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector.git"
+  },
+  "author": "5Bits",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector/issues"
+  },
+  "homepage": "https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector#readme",
+  "dependencies": {
+    "mocha": "^8.0.1",
+    "nn_server": "file:nn_server",
+    "db_server": "file:db_server",
+    "api_server": "file:api_server"
+  }
 }
