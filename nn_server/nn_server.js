@@ -2,8 +2,6 @@
 const express = require("express");
 const server = express();
 const bodyParser = require("body-parser");
-const path = require("path");
-const root = require("./path");
 
 // Regex
 const sentenceRegex = /[^\.\!\?]*[\.\!\?]/g;

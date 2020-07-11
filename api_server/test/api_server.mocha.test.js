@@ -24,17 +24,26 @@ describe("Facts", () => {
   it("It should retrieve a specific fact from the database /GET facts/:factId", (done) => {
     chai
       .request(server)
-      .get("/API/Facts/5ee0e4969332c14e78b1b422")
-      .end((err, res) => {
-        expect(err).to.be.null;
-        res.should.have.status(200);
-        res.body.should.be.a("object");
-        res.body.doc.should.have.property("_id");
-        res.body.doc.should.have.property("statement");
-        res.body.doc.should.have.property("popularity");
-        res.body.doc.statement.should.equal("Dinosaurs never existed");
-        res.body.doc.popularity.should.equal(30);
-        done();
+      .get("/API/Facts")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .get("/API/Facts/" + responder.body["facts"][0]._id)
+          .end((err, res) => {
+            expect(err).to.be.null;
+            res.should.have.status(200);
+            res.body.should.be.a("object");
+            res.body.doc.should.have.property("_id");
+            res.body.doc.should.have.property("statement");
+            res.body.doc.should.have.property("popularity");
+            res.body.doc.statement.should.equal(
+              responder.body["facts"][0]["statement"]
+            );
+            res.body.doc.popularity.should.equal(
+              responder.body["facts"][0]["popularity"]
+            );
+            done();
+          });
       });
   });
 
@@ -59,15 +68,23 @@ describe("Facts", () => {
   it("It should delete a single fact from the database /DELETE facts/:factId", function (done) {
     chai
       .request(server)
-      .delete("/API/Facts/5ee18a30bd9adf44604ed070")
-      .end(function (error, res) {
-        res.should.have.status(200);
-        res.should.be.json;
-        res.body.should.be.a("object");
-        res.body.should.have.property("deletedCount");
-        res.body.deletedCount.should.be.a("number");
-        res.body.deletedCount.should.be.eql(1);
-        done();
+      .get("/API/Facts")
+      .end(function (err, responder) {
+        chai
+          .request(server)
+          .delete(
+            "/API/Facts/" +
+              responder.body["facts"][responder.body["facts"].length - 1]._id
+          )
+          .end(function (error, res) {
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.be.a("object");
+            res.body.should.have.property("deletedCount");
+            res.body.deletedCount.should.be.a("number");
+            res.body.deletedCount.should.be.eql(1);
+            done();
+          });
       });
   });
 });
@@ -91,32 +108,26 @@ describe("Sources", () => {
   it("It should retrieve a specific source from the database /GET Sources/:SourceId", (done) => {
     chai
       .request(server)
-      .get("/API/Sources/5edfe9d2931e5b74a2297169")
-      .end((err, res) => {
-        expect(err).to.be.null;
-        res.should.have.status(200);
-        res.body.should.be.a("object");
-        res.body.doc.should.have.property("_id");
-        res.body.doc.should.have.property("name");
-        res.body.doc.should.have.property("tld");
-        res.body.doc.name.should.equal("Wall Street Journal");
-        res.body.doc.tld.should.equal("https://www.wsj.com/");
-        done();
-      });
-  });
-
-  it("It should update a single source in the database /PUT sources/:SourceId", function (done) {
-    chai
-      .request(server)
-      .put("/API/Sources/5ee189f0bd9adf44604ed06f")
-      .send({ name: "google", tld: "https://google.co.za" })
-      .end(function (error, response) {
-        response.should.have.status(200);
-        response.should.be.json;
-        response.body.should.be.a("object");
-        response.body.should.have.property("nModified");
-        response.body.nModified.should.equal(1);
-        done();
+      .get("/API/Sources")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .get("/API/Sources/" + responder.body["sources"][0]._id)
+          .end((err, res) => {
+            expect(err).to.be.null;
+            res.should.have.status(200);
+            res.body.should.be.a("object");
+            res.body["source"].should.have.property("_id");
+            res.body["source"].should.have.property("name");
+            res.body["source"].should.have.property("tld");
+            res.body["source"].name.should.equal(
+              responder.body["sources"][0]["name"]
+            );
+            res.body["source"].tld.should.equal(
+              responder.body["sources"][0]["tld"]
+            );
+            done();
+          });
       });
   });
 
@@ -140,18 +151,51 @@ describe("Sources", () => {
       });
   });
 
+  it("It should update a single source in the database /PUT sources/:SourceId", function (done) {
+    chai
+      .request(server)
+      .get("/API/Sources")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .put(
+            "/API/Sources/" +
+              responder.body["sources"][responder.body["sources"].length - 1]
+                ._id
+          )
+          .send({ name: "google", tld: "https://google.co.za" })
+          .end(function (error, response) {
+            response.should.have.status(200);
+            response.should.be.json;
+            response.body.should.be.a("object");
+            response.body.should.have.property("message");
+            response.body.message.should.equal("Source Updated");
+            done();
+          });
+      });
+  });
+
   it("It should delete a single source from the database /DELETE source/:source", function (done) {
     chai
       .request(server)
-      .delete("/API/Sources/5ee189f0bd9adf44604ed06f")
-      .end(function (error, res) {
-        res.should.have.status(200);
-        res.should.be.json;
-        res.body.should.be.a("object");
-        res.body.should.have.property("deletedCount");
-        res.body.deletedCount.should.be.a("number");
-        res.body.deletedCount.should.be.eql(1);
-        done();
+      .get("/API/Sources")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .delete(
+            "/API/Sources/" +
+              responder.body["sources"][responder.body["sources"].length - 1]
+                ._id
+          )
+          .end(function (error, res) {
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.be.a("object");
+            res.body.should.have.property("message");
+            res.body.message.should.be.a("string");
+            res.body.message.should.be.eql("Source Deleted");
+            done();
+          });
       });
   });
 });

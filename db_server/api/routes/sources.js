@@ -103,7 +103,7 @@ router.put("/:sourceId", (req, res, next) => {
     .exec()
     .then((result) => {
       res.status(200).json({
-        message: "Source Rating Updated",
+        message: "Source Updated",
         request: {
           type: "PUT",
           description: "URL to get updated source",
@@ -122,11 +122,11 @@ router.put("/:sourceId", (req, res, next) => {
  */
 router.delete("/:sourceId", (req, res, next) => {
   const id = req.params.sourceId;
-  Source.remove({ _id: id })
+  Source.deleteOne({ _id: id })
     .exec()
     .then((result) => {
       res.status(200).json({
-        message: "Source deleted",
+        message: "Source Deleted",
       });
     })
     .catch((err) => {

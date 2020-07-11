@@ -4,9 +4,9 @@
   "description": "Fake news detector api server. 5Bits Capstone Project",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "startDev": "concurrently \"nodemon api_server.js\" \"nodemon ../db_server/db_server.js\" \"nodemon ../nn_server/nn_server.js\"",
-    "start": "concurrently \"node api_server.js\" \"node ../db_server/db_server.js\" \"node ../nn_server/nn_server.js\""
+    "test": "mocha --exit",
+    "start": "concurrently \"nodemon api_server.js\" \"nodemon ../db_server/db_server.js\" \"nodemon ../nn_server/nn_server.js\""
+
   },
   "author": "5Bits",
   "license": "ISC",

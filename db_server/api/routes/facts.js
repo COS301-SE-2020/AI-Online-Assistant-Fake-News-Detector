@@ -96,7 +96,7 @@ router.get("/:factId", (req, res, next) => {
  */
 router.delete("/:factId", (req, res, next) => {
   const id = req.params.factId;
-  Fact.remove({ _id: id })
+  Fact.deleteOne({ _id: id })
     .exec()
     .then((result) => {
       res.status(200).json(result);
