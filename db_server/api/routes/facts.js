@@ -22,7 +22,7 @@ router.get("/", (req, res, next) => {
             _id: doc._id,
             request: {
               type: "GET",
-              url: "/facts/" + doc._id,
+              url: "/Facts/" + doc._id,
             },
           };
         }),
@@ -57,7 +57,7 @@ router.post("/", (req, res, next) => {
           popularity: result.popularity,
           request: {
             type: "POST",
-            url: "/facts/" + result._id,
+            url: "/Facts/" + result._id,
           },
         },
       });
