@@ -18,6 +18,7 @@ server.use(cors());
 // server.use(morgan("combined"));
 server.use("/API-Documents", express.static(pathToSwaggerUi));
 server.use("/API", API);
+server.use("/", express.static("../frontend/dist/AiNews"));
 
 let listener = server.listen(port, () => {
   console.log("API_Server listening on port " + listener.address().port);
