@@ -3,7 +3,6 @@ const chaiHttp = require("chai-http");
 const should = chai.should();
 const expect = chai.expect;
 const server = require("./nn_server.js");
-console.log(root);
 
 chai.use(chaiHttp);
 describe("nn_server API", () => {
