@@ -24,6 +24,7 @@
     "express": "^4.17.1",
     "mocha": "^7.2.0",
     "nn_spelling_input": "file:nn_spelling_input",
-    "nn_verbose_input": "file:nn_verbose_input"
+    "nn_verbose_input": "file:nn_verbose_input",
+    "path": "^0.12.7"
   }
 }
