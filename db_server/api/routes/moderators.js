@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const Moderator = require("../models/moderator");
 
@@ -16,7 +17,7 @@ router.get("/", (req, res, next) => {
         count: moderators.length,
         moderators: moderators.map((moderator) => {
           return {
-            ID: moderator._id,
+            _id: moderator._id,
             Name: moderator.fName + " " + moderator.lName,
             "Email Address": moderator.emailAddress,
             "Authentication Level": moderator.authenticationLevel,
@@ -35,31 +36,33 @@ router.get("/", (req, res, next) => {
  * @author Stuart Barclay
  */
 router.post("/", (req, res, next) => {
-  const moderator = new Moderator({
-    _id: new mongoose.Types.ObjectId(),
-    emailAddress: req.body.emailAddress,
-    password: req.body.password,
-    fName: req.body.fName,
-    lName: req.body.lName,
-    phoneNumber: req.body.phoneNumber,
-  });
-  moderator
-    .save()
-    .then((result) => {
-      res.status(200).json({
-        message: "Successfully added new moderator",
-        "Moderator Details": {
-          _id: result.id,
-          emailAddress: result.emailAddress,
-          fName: result.fName,
-          lName: result.lName,
-          phoneNumber: result.phoneNumber,
-        },
-      });
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
+  bcrypt.hash(req.body.password, 6, (err, hash) => {
+    const moderator = new Moderator({
+      _id: new mongoose.Types.ObjectId(),
+      emailAddress: req.body.emailAddress,
+      password: req.body.password,
+      fName: req.body.fName,
+      lName: req.body.lName,
+      phoneNumber: req.body.phoneNumber,
     });
+    moderator
+      .save()
+      .then((result) => {
+        res.status(200).json({
+          message: "Successfully added new moderator",
+          "Moderator Details": {
+            _id: result.id,
+            emailAddress: result.emailAddress,
+            fName: result.fName,
+            lName: result.lName,
+            phoneNumber: result.phoneNumber,
+          },
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err });
+      });
+  });
 });
 
 /**
@@ -76,7 +79,7 @@ router.get("/:emailAddress", (req, res, next) => {
     .then((doc) => {
       if (doc) {
         res.status(200).json({
-          ID: doc._id,
+          _id: doc._id,
           Name: doc.fName + " " + doc.lName,
           "Email Address": doc.emailAddress,
           "Authentication Level": doc.authenticationLevel,
@@ -99,6 +102,11 @@ router.get("/:emailAddress", (req, res, next) => {
  */
 router.put("/:emailAddress", (req, res, next) => {
   const id = req.params.emailAddress;
+  if (req.body.password !== undefined && req.body.password !== null) {
+    bcrypt.hash(req.body.password, 6, (err, hash) => {
+      req.body.password = hash;
+    });
+  }
   Moderator.updateOne({ emailAddress: id }, { $set: req.body })
     .exec()
     .then((result) => {
