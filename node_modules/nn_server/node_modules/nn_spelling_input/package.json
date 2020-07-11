@@ -1,0 +1,22 @@
+{
+  "name": "nn_spelling_input",
+  "version": "1.0.0",
+  "description": "A class that checks if the spelling of sentences.",
+  "main": "nn_spelling_input.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector.git"
+  },
+  "author": "5Bits",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector/issues"
+  },
+  "homepage": "https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector#readme",
+  "dependencies": {
+    "simple-spellchecker": "^1.0.0"
+  }
+}
