@@ -1,8 +1,8 @@
-const precision = 8;
-const sentenceRegex = /[^\.\!\?]*[\.\!\?]/g;
+const nn_input = require('../nn_input/nn_input.js');
 
-class core_nn {
+class core_nn extends nn_input {
     constructor(trainedModel) {
+	super();
 	this.model = trainedModel;
 	this.inputs = [];
     }
@@ -24,17 +24,16 @@ class core_nn {
 	    });
 	    result = total;
 	}
-	return (result).toFixed(precision);
+	return result;
     }
     
-    processText(text) {
-	let sentences = text.match(sentenceRegex); // splits text into array of sentences
+    processText(sentences) {
 	let inputResults = [];
 	let result = 0.0;
 
 	// get the result of each input and then get the result from the regression model
 	this.inputs.forEach((input) => {
-	    inputResults.push(parseFloat(input.process(sentences)));
+	    inputResults.push(input.process(sentences));
 	    if (inputResults.length === this.inputs.length) {
 		result = this.runModel(inputResults);
 	    }
