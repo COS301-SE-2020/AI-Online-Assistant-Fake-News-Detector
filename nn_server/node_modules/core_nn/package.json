@@ -1,0 +1,20 @@
+{
+  "name": "core_nn",
+  "version": "1.0.0",
+  "description": "The neural network used by the nn_server. Combines multiple other forms of processing to produce one response.",
+  "main": "core_nn.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector.git"
+  },
+  "author": "5Bits",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector/issues"
+  },
+  "homepage": "https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector#readme",
+  "dependencies": {}
+}
