@@ -31,7 +31,6 @@ router.get("/", (req, res, next) => {
       res.status(200).json(response);
     })
     .catch((err) => {
-      // console.log(err);
       res.status(500).json({ error: err });
     });
 });
@@ -49,7 +48,6 @@ router.post("/", (req, res, next) => {
   source
     .save()
     .then((result) => {
-      // console.log(result);
       res.status(201).json({
         message: "Created source successfully",
         createdSource: {
@@ -79,7 +77,6 @@ router.get("/:sourceId", (req, res, next) => {
     .select("name tld rating _id")
     .exec()
     .then((doc) => {
-      // console.log("From Database", doc);
       if (doc) {
         res.status(200).json({
           source: doc,
@@ -93,7 +90,6 @@ router.get("/:sourceId", (req, res, next) => {
       }
     })
     .catch((err) => {
-      // console.log(err);
       res.status(500).json({ error: err });
     });
 });
@@ -116,7 +112,6 @@ router.put("/:sourceId", (req, res, next) => {
       });
     })
     .catch((err) => {
-      // console.log(err);
       res.status(500).json({ error: err });
     });
 });
@@ -135,7 +130,6 @@ router.delete("/:sourceId", (req, res, next) => {
       });
     })
     .catch((err) => {
-      // console.log(err);
       res.status(500).json({ error: err });
     });
 });

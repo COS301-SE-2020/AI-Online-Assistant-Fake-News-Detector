@@ -1,0 +1,32 @@
+{
+  "name": "fake_news_auth_server",
+  "version": "0.0.1",
+  "description": "Fake news detector authentication server. 5Bits Capstone Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "nodemon auth_server.js"
+  },
+  "keywords": [
+    "5Bits",
+    "auth_server"
+  ],
+  "author": "5Bits",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^3.23.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.23",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.0.1",
+    "nodemon": "^2.0.4",
+    "should": "^13.2.3"
+  }
+}

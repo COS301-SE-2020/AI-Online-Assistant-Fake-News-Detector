@@ -3,6 +3,8 @@ const server = express();
 const bodyParser = require("body-parser");
 const path = require("path");
 const port = 8080;
+const helmet = require("helmet");
+const morgan = require("morgan");
 var cors = require("cors");
 // Root path of server
 const root = require("./Util/path");
@@ -21,6 +23,9 @@ server.use(
   express.static(path.join(root, "/node_modules/jquery/dist/"))
 );
 server.use("/API-Documents", express.static(pathToSwaggerUi));
+server.use(helmet());
+server.use(cors());
+server.use(morgan("combined"));
 server.use("/API", API);
 
 server.get("/", (req, res, next) => {

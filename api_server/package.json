@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "start": "concurrently \"nodemon api_server.js\" \"nodemon ../db_server/db_server.js\""
+    "start": "concurrently \"nodemon api_server.js\" \"nodemon ../db_server/db_server.js\" \"nodemon ../authentication_server/auth_server.js\""
   },
   "author": "5Bits",
   "license": "ISC",
@@ -14,7 +14,9 @@
     "bootstrap": "^4.5.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "helmet": "^3.23.3",
     "jquery": "^3.5.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.18",
     "morgan": "^1.10.0",
     "popper.js": "^1.16.1",
