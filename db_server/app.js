@@ -3,6 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const sourceRoutes = require("./api/routes/sources");
 const factRoutes = require("./api/routes/facts");
