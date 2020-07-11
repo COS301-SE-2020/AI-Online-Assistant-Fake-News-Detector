@@ -22,7 +22,7 @@ router.get("/", (req, res, next) => {
             _id: doc._id,
             request: {
               type: "GET",
-              url: "http://localhost:3000/facts/" + doc._id,
+              url: "/facts/" + doc._id,
             },
           };
         }),
@@ -56,8 +56,8 @@ router.post("/", (req, res, next) => {
           statement: result.statement,
           popularity: result.popularity,
           request: {
-            type: "GET",
-            url: "http://localhost:3000/facts/" + result._id,
+            type: "POST",
+            url: "/facts/" + result._id,
           },
         },
       });

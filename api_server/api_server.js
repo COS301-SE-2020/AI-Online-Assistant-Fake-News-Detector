@@ -6,7 +6,7 @@ const port = 8080;
 var cors = require("cors");
 // Root path of server
 const root = require("./Util/path");
-const pathToSwaggerUi = require("swagger-ui-dist").absolutePath();
+const pathToSwaggerUi = require("swagger-ui-dist").getAbsoluteFSPath();
 const API = require("./routes/APIv1");
 
 //Static files like css or js frontend.
@@ -20,7 +20,7 @@ server.use(
   "/jquery",
   express.static(path.join(root, "/node_modules/jquery/dist/"))
 );
-server.use(express.static(pathToSwaggerUi));
+server.use("/API-Documents", express.static(pathToSwaggerUi));
 server.use("/API", API);
 
 server.get("/", (req, res, next) => {

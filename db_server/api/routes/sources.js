@@ -23,7 +23,7 @@ router.get("/", (req, res, next) => {
             _id: doc._id,
             request: {
               type: "GET",
-              url: "http://localhost:3000/sources/" + doc._id,
+              url: "/Sources/" + doc._id,
             },
           };
         }),
@@ -58,8 +58,8 @@ router.post("/", (req, res, next) => {
           tld: result.tld,
           rating: result.rating,
           request: {
-            type: "GET",
-            url: "http://localhost:3000/sources/" + result._id,
+            type: "POST",
+            url: "sources/" + result._id,
           },
         },
       });
