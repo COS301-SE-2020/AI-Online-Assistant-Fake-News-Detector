@@ -1,10 +1,9 @@
-const root = require("./Util/path");
-const path = require("path");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const should = chai.should();
 const expect = chai.expect;
-const server = require(path.join(root, "nn_server", "nn_server.js"));
+const server = require("./nn_server.js");
+console.log(root);
 
 chai.use(chaiHttp);
 describe("nn_server API", () => {

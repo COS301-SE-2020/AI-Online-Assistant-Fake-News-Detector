@@ -4,8 +4,7 @@
   "description": "",
   "main": "nn_server.js",
   "scripts": {
-    "test": "mocha --exit '*.mocha.test.js'",
-    "start": "node nn_server.js"
+    "test": "mocha --exit \"**/*.mocha.test.js\""
   },
   "repository": {
     "type": "git",
@@ -21,11 +20,8 @@
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "core_nn": "file:core_nn",
     "express": "^4.17.1",
     "mocha": "^7.2.0",
-    "nn_spelling_input": "file:nn_spelling_input",
-    "nn_verbose_input": "file:nn_verbose_input",
     "path": "^0.12.7"
   }
 }

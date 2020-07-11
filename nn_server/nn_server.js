@@ -3,7 +3,7 @@ const express = require("express");
 const server = express();
 const bodyParser = require("body-parser");
 const path = require("path");
-const root = require("./Util/path");
+const root = require("./path");
 
 // Regex
 const sentenceRegex = /[^\.\!\?]*[\.\!\?]/g;
@@ -15,17 +15,9 @@ const precision = 8;
 const port = 8082;
 
 // Neural network, procesing modules
-const core_nn = require(path.join(root, "core_nn", "core_nn.js"));
-const nn_spelling_input = require(path.join(
-  root,
-  "nn_spelling_input",
-  "nn_spelling_input.js"
-));
-const nn_verbose_input = require(path.join(
-  root,
-  "nn_verbose_input",
-  "nn_verbose_input.js"
-));
+const core_nn = require("./core_nn/core_nn.js");
+const nn_spelling_input = require("./nn_spelling_input/nn_spelling_input.js");
+const nn_verbose_input = require("./nn_verbose_input/nn_verbose_input.js");
 
 // neural network for processing, currently mocked
 let core = new core_nn("mockModel");

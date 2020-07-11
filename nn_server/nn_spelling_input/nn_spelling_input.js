@@ -1,6 +1,4 @@
-const root = require("../Util/path");
-const path = require("path");
-const nn_input = require(path.join(root, "nn_input", "nn_input.js"));
+const nn_input = require("../nn_input/nn_input.js");
 const spellChecker = require("simple-spellchecker");
 
 const wordRegex = /\b[^\s]+\b/g;

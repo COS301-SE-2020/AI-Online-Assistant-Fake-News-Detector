@@ -1,6 +1,4 @@
-const root = require("../Util/path");
-const path = require("path");
-const nn_input = require(path.join(root, "nn_input", "nn_input.js"));
+const nn_input = require("../nn_input/nn_input.js");
 
 class core_nn extends nn_input {
   constructor(trainedModel) {
