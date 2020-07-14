@@ -1,4 +1,6 @@
+
 const api = require("express").Router();
+
 const http = require("http");
 
 /**
@@ -16,6 +18,7 @@ api.get("/", (req, res) => {
  */
 
 api.get("/sources", (req, res, next) => {
+
   const request = http.request(
     {
       host: "localhost",
@@ -24,7 +27,9 @@ api.get("/sources", (req, res, next) => {
       method: "GET",
     },
     (response) => {
+
       response.setEncoding("utf-8");
+
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -57,6 +62,7 @@ api.post("/sources", (req, res, next) => {
     error.status = 500;
     next(error);
   }
+
   const request = http.request(
     {
       host: "localhost",
@@ -69,7 +75,9 @@ api.post("/sources", (req, res, next) => {
       },
     },
     (response) => {
+
       response.setEncoding("utf-8");
+
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -96,7 +104,9 @@ api.post("/sources", (req, res, next) => {
  */
 
 api.get("/sources/:sourceId", (req, res, next) => {
+
   const request = http.request(
+
     {
       host: "localhost",
       port: 3000,
@@ -104,7 +114,9 @@ api.get("/sources/:sourceId", (req, res, next) => {
       method: "GET",
     },
     (response) => {
+
       response.setEncoding("utf-8");
+
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -138,6 +150,7 @@ api.put("/sources/:sourceId", (req, res, next) => {
     error.status = 500;
     next(error);
   }
+
   const request = http.request(
     {
       host: "localhost",
@@ -150,6 +163,7 @@ api.put("/sources/:sourceId", (req, res, next) => {
       },
     },
     (response) => {
+
       response.setEncoding("utf-8");
       let responseString = "";
       response.on("data", (chunk) => {
@@ -177,6 +191,7 @@ api.put("/sources/:sourceId", (req, res, next) => {
  */
 
 api.delete("/sources/:sourceId", (req, res, next) => {
+
   const request = http.request(
     {
       host: "localhost",
@@ -185,7 +200,9 @@ api.delete("/sources/:sourceId", (req, res, next) => {
       method: "DELETE",
     },
     (response) => {
+
       response.setEncoding("utf-8");
+
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -212,7 +229,9 @@ api.delete("/sources/:sourceId", (req, res, next) => {
  */
 
 api.get("/facts", (req, res, next) => {
+
   const request = http.request(
+
     {
       host: "localhost",
       port: 3000,
@@ -220,7 +239,9 @@ api.get("/facts", (req, res, next) => {
       method: "GET",
     },
     (response) => {
+
       response.setEncoding("utf-8");
+
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -267,6 +288,7 @@ api.post("/facts", (req, res, next) => {
     },
     (response) => {
       response.setEncoding("utf-8");
+
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -293,6 +315,7 @@ api.post("/facts", (req, res, next) => {
  */
 
 api.get("/facts/:factId", (req, res, next) => {
+
   const request = http.request(
     {
       host: "localhost",
@@ -301,6 +324,7 @@ api.get("/facts/:factId", (req, res, next) => {
       method: "GET",
     },
     (response) => {
+
       response.setEncoding("utf-8");
       let responseString = "";
       response.on("data", (chunk) => {
@@ -328,6 +352,7 @@ api.get("/facts/:factId", (req, res, next) => {
  */
 
 api.delete("/facts/:factId", (req, res, next) => {
+
   const request = http.request(
     {
       host: "localhost",
@@ -336,6 +361,7 @@ api.delete("/facts/:factId", (req, res, next) => {
       method: "DELETE",
     },
     (response) => {
+
       response.setEncoding("utf-8");
       let responseString = "";
       response.on("data", (chunk) => {
