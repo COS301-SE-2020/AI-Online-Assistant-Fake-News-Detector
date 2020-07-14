@@ -20,10 +20,16 @@ import { FindService } from './find.service'
 import { CheckService } from './check.service'
 import { MatCardModule } from '@angular/material/card'
 
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { ModerateComponent } from './components/moderate/moderate.component';
+import { HowtoComponent } from './components/howto/howto.component'
 
 @NgModule({
-	declarations: [ AppComponent, NavComponent, InputComponent ],
+	declarations: [ AppComponent, NavComponent, InputComponent, HeaderComponent, FooterComponent, HomeComponent, AboutComponent, ModerateComponent, HowtoComponent ],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
