@@ -1,50 +1,49 @@
-const precision = 8;
-const sentenceRegex = /[^\.\!\?]*[\.\!\?]/g;
+const nn_input = require("../nn_input/nn_input.js");
 
-class core_nn {
-    constructor(trainedModel) {
-	this.model = trainedModel;
-	this.inputs = [];
-    }
+class core_nn extends nn_input {
+  constructor(trainedModel) {
+    super();
+    this.model = trainedModel;
+    this.inputs = [];
+  }
 
-    importModel(trainedModel) {
-	this.model = trainedModel;
-    }
+  importModel(trainedModel) {
+    this.model = trainedModel;
+  }
 
-    exportModel() {
-	return this.model;
-    }
+  exportModel() {
+    return this.model;
+  }
 
-    runModel(inputResults) {
-	let result = 0.0;
-	if (inputResults.length > 0) {
-	    let total = 0.0;
-	    inputResults.forEach((value)=>{
-		total += value;
-	    });
-	    result = total;
-	}
-	return (result).toFixed(precision);
+  runModel(inputResults) {
+    let result = 0.0;
+    if (inputResults.length > 0) {
+      let total = 0.0;
+      inputResults.forEach((value) => {
+        total += value;
+      });
+      result = total;
     }
-    
-    processText(text) {
-	let sentences = text.match(sentenceRegex); // splits text into array of sentences
-	let inputResults = [];
-	let result = 0.0;
+    return result;
+  }
 
-	// get the result of each input and then get the result from the regression model
-	this.inputs.forEach((input) => {
-	    inputResults.push(parseFloat(input.process(sentences)));
-	    if (inputResults.length === this.inputs.length) {
-		result = this.runModel(inputResults);
-	    }
-	});
-	return result;
-    }
+  processText(sentences) {
+    let inputResults = [];
+    let result = 0.0;
 
-    addInput(input) {
-	this.inputs.push(input);
-    }
+    // get the result of each input and then get the result from the regression model
+    this.inputs.forEach((input) => {
+      inputResults.push(input.process(sentences));
+      if (inputResults.length === this.inputs.length) {
+        result = this.runModel(inputResults);
+      }
+    });
+    return result;
+  }
+
+  addInput(input) {
+    this.inputs.push(input);
+  }
 }
 
 module.exports = core_nn;

@@ -1,5 +1,6 @@
-const express = require("express");
-const api = express.Router();
+
+const api = require("express").Router();
+
 const http = require("http");
 
 /**
@@ -17,7 +18,8 @@ api.get("/", (req, res) => {
  */
 
 api.get("/sources", (req, res, next) => {
-  let request = http.request(
+
+  const request = http.request(
     {
       host: "localhost",
       port: 3000,
@@ -25,7 +27,9 @@ api.get("/sources", (req, res, next) => {
       method: "GET",
     },
     (response) => {
-      response.setEncoding("utf8");
+
+      response.setEncoding("utf-8");
+
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -58,7 +62,8 @@ api.post("/sources", (req, res, next) => {
     error.status = 500;
     next(error);
   }
-  let request = http.request(
+
+  const request = http.request(
     {
       host: "localhost",
       port: 3000,
@@ -70,7 +75,9 @@ api.post("/sources", (req, res, next) => {
       },
     },
     (response) => {
-      response.setEncoding("utf8");
+
+      response.setEncoding("utf-8");
+
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -97,7 +104,9 @@ api.post("/sources", (req, res, next) => {
  */
 
 api.get("/sources/:sourceId", (req, res, next) => {
-  let request = http.request(
+
+  const request = http.request(
+
     {
       host: "localhost",
       port: 3000,
@@ -105,7 +114,9 @@ api.get("/sources/:sourceId", (req, res, next) => {
       method: "GET",
     },
     (response) => {
-      response.setEncoding("utf8");
+
+      response.setEncoding("utf-8");
+
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -139,7 +150,8 @@ api.put("/sources/:sourceId", (req, res, next) => {
     error.status = 500;
     next(error);
   }
-  let request = http.request(
+
+  const request = http.request(
     {
       host: "localhost",
       port: 3000,
@@ -151,7 +163,8 @@ api.put("/sources/:sourceId", (req, res, next) => {
       },
     },
     (response) => {
-      response.setEncoding("utf8");
+
+      response.setEncoding("utf-8");
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -178,7 +191,8 @@ api.put("/sources/:sourceId", (req, res, next) => {
  */
 
 api.delete("/sources/:sourceId", (req, res, next) => {
-  let request = http.request(
+
+  const request = http.request(
     {
       host: "localhost",
       port: 3000,
@@ -186,7 +200,9 @@ api.delete("/sources/:sourceId", (req, res, next) => {
       method: "DELETE",
     },
     (response) => {
-      response.setEncoding("utf8");
+
+      response.setEncoding("utf-8");
+
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -213,7 +229,9 @@ api.delete("/sources/:sourceId", (req, res, next) => {
  */
 
 api.get("/facts", (req, res, next) => {
-  let request = http.request(
+
+  const request = http.request(
+
     {
       host: "localhost",
       port: 3000,
@@ -221,7 +239,9 @@ api.get("/facts", (req, res, next) => {
       method: "GET",
     },
     (response) => {
-      response.setEncoding("utf8");
+
+      response.setEncoding("utf-8");
+
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -255,7 +275,7 @@ api.post("/facts", (req, res, next) => {
     error.status = 500;
     next(error);
   }
-  let request = http.request(
+  const request = http.request(
     {
       host: "localhost",
       port: 3000,
@@ -267,7 +287,8 @@ api.post("/facts", (req, res, next) => {
       },
     },
     (response) => {
-      response.setEncoding("utf8");
+      response.setEncoding("utf-8");
+
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -294,7 +315,8 @@ api.post("/facts", (req, res, next) => {
  */
 
 api.get("/facts/:factId", (req, res, next) => {
-  let request = http.request(
+
+  const request = http.request(
     {
       host: "localhost",
       port: 3000,
@@ -302,7 +324,8 @@ api.get("/facts/:factId", (req, res, next) => {
       method: "GET",
     },
     (response) => {
-      response.setEncoding("utf8");
+
+      response.setEncoding("utf-8");
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -329,7 +352,8 @@ api.get("/facts/:factId", (req, res, next) => {
  */
 
 api.delete("/facts/:factId", (req, res, next) => {
-  let request = http.request(
+
+  const request = http.request(
     {
       host: "localhost",
       port: 3000,
@@ -337,7 +361,8 @@ api.delete("/facts/:factId", (req, res, next) => {
       method: "DELETE",
     },
     (response) => {
-      response.setEncoding("utf8");
+
+      response.setEncoding("utf-8");
       let responseString = "";
       response.on("data", (chunk) => {
         responseString += chunk;
@@ -349,6 +374,177 @@ api.delete("/facts/:factId", (req, res, next) => {
     }
   );
 
+  request.on("error", (e) => {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  });
+
+  request.end();
+});
+
+api.get("/moderators", (req, res, next) => {
+  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+  const request = http.request(
+    {
+      host: "localhost",
+      port: 3000,
+      path: "/moderators",
+      method: "GET",
+    },
+    (response) => {
+      response.setEncoding("utf-8");
+      let responseString = "";
+      response.on("data", (chunk) => {
+        responseString += chunk;
+      });
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
+      });
+    }
+  );
+  request.on("error", (e) => {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  });
+
+  request.end();
+});
+
+api.post("/moderators", (req, res, next) => {
+  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  }
+  const request = http.request(
+    {
+      host: "localhost",
+      port: 3000,
+      path: "/moderators",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(requestBody),
+      },
+    },
+    (response) => {
+      response.setEncoding("utf-8");
+      let responseString = "";
+      response.on("data", (chunk) => {
+        responseString += chunk;
+      });
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
+      });
+    }
+  );
+  request.on("error", (e) => {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  });
+
+  request.write(requestBody);
+  request.end();
+});
+
+api.get("/moderators/:emailAddress", (req, res, next) => {
+  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+  const request = http.request(
+    {
+      host: "localhost",
+      port: 3000,
+      path: "/moderators/" + req.params.emailAddress,
+      method: "GET",
+    },
+    (response) => {
+      response.setEncoding("utf-8");
+      let responseString = "";
+      response.on("data", (chunk) => {
+        responseString += chunk;
+      });
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
+      });
+    }
+  );
+  request.on("error", (e) => {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  });
+
+  request.end();
+});
+
+api.put("/moderators/:emailAddress", (req, res, next) => {
+  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  }
+  const request = http.request(
+    {
+      host: "localhost",
+      port: 3000,
+      path: "/moderators/" + req.params.emailAddress,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(requestBody),
+      },
+    },
+    (response) => {
+      response.setEncoding("utf-8");
+      let responseString = "";
+      response.on("data", (chunk) => {
+        responseString += chunk;
+      });
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
+      });
+    }
+  );
+  request.on("error", (e) => {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  });
+
+  request.write(requestBody);
+  request.end();
+});
+
+api.delete("/moderators/:emailAddress", (req, res, next) => {
+  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+  const request = http.request(
+    {
+      host: "localhost",
+      port: 3000,
+      path: "/moderators/" + req.params.emailAddress,
+      method: "DELETE",
+    },
+    (response) => {
+      response.setEncoding("utf-8");
+      let responseString = "";
+      response.on("data", (chunk) => {
+        responseString += chunk;
+      });
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
+      });
+    }
+  );
   request.on("error", (e) => {
     let error = new Error(e.message);
     error.status = 500;
