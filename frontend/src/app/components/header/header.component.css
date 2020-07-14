@@ -1,0 +1,27 @@
+img {
+    max-width: 20%;
+    height: auto;
+  }
+
+a {
+    padding-left: 0px;
+    padding-right: 30px;
+    font-size: 1.5em;
+}
+
+.navbar-brand{
+    margin: 0;
+    padding-right: 0;
+}
+
+#navbrand {
+    height: 100%;
+    width: 50%;
+    margin-left: 12%;
+    font-size: 2em;
+  }
+
+nav{
+    height:7em;
+    padding-bottom: 0;
+}
