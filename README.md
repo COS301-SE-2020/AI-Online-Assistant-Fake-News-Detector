@@ -21,6 +21,7 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 | [Thato Tshukudu](https://taydos.github.io/)          | 18010408    | BIT student with core strength in front-end.                                                                                                                                      |
 
 ### Style Guidlines
+
 #### Ecma 6+
 
 | Name              | Action                                                                                                                                                                                                                                                                                                                                                        | Example                                                                   |
@@ -31,3 +32,7 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 | Simple statement  | End a simple statement with a semi colon.                                                                                                                                                                                                                                                                                                                     | let a = b \* c;                                                           |
 | Complex statement | Open a curly brace on the same line as the statement. (Applies to statements, functions and if else statements)                                                                                                                                                                                                                                               | let x = ()=>{}                                                            |
 | Object Rules      | Place the opening bracket on the same line as the object name. Use colon plus one space between each property and its value. Use quotes around string values, not around numeric values. Do not a comma after the last property-value pair. Place the closing bracket on a new line, without leading spaces.Always end an object definition with a semicolon. | var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}; |
+
+## Start The Server
+
+npm run-script postinstall && npm start

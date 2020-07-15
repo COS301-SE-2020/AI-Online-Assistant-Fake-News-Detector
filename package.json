@@ -3,7 +3,17 @@
   "version": "1.0.0",
   "description": "A tool for identifying fake news articles.",
   "scripts": {
-    "test": "mocha --exit \"**/*.mocha.test.js\""
+    "install:frontend": "cd frontend && npm install && ng build",
+    "install:nn": "cd nn_server && npm install",
+    "install:coreNN": "cd nn_server/core_nn && npm install",
+    "install:adjectiveNN": "cd nn_server/nn_adjective_input && npm install",
+    "install:verboseNN": "cd nn_server/nn_verbose_input && npm install",
+    "install:spellingNN": "cd nn_server/nn_spelling_input && npm install",
+    "install:db": "cd db_server && npm install",
+    "install:api": "cd api_server && npm install",
+    "postinstall": "run-p install:*",
+    "test": "mocha --exit \"**/*.mocha.test.js\"",
+    "start": "cd api_server && npm start"
   },
   "repository": {
     "type": "git",
@@ -16,6 +26,7 @@
   },
   "homepage": "https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector#readme",
   "dependencies": {
-    "mocha": "^8.0.1"
+    "mocha": "^8.0.1",
+    "npm-run-all": "^4.1.5"
   }
 }
