@@ -1,2 +1,2 @@
-**/node_modules/*
-frontend/dist/*
+node_modules
+api_server/node_modules/*

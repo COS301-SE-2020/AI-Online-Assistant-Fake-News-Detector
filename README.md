@@ -35,4 +35,4 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 
 ## Start The Server
 
-npm run-script postinstall && npm start
+npm install && npm start
