@@ -5,3 +5,10 @@ body {
 .basic-container {
 	padding: 30px;
 }
+.container {
+	height: 90%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
