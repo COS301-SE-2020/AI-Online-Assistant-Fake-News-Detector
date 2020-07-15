@@ -1,0 +1,19 @@
+/* Footer Logo Alignment */
+#FooterLogo {
+    display:inline-block;
+    width:100%;
+    float:none;
+    text-align:center;
+   
+    }
+img {
+    max-width: 5%;
+    height: auto;
+    margin-bottom: 0em;
+    }
+footer{
+    background: #e7e8ea;
+}
+h2{
+    color: rgba(0,0,0,0.4);
+}
