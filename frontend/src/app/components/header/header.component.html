@@ -1,5 +1,5 @@
 
-<nav class="navbar navbar-expand-sm navbar-light bg-white" data-toggle="affix">
+<!-- <nav class="navbar navbar-expand-sm navbar-light bg-white" data-toggle="affix">
     <div class="mx-auto d-sm-flex d-block flex-sm-nowrap">
         <a id="navbrand" class="navbar-brand" routerLink=""><img src="assets/img/5bitslogo.png"> AiNewsDetector </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,4 +24,28 @@
     </div>
 </nav>
 
+-->
 
+
+
+<mat-toolbar>
+		<span>
+            <a id="navbrand" class="navbar-brand" routerLink=""><img src="assets/img/5bitslogo.png"> AI News Detector</a>
+        </span>
+  
+  <span><a class="nav-link" id="heading_link" routerLink="">Home</a></span>
+  <span><a class="nav-link" id="heading_link" routerLink="moderate">Moderate</a></span>
+  <span><a class="nav-link" id="heading_link" routerLink="howto">HowTo</a></span>
+  <span><a class="nav-link" id="heading_link" routerLink="about">About Us</a></span>
+  <span class="spacer"></span>
+
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+   <mat-icon>share</mat-icon>
+ </button>
+    
+    <app-menu 
+      [options]="options$ | async"
+      (themeChange)="themeChangeHandler($event)">
+    </app-menu>
+
+</mat-toolbar>

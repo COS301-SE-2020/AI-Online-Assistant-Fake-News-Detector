@@ -7,7 +7,6 @@
 
     "test": "mocha --exit",
     "start": "concurrently \"nodemon api_server.js\" \"nodemon ../db_server/db_server.js\" \"nodemon ../nn_server/nn_server.js\""
-
   },
   "author": "5Bits",
   "license": "ISC",
@@ -34,6 +33,5 @@
     "nodemon": "^2.0.4",
     "should": "^13.2.3"
   }
-
 }
 

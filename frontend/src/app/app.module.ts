@@ -21,9 +21,31 @@ import { CheckService } from './check.service'
 import { MatCardModule } from '@angular/material/card'
 
 import { HttpClientModule } from '@angular/common/http'
+import { HeaderComponent } from './components/header/header.component'
+import { FooterComponent } from './components/footer/footer.component'
+import { HomeComponent } from './components/home/home.component'
+import { AboutComponent } from './components/about/about.component'
+import { ModerateComponent } from './components/moderate/moderate.component'
+import { HowtoComponent } from './components/howto/howto.component'
+
+import { AppMaterialModule } from './app-material.module'
+import { StyleManagerService } from './style-manager.service'
+import { ThemeService } from './theme.service'
+import { MenuComponent } from './menu/menu.component'
 
 @NgModule({
-	declarations: [ AppComponent, NavComponent, InputComponent ],
+	declarations: [
+		AppComponent,
+		NavComponent,
+		InputComponent,
+		MenuComponent,
+		HeaderComponent,
+		FooterComponent,
+		HomeComponent,
+		AboutComponent,
+		ModerateComponent,
+		HowtoComponent
+	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
@@ -38,9 +60,10 @@ import { HttpClientModule } from '@angular/common/http'
 		FormsModule,
 		MatInputModule,
 		HttpClientModule,
-		MatCardModule
+		MatCardModule,
+		AppMaterialModule
 	],
-	providers: [ ReportService, FindService, CheckService, HttpClientModule ],
+	providers: [ ReportService, FindService, CheckService, HttpClientModule, StyleManagerService, ThemeService ],
 	bootstrap: [ AppComponent ]
 })
 export class AppModule {}
