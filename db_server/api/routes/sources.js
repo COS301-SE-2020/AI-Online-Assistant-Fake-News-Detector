@@ -10,7 +10,6 @@ const Source = require("../models/source");
  */
 router.get("/", (req, res, next) => {
   Source.find()
-
     .select("name tld _id rating")
     .exec()
     .then((docs) => {
@@ -91,7 +90,6 @@ router.get("/:sourceId", (req, res, next) => {
       }
     })
     .catch((err) => {
-
       res.status(500).json({ error: err });
     });
 });

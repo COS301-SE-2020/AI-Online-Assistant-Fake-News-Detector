@@ -30,6 +30,7 @@ router.get("/", (req, res, next) => {
       res.status(200).json(response);
     })
     .catch((err) => {
+      // console.log(err);
       res.status(500).json({ error: err });
     });
 });
@@ -48,7 +49,6 @@ router.post("/", (req, res, next) => {
     .save()
     .then((result) => {
       // console.log(result);
-
       res.status(201).json({
         message: "Created fact successfully",
         createdFact: {
@@ -63,6 +63,7 @@ router.post("/", (req, res, next) => {
       });
     })
     .catch((err) => {
+      // console.log(err);
       res.status(500).json({ error: err });
     });
 });
@@ -76,6 +77,7 @@ router.get("/:factId", (req, res, next) => {
   Fact.findById(id)
     .exec()
     .then((doc) => {
+      // console.log("From Database", doc);
       if (doc) {
         res.status(200).json({ doc });
       } else {
@@ -83,6 +85,7 @@ router.get("/:factId", (req, res, next) => {
       }
     })
     .catch((err) => {
+      // console.log(err);
       res.status(500).json({ error: err });
     });
 });
@@ -93,11 +96,13 @@ router.get("/:factId", (req, res, next) => {
  */
 router.delete("/:factId", (req, res, next) => {
   const id = req.params.factId;
+  Fact.deleteOne({ _id: id })
     .exec()
     .then((result) => {
       res.status(200).json(result);
     })
     .catch((err) => {
+      // console.log(err);
       res.status(500).json({ error: err });
     });
 });
