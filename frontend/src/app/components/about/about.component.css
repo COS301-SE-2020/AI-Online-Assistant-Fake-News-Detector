@@ -3,13 +3,6 @@
     padding-left: 70px;
 }
 
-.section{
-    padding-top: 70px;
-    padding-bottom: 70px;
-    background-color: #c72c69;
-    text-align: center;
-}
-
 .section.hero{
     padding-bottom: 92px;
     padding-top: 92px;
@@ -25,21 +18,23 @@
 .topsection{
     padding-top: 70px;
     padding-bottom: 70px;
-    background-color: #e7e8ea;
+    /* 
+    moved this to assets/css for dark/light
+    background-color: #e7e8ea; */
     text-align: center;
 }
 
-.topsection.hero{
+/* .topsection.hero{
     padding-bottom: 92px;
     padding-top: 92px;
     background-color: #e7e8ea;
     text-align: center;
-}
+} */
 
 h3{
     font-size: 3em;
     font-weight: 300;
-    color: black;
+    /* color: black; */
 }
 
 p{
