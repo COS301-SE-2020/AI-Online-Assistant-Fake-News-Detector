@@ -1,0 +1,27 @@
+{
+  "name": "nn_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "nn_server.js",
+  "scripts": {
+    "test": "mocha --exit \"**/*.mocha.test.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stuey61296/5Bits-Captsone.git"
+  },
+  "author": "5Bits",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Stuey61296/5Bits-Captsone/issues"
+  },
+  "homepage": "https://github.com/Stuey61296/5Bits-Captsone#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "express": "^4.17.1",
+    "mocha": "^7.2.0",
+    "path": "^0.12.7"
+  }
+}
