@@ -28,10 +28,15 @@ import { AboutComponent } from './components/about/about.component'
 import { ModerateComponent } from './components/moderate/moderate.component'
 import { HowtoComponent } from './components/howto/howto.component'
 
-import { AppMaterialModule } from './app-material.module'
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
+
+import { AiMaterialModule } from './app-material.module'
 import { StyleManagerService } from './style-manager.service'
 import { ThemeService } from './theme.service'
 import { MenuComponent } from './menu/menu.component'
+import { ShareButtonComponent } from './sharebutton/sharebutton.component'
+import { ShareSheetComponent } from './sharesheet/sharesheet.component'
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'
 
 @NgModule({
 	declarations: [
@@ -44,7 +49,9 @@ import { MenuComponent } from './menu/menu.component'
 		HomeComponent,
 		AboutComponent,
 		ModerateComponent,
-		HowtoComponent
+		HowtoComponent,
+		ShareSheetComponent,
+		ShareButtonComponent
 	],
 	imports: [
 		BrowserModule,
@@ -61,9 +68,18 @@ import { MenuComponent } from './menu/menu.component'
 		MatInputModule,
 		HttpClientModule,
 		MatCardModule,
-		AppMaterialModule
+		AiMaterialModule
 	],
-	providers: [ ReportService, FindService, CheckService, HttpClientModule, StyleManagerService, ThemeService ],
+	entryComponents: [ ShareButtonComponent, ShareSheetComponent ],
+	providers: [
+		ReportService,
+		FindService,
+		CheckService,
+		HttpClientModule,
+		StyleManagerService,
+		ThemeService,
+		{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }
+	],
 	bootstrap: [ AppComponent ]
 })
 export class AppModule {}

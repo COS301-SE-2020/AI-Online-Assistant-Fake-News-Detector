@@ -1,10 +1,18 @@
+footer{
+    position: absolute;
+    bottom: 0%;
+    width: 100%;
+ }
 /* Footer Logo Alignment */
 #FooterLogo {
-    display:inline-block;
+    display: inline-flexbox;
     width:100%;
     float:none;
     text-align:center;
+    margin-bottom: 0%;
+    padding: 0%;
     }
+
 img {
     max-width: 5%;
     height: auto;

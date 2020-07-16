@@ -36,13 +36,12 @@
   <span><a class="nav-link" id="heading_link" routerLink="">Home</a></span>
   <span><a class="nav-link" id="heading_link" routerLink="moderate">Moderate</a></span>
   <span><a class="nav-link" id="heading_link" routerLink="howto">HowTo</a></span>
-  <span><a class="nav-link" id="heading_link" routerLink="about">About Us</a></span>
+  <span><a class="nav-link" id="heading_link" routerLink="about">About Us </a></span>
   <span class="spacer"></span>
 
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-   <mat-icon>share</mat-icon>
- </button>
-    
+    <app-sharebutton></app-sharebutton>
+
+
     <app-menu 
       [options]="options$ | async"
       (themeChange)="themeChangeHandler($event)">

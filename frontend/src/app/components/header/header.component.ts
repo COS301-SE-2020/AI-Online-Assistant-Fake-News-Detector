@@ -26,14 +26,18 @@ import { ThemeService } from '../../theme.service'
 })
 export class HeaderComponent implements OnInit {
 	options$: Observable<Array<Option>> = this.themeService.getThemeOptions()
+	
+	curTheme:string
 
 	constructor(private readonly themeService: ThemeService) {}
 
 	ngOnInit() {
 		this.themeService.setTheme('pink-bluegrey')
+		this.curTheme = 'pink-bluegrey'
 	}
 
 	themeChangeHandler(themeToSet) {
 		this.themeService.setTheme(themeToSet)
+		this.curTheme=themeToSet
 	}
 }
