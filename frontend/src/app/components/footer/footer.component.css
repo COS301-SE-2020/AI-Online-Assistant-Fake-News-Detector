@@ -1,24 +1,25 @@
-footer{
-    position: absolute;
-    bottom: 0%;
-    width: 100%;
- }
+footer {
+	position: fixed;
+	bottom: 0%;
+	width: 100%;
+}
 /* Footer Logo Alignment */
 #FooterLogo {
-    display: inline-flexbox;
-    width:100%;
-    float:none;
-    text-align:center;
-    margin-bottom: 0%;
-    padding: 0%;
-    }
+	display: inline-flexbox;
+	width: 100%;
+	text-align: center;
+	margin-top: 0%;
+	margin-bottom: 0%;
+	padding: 0%;
+}
 
 img {
-    max-width: 5%;
-    height: auto;
-    margin-bottom: 0em;
-    }
+	max-width: 5%;
+	height: auto;
+	margin-bottom: 0em;
+}
 
-h2{
-    color: rgba(0,0,0,0.4);
+h2 {
+	color: rgba(0, 0, 0, 0.4);
+	font-size: 3px;
 }
