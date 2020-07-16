@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A tool for identifying fake news articles.",
   "scripts": {
-    "install:frontend": "cd frontend && npm install && ng build && npm audit fix",
+    "install:frontend": "cd frontend && npm install && ng build --prod && npm audit fix",
     "install:nn": "cd nn_server && npm install && npm audit fix",
     "install:coreNN": "cd nn_server/core_nn && npm install && npm audit fix",
     "install:adjectiveNN": "cd nn_server/nn_adjective_input && npm install && npm audit fix",
