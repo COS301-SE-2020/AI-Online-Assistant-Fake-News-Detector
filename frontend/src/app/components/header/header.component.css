@@ -7,7 +7,8 @@ img {
 }
 
 a {
-	padding-right: 1px;
+	padding-right: 10px;
+	padding-left: 10px;
 	/* padding-right: 30px; */
 	font-size: 1em;
 }
@@ -38,3 +39,7 @@ a:visited {
 .spacer {
 	flex: 1 1 auto;
 }
+
+.menu-spacer {
+	flex: 1 1 auto;
+  }
