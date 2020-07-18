@@ -22,10 +22,13 @@ jobs:
      - name: Run Tests
        run: npm test
    
-  deploy:
-    needs: test
-    name: Deploy
-    runs-on: ubuntu-latest
+#   deploy:
+#     needs: test
+#     name: Deploy
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Deploy To EC2
+#         uses: actions/upload-artifact@v2
 
 
     
