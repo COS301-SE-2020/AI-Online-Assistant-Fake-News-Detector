@@ -11,8 +11,7 @@
     "install:spellingNN": "cd nn_server/nn_spelling_input && npm install && npm audit fix",
     "install:db": "cd db_server && npm install && npm audit fix",
     "install:api": "cd api_server && npm install && npm audit fix",
-    "preinstall": "run-p install:*",
-    "postinstall": "cd frontend && ng build --prod",
+    "postinstall": "run-p install:*",
     "test": "mocha --exit \"**/*.mocha.test.js\" --timeout 10000",
     "start": "cd api_server && npm start"
   },
