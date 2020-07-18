@@ -19,6 +19,8 @@ import { ReportService } from './report.service'
 import { FindService } from './find.service'
 import { CheckService } from './check.service'
 import { MatCardModule } from '@angular/material/card'
+import { FlexLayoutModule } from "@angular/flex-layout"
+
 
 import { HttpClientModule } from '@angular/common/http'
 import { HeaderComponent } from './components/header/header.component'
@@ -68,7 +70,8 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'
 		MatInputModule,
 		HttpClientModule,
 		MatCardModule,
-		AiMaterialModule
+		AiMaterialModule,
+		FlexLayoutModule
 	],
 	entryComponents: [ ShareButtonComponent, ShareSheetComponent ],
 	providers: [
