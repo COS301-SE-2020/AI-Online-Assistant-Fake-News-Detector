@@ -1,1 +1,3 @@
 node_modules
+api_server/access.log
+frontend/dist
