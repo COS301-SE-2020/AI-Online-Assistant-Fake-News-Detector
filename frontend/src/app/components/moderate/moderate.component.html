@@ -1,8 +1,50 @@
-<section class="hero is-info is-fullheight is-bold">
-    <div class="hero-body">
-    <div class="container">
+<div class="section hero"> 
+    <div class="container w-container">
+            <h3>We value your contribution </h3>
+            <p>As a moderator, your input will help improve our AI's accuracy...so please tread carefully.</p>
+    </div>
+    
+</div>
+
+
+<div class="topsection tophero"> 
+    <div class="topcontainer w-container">
+        <h4>You believe there is a fact that our AI doesn't know about?</h4>
+        <h4>Our AI engine is always hungry for new information. </h4>
+
+        <div id="listOfFacts">
+            
+            <ul style="list-style-type:none;"  *ngFor="let fact of factslist; let i = index">
+                <li *ngIf="7 > i">"{{fact.statement}}"</li>
+            </ul>
+  
+        </div>
+
+        <!--Start of fact input form-->
+
+        <div class="container-fluid">
+  
+          
+            <form [formGroup]="FactInputForm" (ngSubmit)="onSubmit()">
+  
+              <div class="form-group">
+                <input type="text" formControlName="statement" placeholder="Type in a fact" class="form-control">
+              </div>
+
+         
+              <div class="form-group">     
+              <input id="popularity" type="number" formControlName="popularity" placeholder="rating between 0-100" class="form-control">
+              </div>
+
+              <button class="btn btn-dark" type="submit">Input Fact</button>
+              
+          
+            </form>
+
+        <!--End of fact input form-->
 
 
     </div>
-    </div>
-</section>
+    
+</div>
+

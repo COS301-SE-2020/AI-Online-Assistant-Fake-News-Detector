@@ -39,6 +39,8 @@ import { ShareButtonComponent } from './sharebutton/sharebutton.component'
 import { ShareSheetComponent } from './sharesheet/sharesheet.component'
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { NotfoundComponent } from './notfound/notfound.component'
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
 	declarations: [
@@ -72,7 +74,9 @@ import { NotfoundComponent } from './notfound/notfound.component'
 		HttpClientModule,
 		MatCardModule,
 		AiMaterialModule,
-		FlexLayoutModule
+		FlexLayoutModule,
+		ReactiveFormsModule
+		
 	],
 	entryComponents: [ ShareButtonComponent, ShareSheetComponent ],
 	providers: [
