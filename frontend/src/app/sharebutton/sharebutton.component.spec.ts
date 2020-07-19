@@ -1,0 +1,26 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+
+import { ShareButtonComponent } from './sharebutton.component'
+
+describe('ShareMenuComponent', () => {
+	let component: ShareButtonComponent
+	let fixture: ComponentFixture<ShareButtonComponent>
+
+	beforeEach(
+		async(() => {
+			TestBed.configureTestingModule({
+				declarations: [ ShareButtonComponent ]
+			}).compileComponents()
+		})
+	)
+
+	beforeEach(() => {
+		fixture = TestBed.createComponent(ShareButtonComponent)
+		component = fixture.componentInstance
+		fixture.detectChanges()
+	})
+
+	it('should create', () => {
+		expect(component).toBeTruthy()
+	})
+})

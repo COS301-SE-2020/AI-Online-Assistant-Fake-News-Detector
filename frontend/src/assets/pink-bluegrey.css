@@ -1,9 +1,12 @@
 footer{
-	background: #303030;
+	background-color:  #303030;;
+}
+
+body{
+	background-color: #303030;
 }
 
 .topsection{
-	background-color: #303030;
 	color: #FFFFFF;
 }
 

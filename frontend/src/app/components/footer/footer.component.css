@@ -1,16 +1,25 @@
+footer {
+	position: fixed;
+	bottom: 0%;
+	width: 100%;
+}
 /* Footer Logo Alignment */
 #FooterLogo {
-    display:inline-block;
-    width:100%;
-    float:none;
-    text-align:center;
-    }
-img {
-    max-width: 5%;
-    height: auto;
-    margin-bottom: 0em;
-    }
+	display: inline-flexbox;
+	width: 100%;
+	text-align: center;
+	margin-top: 0%;
+	margin-bottom: 0%;
+	padding: 0%;
+}
 
-h2{
-    color: rgba(0,0,0,0.4);
+img {
+	max-width: 5%;
+	height: auto;
+	margin-bottom: 0em;
+}
+
+h2 {
+	color: rgba(0, 0, 0, 0.4);
+	font-size: 3px;
 }
