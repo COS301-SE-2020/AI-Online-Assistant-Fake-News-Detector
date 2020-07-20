@@ -23,7 +23,7 @@ router.get("/", (req, res, next) => {
             _id: doc._id,
             request: {
               type: "GET",
-              url: "/Sources/" + doc._id,
+              url: "/Sources/id/" + doc._id,
             },
           };
         }),
@@ -57,7 +57,7 @@ router.post("/", (req, res, next) => {
           rating: result.rating,
           request: {
             type: "POST",
-            url: "/Sources/" + result._id,
+            url: "/Sources/id/" + result._id,
           },
         },
       });
@@ -71,7 +71,7 @@ router.post("/", (req, res, next) => {
  * @description get request to get a single fake news source by id
  * @author Quinton Coetzee
  */
-router.get("/:sourceId", (req, res, next) => {
+router.get("/id/:sourceId", (req, res, next) => {
   const id = req.params.sourceId;
   Source.findById(id)
     .select("name tld rating _id")
@@ -82,6 +82,7 @@ router.get("/:sourceId", (req, res, next) => {
           source: doc,
           request: {
             type: "GET",
+            description: "URL to get all source",
             url: "/Sources/",
           },
         });
@@ -107,7 +108,7 @@ router.put("/:sourceId", (req, res, next) => {
         request: {
           type: "PUT",
           description: "URL to get updated source",
-          url: "/Sources/" + id,
+          url: "/Sources/id/" + id,
         },
       });
     })
@@ -134,3 +135,31 @@ router.delete("/:sourceId", (req, res, next) => {
     });
 });
 module.exports = router;
+/**
+ * @description get source by name
+ * @author Quinton Coetzee
+ */
+router.get("/name/:sourceName", (req, res, next) => {
+  const name = req.params.sourceName;
+  // Source.findById(name)
+  Source.findOne({name: name})
+    .select("name tld rating _id")
+    .exec()
+    .then((doc) => {
+      if (doc) {
+        res.status(200).json({
+          source: doc,
+          request: {
+            type: "GET",
+            description: "URL to get all source",
+            url: "/Sources/",
+          },
+        });
+      } else {
+        res.status(404).json({ message: "No database entry for provided name" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+});
