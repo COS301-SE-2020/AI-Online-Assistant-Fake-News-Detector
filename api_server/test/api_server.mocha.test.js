@@ -105,14 +105,40 @@ describe("Sources", () => {
       });
   });
 
-  it("It should retrieve a specific source from the database /GET Sources/:SourceId", (done) => {
+  it("It should retrieve a specific source from the database /GET Sources/id/:SourceId", (done) => {
     chai
       .request(server)
       .get("/API/Sources")
       .end((err, responder) => {
         chai
           .request(server)
-          .get("/API/Sources/" + responder.body["sources"][0]._id)
+          .get("/API/Sources/id/" + responder.body["sources"][0]._id)
+          .end((err, res) => {
+            expect(err).to.be.null;
+            res.should.have.status(200);
+            res.body.should.be.a("object");
+            res.body["source"].should.have.property("_id");
+            res.body["source"].should.have.property("name");
+            res.body["source"].should.have.property("tld");
+            res.body["source"].name.should.equal(
+              responder.body["sources"][0]["name"]
+            );
+            res.body["source"].tld.should.equal(
+              responder.body["sources"][0]["tld"]
+            );
+            done();
+          });
+      });
+  });
+
+  it("It should retrieve a specific source from the database /GET Sources/name/:SourceName", (done) => {
+    chai
+      .request(server)
+      .get("/API/Sources")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .get("/API/Sources/name/" + responder.body["sources"][0].name)
           .end((err, res) => {
             expect(err).to.be.null;
             res.should.have.status(200);

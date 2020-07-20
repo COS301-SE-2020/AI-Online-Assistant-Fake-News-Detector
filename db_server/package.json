@@ -4,7 +4,7 @@
   "description": "RESTful API for Fake News Detector",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --timeout 10000",
     "start": "nodemon db_server.js"
   },
   "author": "Quinton Coetzee",
