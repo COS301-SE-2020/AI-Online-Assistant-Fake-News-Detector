@@ -1,8 +1,12 @@
+os: linux
+dist: bionic
+before_install:
+  - pyenv global 3.8
 language: node_js
 node_js:
   - 14
 cache:
-  npm: false
+  npm: true
 install:
   npm install
 notifications:
