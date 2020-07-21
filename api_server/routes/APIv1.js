@@ -91,16 +91,49 @@ api.post("/sources", (req, res, next) => {
 });
 
 /**
- * @description base get request route. Reroutes the api call to the api server, gets all sources in the db
- * @author Stuart Barclay
+ * @description Get request to get a single source based on name
+ * @author Quinton Coetzee
  */
 
-api.get("/sources/:sourceId", (req, res, next) => {
+api.get("/sources/name/:sourceName", (req, res, next) => {
   const request = http.request(
     {
       host: "localhost",
       port: 3000,
-      path: "/sources/" + req.params.sourceId,
+      path: "/sources/name/" + req.params.sourceName,
+      method: "GET",
+    },
+    (response) => {
+      response.setEncoding("utf-8");
+      let responseString = "";
+      response.on("data", (chunk) => {
+        responseString += chunk;
+      });
+
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
+      });
+    }
+  );
+  request.on("error", (e) => {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  });
+
+  request.end();
+});
+/**
+ * @description base get request route. Reroutes the api call to the api server, gets all sources in the db
+ * @author Stuart Barclay
+ */
+
+api.get("/sources/id/:sourceId", (req, res, next) => {
+  const request = http.request(
+    {
+      host: "localhost",
+      port: 3000,
+      path: "/sources/id/" + req.params.sourceId,
       method: "GET",
     },
     (response) => {

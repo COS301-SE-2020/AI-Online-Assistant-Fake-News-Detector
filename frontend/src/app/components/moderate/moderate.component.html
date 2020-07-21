@@ -1,8 +1,67 @@
 <div class="section hero"> 
     <div class="container w-container">
-            <h3>We value your contribution </h3>
-            <p>As a moderator, your input will help improve our AI's accuracy...so please tread carefully.</p>
+            <h4>We value your contribution </h4>
+            <p id="heading">As a moderator, your input will help improve our AI's accuracy...so please tread carefully.</p>
+
     </div>
+
+    &nbsp; &nbsp; &nbsp; &nbsp; 
+    <div class="container w-container">
+
+        
+        <form [formGroup]="SourceInputForm" (ngSubmit)="Search()">
+            
+
+                <mat-form-field color="primary" id="sourceInput"  class="example-form-field">
+                    <mat-label>Enter source name (e.g CNN)</mat-label>
+                    <input matInput  type="text" formControlName="SourceName">
+                </mat-form-field>
+
+                <div>
+                    <button mat-raised-button color="accent" >Search Source</button>
+                </div>
+               
+        </form>
+
+           
+       
+            <div  *ngIf="sourcelist.source; else elseBlock">
+                <mat-card id="SearchResponseCard" class="example-card" *ngIf="dismiss">
+                    <mat-card-header>
+                      <div mat-card-avatar class="example-header-image"><img id="cardImg" src="assets/img/5bitslogo.png"/></div>
+                      <mat-card-title>{{sourcelist.source?.name}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p> <span>Source URL: </span> <i>{{sourcelist.source?.tld}}</i></p>
+                       <p> <span>Popularity Rating: </span><i>{{sourcelist.source?.rating}}</i></p> 
+                    </mat-card-content>
+                    <mat-card-actions>
+                      <button mat-raised-button color="accent" (click)="dismiss=false">Dismiss</button>
+                      <button mat-raised-button color="accent" (click)="DeleteSource(sourcelist.source?._id)">Delete Source</button>
+                    </mat-card-actions>
+                  </mat-card>
+
+            </div>
+
+            <ng-template #elseBlock>
+                <mat-card id="SearchResponseCard" class="example-card" *ngIf="dismiss">
+                    <mat-card-content>
+                        <p> Unfortunately, we don't seem to have that source.</p> 
+                    </mat-card-content>
+                    <mat-card-actions>
+                      <button mat-raised-button color="accent" (click)="dismiss=false">Dismiss</button>
+                    </mat-card-actions>
+                  </mat-card>
+
+            </ng-template>
+            
+
+
+       
+                 
+
+    </div>
+
     
 </div>
 
@@ -16,35 +75,58 @@
             
             <ul style="list-style-type:none;"  *ngFor="let fact of factslist; let i = index">
                 <li *ngIf="7 > i">"{{fact.statement}}"</li>
+                {{fact.count}}
             </ul>
   
         </div>
 
         <!--Start of fact input form-->
 
+        <!--
+        <mat-form-field class="example-form-field">
+            <mat-label>Source/URL</mat-label>
+            <input matInput type="text" [(ngModel)]="statement">
+            <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          
+            <div class="example-button-row">
+              <button mat-raised-button (click)="onSubmit()">Check</button>
+            </div>
+        -->
+
         <div class="container-fluid">
   
           
             <form [formGroup]="FactInputForm" (ngSubmit)="onSubmit()">
   
-              <div class="form-group">
-                <input type="text" formControlName="statement" placeholder="Type in a fact" class="form-control">
-              </div>
+                <mat-form-field id="statement" class="example-form-field">
+                    <mat-label>Type in a fact</mat-label>
+                    <input matInput type="text" formControlName="statement">
+                </mat-form-field>
 
+                  <span></span>
+
+                  <mat-form-field id="popularity" class="example-form-field">
+                    <mat-label>Rating between 0-100</mat-label>
+                    <input matInput matInput id="popularity" type="number" formControlName="popularity">
+                  </mat-form-field>
          
-              <div class="form-group">     
-              <input id="popularity" type="number" formControlName="popularity" placeholder="rating between 0-100" class="form-control">
-              </div>
-
-              <button class="btn btn-dark" type="submit">Input Fact</button>
+            <div>
+                <button mat-raised-button color="accent" type="submit">Insert Fact</button>
+            </div>
+              
               
           
             </form>
 
-        <!--End of fact input form-->
+       
 
 
     </div>
+
+     <!--End of fact input form-->
     
 </div>
 

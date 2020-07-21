@@ -30,6 +30,12 @@
     background-color: #e7e8ea;
     text-align: center;
 } */
+mat-card-title{
+	align-items: center;
+}
+span{
+	font-weight: 500;
+}
 
 h3 {
 	font-size: 3em;
@@ -43,16 +49,16 @@ h4{
   color: #A9A9A9;
 }
 
-p {
+#heading {
 	margin-top: 2em;
 	font-size: 20px;
-	font-weight: 300;
-	color: black;
+	font-weight: 200;
+	
 }
 
 img {
-	height: 45%;
-	width: 45%;
+	height: 70%;
+	width: 100%;
 }
 
 #popularity{
@@ -71,3 +77,40 @@ ul{
   font-size: 1.5em;
   font-weight: 100;
 }
+
+
+@media (max-width: 590px) {
+	#popularity{
+		margin-left: auto;
+		margin-right: auto;
+	}
+  }
+
+#statement{
+	margin-right: 1em;
+	width: 20%;
+	min-width: 190px;
+}
+@media (max-width: 590px) {
+	#statement{
+		margin-left: auto;
+		margin-right: auto;
+	}
+  }
+
+  #sourceInput{
+	  width: 40%;
+	  min-width: 220px;
+  }
+
+  #SearchResponseCard{
+	  width: 40%;
+	  margin-left: auto;
+	  margin-right: auto;
+	  margin-top: 3em;
+	  margin-bottom: 3em;
+  }
+
+  #cardImg{
+	  width: 50px;
+  }
