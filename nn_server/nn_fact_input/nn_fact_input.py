@@ -1,9 +1,12 @@
 import sys
+import os 
 import combined_classifier
 from combined_classifier import CombinedClassifier
 
-trainingSetPath = './trainingSet.json'
-modelFilePath = './trainedModels.model'
+path = os.path.dirname(os.path.realpath(__file__))
+
+trainingSetPath = path + '/trainingSet.json'
+modelFilePath = path + '/trainedModels.model'
 
 classifier = CombinedClassifier()
 #classifier.trainModelFromFile(trainingSetPath)
