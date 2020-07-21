@@ -6,12 +6,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DeleteSourceService {
 
-  _url = 'http://localhost:3000/sources/';
+  url = 'http://fakenewsdetector.tech/api/sources/';
 
   constructor(private _http: HttpClient) { }
 
   SourceDeletion(ID) {
-    return this._http.delete(this._url + ID)
+    return this._http.delete(this.url + ID)
 }
 
 }

@@ -6,12 +6,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FactInputService {
 
-  _url = 'http://localhost:3000/facts/';
+  url = 'http://fakenewsdetector.tech/api/facts/';
 
   constructor(private _http: HttpClient) { }
 
   SubmitFact(userData) {
-    return this._http.post<any>(this._url, userData)
+    return this._http.post<any>(this.url, userData)
 }
 
 }
