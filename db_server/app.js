@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const sourceRoutes = require("./api/routes/sources");
 const factRoutes = require("./api/routes/facts");
 const moderatorRoutes = require("./api/routes/moderators");
+const reportRoutes = require("./api/routes/reports");
 
 mongoose.connect(
   // 'mongodb+srv://FakeNewsAdmin:' + process.env.MONGO_ATLAS_PW + '@fake-news-detector-vastj.mongodb.net/fake_news_detector?retryWrites=true&w=majority',
@@ -38,6 +39,7 @@ app.use((res, req, next) => {
 app.use("/sources", sourceRoutes);
 app.use("/facts", factRoutes);
 app.use("/moderators", moderatorRoutes);
+app.use("/reports", reportRoutes);
 
 //Requests that passed the routes above are not supported and therefore seen as errors.
 app.use((req, res, next) => {
