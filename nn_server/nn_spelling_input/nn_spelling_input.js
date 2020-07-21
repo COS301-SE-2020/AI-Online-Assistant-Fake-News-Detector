@@ -12,9 +12,9 @@ const dictionaryGB = spellChecker.getDictionarySync("en-GB"); // British
  * @author Alistair Payn
  */
 class nn_spelling_input extends nn_input {
-  constructor(precision) {
-    super(precision);
-  }
+    constructor() {
+	super()
+    }
 
   /**
    * @description determines the fraction of english spelling errors.
