@@ -41,7 +41,6 @@ server.post("/API/Check", (req, res) => {
     ) {
 	// python shell for nn_fact_input
 	let text = req.body.content.toLowerCase();
-	console.log(__dirname);
 	let pyShell = new pythonShell.PythonShell(__dirname + '/nn_fact_input/nn_fact_input.py');
 	pyShell.on('message', function (message) {	   
 	    let sentences = req.body.content.match(sentenceRegex); // splits text into array of sentences	    
