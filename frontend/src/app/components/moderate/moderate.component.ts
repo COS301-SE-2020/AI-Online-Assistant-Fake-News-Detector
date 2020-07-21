@@ -23,14 +23,21 @@ export class ModerateComponent implements OnInit {
   SourceInputForm: FormGroup;
   FactInputForm: FormGroup;
   factslist: FactsList[];
+
   dismiss: boolean;
+  sourceDeleteResponse: boolean;
+  insertFactResponse: boolean;
+  searchResponse:boolean;
+
   //sourceID:string;
   receivedID:string;
 
   constructor(private factslistService: FactslistService, private _factinputService: FactInputService,
     private searchService: SearchSourceService ,public http: HttpClient, private _deleteService: DeleteSourceService) { 
     this.dismiss=false;
-
+    this.sourceDeleteResponse=false;
+    this.insertFactResponse=false;
+    this.searchResponse=false;
   }
   
   
@@ -61,12 +68,17 @@ export class ModerateComponent implements OnInit {
 
         /*function that fetches source by name */
         Search(){
+            
         this.searchService.search(this.SourceInputForm.value.SourceName).
         subscribe((data: any={}) =>{
             this.sourcelist = data;
             this.dismiss=true;
+            this.sourceDeleteResponse=false;
+            //this.testSearch=true;
            // this.sourceID = data.source._id;
+           
         })
+        
       }
        /*end of fetch source function */ 
 
@@ -100,8 +112,10 @@ export class ModerateComponent implements OnInit {
 
      DeleteSource(ID:string) {
       this.dismiss=false;
+      this.sourceDeleteResponse= true;
       this._deleteService.SourceDeletion(ID)
         .subscribe(
+          
           response => console.log('Success!', response),
           error => console.error('Error!', error)
         );

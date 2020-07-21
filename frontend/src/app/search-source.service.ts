@@ -9,8 +9,9 @@ import { Sources } from "./sources";
   providedIn: 'root'
 })
 export class SearchSourceService {
-  baseUrl: string = 'http://localhost:3000/sources/name/';
+  baseUrl: string = 'http://fakenewsdetector.tech/api/sources/name/';
   //queryUrl: string = '?search=';
+  
 
   constructor(private http: HttpClient) { }
 
@@ -25,7 +26,7 @@ export class SearchSourceService {
         return response;
       }), catchError( error => {
          return throwError('Something went wrong');
-      })
+      },)
     ); 
   }
  
