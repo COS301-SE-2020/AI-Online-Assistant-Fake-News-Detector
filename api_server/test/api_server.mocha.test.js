@@ -199,3 +199,304 @@ describe("Sources", () => {
       });
   });
 });
+
+describe("Moderators", () => {
+  it("It should retrieve all moderators in the database", (done) => {
+    chai
+      .request(server)
+      .get("/API/Moderators")
+      .end((err, res) => {
+        expect(err).to.be.null;
+        res.should.have.status(200);
+        res.body.should.be.a("object");
+        res.body.moderators[0].should.have.property("_id");
+        res.body.moderators[0].should.have.property("Name");
+        res.body.moderators[0].should.have.property("Email Address");
+        done();
+      });
+  });
+
+  it("It should retrieve a specific moderator from the database /GET Moderators/:emailAddress", (done) => {
+    chai
+      .request(server)
+      .get("/API/Moderators")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .get(
+            "/API/Moderators/" + responder.body.moderators[0]["Email Address"]
+          )
+          .end((err, res) => {
+            expect(err).to.be.null;
+            res.should.have.status(200);
+            res.body.should.be.a("object");
+            res.body.should.have.property("_id");
+            res.body.should.have.property("Name");
+            res.body.should.have.property("Email Address");
+            res.body.should.have.property("Authentication Level");
+            res.body.Name.should.equal(responder.body.moderators[0]["Name"]);
+            done();
+          });
+      });
+  });
+
+  it("It should add a Moderator to the database /POST Moderators", function (done) {
+    chai
+      .request(server)
+      .post("/API/Moderators")
+      .send({
+        emailAddress: "5Bits@gmail.com",
+        password: "Stuart123456789",
+        fName: "Stuart",
+        lName: "Barclay",
+        phoneNumber: "0793580784",
+      })
+      .end(function (err, res) {
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a("object");
+        res.body.should.have.property("message");
+        res.body["Moderator Details"].should.be.a("object");
+        res.body["Moderator Details"].should.have.property("fName");
+        res.body["Moderator Details"].should.have.property("emailAddress");
+        res.body["Moderator Details"].should.have.property("_id");
+        res.body["Moderator Details"].should.have.property("lName");
+        done();
+      });
+  });
+
+  it("It should update a moderator in the database /PUT Moderators/:emailAddress", function (done) {
+    chai
+      .request(server)
+      .get("/API/Moderators")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .put(
+            "/API/Moderators/" +
+              responder.body.moderators[responder.body.count - 1][
+                "Email Address"
+              ]
+          )
+          .send({ fName: "test", authenticationLevel: 2 })
+          .end(function (error, response) {
+            response.should.have.status(200);
+            response.should.be.json;
+            response.body.should.be.a("object");
+            response.body.should.have.property("message");
+            response.body.message.should.equal("Moderator Details Updated");
+            done();
+          });
+      });
+  });
+
+  it("It should delete a single source from the database /DELETE Moderators/:emailAddress", function (done) {
+    chai
+      .request(server)
+      .get("/API/Moderators")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .delete(
+            "/API/Moderators/" +
+              responder.body.moderators[responder.body.count - 1][
+                "Email Address"
+              ]
+          )
+          .end(function (error, res) {
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.be.a("object");
+            res.body.should.have.property("message");
+            res.body.message.should.be.a("string");
+            res.body.message.should.be.eql("Moderator deleted");
+            done();
+          });
+      });
+  });
+});
+
+describe("Reports", () => {
+  it("It should add a Report to the database /POST Reports", function (done) {
+    chai
+      .request(server)
+      .post("/API/Reports")
+      .send({
+        type: "1",
+        description: "Mocha Test",
+      })
+      .end(function (err, res) {
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a("object");
+        res.body.should.have.property("message");
+        res.body["Report Details"].should.be.a("object");
+        res.body["Report Details"].should.have.property("type");
+        res.body["Report Details"].should.have.property("Report Data");
+        res.body["Report Details"].should.have.property("_id");
+        done();
+      });
+  });
+
+  it("It should retrieve all reports from the database /GET", (done) => {
+    chai
+      .request(server)
+      .get("/API/Reports")
+      .end((err, res) => {
+        expect(err).to.be.null;
+        res.should.have.status(200);
+        res.body.should.be.a("object");
+        res.body.reports[0].should.have.property("_id");
+        res.body.reports[0].should.have.property("type");
+        res.body.reports[0].should.have.property("Date Captured");
+        done();
+      });
+  });
+
+  it("It should retrieve a specific report from the database /GET Reports/id/:id", (done) => {
+    chai
+      .request(server)
+      .get("/API/Reports")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .get("/API/Reports/id/" + responder.body.reports[0]["_id"])
+          .end((err, res) => {
+            expect(err).to.be.null;
+            res.should.have.status(200);
+            res.body.should.be.a("object");
+            res.body.Report.should.have.property("_id");
+            res.body.Report.should.have.property("type");
+            res.body.Report.should.have.property("Report Data");
+            res.body.Report.should.have.property("Date Captured");
+            res.body.Report.type.should.equal(
+              responder.body.reports[0]["type"]
+            );
+            done();
+          });
+      });
+  });
+
+  it("It should retrieve all active reports from the database /GET Reports/active/:active", (done) => {
+    chai
+      .request(server)
+      .get("/API/Reports/active/1")
+      .end((err, res) => {
+        expect(err).to.be.null;
+        res.should.have.status(200);
+        res.body.should.be.a("object");
+        res.body.reports[0].should.have.property("_id");
+        res.body.reports[0].should.have.property("type");
+        res.body.reports[0].should.have.property("Report Data");
+        res.body.reports[0].should.have.property("Date Captured");
+        done();
+      });
+  });
+
+  it("It should retrieve all reports with the type Fact from the database /GET Reports/type/:type", (done) => {
+    chai
+      .request(server)
+      .get("/API/Reports")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .get("/API/Reports/type/1")
+          .end((err, res) => {
+            expect(err).to.be.null;
+            res.should.have.status(200);
+            res.body.should.be.a("object");
+            res.body.reports[0].should.have.property("_id");
+            res.body.reports[0].should.have.property("type");
+            res.body.reports[0].should.have.property("Report Data");
+            res.body.reports[0].should.have.property("Date Captured");
+            res.body.reports[0].type.should.equal(
+              responder.body.reports[0]["type"]
+            );
+            done();
+          });
+      });
+  });
+
+  it("It should update a moderator in the database /PUT Reports/active/:active", function (done) {
+    chai
+      .request(server)
+      .get("/API/Reports")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .put("/API/Reports/active/1")
+          .send({ bActive: 0 })
+          .end(function (error, response) {
+            response.should.have.status(200);
+            response.should.be.json;
+            response.body.should.be.a("object");
+            response.body.should.have.property("message");
+            response.body.message.should.equal("Report Updated");
+            done();
+          });
+      });
+  });
+
+  it("It should update a moderator in the database /PUT Reports/type/:type", function (done) {
+    chai
+      .request(server)
+      .get("/API/Reports")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .put("/API/Reports/type/1")
+          .send({ bActive: 1 })
+          .end(function (error, response) {
+            response.should.have.status(200);
+            response.should.be.json;
+            response.body.should.be.a("object");
+            response.body.should.have.property("message");
+            response.body.message.should.equal("Report Updated");
+            done();
+          });
+      });
+  });
+
+  it("It should update a moderator in the database /PUT Reports/id/:id", function (done) {
+    chai
+      .request(server)
+      .get("/API/Reports/type/1")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .put(
+            "/API/Reports/id/" +
+              responder.body.reports[responder.body.count - 1]["_id"]
+          )
+          .send({ bActive: 0 })
+          .end(function (error, response) {
+            response.should.have.status(200);
+            response.should.be.json;
+            response.body.should.be.a("object");
+            response.body.should.have.property("message");
+            response.body.message.should.equal("Report Updated");
+            done();
+          });
+      });
+  });
+
+  it("It should delete a single source from the database /DELETE Reports/id/:id", function (done) {
+    chai
+      .request(server)
+      .get("/API/Reports")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .delete("/API/Reports/id/" + responder.body.reports[0]["_id"])
+          .end(function (error, res) {
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.be.a("object");
+            res.body.should.have.property("message");
+            res.body.message.should.be.a("string");
+            res.body.message.should.be.eql("Report deleted");
+            done();
+          });
+      });
+  });
+});
