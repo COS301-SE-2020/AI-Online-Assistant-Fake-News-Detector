@@ -1,0 +1,2 @@
+nltk==3.5
+scikit_learn==0.23.1

@@ -25,7 +25,7 @@
 
            
        
-            <div  *ngIf="sourcelist.source; else elseBlock">
+            <div  *ngIf="sourcelist.source">
                 <mat-card id="SearchResponseCard" class="example-card" *ngIf="dismiss">
                     <mat-card-header>
                       <div mat-card-avatar class="example-header-image"><img id="cardImg" src="assets/img/5bitslogo.png"/></div>
@@ -43,18 +43,27 @@
 
             </div>
 
-            <ng-template #elseBlock>
-                <mat-card id="SearchResponseCard" class="example-card" *ngIf="dismiss">
+            <!--Alternate divs that load when specific events occur-->
+            <div *ngIf="sourceDeleteResponse">
+                <mat-card id="SearchResponseCard" class="example-card">
                     <mat-card-content>
-                        <p> Unfortunately, we don't seem to have that source.</p> 
+                        <p> Source has been deleted...Good riddance.</p> 
                     </mat-card-content>
-                    <mat-card-actions>
-                      <button mat-raised-button color="accent" (click)="dismiss=false">Dismiss</button>
-                    </mat-card-actions>
                   </mat-card>
 
-            </ng-template>
-            
+            </div>
+
+            <div *ngIf="searchResponse">
+                <mat-card id="SearchResponseCard" class="example-card">
+                    <mat-card-content>
+                        <p> Unfortunately, we do not know about that source.</p> 
+                    </mat-card-content>
+                  </mat-card>
+
+            </div>
+
+
+            <!--End of alternative divs-->
 
 
        
@@ -114,19 +123,27 @@
                   </mat-form-field>
          
             <div>
-                <button mat-raised-button color="accent" type="submit">Insert Fact</button>
+                <button mat-raised-button color="accent" (click)="insertFactResponse=true" type="submit">Insert Fact</button>
             </div>
-              
-              
-          
+    
             </form>
-
-       
-
 
     </div>
 
      <!--End of fact input form-->
+
+
+     <!--Alternate divs that load when specific events occur-->
+        <div *ngIf="insertFactResponse">
+            <mat-card color="primary" id="SearchResponseCard" class="example-card">
+                <mat-card-content>
+                    <p> False fact has been added.</p> 
+                </mat-card-content>
+            </mat-card>
+
+        </div>
+
+        <!--End of alternative divs-->
     
 </div>
 
