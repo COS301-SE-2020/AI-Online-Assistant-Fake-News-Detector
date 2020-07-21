@@ -435,9 +435,6 @@ describe("Reports", () => {
             res.body.reports[0].should.have.property("type");
             res.body.reports[0].should.have.property("Report Data");
             res.body.reports[0].should.have.property("Date Captured");
-            res.body.reports[0].type.should.equal(
-              responder.body.reports[0]["type"]
-            );
             done();
           });
       });
