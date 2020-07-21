@@ -7,6 +7,8 @@ from multiprocessing import Process, Manager
 import math
 import pickle
 import nltk
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
 from nltk.classify.scikitlearn import SklearnClassifier
 from sklearn.naive_bayes import MultinomialNB, BernoulliNB, GaussianNB
 from sklearn.linear_model import LogisticRegression,SGDClassifier
