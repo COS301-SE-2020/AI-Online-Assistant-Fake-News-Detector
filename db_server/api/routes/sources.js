@@ -142,7 +142,7 @@ module.exports = router;
 router.get("/name/:sourceName", (req, res, next) => {
   const name = req.params.sourceName;
   // Source.findById(name)
-  Source.findOne({name: name})
+  Source.findOne({ name: name })
     .select("name tld rating _id")
     .exec()
     .then((doc) => {
@@ -156,7 +156,9 @@ router.get("/name/:sourceName", (req, res, next) => {
           },
         });
       } else {
-        res.status(404).json({ message: "No database entry for provided name" });
+        res
+          .status(404)
+          .json({ message: "No database entry for provided name" });
       }
     })
     .catch((err) => {

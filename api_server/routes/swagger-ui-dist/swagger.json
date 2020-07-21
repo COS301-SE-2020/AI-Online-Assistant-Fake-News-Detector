@@ -655,7 +655,14 @@
             "name": "bActive",
             "in": "formData",
             "description": "Update the reports active status",
-            "required": true,
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "reportCount",
+            "in": "formData",
+            "description": "Update the reports count",
+            "required": false,
             "type": "integer"
           }
         ],
@@ -719,7 +726,14 @@
           {
             "name": "bActive",
             "in": "formData",
-            "description": "Update the active status",
+            "description": "Update the reports active status",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "reportCount",
+            "in": "formData",
+            "description": "Update the reports count",
             "required": false,
             "type": "integer"
           }
@@ -817,7 +831,14 @@
             "name": "bActive",
             "in": "formData",
             "description": "Update the reports active status",
-            "required": true,
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "reportCount",
+            "in": "formData",
+            "description": "Update the reports count",
+            "required": false,
             "type": "integer"
           }
         ],
@@ -1359,6 +1380,10 @@
               "Date Captured": {
                 "type": "Date",
                 "example": "2020-07-20T23:01:08.926Z"
+              },
+              "Report Count": {
+                "type": "integer",
+                "example": 1
               }
             }
           }
@@ -1386,6 +1411,10 @@
             "Date Captured": {
               "type": "Date",
               "example": "2020-07-20T23:01:08.926Z"
+            },
+            "Report Count": {
+              "type": "integer",
+              "example": 1
             }
           }
         }
@@ -1418,6 +1447,10 @@
               "Date Captured": {
                 "type": "Date",
                 "example": "2020-07-20T23:01:08.926Z"
+              },
+              "Report Count": {
+                "type": "integer",
+                "example": 1
               }
             }
           }
@@ -1451,6 +1484,10 @@
               "Date Captured": {
                 "type": "Date",
                 "example": "2020-07-20T23:01:08.926Z"
+              },
+              "Report Count": {
+                "type": "integer",
+                "example": 1
               }
             }
           }

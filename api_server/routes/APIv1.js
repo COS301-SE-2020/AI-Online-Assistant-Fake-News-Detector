@@ -594,6 +594,10 @@ api.post("/reports", (req, res, next) => {
   /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   let requestBody = "";
   try {
+    req.body.description = req.body.description
+      .split(" ")
+      .filter((e) => e != "")
+      .join(" ");
     requestBody = JSON.stringify(req.body);
   } catch (e) {
     let error = new Error(e.message);

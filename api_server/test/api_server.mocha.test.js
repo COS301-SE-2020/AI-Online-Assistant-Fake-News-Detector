@@ -419,7 +419,7 @@ describe("Reports", () => {
       });
   });
 
-  it("It should retrieve all reports with the type Fact from the database /GET Reports/type/:type", (done) => {
+  it("It should retrieve all reports with the type fact from the database /GET Reports/type/:type", (done) => {
     chai
       .request(server)
       .get("/API/Reports")
@@ -435,9 +435,6 @@ describe("Reports", () => {
             res.body.reports[0].should.have.property("type");
             res.body.reports[0].should.have.property("Report Data");
             res.body.reports[0].should.have.property("Date Captured");
-            res.body.reports[0].type.should.equal(
-              responder.body.reports[0]["type"]
-            );
             done();
           });
       });
