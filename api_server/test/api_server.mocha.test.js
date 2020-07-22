@@ -419,7 +419,7 @@ describe("Reports", () => {
       });
   });
 
-  it("It should retrieve all reports with the type Fact from the database /GET Reports/type/:type", (done) => {
+  it("It should retrieve all reports with the type fact from the database /GET Reports/type/:type", (done) => {
     chai
       .request(server)
       .get("/API/Reports")

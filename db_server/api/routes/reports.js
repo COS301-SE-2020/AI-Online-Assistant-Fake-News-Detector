@@ -9,7 +9,8 @@ const Report = require("../models/report");
  */
 router.get("/", (req, res, next) => {
   Report.find()
-    .select("_id type description dCaptured bActive")
+    .select("_id type description reportCount dCaptured bActive")
+    .sort("type description")
     .exec()
     .then((reports) => {
       const response = {
@@ -25,6 +26,7 @@ router.get("/", (req, res, next) => {
                 : "undefined",
             "Report Data": report.description,
             "Date Captured": report.dCaptured,
+            "Report Count": report.reportCount,
           };
         }),
       };
@@ -75,7 +77,7 @@ router.post("/", (req, res, next) => {
 router.get("/id/:id", (req, res, next) => {
   Report.findOne(
     { _id: req.params.id },
-    "_id type description dCaptured bActive"
+    "_id type description reportCount dCaptured bActive"
   )
     .exec()
     .then((doc) => {
@@ -87,6 +89,7 @@ router.get("/id/:id", (req, res, next) => {
               doc.type == 1 ? "Fact" : doc.type == 2 ? "Source" : "undefined",
             "Report Data": doc.description,
             "Date Captured": doc.dCaptured,
+            "Report Count": doc.reportCounter,
           },
         });
       } else {
@@ -108,8 +111,9 @@ router.get("/id/:id", (req, res, next) => {
 router.get("/active/:active", (req, res, next) => {
   Report.find(
     { bActive: req.params.active },
-    "_id type description dCaptured bActive"
+    "_id type description reportCount dCaptured bActive"
   )
+    .sort("type description")
     .exec()
     .then((reports) => {
       if (reports) {
@@ -126,6 +130,7 @@ router.get("/active/:active", (req, res, next) => {
                   : "undefined",
               "Report Data": report.description,
               "Date Captured": report.dCaptured,
+              "Report Count": report.reportCount,
             };
           }),
         };
@@ -149,8 +154,9 @@ router.get("/active/:active", (req, res, next) => {
 router.get("/type/:type", (req, res, next) => {
   Report.find(
     { type: req.params.type },
-    "_id type description dCaptured bActive"
+    "_id type description reportCount dCaptured bActive"
   )
+    .sort("type description")
     .exec()
     .then((reports) => {
       if (reports) {
@@ -167,6 +173,7 @@ router.get("/type/:type", (req, res, next) => {
                   : "undefined",
               "Report Data": report.description,
               "Date Captured": report.dCaptured,
+              "Report Count": report.reportCount,
             };
           }),
         };

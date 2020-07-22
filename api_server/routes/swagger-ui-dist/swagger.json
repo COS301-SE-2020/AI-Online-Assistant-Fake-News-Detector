@@ -16,9 +16,13 @@
     {
       "name": "Reports",
       "description": "All reports made"
+    },
+    {
+      "name": "Process",
+      "description": "Processing Routes"
     }
   ],
-  "host": "localhost:8080",
+  "host": "fakenewsdetector.tech",
   "basePath": "/API",
   "schemes": [
     "http"
@@ -655,7 +659,14 @@
             "name": "bActive",
             "in": "formData",
             "description": "Update the reports active status",
-            "required": true,
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "reportCount",
+            "in": "formData",
+            "description": "Update the reports count",
+            "required": false,
             "type": "integer"
           }
         ],
@@ -719,7 +730,14 @@
           {
             "name": "bActive",
             "in": "formData",
-            "description": "Update the active status",
+            "description": "Update the reports active status",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "reportCount",
+            "in": "formData",
+            "description": "Update the reports count",
             "required": false,
             "type": "integer"
           }
@@ -817,7 +835,14 @@
             "name": "bActive",
             "in": "formData",
             "description": "Update the reports active status",
-            "required": true,
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "reportCount",
+            "in": "formData",
+            "description": "Update the reports count",
+            "required": false,
             "type": "integer"
           }
         ],
@@ -830,6 +855,46 @@
           "500": {
             "description": "Server Error"
           }
+        }
+      }
+    }
+  },
+  "/Check": {
+    "post": {
+      "tags": [
+        "Process"
+      ],
+      "summary": "Checks the ",
+      "description": "Post request to add a new report to the database",
+      "operationId": "",
+      "consumes": [
+        "application/x-www-form-urlencoded"
+      ],
+      "produces": "application/json",
+      "parameters": [
+        {
+          "name": "type",
+          "in": "formData",
+          "description": "The type of report being made. 1 = Fact, 2 = Source",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "description",
+          "in": "formData",
+          "description": "The body of the report",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "200": {
+          "schema": {
+            "$ref": "#/definitions/POST Reports"
+          }
+        },
+        "500": {
+          "description": "Server Error"
         }
       }
     }
@@ -1359,6 +1424,10 @@
               "Date Captured": {
                 "type": "Date",
                 "example": "2020-07-20T23:01:08.926Z"
+              },
+              "Report Count": {
+                "type": "integer",
+                "example": 1
               }
             }
           }
@@ -1386,6 +1455,10 @@
             "Date Captured": {
               "type": "Date",
               "example": "2020-07-20T23:01:08.926Z"
+            },
+            "Report Count": {
+              "type": "integer",
+              "example": 1
             }
           }
         }
@@ -1418,6 +1491,10 @@
               "Date Captured": {
                 "type": "Date",
                 "example": "2020-07-20T23:01:08.926Z"
+              },
+              "Report Count": {
+                "type": "integer",
+                "example": 1
               }
             }
           }
@@ -1451,6 +1528,10 @@
               "Date Captured": {
                 "type": "Date",
                 "example": "2020-07-20T23:01:08.926Z"
+              },
+              "Report Count": {
+                "type": "integer",
+                "example": 1
               }
             }
           }
@@ -1829,6 +1910,19 @@
               "example": "2020-07-20T23:01:08.926Z"
             }
           }
+        }
+      }
+    },
+    "POST Process": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "text"
+        },
+        "tycontentpe": {
+          "type": "string",
+          "example": "News alert:..."
         }
       }
     },
