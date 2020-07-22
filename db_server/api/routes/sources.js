@@ -140,9 +140,8 @@ module.exports = router;
  * @author Quinton Coetzee
  */
 router.get("/name/:sourceName", (req, res, next) => {
-  const name = req.params.sourceName;
-  // Source.findById(name)
-  Source.findOne({ name: name })
+  const name = req.params.sourceName;  
+  Source.findOne({ name: new RegExp(name, 'i') })
     .select("name tld rating _id")
     .exec()
     .then((doc) => {
