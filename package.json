@@ -9,11 +9,12 @@
     "install:adjectiveNN": "cd nn_server/nn_adjective_input && npm install && npm audit fix",
     "install:verboseNN": "cd nn_server/nn_verbose_input && npm install && npm audit fix",
     "install:spellingNN": "cd nn_server/nn_spelling_input && npm install && npm audit fix",
-    "install:factNN": "cd nn_server/nn_fact_input && pip install -r requirements.txt",
+    "install:factNN": "cd nn_server/nn_fact_input && pip3 install -r requirements.txt",
     "install:db": "cd db_server && npm install && npm audit fix",
     "install:api": "cd api_server && npm install && npm audit fix",
     "postinstall": "run-p install:*",
-    "test": "mocha --exit \"**/*.mocha.test.js\" --timeout 10000",
+    "test": "mocha --exit \"**/*.mocha.test.js\" --timeout 30000",
+    "posttest": "cd frontend && ng test",
     "start": "cd api_server && npm start"
   },
   "repository": {
