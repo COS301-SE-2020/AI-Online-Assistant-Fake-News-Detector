@@ -12,7 +12,7 @@
     "install:db": "cd db_server && npm install && npm audit fix",
     "install:api": "cd api_server && npm install && npm audit fix",
     "postinstall": "run-p install:*",
-    "test": "./nn_server_test.sh && mocha --exit \"**/*.mocha.test.js\" --timeout 10000",
+    "test": "bash nn_server_test.sh && mocha --exit \"**/*.mocha.test.js\" --timeout 10000",
     "start": "cd api_server && npm start"
   },
   "repository": {
