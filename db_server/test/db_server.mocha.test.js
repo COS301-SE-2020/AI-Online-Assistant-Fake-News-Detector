@@ -115,7 +115,7 @@ describe("Sources Api", () => {
       });
   });
     
-  it("It should POST a test source", (done) => {
+  it("It should update a source rating", (done) => {
     const source = {
       rating: "550",
     };
