@@ -5,7 +5,8 @@ import { ShareSheetComponent } from '../sharesheet/sharesheet.component'
 @Component({
 	selector: 'app-sharebutton',
 	templateUrl: './sharebutton.component.html',
-	styleUrls: [ './sharebutton.component.css' ]
+	styleUrls: [ './sharebutton.component.css' ],
+	providers: [MatBottomSheet]
 })
 export class ShareButtonComponent {
 	constructor(private _bottomSheet: MatBottomSheet) {}

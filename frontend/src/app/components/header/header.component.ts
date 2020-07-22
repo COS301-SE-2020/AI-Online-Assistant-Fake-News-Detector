@@ -18,9 +18,11 @@ import { Observable } from 'rxjs/Observable'
 
 import { Option } from '../../option.model'
 import { ThemeService } from '../../theme.service'
+import {StyleManagerService} from '../../style-manager.service'
 
 @Component({
 	selector: 'app-header',
+	providers: [ThemeService,StyleManagerService],
 	templateUrl: './header.component.html',
 	styleUrls: [ './header.component.css' ]
 })

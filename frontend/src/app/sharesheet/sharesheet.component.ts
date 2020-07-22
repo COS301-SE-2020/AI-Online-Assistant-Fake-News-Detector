@@ -3,7 +3,8 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet'
 
 @Component({
 	selector: 'app-sharesheet',
-	templateUrl: './sharesheet.component.html'
+	templateUrl: './sharesheet.component.html',
+	providers: [MatBottomSheetRef]
 })
 export class ShareSheetComponent {
 	constructor(private _bottomSheetRef: MatBottomSheetRef<ShareSheetComponent>) {}
