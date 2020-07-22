@@ -767,7 +767,6 @@ api.put("/reports/id/:id", (req, res, next) => {
 
 api.put("/reports/active/:active", (req, res, next) => {
   /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
-  console.log("Active");
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -810,8 +809,6 @@ api.put("/reports/active/:active", (req, res, next) => {
 
 api.put("/reports/type/:type", (req, res, next) => {
   /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
-  console.log("Type");
-
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);

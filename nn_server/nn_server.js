@@ -51,7 +51,7 @@ server.post("/Check", (req, res) => {
         // check if result is float to avoid returing internal errors to clients
         res.status(200).json({ result: parseFloat(result.toFixed(precision)) });
       } else {
-        console.log(result);
+        // console.log(result);
         res.sendStatus(500);
       }
     });

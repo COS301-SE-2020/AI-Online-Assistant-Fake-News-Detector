@@ -75,7 +75,6 @@ router.post("/", (req, res, next) => {
  * @author Stuart Barclay
  */
 router.get("/id/:id", (req, res, next) => {
-  console.log(req.params.id);
   Report.findOne(
     { _id: req.params.id },
     "_id type description reportCount dCaptured bActive"
@@ -216,7 +215,6 @@ router.put("/id/:id", (req, res, next) => {
  * @author Stuart Barclay
  */
 router.put("/active/:active", (req, res, next) => {
-  console.log(req.body);
   Report.updateMany({ bActive: req.params.active }, { $set: req.body })
     .exec()
     .then((result) => {

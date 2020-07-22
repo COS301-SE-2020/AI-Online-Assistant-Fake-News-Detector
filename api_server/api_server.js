@@ -18,6 +18,7 @@ const api = require("./routes/APIv1");
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 server.use(bodyParser.text());
+server.use(bodyParser.json({ type: "application/json" }));
 // server.use(bodyParser.json({ type: "application/json" }));
 server.use(helmet());
 server.use(cors());
@@ -97,7 +98,6 @@ cron.schedule("59 23 * * *", () => {
         putRequest("localhost", "/api/reports/id/" + report["_id"], {
           bActive: 0,
         });
-        console.log("equal", report["_id"], prevReport["_id"]);
       } else {
         prevReport = report;
       }
@@ -108,7 +108,7 @@ cron.schedule("59 23 * * *", () => {
 // log all requests to access.log
 server.use(
   morgan(":date[clf] :method :url :status :response-time ms", {
-    stream: fs.createWriteStream(path.join(root, "logs", "access.log"), {
+    stream: fs.createWriteStream(path.join(root, "logfiles", "access.log"), {
       flags: "a",
     }),
   })
