@@ -12,6 +12,7 @@
     "install:factNN": "cd nn_server/nn_fact_input && pip install -r requirements.txt",
     "install:db": "cd db_server && npm install && npm audit fix",
     "install:api": "cd api_server && npm install && npm audit fix",
+    "postinstall": "run-p install:*",
     "test": "mocha --exit \"**/*.mocha.test.js\" --timeout 10000",
     "start": "cd api_server && npm start"
   },
