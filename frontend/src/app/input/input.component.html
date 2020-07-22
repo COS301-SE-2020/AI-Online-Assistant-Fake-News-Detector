@@ -1,5 +1,6 @@
+&nbsp;
 <mat-form-field class="example-form-field">
-  <mat-label>Source/URL</mat-label>
+  <mat-label>Source/URL/Fact/Text</mat-label>
   <input matInput type="text" [(ngModel)]="value">
   <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
     <mat-icon>close</mat-icon>
@@ -7,59 +8,55 @@
 </mat-form-field>
 
   <div class="example-button-row">
-    <button mat-raised-button (click)="clickCheck()">Check</button>
+    <button mat-raised-button (click)="clickCheck()" class="checkBtn">Check</button>
     <button mat-raised-button color="primary" (click)="clickReport()">Report</button>
     <button mat-raised-button color="accent" (click)="clickFind()">Analytics</button>
   </div>
 
 
+<div>&nbsp;</div>
 
-<mat-card class="example-card" *ngIf="checkFake">
+<mat-card class="example-card" *ngIf="isSource">
   <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>Fake</mat-card-title>
-    <mat-card-subtitle>URL: {{value}}</mat-card-subtitle>
+    <mat-card-title>Source {{source.name}} is in our database!</mat-card-title>
+    <mat-card-subtitle>URL: {{source.tld}}</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src="https://cdn1.img.sputniknews.com/img/107843/75/1078437515_0:-1:1001:541_1000x541_80_0_0_ef6282ef090b0c653f13241eb33deb5b.jpg.webp" alt="fake news">
+  <img mat-card-image src="assets/img/source.gif" alt="source">
   <mat-card-content>
     <p>
-      The URL points to news that was determined to be fake by our engine.
+      This source has a rating of {{source.rating}}
     </p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>Query</button>
-    <button mat-button (click)="checkFake=false">Dismiss</button>
+    <button mat-button (click)="isSource=false;source=null">Dismiss</button>
   </mat-card-actions>
 </mat-card>
 
-<mat-card class="example-card" *ngIf="checkValid">
+<mat-card class="example-card" *ngIf="isFact">
   <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>Valid</mat-card-title>
-    <mat-card-subtitle>URL: {{value}}</mat-card-subtitle>
+    <mat-card-title>This fact is in our database!</mat-card-title>
+    <mat-card-subtitle>Statement: {{fact.statement}}</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="valid news">
+  <img mat-card-image src="assets/img/fact.gif" alt="fact">
   <mat-card-content>
     <p>
-      The URL points to news that was determined to be valid by our engine.
+      The fact has a popularity of rating of {{fact.popularity}}.
     </p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>Query</button>
-    <button mat-button (click)="checkValid=false">Dismiss</button>
+    <button mat-button (click)="isFact=false;fact=null">Dismiss</button>
   </mat-card-actions>
 </mat-card>
 
 <mat-card class="example-card" *ngIf="reported">
   <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>Source reported</mat-card-title>
     <mat-card-subtitle>URL: {{value}}</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src="https://memegenerator.net/img/instances/55571127/much-status-so-report-much-improve-wow.jpg" alt="reported news">
+  <img mat-card-image src="assets/img/report.gif" alt="reported">
   <mat-card-content>
     <p>
-      The URL has been reported to contain fake news and is under review by our engine.
+      The URL has been reported to contain fake news.
     </p>
   </mat-card-content>
   <mat-card-actions>
