@@ -120,7 +120,7 @@
     ora "4.0.4"
     rxjs "6.5.5"
 
-"@angular/animations@~10.0.4":
+"@angular/animations@^10.0.4":
   version "10.0.4"
   resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-10.0.4.tgz#179e4e63e3f2468ee1fe961c12eb143dd8350b23"
   integrity sha512-UzQiWhDHY6wixS1Nh+Jwpzq1weiLGXJPt3Pa4pETpt3Hg7MIUu62dik6OFWuGYQPbn9DJYH+CH+sRxN1GCVjww==
@@ -202,8 +202,6 @@
   dependencies:
     tslib "^2.0.0"
 
-<<<<<<< HEAD
-=======
 "@angular/flex-layout@^10.0.0-beta.32":
   version "10.0.0-beta.32"
   resolved "https://registry.yarnpkg.com/@angular/flex-layout/-/flex-layout-10.0.0-beta.32.tgz#a797ebd6f3689c71a63e99aa62f2b9cb933f5e2d"
@@ -211,7 +209,6 @@
   dependencies:
     tslib "^2.0.0"
 
->>>>>>> ng-front
 "@angular/forms@~10.0.4":
   version "10.0.4"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-10.0.4.tgz#d37fe47d5c91b0ef249066e904338905b2687847"
@@ -5762,10 +5759,29 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
+ng-http-loader@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/ng-http-loader/-/ng-http-loader-8.0.0.tgz#4a6c55621548f8fa0c5d801d6086c977221a6542"
+  integrity sha512-E7cifH8+N3qk7Nt9Y1ZQyzC8NcM9ObPYJRS+pFNOm1Bg491Dfq63/Kboqkb6UCac5Ku2Nu8dOCerM4bCZo73bw==
+  dependencies:
+    tslib "^2.0.0"
+
 ng-material-floating-button@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/ng-material-floating-button/-/ng-material-floating-button-0.6.2.tgz#0193991a933cd839c84ac2403d1d023480898a28"
   integrity sha1-AZOZGpM82DnISsJAPR0CNICJiig=
+
+ngx-animations@^4.0.0-beta.1:
+  version "4.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/ngx-animations/-/ngx-animations-4.0.0-beta.1.tgz#c334226451a76ff6ee31aced07cec95fc388445b"
+  integrity sha512-CCgsZW/JIrXD05y3tmRmN43+u2HkM/fkfDw9NwDQRjrl+sDLJFDtx9NFzXa29Dx6lChoaCTZ8g8S4kivjD4Z2w==
+
+ngx-router-animations@0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/ngx-router-animations/-/ngx-router-animations-0.0.9.tgz#b29239273e429c153abf26927c8c2db6ccba5171"
+  integrity sha512-30kqbnFp30Vgvi2GKKjpFD6tXBXxsodfR6xwuLt6krqBm7JOrryhC2MrgRLlZn0O815PCYk7YIOd0XqmZ0HxUQ==
+  dependencies:
+    tslib "^1.9.0"
 
 nice-try@^1.0.4:
   version "1.0.5"

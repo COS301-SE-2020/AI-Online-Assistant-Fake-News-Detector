@@ -14,7 +14,7 @@ export class FactslistService {
 
   constructor(private http: HttpClient) { }
 
-  url : string = 'http://localhost:3000/facts/';
+  url = 'http://fakenewsdetector.tech/api/facts/';
 
   getFactsList(){
     return this.http.get(this.url).

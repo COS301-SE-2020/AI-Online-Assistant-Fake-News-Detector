@@ -2,7 +2,7 @@
 	width: 100%;
 }
 .example-button-row {
-	display: table-cell;
+	display: block;
 }
 
 .example-button-row button {
@@ -12,9 +12,8 @@
 
 .example-card {
 	max-width: 400px;
-}
-
-.example-header-image {
-	background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-	background-size: cover;
+	max-height: 350px;
+	display: inline-block;
+	margin-right: 1em;
+	margin-bottom: 1em;
 }

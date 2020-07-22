@@ -1,6 +1,9 @@
 mat-card {
-	height: 20vh;
+	height: 30vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+img {
+	size: 30em;
 }

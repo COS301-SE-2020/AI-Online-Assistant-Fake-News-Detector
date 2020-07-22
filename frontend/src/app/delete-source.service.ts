@@ -4,14 +4,14 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class FactInputService {
+export class DeleteSourceService {
 
-  url = 'http://fakenewsdetector.tech/api/facts/';
+  url = 'http://fakenewsdetector.tech/api/sources/';
 
   constructor(private _http: HttpClient) { }
 
-  SubmitFact(userData) {
-    return this._http.post<any>(this.url, userData)
+  SourceDeletion(ID) {
+    return this._http.delete(this.url + ID)
 }
 
 }
