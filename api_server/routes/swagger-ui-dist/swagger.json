@@ -12,9 +12,17 @@
     {
       "name": "Moderators",
       "description": "All system moderators"
+    },
+    {
+      "name": "Reports",
+      "description": "All reports made"
+    },
+    {
+      "name": "Process",
+      "description": "Processing Routes"
     }
   ],
-  "host": "localhost:8080",
+  "host": "fakenewsdetector.tech",
   "basePath": "/API",
   "schemes": [
     "http"
@@ -513,6 +521,382 @@
           }
         }
       }
+    },
+    "/Reports": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Get all reports made",
+        "description": "Get request to retrieve all reports",
+        "operationId": "",
+        "produces": "application/json",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Reports"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Adds a new report to the database",
+        "description": "Post request to add a new report to the database",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "formData",
+            "description": "The type of report being made. 1 = Fact, 2 = Source",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "description": "The body of the report",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/POST Reports"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Reports/id/{id}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Get a specific report made",
+        "description": "Get request to retrieve a specific report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of report to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Report ID"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Removes a report, based off of it's ID, from the database",
+        "description": "Delete request to remove a report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of report to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DELETE Specific Report ID"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Update report",
+        "description": "Put request to update a reports active status",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of report to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "bActive",
+            "in": "formData",
+            "description": "Update the reports active status",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "reportCount",
+            "in": "formData",
+            "description": "Update the reports count",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/PUT Specific Report ID"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Reports/type/{type}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Get a specific report made",
+        "description": "Get request to retrieve a specific report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "description": "Type of reports to be fetched. 1 = Facts, 2 = Sources",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Report Type"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Update moderators details",
+        "description": "Put request to update a moderators details",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "description": "Type of reports to be updated. 1 = Facts, 2 = Sources",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "bActive",
+            "in": "formData",
+            "description": "Update the reports active status",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "reportCount",
+            "in": "formData",
+            "description": "Update the reports count",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/PUT Specific Report Type"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/Reports/active/{active}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Get a specific report made",
+        "description": "Get request to retrieve a specific report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "active",
+            "in": "path",
+            "description": "Active status of report to be fetched",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Report Active"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Removes a report, based off of it's active status, from the database",
+        "description": "Delete request to remove a report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "active",
+            "in": "path",
+            "description": "Active status of reports to be deleted",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DELETE Specific Report Active"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Update reports details",
+        "description": "Put request to update a reports active status",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "active",
+            "in": "path",
+            "description": "Active status of reports to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "bActive",
+            "in": "formData",
+            "description": "Update the reports active status",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "reportCount",
+            "in": "formData",
+            "description": "Update the reports count",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/PUT Specific Report Active"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "/Check": {
+    "post": {
+      "tags": [
+        "Process"
+      ],
+      "summary": "Checks the ",
+      "description": "Post request to add a new report to the database",
+      "operationId": "",
+      "consumes": [
+        "application/x-www-form-urlencoded"
+      ],
+      "produces": "application/json",
+      "parameters": [
+        {
+          "name": "type",
+          "in": "formData",
+          "description": "The type of report being made. 1 = Fact, 2 = Source",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "description",
+          "in": "formData",
+          "description": "The body of the report",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "200": {
+          "schema": {
+            "$ref": "#/definitions/POST Reports"
+          }
+        },
+        "500": {
+          "description": "Server Error"
+        }
+      }
     }
   },
   "securityDefinitions": {
@@ -959,7 +1343,7 @@
             },
             "phoneNumber": {
               "type": "string",
-              "example": "0793580784}"
+              "example": "0793580784"
             }
           }
         }
@@ -1010,6 +1394,535 @@
         "message": {
           "type": "string",
           "example": "Moderator Details Updated"
+        }
+      }
+    },
+    "GET Reports": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "example": 10
+        },
+        "reports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "5f1622e15643f25f14fb6b31"
+              },
+              "type": {
+                "type": "string",
+                "example": "Fact"
+              },
+              "Report Data": {
+                "type": "integer",
+                "example": "This is a facts report"
+              },
+              "Date Captured": {
+                "type": "Date",
+                "example": "2020-07-20T23:01:08.926Z"
+              },
+              "Report Count": {
+                "type": "integer",
+                "example": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "GET Specific Report ID": {
+      "type": "object",
+      "properties": {
+        "Report": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "5ee186e05de6721c0ccbc14a"
+            },
+            "type": {
+              "type": "string",
+              "example": "Fact"
+            },
+            "Report Data": {
+              "type": "integer",
+              "example": "This is a facts report"
+            },
+            "Date Captured": {
+              "type": "Date",
+              "example": "2020-07-20T23:01:08.926Z"
+            },
+            "Report Count": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        }
+      }
+    },
+    "GET Specific Report Type": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "example": 2
+        },
+        "reports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "5ee186e05de6721c0ccbc14a"
+              },
+              "type": {
+                "type": "string",
+                "example": "Fact"
+              },
+              "Report Data": {
+                "type": "integer",
+                "example": "This is a facts report"
+              },
+              "Date Captured": {
+                "type": "Date",
+                "example": "2020-07-20T23:01:08.926Z"
+              },
+              "Report Count": {
+                "type": "integer",
+                "example": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "GET Specific Report Active": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "example": 2
+        },
+        "reports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "5ee186e05de6721c0ccbc14a"
+              },
+              "type": {
+                "type": "string",
+                "example": "Fact"
+              },
+              "Report Data": {
+                "type": "integer",
+                "example": "This is a facts report"
+              },
+              "Date Captured": {
+                "type": "Date",
+                "example": "2020-07-20T23:01:08.926Z"
+              },
+              "Report Count": {
+                "type": "integer",
+                "example": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "PUT Specific Report ID": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Report Updated"
+        },
+        "result": {
+          "type": "object",
+          "properties": {
+            "n": {
+              "type": "integer",
+              "example": 1
+            },
+            "nModified": {
+              "type": "integer",
+              "example": 1
+            },
+            "opTime": {
+              "type": "object",
+              "properties": {
+                "ts": {
+                  "type": "string",
+                  "example": "6847981318001655813"
+                },
+                "t": {
+                  "type": "integer",
+                  "example": 9
+                }
+              }
+            },
+            "electionId": {
+              "type": "string",
+              "example": "7fffffff0000000000000009"
+            },
+            "ok": {
+              "type": "integer",
+              "example": 1
+            },
+            "$clusterTime": {
+              "type": "object",
+              "properties": {
+                "clusterTime": {
+                  "type": "string",
+                  "example": "6847981318001655813"
+                },
+                "signature": {
+                  "type": "object",
+                  "properties": {
+                    "hash": {
+                      "type": "string",
+                      "example": "eSazwwZUt1sfyEiijzLHwAvs36Y="
+                    },
+                    "keyId": {
+                      "type": "string",
+                      "example": "6835849740492472323"
+                    }
+                  }
+                }
+              }
+            },
+            "operationTime": {
+              "type": "string",
+              "example": "6847981318001655813"
+            }
+          }
+        }
+      }
+    },
+    "DELETE Specific Report ID": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Report deleted"
+        },
+        "result": {
+          "type": "object",
+          "properties": {
+            "n": {
+              "type": "integer",
+              "example": 1
+            },
+            "opTime": {
+              "type": "object",
+              "properties": {
+                "ts": {
+                  "type": "string",
+                  "example": "6847981318001655813"
+                },
+                "t": {
+                  "type": "integer",
+                  "example": 9
+                }
+              }
+            },
+            "electionId": {
+              "type": "string",
+              "example": "7fffffff0000000000000009"
+            },
+            "ok": {
+              "type": "integer",
+              "example": 1
+            },
+            "$clusterTime": {
+              "type": "object",
+              "properties": {
+                "clusterTime": {
+                  "type": "string",
+                  "example": "6847981318001655813"
+                },
+                "signature": {
+                  "type": "object",
+                  "properties": {
+                    "hash": {
+                      "type": "string",
+                      "example": "eSazwwZUt1sfyEiijzLHwAvs36Y="
+                    },
+                    "keyId": {
+                      "type": "string",
+                      "example": "6835849740492472323"
+                    }
+                  }
+                }
+              }
+            },
+            "operationTime": {
+              "type": "string",
+              "example": "6847981318001655813"
+            },
+            "deletedCount": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        }
+      }
+    },
+    "PUT Specific Report Active": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Report Updated"
+        },
+        "result": {
+          "type": "object",
+          "properties": {
+            "n": {
+              "type": "integer",
+              "example": 1
+            },
+            "nModified": {
+              "type": "integer",
+              "example": 1
+            },
+            "opTime": {
+              "type": "object",
+              "properties": {
+                "ts": {
+                  "type": "string",
+                  "example": "6847981318001655813"
+                },
+                "t": {
+                  "type": "integer",
+                  "example": 9
+                }
+              }
+            },
+            "electionId": {
+              "type": "string",
+              "example": "7fffffff0000000000000009"
+            },
+            "ok": {
+              "type": "integer",
+              "example": 1
+            },
+            "$clusterTime": {
+              "type": "object",
+              "properties": {
+                "clusterTime": {
+                  "type": "string",
+                  "example": "6847981318001655813"
+                },
+                "signature": {
+                  "type": "object",
+                  "properties": {
+                    "hash": {
+                      "type": "string",
+                      "example": "eSazwwZUt1sfyEiijzLHwAvs36Y="
+                    },
+                    "keyId": {
+                      "type": "string",
+                      "example": "6835849740492472323"
+                    }
+                  }
+                }
+              }
+            },
+            "operationTime": {
+              "type": "string",
+              "example": "6847981318001655813"
+            }
+          }
+        }
+      }
+    },
+    "DELETE Specific Report Active": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Report deleted"
+        },
+        "result": {
+          "type": "object",
+          "properties": {
+            "n": {
+              "type": "integer",
+              "example": 1
+            },
+            "opTime": {
+              "type": "object",
+              "properties": {
+                "ts": {
+                  "type": "string",
+                  "example": "6847981318001655813"
+                },
+                "t": {
+                  "type": "integer",
+                  "example": 9
+                }
+              }
+            },
+            "electionId": {
+              "type": "string",
+              "example": "7fffffff0000000000000009"
+            },
+            "ok": {
+              "type": "integer",
+              "example": 1
+            },
+            "$clusterTime": {
+              "type": "object",
+              "properties": {
+                "clusterTime": {
+                  "type": "string",
+                  "example": "6847981318001655813"
+                },
+                "signature": {
+                  "type": "object",
+                  "properties": {
+                    "hash": {
+                      "type": "string",
+                      "example": "eSazwwZUt1sfyEiijzLHwAvs36Y="
+                    },
+                    "keyId": {
+                      "type": "string",
+                      "example": "6835849740492472323"
+                    }
+                  }
+                }
+              }
+            },
+            "operationTime": {
+              "type": "string",
+              "example": "6847981318001655813"
+            },
+            "deletedCount": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        }
+      }
+    },
+    "PUT Specific Report Type": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Report Updated"
+        },
+        "result": {
+          "type": "object",
+          "properties": {
+            "n": {
+              "type": "integer",
+              "example": 1
+            },
+            "nModified": {
+              "type": "integer",
+              "example": 1
+            },
+            "opTime": {
+              "type": "object",
+              "properties": {
+                "ts": {
+                  "type": "string",
+                  "example": "6847981318001655813"
+                },
+                "t": {
+                  "type": "integer",
+                  "example": 9
+                }
+              }
+            },
+            "electionId": {
+              "type": "string",
+              "example": "7fffffff0000000000000009"
+            },
+            "ok": {
+              "type": "integer",
+              "example": 1
+            },
+            "$clusterTime": {
+              "type": "object",
+              "properties": {
+                "clusterTime": {
+                  "type": "string",
+                  "example": "6847981318001655813"
+                },
+                "signature": {
+                  "type": "object",
+                  "properties": {
+                    "hash": {
+                      "type": "string",
+                      "example": "eSazwwZUt1sfyEiijzLHwAvs36Y="
+                    },
+                    "keyId": {
+                      "type": "string",
+                      "example": "6835849740492472323"
+                    }
+                  }
+                }
+              }
+            },
+            "operationTime": {
+              "type": "string",
+              "example": "6847981318001655813"
+            }
+          }
+        }
+      }
+    },
+    "POST Reports": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Successfully added new report"
+        },
+        "Report Details": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "5f162e4c1ad7363464fb0b2a"
+            },
+            "type": {
+              "type": "string",
+              "example": "Sources"
+            },
+            "Report Data": {
+              "type": "integer",
+              "example": "This is a facts report"
+            },
+            "Date Captured": {
+              "type": "Date",
+              "example": "2020-07-20T23:01:08.926Z"
+            }
+          }
+        }
+      }
+    },
+    "POST Process": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "text"
+        },
+        "tycontentpe": {
+          "type": "string",
+          "example": "News alert:..."
         }
       }
     },

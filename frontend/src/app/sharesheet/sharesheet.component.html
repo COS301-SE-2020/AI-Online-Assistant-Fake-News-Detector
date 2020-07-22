@@ -1,22 +1,22 @@
 <mat-nav-list>
-  <a href="https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector#team-members" mat-list-item>
+  <a mat-list-item (click)="openLink($event,'https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector#team-members')">
   <div>
     <span mat-line>GitHub</span>
-    <span mat-line>Share on GitHub</span>
+    <span mat-line>Visit our repo ⊙﹏⊙</span>
   </div>
   </a>
 
-  <a href="mailto:5bits301@gmail.com" mat-list-item>
+  <a mat-list-item (click)="emailCurrentPage()">
     <span mat-line>Email</span>
-    <span mat-line>Share via email</span>
+    <span mat-line>Share this page via email</span>
   </a>
 
-  <a href="twitter.com" mat-list-item>
+  <a mat-list-item (click)="openLink($event,'')">
     <span mat-line>Twitter</span>
     <span mat-line>Share this page on Twitter</span>
   </a>
 
-  <a href="" mat-list-item (click)="openLink($event)">
+  <a mat-list-item (click)="openLink($event,'')">
     <span mat-line>Facebook</span>
     <span mat-line>Share this page on Facebook</span>
   </a>
