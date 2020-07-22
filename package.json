@@ -14,7 +14,6 @@
     "install:api": "cd api_server && npm install && npm audit fix",
     "postinstall": "run-p install:*",
     "test": "mocha --exit \"**/*.mocha.test.js\" --timeout 30000",
-    "posttest": "cd frontend && ng test",
     "start": "cd api_server && npm start"
   },
   "repository": {

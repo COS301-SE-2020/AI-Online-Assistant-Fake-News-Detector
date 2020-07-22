@@ -857,44 +857,42 @@
           }
         }
       }
-    }
-  },
-  "/Check": {
-    "post": {
-      "tags": [
-        "Process"
-      ],
-      "summary": "Checks the ",
-      "description": "Post request to add a new report to the database",
-      "operationId": "",
-      "consumes": [
-        "application/x-www-form-urlencoded"
-      ],
-      "produces": "application/json",
-      "parameters": [
-        {
-          "name": "type",
-          "in": "formData",
-          "description": "The type of report being made. 1 = Fact, 2 = Source",
-          "required": true,
-          "type": "integer"
-        },
-        {
-          "name": "description",
-          "in": "formData",
-          "description": "The body of the report",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "schema": {
-            "$ref": "#/definitions/POST Reports"
+    },
+    "/Check": {
+      "post": {
+        "tags": [
+          "Process"
+        ],
+        "summary": "Checks the ",
+        "description": "Post request to add a new report to the database",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "formData",
+            "description": "The type of report being made. 1 = Fact, 2 = Source",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "description": "The body of the report",
+            "required": true,
+            "type": "string"
           }
-        },
-        "500": {
-          "description": "Server Error"
+        ],
+        "responses": {
+          "200": {
+            "schema": {}
+          },
+          "500": {
+            "description": "Server Error"
+          }
         }
       }
     }
