@@ -767,6 +767,7 @@ api.put("/reports/id/:id", (req, res, next) => {
 
 api.put("/reports/active/:active", (req, res, next) => {
   /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+  console.log("Active");
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -809,6 +810,8 @@ api.put("/reports/active/:active", (req, res, next) => {
 
 api.put("/reports/type/:type", (req, res, next) => {
   /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+  console.log("Type");
+
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -905,6 +908,45 @@ api.delete("/reports/active/:active", (req, res, next) => {
   });
 
   request.end();
+});
+
+api.post("/Check", (req, res, next) => {
+  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  }
+  const request = http.request(
+    {
+      host: "localhost",
+      port: 8082,
+      path: "/Check",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(requestBody),
+      },
+    },
+    (response) => {
+      response.setEncoding("utf-8");
+      let responseString = "";
+      response.on("data", (chunk) => {
+        responseString += chunk;
+      });
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
+      });
+    }
+  );
+  request.on("error", (e) => {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  });
 });
 
 /**

@@ -12,12 +12,13 @@ const path = require("path");
 const root = require("../Util/path");
 const cron = require("node-cron");
 const http = require("http");
+const api = require("./routes/APIv1");
 
 //Static files like css or js frontend.
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 server.use(bodyParser.text());
-server.use(bodyParser.json({ type: "application/json" }));
+// server.use(bodyParser.json({ type: "application/json" }));
 server.use(helmet());
 server.use(cors());
 
@@ -42,36 +43,42 @@ const getRequest = (url, callBack) => {
 };
 
 const putRequest = (_host, _path, params) => {
-  let req = http.request(
-    {
-      host: _host,
-      port: 8080,
-      path: _path,
-      method: "PUT",
-      headers: {
-        "Content-Length": Buffer.byteLength(JSON.stringify(params)),
-        "Content-Type": "application/x-www-form-urlencoded",
+  let req = http
+    .request(
+      {
+        host: _host,
+        port: 8080,
+        path: _path,
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Content-Length": JSON.stringify(params).length,
+        },
       },
-    },
-    (resp) => {
-      let data = "";
-      resp.on("data", (chunk) => {
-        data += chunk;
-      });
-      resp.on("error", (err) => {
-        morgan(":date[clf] :method :url :status :response-time ms", {
-          stream: fs.createWriteStream(path.join(root, "logs", "error.log"), {
-            flags: "a",
-          }),
+      (response) => {
+        response.setEncoding("utf-8");
+        let responseString = "";
+        response.on("data", (chunk) => {
+          responseString += chunk;
         });
+        response.on("end", () => {
+          console.log(responseString);
+        });
+      }
+    )
+    .on("error", (err) => {
+      morgan(":date[clf] :method :url :status :response-time ms", {
+        stream: fs.createWriteStream(path.join(root, "logs", "error.log"), {
+          flags: "a",
+        }),
       });
-    }
-  );
-  req.write(params);
+    });
+
+  req.write(JSON.stringify(params));
   req.end();
 };
 
-cron.schedule("2 * * * * *", () => {
+cron.schedule("59 23 * * *", () => {
   // Fetch all reports with a active status of 1 status and order by description trimmed
   // If the previous entity is the same as current, take previous counter add 1 and remove current by setting active = 0
   getRequest("http://localhost:8080/api/reports/active/1", (data) => {
@@ -84,20 +91,12 @@ cron.schedule("2 * * * * *", () => {
         report["_id"] !== prevReport["_id"]
       ) {
         ++prevReport["Report Count"];
-        putRequest(
-          "localhost",
-          "/api/reports/id/" + prevReport["_id"],
-          JSON.stringify({
-            reportCount: prevReport["Report Count"],
-          })
-        );
-        putRequest(
-          "localhost",
-          "/api/reports/id/" + report["_id"],
-          JSON.stringify({
-            bActive: 0,
-          })
-        );
+        putRequest("localhost", "/api/reports/id/" + prevReport["_id"], {
+          reportCount: prevReport["Report Count"],
+        });
+        putRequest("localhost", "/api/reports/id/" + report["_id"], {
+          bActive: 0,
+        });
         console.log("equal", report["_id"], prevReport["_id"]);
       } else {
         prevReport = report;

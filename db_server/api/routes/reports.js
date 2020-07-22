@@ -75,6 +75,7 @@ router.post("/", (req, res, next) => {
  * @author Stuart Barclay
  */
 router.get("/id/:id", (req, res, next) => {
+  console.log(req.params.id);
   Report.findOne(
     { _id: req.params.id },
     "_id type description reportCount dCaptured bActive"
@@ -89,7 +90,7 @@ router.get("/id/:id", (req, res, next) => {
               doc.type == 1 ? "Fact" : doc.type == 2 ? "Source" : "undefined",
             "Report Data": doc.description,
             "Date Captured": doc.dCaptured,
-            "Report Count": report.reportCounter,
+            "Report Count": doc.reportCounter,
           },
         });
       } else {
@@ -195,7 +196,6 @@ router.get("/type/:type", (req, res, next) => {
  * @author Stuart Barclay
  */
 router.put("/id/:id", (req, res, next) => {
-  console.log(req.body);
   const id = req.params.id;
   Report.updateOne({ _id: id }, { $set: req.body })
     .exec()
