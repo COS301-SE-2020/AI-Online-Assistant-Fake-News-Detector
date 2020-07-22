@@ -108,9 +108,12 @@ cron.schedule("59 23 * * *", () => {
 // log all requests to access.log
 server.use(
   morgan(":date[clf] :method :url :status :response-time ms", {
-    stream: fs.createWriteStream(path.join(root, "logfiles", "access.log"), {
-      flags: "a",
-    }),
+    stream: fs.createWriteStream(
+      path.join(__dirname, "logfiles", "access.log"),
+      {
+        flags: "a",
+      }
+    ),
   })
 );
 server.use("/API-Documents", express.static(SwaggerUi));
