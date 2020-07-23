@@ -1,8 +1,4 @@
-/* 
-
-.hero {
-    background-image: url('/assets/img/Placeholder.jpg') !important;
-    height: 100%;
-    background-size: cover;
-    background-position: center center;
-  } */
+.hero-body {
+	margin-left: 3em;
+	margin-right: 3em;
+}

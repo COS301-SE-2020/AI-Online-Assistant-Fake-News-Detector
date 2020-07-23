@@ -134,15 +134,14 @@ router.delete("/:sourceId", (req, res, next) => {
       res.status(500).json({ error: err });
     });
 });
-module.exports = router;
+
 /**
  * @description get source by name
  * @author Quinton Coetzee
  */
 router.get("/name/:sourceName", (req, res, next) => {
-  const name = req.params.sourceName;
-  // Source.findById(name)
-  Source.findOne({name: name})
+  const name = decodeURI(req.params.sourceName);
+  Source.findOne({ name: new RegExp(name, "i") })
     .select("name tld rating _id")
     .exec()
     .then((doc) => {
@@ -156,10 +155,14 @@ router.get("/name/:sourceName", (req, res, next) => {
           },
         });
       } else {
-        res.status(404).json({ message: "No database entry for provided name" });
+        res
+          .status(404)
+          .json({ message: "No database entry for provided name" });
       }
     })
     .catch((err) => {
       res.status(500).json({ error: err });
     });
 });
+
+module.exports = router;

@@ -5,6 +5,7 @@ const expect = chai.expect;
 const server = require("../api_server");
 
 chai.use(chaiHttp);
+
 describe("Facts", () => {
   it("It should retrieve all facts in database /GET facts", (done) => {
     chai
@@ -147,7 +148,7 @@ describe("Sources", () => {
             res.body["source"].should.have.property("name");
             res.body["source"].should.have.property("tld");
             res.body["source"].name.should.equal(
-              responder.body["sources"][0]["name"]
+              decodeURI(responder.body["sources"][0]["name"])
             );
             res.body["source"].tld.should.equal(
               responder.body["sources"][0]["tld"]
@@ -419,7 +420,7 @@ describe("Reports", () => {
       });
   });
 
-  it("It should retrieve all reports with the type Fact from the database /GET Reports/type/:type", (done) => {
+  it("It should retrieve all reports with the type fact from the database /GET Reports/type/:type", (done) => {
     chai
       .request(server)
       .get("/API/Reports")

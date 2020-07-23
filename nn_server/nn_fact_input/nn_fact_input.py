@@ -1,17 +1,18 @@
-import sys
-import os 
-import combined_classifier
+import sys, os
+dirname = os.path.dirname(__file__)
+sys.path.append(os.path.join(dirname, '..', 'classifier_utilities'))
+sys.path.append(os.path.join(dirname, '..', 'nn_input'))
 from combined_classifier import CombinedClassifier
+from training_input_tagger import TrainingInputTagger
+from nn_input import NNInput
+from fact_feature_tagger import factFeatureTagger
 
-path = os.path.dirname(os.path.realpath(__file__))
+class NNFactInput(NNInput, CombinedClassifier):    
+    def __init__(self):
+        super().__init__()
+        self.setName("nn_fact_input")
+        self.useFeatureTagger(factFeatureTagger)
 
-trainingSetPath = path + '/trainingSet.json'
-modelFilePath = path + '/trainedModels.model'
+    def process(self, text):         
+        return float(self.classify(text))
 
-classifier = CombinedClassifier()
-#classifier.trainModelFromFile(trainingSetPath)
-#classifier.exportModelToFile(modelFilePath)
-classifier.importModelFromFile(modelFilePath)
-
-for line in sys.stdin:
-    print(classifier.classify(line))

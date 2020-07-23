@@ -100,7 +100,7 @@ api.get("/sources/name/:sourceName", (req, res, next) => {
     {
       host: "localhost",
       port: 3000,
-      path: "/sources/name/" + req.params.sourceName,
+      path: "/sources/name/" + encodeURI(req.params.sourceName),
       method: "GET",
     },
     (response) => {
@@ -123,6 +123,7 @@ api.get("/sources/name/:sourceName", (req, res, next) => {
 
   request.end();
 });
+
 /**
  * @description base get request route. Reroutes the api call to the api server, gets all sources in the db
  * @author Stuart Barclay
@@ -590,10 +591,55 @@ api.get("/reports", (req, res, next) => {
   request.end();
 });
 
+api.get("/reports/update", (req, res, next) => {
+  let data = "";
+  getRequest("http://localhost:8080/api/reports/active/1", (data) => {
+    data = JSON.parse(data);
+    let prevReport = data.reports[0];
+    for (report of data.reports) {
+      if (
+        report["Report Data"].toLowerCase() ===
+          prevReport["Report Data"].toLowerCase() &&
+        report["_id"] !== prevReport["_id"]
+      ) {
+        ++prevReport["Report Count"];
+        putRequest(
+          "localhost",
+          "/api/reports/id/" + prevReport["_id"],
+          {
+            reportCount: prevReport["Report Count"],
+          },
+          (_data) => (data += _data)
+        );
+        putRequest(
+          "localhost",
+          "/api/reports/id/" + report["_id"],
+          {
+            bActive: 0,
+          },
+          (_data) => (data += _data)
+        );
+      } else {
+        prevReport = report;
+      }
+    }
+    if (data !== "") res.status(200).send({ responseData: data });
+    else {
+      let error = new Error("No Updates Occurred Due To An Error");
+      error.status = 500;
+      next(error);
+    }
+  });
+});
+
 api.post("/reports", (req, res, next) => {
   /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   let requestBody = "";
   try {
+    req.body.description = req.body.description
+      .split(" ")
+      .filter((e) => e != "")
+      .join(" ");
     requestBody = JSON.stringify(req.body);
   } catch (e) {
     let error = new Error(e.message);
@@ -903,6 +949,45 @@ api.delete("/reports/active/:active", (req, res, next) => {
   request.end();
 });
 
+api.post("/Check", (req, res, next) => {
+  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  }
+  const request = http.request(
+    {
+      host: "localhost",
+      port: 8082,
+      path: "/Check",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(requestBody),
+      },
+    },
+    (response) => {
+      response.setEncoding("utf-8");
+      let responseString = "";
+      response.on("data", (chunk) => {
+        responseString += chunk;
+      });
+      response.on("end", () => {
+        res.status(response.statusCode).json(JSON.parse(responseString));
+      });
+    }
+  );
+  request.on("error", (e) => {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  });
+});
+
 /**
  * @description API calls done incorrectly will arrive at this route and be dismissed.
  * @author Stuart Barclay
@@ -925,3 +1010,59 @@ api.use((error, req, res, next) => {
 });
 
 module.exports = api;
+
+const putRequest = (_host, _path, params, callBack) => {
+  let req = http
+    .request(
+      {
+        host: _host,
+        port: 8080,
+        path: _path,
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Content-Length": JSON.stringify(params).length,
+        },
+      },
+      (response) => {
+        response.setEncoding("utf-8");
+        let responseString = "";
+        response.on("data", (chunk) => {
+          responseString += chunk;
+        });
+        response.on("end", () => {
+          return callBack(responseString);
+        });
+      }
+    )
+    .on("error", (err) => {
+      morgan(":date[clf] :method :url :status :response-time ms", {
+        stream: fs.createWriteStream(path.join(root, "logs", "error.log"), {
+          flags: "a",
+        }),
+      });
+    });
+
+  req.write(JSON.stringify(params));
+  req.end();
+};
+
+const getRequest = (url, callBack) => {
+  http.get(url, (resp) => {
+    let data = "";
+    resp.on("data", (chunk) => {
+      data += chunk;
+    });
+    resp
+      .on("end", () => {
+        return callBack(data);
+      })
+      .on("error", (err) => {
+        morgan(":date[clf] :method :url :status :response-time ms", {
+          stream: fs.createWriteStream(path.join(root, "logs", "error.log"), {
+            flags: "a",
+          }),
+        });
+      });
+  });
+};
