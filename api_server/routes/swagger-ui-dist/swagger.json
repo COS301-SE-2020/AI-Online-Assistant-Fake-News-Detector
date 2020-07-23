@@ -888,7 +888,9 @@
         ],
         "responses": {
           "200": {
-            "schema": {}
+            "schema": {
+              "$ref": "#/definitions/POST Process"
+            }
           },
           "500": {
             "description": "Server Error"
