@@ -1,4 +1,2 @@
 node_modules
 frontend/dist
-api_server/logfiles/access.log
-api_server/logfiles/error.log
