@@ -126,7 +126,7 @@ router.put("/:emailAddress", (req, res, next) => {
  */
 router.delete("/:emailAddress", (req, res, next) => {
   const id = req.params.emailAddress;
-  Moderator.remove({ emailAddress: id })
+  Moderator.deleteOne({ emailAddress: id })
     .exec()
     .then((result) => {
       res.status(200).json({
