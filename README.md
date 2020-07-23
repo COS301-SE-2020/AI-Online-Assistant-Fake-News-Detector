@@ -24,11 +24,11 @@
 
 <div align="center">
   <h5>
-    <a href="http://fakenewsdetector.tech/">
+    <a target="_blank" href="http://fakenewsdetector.tech/">
       Website
     </a>
     <span> | </span>
-    <a href="https://youtu.be/xQSGfRS1p_s">
+    <a target="_blank" href="https://youtu.be/xQSGfRS1p_s">
       Demo 2
     </a>
   </h5>
