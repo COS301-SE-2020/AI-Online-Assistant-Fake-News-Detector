@@ -12,7 +12,6 @@ describe("Use Case 3.3 - Reports Update", () => {
       .request(server)
       .get("/API/Reports/active/1")
       .end((err, res) => {
-        console.log(res.body);
         expect(err).to.be.null;
         res.should.have.status(200);
         res.body.should.be.a("object");
@@ -41,7 +40,6 @@ describe("Use Case 3.3 - Reports Update", () => {
       .request(server)
       .get("/API/Reports/active/1")
       .end((err, res) => {
-        console.log(res.body);
         expect(err).to.be.null;
         res.should.have.status(200);
         res.body.should.be.a("object");

@@ -100,7 +100,7 @@ api.get("/sources/name/:sourceName", (req, res, next) => {
     {
       host: "localhost",
       port: 3000,
-      path: "/sources/name/" + req.params.sourceName,
+      path: "/sources/name/" + encodeURI(req.params.sourceName),
       method: "GET",
     },
     (response) => {

@@ -21,7 +21,8 @@ describe("API-DB Integration, Get and Update", () => {
         done();
       });
   });
-  it('It should get the top available source based on name and update its rating', (done) => {
+
+  it("It should get the top available source based on name and update its rating", (done) => {
     const source = {
       rating: "300",
     };
@@ -31,11 +32,13 @@ describe("API-DB Integration, Get and Update", () => {
       .end((err, responder) => {
         chai
           .request(server)
-          .get("/API/Sources/name/" + responder.body["sources"][0].name)
+          .get(
+            "/API/Sources/name/" + encodeURI(responder.body["sources"][0].name)
+          )
           .end((err, res) => {
             chai
               .request(server)
-              .put("/API/Sources/" +res.body["source"]._id)
+              .put("/API/Sources/" + res.body["source"]._id)
               .send(source)
               .end((err, response) => {
                 response.should.have.status(200);
@@ -47,5 +50,4 @@ describe("API-DB Integration, Get and Update", () => {
           });
       });
   });
-  
 });

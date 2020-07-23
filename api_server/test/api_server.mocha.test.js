@@ -139,10 +139,7 @@ describe("Sources", () => {
       .end((err, responder) => {
         chai
           .request(server)
-          .get(
-            "/API/Sources/name/" +
-              responder.body["sources"][responder.body["count"] - 1].name
-          )
+          .get("/API/Sources/name/" + responder.body["sources"][0].name)
           .end((err, res) => {
             expect(err).to.be.null;
             res.should.have.status(200);
@@ -151,10 +148,10 @@ describe("Sources", () => {
             res.body["source"].should.have.property("name");
             res.body["source"].should.have.property("tld");
             res.body["source"].name.should.equal(
-              responder.body["sources"][responder.body["count"] - 1]["name"]
+              decodeURI(responder.body["sources"][0]["name"])
             );
             res.body["source"].tld.should.equal(
-              responder.body["sources"][responder.body["count"] - 1]["tld"]
+              responder.body["sources"][0]["tld"]
             );
             done();
           });

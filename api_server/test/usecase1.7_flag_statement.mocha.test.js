@@ -18,7 +18,6 @@ describe("Use Case 1.7 - Flag Statement", () => {
         res.body.reports[0].should.have.property("_id");
         res.body.reports[0].should.have.property("type");
         res.body.reports[0].should.have.property("Date Captured");
-        console.log(res.body);
         done();
       });
   });
@@ -55,7 +54,6 @@ describe("Use Case 1.7 - Flag Statement", () => {
         res.body.reports[0].should.have.property("_id");
         res.body.reports[0].should.have.property("type");
         res.body.reports[0].should.have.property("Date Captured");
-        console.log(res.body);
         done();
       });
   });
