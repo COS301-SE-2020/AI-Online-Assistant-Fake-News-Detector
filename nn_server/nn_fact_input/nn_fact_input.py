@@ -10,10 +10,9 @@ from fact_feature_tagger import factFeatureTagger
 class NNFactInput(NNInput, CombinedClassifier):    
     def __init__(self):
         super().__init__()
+        self.setName("nn_fact_input")
         self.useFeatureTagger(factFeatureTagger)
 
-    def process(self, sentences):
-        seperator = " "
-        result = self.classify(seperator.join(sentences))
-        return float(result)
+    def process(self, text):         
+        return float(self.classify(text))
 

@@ -1,19 +1,21 @@
+import math
+import random
 import json
 import multiprocessing
 from multiprocessing import Process, Manager
 
 class TrainingInputTagger:
-    def __init(self, featureTagger):
+    def __init__(self, featureTagger):
         self.__featureTagger = featureTagger
-
+        
     def __loadDataFromFile(self, filePath):
         jsonFile = open(filePath, 'r')
         jsonString = jsonFile.read()
         jsonFile.close()
         dataList = list(json.loads(jsonString.lower()))
         random.shuffle(dataList)
-        return dataList
-    
+        return dataList  
+        
     def __sampleFeatureTagger(self, sampleList, processGlobalResultsList, processGlobalResultsLock):
         processLocalResultsList = []
         for sample in sampleList:
@@ -40,7 +42,7 @@ class TrainingInputTagger:
             processList.append(newProcess)
         for process in processList:
             process.join()
-        return processGlobalResultsList
+        return processGlobalResultsList  
     
     def tagDataFromFile(self, filePath):
         return self.__parallelFeatureTagger(self.__loadDataFromFile(filePath))

@@ -1,5 +1,4 @@
 import sys
-import random
 import statistics
 import math
 import pickle
@@ -11,6 +10,7 @@ from sklearn.svm import SVC, LinearSVC, NuSVC
     
 class CombinedClassifier:
     def __init__(self):
+        super().__init__()
         self.__featureTagger = None
         self.__classifiers = [SklearnClassifier(MultinomialNB()),
                             SklearnClassifier(BernoulliNB()),
@@ -23,7 +23,7 @@ class CombinedClassifier:
     
     def exportModelToFile(self, modelFilePath):
         fileOut = open(modelFilePath, 'wb')
-        pickle.dump(self.classifiers, fileOut)
+        pickle.dump(self.__classifiers, fileOut)
         fileOut.close()
         
     def importModelFromFile(self, modelFilePath):
@@ -36,14 +36,14 @@ class CombinedClassifier:
             classifier.train(taggedTrainingData)
         print("checking accuracy...")
         for classifier in self.__classifiers:
-            print(nltk.classify.accuracy(classifier, trainingSet))
+            print(nltk.classify.accuracy(classifier, taggedTrainingData))
 
     def useFeatureTagger(self, featureTagger):
         self.__featureTagger = featureTagger
             
     def classify(self, sample):
         results = []
-        features = sample.lower()
+        features = sample
         if self.__featureTagger:
             features = self.__featureTagger(features)                       
         for classifier in self.__classifiers:

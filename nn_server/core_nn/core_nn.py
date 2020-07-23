@@ -8,13 +8,14 @@ from combined_classifier import CombinedClassifier
 class CoreNN(NNInput, CombinedClassifier):
     def __init__(self):
         super().__init__()
-        self.inputs = []
+        self.setName("core_nn")
+        self.__inputs = []        
 
     def addInput(self, i):
-        self.inputs.append(i)
-        
-    def process(self, sentences):
-        results = []
-        for i in self.inputs:
-            results.append(i.process(sentences))
-        return sum(results)        
+        self.__inputs.append(i)
+                
+    def process(self, text):
+        resultDict = {}
+        for i in self.__inputs:
+            resultDict[i.getName()] = i.process(text)
+        return float(self.classify(resultDict))
