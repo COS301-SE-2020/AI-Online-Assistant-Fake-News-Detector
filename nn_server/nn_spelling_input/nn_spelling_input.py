@@ -3,6 +3,8 @@ dirname = os.path.dirname(__file__)
 sys.path.append(os.path.join(dirname, '..', 'nn_input'))
 from nn_input import NNInput
 import nltk
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
 from nltk.tokenize import word_tokenize
 from spellchecker import SpellChecker
 from autocorrect import Speller
