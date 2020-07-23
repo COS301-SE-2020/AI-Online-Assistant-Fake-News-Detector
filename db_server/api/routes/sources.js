@@ -134,14 +134,14 @@ router.delete("/:sourceId", (req, res, next) => {
       res.status(500).json({ error: err });
     });
 });
-module.exports = router;
+
 /**
  * @description get source by name
  * @author Quinton Coetzee
  */
 router.get("/name/:sourceName", (req, res, next) => {
-  const name = req.params.sourceName;  
-  Source.findOne({ name: new RegExp(name, 'i') })
+  const name = decodeURI(req.params.sourceName);
+  Source.findOne({ name: new RegExp(name, "i") })
     .select("name tld rating _id")
     .exec()
     .then((doc) => {
@@ -164,3 +164,5 @@ router.get("/name/:sourceName", (req, res, next) => {
       res.status(500).json({ error: err });
     });
 });
+
+module.exports = router;

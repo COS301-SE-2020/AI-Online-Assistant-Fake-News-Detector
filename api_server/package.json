@@ -4,7 +4,10 @@
   "description": "Fake news detector api server. 5Bits Capstone Project",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --exit \"test/*.mocha.test.js\" --timeout 10000",
+    "test": "mocha --exit --timeout 30000 \"test/api_server.mocha.test.js\"",
+    "testUC1.7": "mocha --exit --timeout 30000 \"test/usecase1.7_flag_statement.mocha.test\"",
+    "testUC1.8": "mocha --exit --timeout 30000 \"test/usecase1.8_report_source.mocha.test\"",
+    "testUC3.3": "mocha --exit --timeout 30000 \"test/usecase3.3_update_reports.mocha.test\"",
     "start": "concurrently \"nodemon api_server.js\" \"nodemon ../db_server/db_server.js\" \"nodemon ../nn_server/nn_server.js\""
   },
   "author": "5Bits",
