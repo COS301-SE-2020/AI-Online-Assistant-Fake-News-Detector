@@ -15,15 +15,16 @@ from nn_spelling_input import NNSpellingInput
 
 dirname = os.path.dirname(os.path.realpath(__file__))
 factInputModelPath = os.path.join(dirname, "trained_models/nn_fact_input.model")
+coreNNModelPath = os.path.join(dirname, "trained_models/core_nn.model")
 
 factInput = NNFactInput()
 factInput.importModelFromFile(factInputModelPath)
 spellingInput = NNSpellingInput()
 
 coreNN = CoreNN()
-#coreNN.importModelFromFile(factInputModelPath)
+coreNN.importModelFromFile(coreNNModelPath)
 coreNN.addInput(factInput)
-coreNN.addInput(spellingInput)
+#coreNN.addInput(spellingInput) # very slow, need another method
 
 app = flask.Flask(__name__)
 

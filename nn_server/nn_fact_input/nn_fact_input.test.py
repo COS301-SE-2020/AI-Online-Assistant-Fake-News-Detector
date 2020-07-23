@@ -13,7 +13,7 @@ class TestApp(unittest.TestCase):
 
     def testProcess(self):
         print("Testing if text processing works")
-        assert isinstance(self.factInput.process(["Some test text.", "Some more text."]), float)
+        assert isinstance(self.factInput.process("Some test text. Some more text."), float)
         print("\tPass 1 - Recieves sentence array and returns float result")
         
 if __name__ == '__main__':

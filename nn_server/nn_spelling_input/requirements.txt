@@ -1,4 +1,4 @@
-nltk==3.5
 pyspellchecker==0.5.4
+nltk==3.5
 autocorrect==2.0.0
 spellchecker==0.4
