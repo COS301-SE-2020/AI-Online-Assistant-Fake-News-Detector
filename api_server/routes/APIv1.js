@@ -959,11 +959,12 @@ api.post("/Check", (req, res, next) => {
     error.status = 500;
     next(error);
   }
+  console.log(req.body);
   const request = http.request(
     {
-      host: "localhost",
+      host: "127.0.0.1",
       port: 8082,
-      path: "/Check",
+      path: "/api/Check",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
