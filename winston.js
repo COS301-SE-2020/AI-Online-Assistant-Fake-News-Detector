@@ -70,4 +70,4 @@ class LoggerService {
     this.logger.log("info", message);
   }
 }
-module.exports = LoggerService;
+module.exports= LoggerService;
