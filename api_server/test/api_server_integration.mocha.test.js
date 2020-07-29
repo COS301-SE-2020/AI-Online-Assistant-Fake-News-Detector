@@ -42,7 +42,7 @@ describe("API-DB Integration, Get and Update", () => {
           .end((err, res) => {
             chai
               .request(server)
-              .put("/API/Sources/" + res.body.response.Source.ID)
+              .put("/API/Sources/id/" + res.body.response.Source.ID)
               .send(source)
               .end((err, response) => {
                 response.should.have.status(200);

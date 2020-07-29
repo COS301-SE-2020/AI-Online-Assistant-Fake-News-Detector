@@ -163,7 +163,7 @@ api.get("/sources/id/:sourceId", (req, res, next) => {
  * @author Stuart Barclay
  */
 
-api.put("/sources/:sourceId", (req, res, next) => {
+api.put("/sources/id/:sourceId", (req, res, next) => {
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -176,7 +176,7 @@ api.put("/sources/:sourceId", (req, res, next) => {
     {
       host: "localhost",
       port: 3000,
-      path: "/sources/" + req.params.sourceId,
+      path: "/sources/id/" + req.params.sourceId,
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -210,12 +210,12 @@ api.put("/sources/:sourceId", (req, res, next) => {
  * @author Stuart Barclay
  */
 
-api.delete("/sources/:sourceId", (req, res, next) => {
+api.delete("/sources/id/:sourceId", (req, res, next) => {
   const request = http.request(
     {
       host: "localhost",
       port: 3000,
-      path: "/sources/" + req.params.sourceId,
+      path: "/sources/id/" + req.params.sourceId,
       method: "DELETE",
     },
     (response) => {

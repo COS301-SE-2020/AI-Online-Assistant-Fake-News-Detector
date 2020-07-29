@@ -130,7 +130,7 @@ describe("Sources Api", () => {
         chai
           .request(server)
           .put(
-            "/sources/" +
+            "/sources/id/" +
               res.body.response.Sources[res.body.response.Sources.length - 1].ID
           )
           .send(source)
@@ -180,7 +180,7 @@ describe("Sources Api", () => {
         chai
           .request(server)
           .delete(
-            "/sources/" +
+            "/sources/id/" +
               res.body.response.Sources[res.body.response.count - 1].ID
           )
           .end(function (error, res) {

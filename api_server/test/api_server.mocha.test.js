@@ -192,7 +192,7 @@ describe("Sources", () => {
         chai
           .request(server)
           .put(
-            "/API/Sources/" +
+            "/API/Sources/id/" +
               responder.body.response.Sources[
                 responder.body.response.Sources.length - 1
               ].ID
@@ -222,7 +222,7 @@ describe("Sources", () => {
         chai
           .request(server)
           .delete(
-            "/API/Sources/" +
+            "/API/Sources/id/" +
               responder.body.response.Sources[
                 responder.body.response.Sources.length - 1
               ].ID
