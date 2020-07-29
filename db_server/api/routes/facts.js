@@ -14,24 +14,23 @@ router.get("/", (req, res, next) => {
     .exec()
     .then((docs) => {
       const response = {
-        count: docs.length,
-        facts: docs.map((doc) => {
-          return {
-            statement: doc.statement,
-            popularity: doc.popularity,
-            _id: doc._id,
-            request: {
-              type: "GET",
-              url: "/Facts/" + doc._id,
-            },
-          };
-        }),
+        response: {
+          message: "Facts retrieved successfully",
+          success: true,
+          count: docs.length,
+          Facts: docs.map((doc) => {
+            return {
+              ID: doc._id,
+              Statement: doc.statement,
+              Popularity: doc.popularity,
+            };
+          }),
+        },
       };
       res.status(200).json(response);
     })
     .catch((err) => {
-      // console.log(err);
-      res.status(500).json({ error: err });
+      res.status(500).json({ response: { message: err, success: false } });
     });
 });
 
@@ -48,23 +47,20 @@ router.post("/", (req, res, next) => {
   fact
     .save()
     .then((result) => {
-      // console.log(result);
       res.status(201).json({
-        message: "Created fact successfully",
-        createdFact: {
-          _id: result.id,
-          statement: result.statement,
-          popularity: result.popularity,
-          request: {
-            type: "POST",
-            url: "/Facts/" + result._id,
+        response: {
+          message: "Fact created successfully",
+          success: true,
+          Fact: {
+            ID: result.id,
+            Statement: result.statement,
+            Popularity: result.popularity,
           },
         },
       });
     })
     .catch((err) => {
-      // console.log(err);
-      res.status(500).json({ error: err });
+      res.status(500).json({ response: { message: err, success: false } });
     });
 });
 
@@ -77,16 +73,29 @@ router.get("/:factId", (req, res, next) => {
   Fact.findById(id)
     .exec()
     .then((doc) => {
-      // console.log("From Database", doc);
       if (doc) {
-        res.status(200).json({ doc });
+        res.status(200).json({
+          response: {
+            message: "Retrieved fact successfully",
+            success: true,
+            Fact: {
+              ID: doc._id,
+              Statement: doc.statement,
+              Popularity: doc.popularity,
+            },
+          },
+        });
       } else {
-        res.status(404).json({ message: "No database entry for provided ID" });
+        res.status(404).json({
+          response: {
+            message: "No database entry for provided ID",
+            success: false,
+          },
+        });
       }
     })
     .catch((err) => {
-      // console.log(err);
-      res.status(500).json({ error: err });
+      res.status(500).json({ response: { message: err, success: false } });
     });
 });
 
@@ -99,11 +108,24 @@ router.delete("/:factId", (req, res, next) => {
   Fact.deleteOne({ _id: id })
     .exec()
     .then((result) => {
-      res.status(200).json(result);
+      if (result.deletedCount > 0) {
+        res.status(200).json({
+          response: {
+            message: "Fact deleted successfully",
+            success: true,
+          },
+        });
+      } else {
+        res.status(404).json({
+          response: {
+            message: "Fact not deleted",
+            success: false,
+          },
+        });
+      }
     })
     .catch((err) => {
-      // console.log(err);
-      res.status(500).json({ error: err });
+      res.status(500).json({ response: { message: err, success: false } });
     });
 });
 module.exports = router;

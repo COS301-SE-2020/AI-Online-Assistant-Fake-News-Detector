@@ -1,0 +1,11 @@
+[29/Jul/2020 12:36:21] ::1 - - GET /home HTTP/1.1 404 8.915 ms
+[29/Jul/2020 12:37:35] ::1 - - GET /home HTTP/1.1 404 1.135 ms
+[29/Jul/2020 02:42:00] ::1 - - GET /facts HTTP/1.1 404 31.090 ms
+[29/Jul/2020 02:46:27] ::1 - - DELETE /API/facts/5f09a0e8b2c67b4d8ca772%20%20%20%2046 HTTP/1.1 500 3.622 ms
+[29/Jul/2020 02:46:53] ::ffff:127.0.0.1 - - DELETE /API/facts/5f09a0e8b2c67b4d8ca772%20%20%20%2046 HTTP/1.1 500 8.861 ms
+[29/Jul/2020 02:46:56] ::ffff:127.0.0.1 - - DELETE /API/facts/5f09a0e8b2c67b4d8ca772%20%20%20%2046 HTTP/1.1 500 0.867 ms
+[29/Jul/2020 02:47:02] ::1 - - DELETE /API/facts/5f09a0e8b2c67b4d8ca772%20%20%20%2046 HTTP/1.1 500 1.193 ms
+[29/Jul/2020 03:08:26] ::1 - - GET /API/moderators/5Bits@gmail.coza HTTP/1.1 404 2199.841 ms
+[29/Jul/2020 03:08:49] ::ffff:127.0.0.1 - - GET /API/moderators/5Bits@gmail.coza HTTP/1.1 404 4900.936 ms
+[29/Jul/2020 03:16:01] ::ffff:127.0.0.1 - - PUT /API/moderators/u15015069@tuks.co.za HTTP/1.1 404 8750.560 ms
+[29/Jul/2020 03:16:34] ::1 - - PUT /API/moderators/u15015069@tuks.co.za HTTP/1.1 404 2694.582 ms

@@ -52,7 +52,7 @@ const getRequest = (url, callBack) => {
   });
 };
 
-cron.schedule("59 23 * * *", () => {
+cron.schedule("55 23 * * *", () => {
   getRequest("localhost", "/api/reports/update", (data) => console.log(data));
   logger.info("Cron job for updating reports ran.");
 });
@@ -126,8 +126,8 @@ server.use("*", (req, res, next) => {
     .sendFile(path.join(root, "frontend", "dist", "AiNews", "index.html"));
 });
 
-let listener = server.listen(port, () => {
-  logger.info("API_Server listening on port " + listener.address().port);
-});
+let listener = server.listen(port, () =>
+  logger.info("API_Server listening on port " + listener.address().port)
+);
 
 module.exports = server;

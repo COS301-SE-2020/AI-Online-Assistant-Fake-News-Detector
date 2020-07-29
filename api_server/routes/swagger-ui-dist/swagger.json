@@ -22,7 +22,7 @@
       "description": "Processing Routes"
     }
   ],
-  "host": "fakenewsdetector.tech",
+  "host": "localhost:8080",
   "basePath": "/API",
   "schemes": [
     "http"
@@ -44,7 +44,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -82,7 +84,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -112,11 +116,15 @@
               "$ref": "#/definitions/GET Specific Fact"
             }
           },
-          "400": {
-            "description": "No database entry for provided ID"
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -144,8 +152,15 @@
               "$ref": "#/definitions/DELETE Specific Fact"
             }
           },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -160,13 +175,15 @@
         "operationId": "",
         "produces": "application/json",
         "responses": {
-          "201": {
+          "200": {
             "schema": {
               "$ref": "#/definitions/GET Source"
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -204,7 +221,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -239,7 +258,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -268,7 +289,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -310,7 +333,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -331,7 +356,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -390,7 +417,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -425,7 +454,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -454,7 +485,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -517,7 +550,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -538,7 +573,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -576,7 +613,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -606,7 +645,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -635,7 +676,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -677,7 +720,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -707,7 +752,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -749,7 +796,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -779,7 +828,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -808,7 +859,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -853,7 +906,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -893,7 +948,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -919,28 +976,40 @@
     "GET Fact": {
       "type": "object",
       "properties": {
-        "statement": {
-          "type": "string",
-          "example": "There is no moon"
-        },
-        "popularity": {
-          "type": "integer",
-          "example": "100"
-        },
-        "_id": {
-          "type": "string",
-          "example": "5ee08d65b9bd0cd05ed2a352"
-        },
-        "request": {
+        "response": {
           "type": "object",
           "properties": {
-            "type": {
+            "message": {
               "type": "string",
-              "example": "GET"
+              "example": "Facts retrieved successfully"
             },
-            "url": {
-              "type": "string",
-              "example": "/facts/5ee08d65b9bd0cd05ed2a352"
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "count": {
+              "type": "integer",
+              "example": 10
+            },
+            "Facts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5ee08d65b9bd0cd05ed2a352"
+                  },
+                  "Statement": {
+                    "type": "string",
+                    "example": "There is no moon"
+                  },
+                  "Popularity": {
+                    "type": "integer",
+                    "example": "100"
+                  }
+                }
+              }
             }
           }
         }
@@ -949,35 +1018,31 @@
     "POST Fact": {
       "type": "object",
       "properties": {
-        "message": {
-          "type": "string",
-          "example": "Created fact successfully"
-        },
-        "createdFact": {
+        "response": {
           "type": "object",
           "properties": {
-            "_id": {
+            "message": {
               "type": "string",
-              "example": "5ee08d65b9bd0cd05ed2a352"
+              "example": "Fact created successfully"
             },
-            "statement": {
-              "type": "string",
-              "example": "There is no moon"
+            "success": {
+              "type": "boolean",
+              "example": true
             },
-            "popularity": {
-              "type": "integer",
-              "example": "100"
-            },
-            "request": {
+            "Fact": {
               "type": "object",
               "properties": {
-                "type": {
+                "ID": {
                   "type": "string",
-                  "example": "POST"
+                  "example": "5ee08d65b9bd0cd05ed2a352"
                 },
-                "url": {
+                "Statement": {
                   "type": "string",
-                  "example": "/facts/5ee08d65b9bd0cd05ed2a352"
+                  "example": "There is no moon"
+                },
+                "Popularity": {
+                  "type": "integer",
+                  "example": 100
                 }
               }
             }
@@ -988,81 +1053,53 @@
     "GET Specific Fact": {
       "type": "object",
       "properties": {
-        "_id": {
-          "type": "string",
-          "example": "5ee08e846d1156d1aaa15a53"
-        },
-        "statement": {
-          "type": "string",
-          "example": "The earth is flat"
-        },
-        "popularity": {
-          "type": "integer",
-          "example": 100
-        },
-        "_v": {
-          "type": "integer",
-          "example": 0
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Retrieved fact successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "Fact": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5ee08e846d1156d1aaa15a53"
+                },
+                "Statement": {
+                  "type": "string",
+                  "example": "The earth is flat"
+                },
+                "Popularity": {
+                  "type": "integer",
+                  "example": 100
+                }
+              }
+            }
+          }
         }
       }
     },
     "DELETE Specific Fact": {
       "type": "object",
       "properties": {
-        "n": {
-          "type": "integer",
-          "example": 1
-        },
-        "opTime": {
+        "response": {
           "type": "object",
           "properties": {
-            "ts": {
+            "message": {
               "type": "string",
-              "example": "6847981318001655813"
+              "example": "Fact deleted successfully"
             },
-            "t": {
-              "type": "integer",
-              "example": 9
+            "success": {
+              "type": "boolean",
+              "example": true
             }
           }
-        },
-        "electionId": {
-          "type": "string",
-          "example": "7fffffff0000000000000009"
-        },
-        "ok": {
-          "type": "integer",
-          "example": 1
-        },
-        "$clusterTime": {
-          "type": "object",
-          "properties": {
-            "clusterTime": {
-              "type": "string",
-              "example": "6847981318001655813"
-            },
-            "signature": {
-              "type": "object",
-              "properties": {
-                "hash": {
-                  "type": "string",
-                  "example": "eSazwwZUt1sfyEiijzLHwAvs36Y="
-                },
-                "keyId": {
-                  "type": "string",
-                  "example": "6835849740492472323"
-                }
-              }
-            }
-          }
-        },
-        "operationTime": {
-          "type": "string",
-          "example": "6847981318001655813"
-        },
-        "deletedCount": {
-          "type": "integer",
-          "example": 1
         }
       }
     },
@@ -1951,6 +1988,42 @@
             "url": {
               "type": "string",
               "example": "/Sources/5edf31165d617a2850632422"
+            }
+          }
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Server Error"
+            },
+            "success": {
+              "type": "boolean",
+              "example": false
+            }
+          }
+        }
+      }
+    },
+    "Not Found": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Not found"
+            },
+            "success": {
+              "type": "boolean",
+              "example": false
             }
           }
         }
