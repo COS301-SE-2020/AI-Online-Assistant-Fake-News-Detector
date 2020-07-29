@@ -143,7 +143,7 @@ router.get("/name/:sourceName", (req, res, next) => {
  * @description put request to update rating of news source based on ID
  * @author Quinton Coetzee
  */
-router.put("/:sourceId", (req, res, next) => {
+router.put("/id/:sourceId", (req, res, next) => {
   const id = req.params.sourceId;
   Source.updateOne({ _id: id }, { $set: req.body })
     .exec()
@@ -158,7 +158,7 @@ router.put("/:sourceId", (req, res, next) => {
         });
       } // Found but not modified
       else if (result.nModified == 0 && result.n > 0) {
-        res.status(304).json({
+        res.status(202).json({
           response: {
             message: "No sources updated",
             success: true,
@@ -183,7 +183,7 @@ router.put("/:sourceId", (req, res, next) => {
  * @description delete request to delete a known fake news source
  * @author Quinton Coetzee
  */
-router.delete("/:sourceId", (req, res, next) => {
+router.delete("/id/:sourceId", (req, res, next) => {
   const id = req.params.sourceId;
   Source.deleteOne({ _id: id })
     .exec()

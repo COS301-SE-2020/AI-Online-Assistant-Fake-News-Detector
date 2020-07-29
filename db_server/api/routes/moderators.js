@@ -136,7 +136,7 @@ router.put("/:emailAddress", (req, res, next) => {
         });
       } // Found but not modified
       else if (result.nModified == 0 && result.n > 0) {
-        res.status(304).json({
+        res.status(202).json({
           response: {
             message: "No details updated",
             success: true,

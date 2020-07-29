@@ -15,7 +15,7 @@ router.get("/", (req, res, next) => {
     .then((reports) => {
       const response = {
         response: {
-          message: "Report created successfully",
+          message: "Reports retireved successfully",
           success: true,
           count: reports.length,
           Reports: reports.map((report) => {
@@ -99,7 +99,7 @@ router.get("/id/:id", (req, res, next) => {
                 doc.type == 1 ? "Fact" : doc.type == 2 ? "Source" : "undefined",
               "Report Data": doc.description,
               "Date Captured": doc.dCaptured,
-              "Report Count": doc.reportCounter,
+              "Report Count": doc.reportCount,
               "Active Status": doc.bActive,
             },
           },
@@ -236,7 +236,7 @@ router.put("/id/:id", (req, res, next) => {
         });
       } // Found but not modified
       else if (result.nModified == 0 && result.n > 0) {
-        res.status(304).json({
+        res.status(202).json({
           response: {
             message: "No reports updated",
             success: true,
@@ -275,7 +275,7 @@ router.put("/active/:active", (req, res, next) => {
         });
       } // Found but not modified
       else if (result.nModified == 0 && result.n > 0) {
-        res.status(304).json({
+        res.status(202).json({
           response: {
             message: "No reports updated",
             success: true,
@@ -314,7 +314,7 @@ router.put("/type/:type", (req, res, next) => {
         });
       } // Found but not modified
       else if (result.nModified == 0 && result.n > 0) {
-        res.status(304).json({
+        res.status(202).json({
           response: {
             message: "No reports updated",
             success: true,
