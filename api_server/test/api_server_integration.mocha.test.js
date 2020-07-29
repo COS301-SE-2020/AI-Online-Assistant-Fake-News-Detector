@@ -14,17 +14,20 @@ describe("API-DB Integration, Get and Update", () => {
         expect(err).to.be.null;
         res.should.have.status(200);
         res.body.should.be.a("object");
-        res.body.sources[0].should.have.property("_id");
-        res.body.sources[0].should.have.property("name");
-        res.body.sources[0].should.have.property("rating");
-        res.body.sources[0].should.have.property("tld");
+        res.body.should.have.property("response");
+        res.body.response.should.have.property("message");
+        res.body.response.should.have.property("count");
+        res.body.response.Sources[0].should.have.property("ID");
+        res.body.response.Sources[0].should.have.property("Name");
+        res.body.response.Sources[0].should.have.property("Rating");
+        res.body.response.Sources[0].should.have.property("Domain Name");
         done();
       });
   });
 
   it("It should get the top available source based on name and update its rating", (done) => {
     const source = {
-      rating: "300",
+      rating: (Math.random() * 100).toFixed(0),
     };
     chai
       .request(server)
@@ -33,18 +36,21 @@ describe("API-DB Integration, Get and Update", () => {
         chai
           .request(server)
           .get(
-            "/API/Sources/name/" + encodeURI(responder.body["sources"][0].name)
+            "/API/Sources/name/" +
+              encodeURI(responder.body.response.Sources[0].Name)
           )
           .end((err, res) => {
             chai
               .request(server)
-              .put("/API/Sources/" + res.body["source"]._id)
+              .put("/API/Sources/" + res.body.response.Source.ID)
               .send(source)
               .end((err, response) => {
                 response.should.have.status(200);
                 response.body.should.be.a("object");
-                response.body.should.have.property("message");
-                response.body.message.should.equal("Source Updated");
+                response.body.should.have.property("response");
+                response.body.response.message.should.equal(
+                  "Source details updated"
+                );
                 done();
               });
           });

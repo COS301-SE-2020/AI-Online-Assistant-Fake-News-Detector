@@ -14,26 +14,30 @@ router.get("/", (req, res, next) => {
     .exec()
     .then((reports) => {
       const response = {
-        count: reports.length,
-        reports: reports.map((report) => {
-          return {
-            _id: report._id,
-            type:
-              report.type == 1
-                ? "Fact"
-                : report.type == 2
-                ? "Source"
-                : "undefined",
-            "Report Data": report.description,
-            "Date Captured": report.dCaptured,
-            "Report Count": report.reportCount,
-          };
-        }),
+        response: {
+          message: "Report created successfully",
+          success: true,
+          count: reports.length,
+          Reports: reports.map((report) => {
+            return {
+              ID: report._id,
+              Type:
+                report.type == 1
+                  ? "Fact"
+                  : report.type == 2
+                  ? "Source"
+                  : "undefined",
+              "Report Data": report.description,
+              "Date Captured": report.dCaptured,
+              "Report Count": report.reportCount,
+            };
+          }),
+        },
       };
       res.status(200).json(response);
     })
     .catch((err) => {
-      res.status(500).json({ error: err });
+      res.status(500).json({ response: { message: err, success: false } });
     });
 });
 
@@ -50,23 +54,26 @@ router.post("/", (req, res, next) => {
   report
     .save()
     .then((result) => {
-      res.status(200).json({
-        message: "Successfully added new report",
-        "Report Details": {
-          _id: result.id,
-          type:
-            result.type == 1
-              ? "Fact"
-              : result.type == 2
-              ? "Source"
-              : "undefined",
-          "Report Data": result.description,
-          "Date Captured": result.dCaptured,
+      res.status(201).json({
+        response: {
+          message: "Report created successfully",
+          success: true,
+          Report: {
+            ID: result.id,
+            Type:
+              result.type == 1
+                ? "Fact"
+                : result.type == 2
+                ? "Source"
+                : "undefined",
+            "Report Data": result.description,
+            "Date Captured": result.dCaptured,
+          },
         },
       });
     })
     .catch((err) => {
-      res.status(500).json({ error: err });
+      res.status(500).json({ response: { message: err, success: false } });
     });
 });
 
@@ -83,24 +90,31 @@ router.get("/id/:id", (req, res, next) => {
     .then((doc) => {
       if (doc) {
         res.status(200).json({
-          Report: {
-            _id: doc._id,
-            type:
-              doc.type == 1 ? "Fact" : doc.type == 2 ? "Source" : "undefined",
-            "Report Data": doc.description,
-            "Date Captured": doc.dCaptured,
-            "Report Count": doc.reportCounter,
+          response: {
+            message: "Retrieved report successfully",
+            success: true,
+            Report: {
+              ID: doc._id,
+              Type:
+                doc.type == 1 ? "Fact" : doc.type == 2 ? "Source" : "undefined",
+              "Report Data": doc.description,
+              "Date Captured": doc.dCaptured,
+              "Report Count": doc.reportCounter,
+              "Active Status": doc.bActive,
+            },
           },
         });
       } else {
         res.status(404).json({
-          message: "No database entry for provided report ID",
+          response: {
+            message: "No database entry for provided ID",
+            success: false,
+          },
         });
       }
     })
     .catch((err) => {
-      // console.log(err);
-      res.status(500).json({ error: err });
+      res.status(500).json({ response: { message: err, success: false } });
     });
 });
 
@@ -118,32 +132,38 @@ router.get("/active/:active", (req, res, next) => {
     .then((reports) => {
       if (reports) {
         const response = {
-          count: reports.length,
-          reports: reports.map((report) => {
-            return {
-              _id: report._id,
-              type:
-                report.type == 1
-                  ? "Fact"
-                  : report.type == 2
-                  ? "Source"
-                  : "undefined",
-              "Report Data": report.description,
-              "Date Captured": report.dCaptured,
-              "Report Count": report.reportCount,
-            };
-          }),
+          response: {
+            message: "Retrieved reports successfully",
+            success: true,
+            count: reports.length,
+            Reports: reports.map((report) => {
+              return {
+                ID: report._id,
+                Type:
+                  report.type == 1
+                    ? "Fact"
+                    : report.type == 2
+                    ? "Source"
+                    : "undefined",
+                "Report Data": report.description,
+                "Date Captured": report.dCaptured,
+                "Report Count": report.reportCount,
+              };
+            }),
+          },
         };
         res.status(200).json(response);
       } else {
         res.status(404).json({
-          message: "No database entry for provided report ID",
+          response: {
+            message: "No database entry for provided active status",
+            success: false,
+          },
         });
       }
     })
     .catch((err) => {
-      // console.log(err);
-      res.status(500).json({ error: err });
+      res.status(500).json({ response: { message: err, success: false } });
     });
 });
 
@@ -159,34 +179,41 @@ router.get("/type/:type", (req, res, next) => {
     .sort("type description")
     .exec()
     .then((reports) => {
-      if (reports) {
+      if (reports.length > 0) {
         const response = {
-          count: reports.length,
-          reports: reports.map((report) => {
-            return {
-              _id: report._id,
-              type:
-                report.type == 1
-                  ? "Fact"
-                  : report.type == 2
-                  ? "Source"
-                  : "undefined",
-              "Report Data": report.description,
-              "Date Captured": report.dCaptured,
-              "Report Count": report.reportCount,
-            };
-          }),
+          response: {
+            message: "Retrieved reports successfully",
+            success: true,
+            count: reports.length,
+            Reports: reports.map((report) => {
+              return {
+                ID: report._id,
+                Type:
+                  report.type == 1
+                    ? "Fact"
+                    : report.type == 2
+                    ? "Source"
+                    : "undefined",
+                "Report Data": report.description,
+                "Date Captured": report.dCaptured,
+                "Report Count": report.reportCount,
+                "Active Status": report.bActive,
+              };
+            }),
+          },
         };
         res.status(200).json(response);
       } else {
         res.status(404).json({
-          message: "No database entry for provided report ID",
+          response: {
+            message: "No database entry for provided email address",
+            success: false,
+          },
         });
       }
     })
     .catch((err) => {
-      // console.log(err);
-      res.status(500).json({ error: err });
+      res.status(500).json({ response: { message: err, success: false } });
     });
 });
 
@@ -199,14 +226,34 @@ router.put("/id/:id", (req, res, next) => {
   Report.updateOne({ _id: id }, { $set: req.body })
     .exec()
     .then((result) => {
-      res.status(200).json({
-        message: "Report Updated",
-        result: result,
-      });
+      // Entry found and modified
+      if (result.nModified > 0 && result.n > 0) {
+        res.status(200).json({
+          response: {
+            message: "Report details updated",
+            success: true,
+          },
+        });
+      } // Found but not modified
+      else if (result.nModified == 0 && result.n > 0) {
+        res.status(304).json({
+          response: {
+            message: "No reports updated",
+            success: true,
+          },
+        });
+      } // Not found
+      else {
+        res.status(404).json({
+          response: {
+            message: "No reports updated",
+            success: false,
+          },
+        });
+      }
     })
     .catch((err) => {
-      // console.log(err);
-      res.status(500).json({ error: err });
+      res.status(500).json({ response: { message: err, success: false } });
     });
 });
 
@@ -218,14 +265,34 @@ router.put("/active/:active", (req, res, next) => {
   Report.updateMany({ bActive: req.params.active }, { $set: req.body })
     .exec()
     .then((result) => {
-      res.status(200).json({
-        message: "Report Updated",
-        result: result,
-      });
+      // Entry found and modified
+      if (result.nModified > 0 && result.n > 0) {
+        res.status(200).json({
+          response: {
+            message: "Report details updated",
+            success: true,
+          },
+        });
+      } // Found but not modified
+      else if (result.nModified == 0 && result.n > 0) {
+        res.status(304).json({
+          response: {
+            message: "No reports updated",
+            success: true,
+          },
+        });
+      } // Not found
+      else {
+        res.status(404).json({
+          response: {
+            message: "No reports updated",
+            success: false,
+          },
+        });
+      }
     })
     .catch((err) => {
-      // console.log(err);
-      res.status(500).json({ error: err });
+      res.status(500).json({ response: { message: err, success: false } });
     });
 });
 
@@ -237,14 +304,34 @@ router.put("/type/:type", (req, res, next) => {
   Report.updateMany({ type: req.params.type }, { $set: req.body })
     .exec()
     .then((result) => {
-      res.status(200).json({
-        message: "Report Updated",
-        result: result,
-      });
+      // Entry found and modified
+      if (result.nModified > 0 && result.n > 0) {
+        res.status(200).json({
+          response: {
+            message: "Report details updated",
+            success: true,
+          },
+        });
+      } // Found but not modified
+      else if (result.nModified == 0 && result.n > 0) {
+        res.status(304).json({
+          response: {
+            message: "No reports updated",
+            success: true,
+          },
+        });
+      } // Not found
+      else {
+        res.status(404).json({
+          response: {
+            message: "No reports updated",
+            success: false,
+          },
+        });
+      }
     })
     .catch((err) => {
-      // console.log(err);
-      res.status(500).json({ error: err });
+      res.status(500).json({ response: { message: err, success: false } });
     });
 });
 
@@ -256,13 +343,23 @@ router.delete("/id/:id", (req, res, next) => {
   Report.deleteOne({ _id: req.params.id })
     .exec()
     .then((result) => {
-      res.status(200).json({
-        message: "Report deleted",
-        result: result,
-      });
+      if (result.deletedCount > 0)
+        res.status(200).json({
+          response: {
+            message: "Report deleted",
+            success: true,
+          },
+        });
+      else
+        res.status(404).json({
+          response: {
+            message: "Report not deleted",
+            success: false,
+          },
+        });
     })
     .catch((err) => {
-      res.status(500).json({ error: err });
+      res.status(500).json({ response: { message: err, success: false } });
     });
 });
 
@@ -274,13 +371,23 @@ router.delete("/active/:active", (req, res, next) => {
   Report.deleteMany({ bActive: req.params.active })
     .exec()
     .then((result) => {
-      res.status(200).json({
-        message: "Report deleted",
-        result: result,
-      });
+      if (result.deletedCount > 0)
+        res.status(200).json({
+          response: {
+            message: "Reports deleted",
+            success: true,
+          },
+        });
+      else
+        res.status(404).json({
+          response: {
+            message: "Reports not deleted",
+            success: false,
+          },
+        });
     })
     .catch((err) => {
-      res.status(500).json({ error: err });
+      res.status(500).json({ response: { message: err, success: false } });
     });
 });
 

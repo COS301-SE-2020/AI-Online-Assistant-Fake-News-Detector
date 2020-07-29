@@ -14,13 +14,17 @@ describe("Sources Api", () => {
     chai
       .request(server)
       .get("/sources")
-      .end((err, response) => {
+      .end((err, res) => {
         expect(err).to.be.null;
-        response.should.have.status(200);
-        response.body.should.be.a("object");
-        response.body.sources[0].should.have.property("_id");
-        response.body.sources[0].should.have.property("name");
-        response.body.sources[0].should.have.property("tld");
+        res.should.have.status(200);
+        res.body.should.be.a("object");
+        res.body.should.have.property("response");
+        res.body.response.should.have.property("message");
+        res.body.response.should.have.property("count");
+        res.body.response.Sources[0].should.have.property("ID");
+        res.body.response.Sources[0].should.have.property("Name");
+        res.body.response.Sources[0].should.have.property("Rating");
+        res.body.response.Sources[0].should.have.property("Domain Name");
         done();
       });
   });
@@ -42,19 +46,19 @@ describe("Sources Api", () => {
       .end((err, res) => {
         chai
           .request(server)
-          .get("/sources/id/" + res.body["sources"][0]._id)
+          .get("/sources/id/" + res.body.response.Sources[0].ID)
           .end((err, response) => {
             expect(err).to.be.null;
             response.should.have.status(200);
             response.body.should.be.a("object");
-            response.body["source"].should.have.property("_id");
-            response.body["source"].should.have.property("name");
-            response.body["source"].should.have.property("tld");
-            response.body["source"].name.should.equal(
-              res.body["sources"][0]["name"]
+            response.body.response.Source.should.have.property("ID");
+            response.body.response.Source.should.have.property("Name");
+            response.body.response.Source.should.have.property("Domain Name");
+            response.body.response.Source.Name.should.equal(
+              res.body.response.Sources[0].Name
             );
-            response.body["source"].tld.should.equal(
-              res.body["sources"][0]["tld"]
+            response.body.response.Source["Domain Name"].should.equal(
+              res.body.response.Sources[0]["Domain Name"]
             );
             done();
           });
@@ -68,8 +72,8 @@ describe("Sources Api", () => {
       .get("/sources/id/" + sourceId)
       .end((err, response) => {
         response.should.have.status(404);
-        response.body.should.be.a("object");
-        response.body.should.have
+        response.body.response.should.be.a("object");
+        response.body.response.should.have
           .property("message")
           .eq("No database entry for provided ID");
         done();
@@ -80,7 +84,7 @@ describe("Sources Api", () => {
     const source = {
       name: "mocha_test_news_source",
       tld: "www.mochatest.com",
-      rating: "500",
+      rating: 500,
     };
     chai
       .request(server)
@@ -89,12 +93,12 @@ describe("Sources Api", () => {
       .end((err, response) => {
         response.should.have.status(201);
         response.body.should.be.a("object");
-        response.body.createdSource.should.be.a("object");
-        response.body.createdSource.rating.should.equal(500);
-        response.body.createdSource.should.have.property("name");
-        response.body.createdSource.should.have.property("tld");
-        response.body.createdSource.should.have.property("_id");
-        response.body.createdSource.should.have.property("rating");
+        response.body.response.Source.should.be.a("object");
+        response.body.response.Source.Rating.should.equal(500);
+        response.body.response.Source.should.have.property("Name");
+        response.body.response.Source.should.have.property("Domain Name");
+        response.body.response.Source.should.have.property("ID");
+        response.body.response.Source.should.have.property("Rating");
         done();
       });
   });
@@ -117,7 +121,7 @@ describe("Sources Api", () => {
 
   it("It should update a source rating", (done) => {
     const source = {
-      rating: "550",
+      rating: 550,
     };
     chai
       .request(server)
@@ -127,14 +131,16 @@ describe("Sources Api", () => {
           .request(server)
           .put(
             "/sources/" +
-              res.body["sources"][res.body["sources"].length - 1]._id
+              res.body.response.Sources[res.body.response.Sources.length - 1].ID
           )
           .send(source)
           .end((err, response) => {
             response.should.have.status(200);
             response.body.should.be.a("object");
-            response.body.should.have.property("message");
-            response.body.message.should.equal("Source Updated");
+            response.body.response.should.have.property("message");
+            response.body.response.message.should.equal(
+              "Source details updated"
+            );
             done();
           });
       });
@@ -147,24 +153,25 @@ describe("Sources Api", () => {
       .end((err, res) => {
         chai
           .request(server)
-          .get("/sources/name/" + encodeURI(res.body["sources"][0].name))
+          .get("/sources/name/" + encodeURI(res.body.response.Sources[0].Name))
           .end((err, response) => {
             expect(err).to.be.null;
             response.should.have.status(200);
-            response.body.should.be.a("object");
-            response.body["source"].should.have.property("_id");
-            response.body["source"].should.have.property("name");
-            response.body["source"].should.have.property("tld");
-            response.body["source"].name.should.equal(
-              decodeURI(res.body["sources"][0]["name"])
+            response.body.response.should.be.a("object");
+            response.body.response.Source.should.have.property("ID");
+            response.body.response.Source.should.have.property("Name");
+            response.body.response.Source.should.have.property("Domain Name");
+            response.body.response.Source.Name.should.equal(
+              decodeURI(res.body.response.Sources[0].Name)
             );
-            response.body["source"].tld.should.equal(
-              res.body["sources"][0]["tld"]
+            response.body.response.Source["Domain Name"].should.equal(
+              res.body.response.Sources[0]["Domain Name"]
             );
             done();
           });
       });
   });
+
   it("It should delete a single source", (done) => {
     chai
       .request(server)
@@ -174,22 +181,23 @@ describe("Sources Api", () => {
           .request(server)
           .delete(
             "/sources/" +
-              res.body["sources"][res.body["sources"].length - 1]._id
+              res.body.response.Sources[res.body.response.count - 1].ID
           )
           .end(function (error, res) {
             res.should.have.status(200);
             res.should.be.json;
             res.body.should.be.a("object");
-            res.body.should.have.property("message");
-            res.body.message.should.be.a("string");
-            res.body.message.should.be.eql("Source Deleted");
+            res.body.should.have.property("response");
+            res.body.response.should.have.property("message");
+            res.body.response.message.should.be.a("string");
+            res.body.response.message.should.be.eql("Source deleted");
             done();
           });
       });
   });
 });
-///////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////////////
 describe("Facts Api", () => {
   it("It should get all known fake facts", (done) => {
     chai
@@ -199,9 +207,9 @@ describe("Facts Api", () => {
         expect(err).to.be.null;
         response.should.have.status(200);
         response.body.should.be.a("object");
-        response.body.facts[0].should.have.property("_id");
-        response.body.facts[0].should.have.property("statement");
-        response.body.facts[0].should.have.property("popularity");
+        response.body.response.Facts[0].should.have.property("ID");
+        response.body.response.Facts[0].should.have.property("Statement");
+        response.body.response.Facts[0].should.have.property("Popularity");
         done();
       });
   });
@@ -223,19 +231,19 @@ describe("Facts Api", () => {
       .end((err, res) => {
         chai
           .request(server)
-          .get("/facts/" + res.body["facts"][0]._id)
+          .get("/facts/" + res.body.response.Facts[0].ID)
           .end((err, response) => {
             expect(err).to.be.null;
             response.should.have.status(200);
             response.should.be.a("object");
-            response.body.doc.should.have.property("_id");
-            response.body.doc.should.have.property("statement");
-            response.body.doc.should.have.property("popularity");
-            response.body.doc.popularity.should.equal(
-              res.body["facts"][0]["popularity"]
+            response.body.response.Fact.should.have.property("ID");
+            response.body.response.Fact.should.have.property("Statement");
+            response.body.response.Fact.should.have.property("Popularity");
+            response.body.response.Fact.Popularity.should.equal(
+              res.body.response.Facts[0].Popularity
             );
-            response.body.doc.statement.should.equal(
-              res.body["facts"][0]["statement"]
+            response.body.response.Fact.Statement.should.equal(
+              res.body.response.Facts[0].Statement
             );
             done();
           });
@@ -246,16 +254,16 @@ describe("Facts Api", () => {
     chai
       .request(server)
       .post("/Facts")
-      .send({ statement: "db server mocha test fact", popularity: "50" })
+      .send({ statement: "db server mocha test fact", popularity: 50 })
       .end(function (err, res) {
         res.should.have.status(201);
         res.should.be.json;
         res.body.should.be.a("object");
-        res.body.should.have.property("message");
-        res.body.createdFact.should.be.a("object");
-        res.body.createdFact.should.have.property("_id");
-        res.body.createdFact.should.have.property("statement");
-        res.body.createdFact.should.have.property("popularity");
+        res.body.response.should.have.property("message");
+        res.body.response.Fact.should.be.a("object");
+        res.body.response.Fact.should.have.property("ID");
+        res.body.response.Fact.should.have.property("Statement");
+        res.body.response.Fact.should.have.property("Popularity");
         done();
       });
   });
@@ -268,7 +276,8 @@ describe("Facts Api", () => {
         chai
           .request(server)
           .delete(
-            "/Facts/" + res.body["facts"][res.body["facts"].length - 1]._id
+            "/Facts/" +
+              res.body.response.Facts[res.body.response.Facts.length - 1].ID
           )
           .end(function (error, res) {
             res.should.have.status(200);
@@ -290,12 +299,15 @@ describe("Moderators Api", () => {
         expect(err).to.be.null;
         response.should.have.status(200);
         response.body.should.be.a("object");
-        response.body.moderators[0].should.have.property("_id");
-        response.body.moderators[0].should.have.property("Name");
-        response.body.moderators[0].should.have.property("Email Address");
+        response.body.response.Moderators[0].should.have.property("ID");
+        response.body.response.Moderators[0].should.have.property("Name");
+        response.body.response.Moderators[0].should.have.property(
+          "Email Address"
+        );
         done();
       });
   });
+
   it("It should get a specific moderator based on email", (done) => {
     chai
       .request(server)
@@ -303,17 +315,21 @@ describe("Moderators Api", () => {
       .end((err, res) => {
         chai
           .request(server)
-          .get("/Moderators/" + res.body.moderators[0]["Email Address"])
+          .get(
+            "/Moderators/" + res.body.response.Moderators[0]["Email Address"]
+          )
           .end((err, response) => {
             response.should.have.status(200);
-            response.body.Name.should.equal(res.body.moderators[0]["Name"]);
+            response.body.response.Moderator.Name.should.equal(
+              res.body.response.Moderators[0]["Name"]
+            );
             done();
           });
       });
   });
 });
-///////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////////////
 describe("Reports Api", () => {
   it("It should get all reports from the database", (done) => {
     chai
@@ -323,12 +339,13 @@ describe("Reports Api", () => {
         expect(err).to.be.null;
         response.should.have.status(200);
         response.body.should.be.a("object");
-        response.body.reports[0].should.have.property("_id");
-        response.body.reports[0].should.have.property("type");
-        response.body.reports[0].should.have.property("Date Captured");
+        response.body.response.Reports[0].should.have.property("ID");
+        response.body.response.Reports[0].should.have.property("Type");
+        response.body.response.Reports[0].should.have.property("Date Captured");
         done();
       });
   });
+
   it("It should get a specific report based on id", (done) => {
     chai
       .request(server)
@@ -336,10 +353,12 @@ describe("Reports Api", () => {
       .end((err, res) => {
         chai
           .request(server)
-          .get("/Reports/id/" + res.body.reports[0]["_id"])
+          .get("/Reports/id/" + res.body.response.Reports[0].ID)
           .end((err, response) => {
             response.should.have.status(200);
-            response.body.Report.type.should.equal(res.body.reports[0]["type"]);
+            response.body.response.Report.Type.should.equal(
+              res.body.response.Reports[0].Type
+            );
             done();
           });
       });
