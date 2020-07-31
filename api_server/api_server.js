@@ -28,32 +28,44 @@ server.use(bodyParser.json({ type: "application/json" }));
 server.use(helmet());
 server.use(cors());
 
-const getRequest = (url, callBack) => {
-  http.get(url, (resp) => {
-    let data = "";
-    resp.on("data", (chunk) => {
-      data += chunk;
-    });
-    resp
-      .on("end", () => {
-        return callBack(data);
-      })
-      .on("error", (err) => {
-        morgan(morganFormat, {
-          stream: fs.createWriteStream(
-            path.join(root, "logfiles", "error.log"),
-            {
-              flags: "a",
-            }
-          ),
+const getRequest = (_host, _path, _port, callBack) => {
+  const request = http
+    .request(
+      {
+        host: _host,
+        port: _port,
+        path: _path,
+        method: "GET",
+      },
+      (response) => {
+        response.setEncoding("utf-8");
+        let responseString = "";
+        response.on("data", (chunk) => {
+          responseString += chunk;
         });
+
+        response.on("end", () => {
+          if (responseString === "") responseString = "{}";
+          callBack(response.statusCode, JSON.parse(responseString));
+        });
+      }
+    )
+    .on("error", (e) => {
+      morgan(":date[clf] :method :url :status :response-time ms", {
+        stream: fs.createWriteStream(path.join(root, "logs", "error.log"), {
+          flags: "a",
+        }),
       });
-  });
+      callBack(500, err);
+    });
+
+  request.end();
 };
 
 cron.schedule("55 23 * * *", () => {
-  getRequest("localhost", "/api/reports/update", (data) => console.log(data));
-  logger.info("Cron job for updating reports ran.");
+  getRequest("localhost", "/api/reports/update", 8080, () =>
+    logger.info("Cron job for updating reports ran.")
+  );
 });
 
 morgan.token("date", (req, res, tz) => {
