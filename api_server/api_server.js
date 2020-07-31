@@ -7,9 +7,10 @@ const morgan = require("morgan");
 const Logger = require("../winston");
 const logger = new Logger(server);
 const cors = require("cors");
-const SwaggerUi = require("./routes/swagger-ui-dist").getAbsoluteFSPath();
 const API = require("./routes/APIv1");
 const fs = require("fs");
+const SwaggerUi = require(__dirname +
+  "/routes/swagger-ui-dist").getAbsoluteFSPath();
 const path = require("path");
 const root = require("../Util/path");
 const cron = require("node-cron");
