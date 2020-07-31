@@ -3,20 +3,32 @@ const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-
 const sourceRoutes = require("./api/routes/sources");
 const factRoutes = require("./api/routes/facts");
 const moderatorRoutes = require("./api/routes/moderators");
 const reportRoutes = require("./api/routes/reports");
+const nnModelRoutes = require("./api/routes/nnModels");
+const trainingRoutes = require("./api/routes/training");
+require('dotenv').config();
 
-mongoose.connect(
-  // 'mongodb+srv://FakeNewsAdmin:' + process.env.MONGO_ATLAS_PW + '@fake-news-detector-vastj.mongodb.net/fake_news_detector?retryWrites=true&w=majority',
-  "mongodb+srv://FakeNewsAdmin:murrIq-xytbud-2wubjo@fake-news-detector-vastj.mongodb.net/fake_news_detector?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+if (process.env.NODE_ENV != "dev") {
+  mongoose.connect(
+    "mongodb+srv://FakeNewsAdmin:murrIq-xytbud-2wubjo@fake-news-detector-vastj.mongodb.net/fake_news_detector?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  );
+} else {
+  mongoose.connect(
+    "mongodb+srv://FakeNewsAdmin:murrIq-xytbud-2wubjo@fake-news-detector-vastj.mongodb.net/fnd_test?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+}
+
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -40,6 +52,8 @@ app.use("/sources", sourceRoutes);
 app.use("/facts", factRoutes);
 app.use("/moderators", moderatorRoutes);
 app.use("/reports", reportRoutes);
+app.use("/nnModels", nnModelRoutes);
+app.use("/training", trainingRoutes);
 
 //Requests that passed the routes above are not supported and therefore seen as errors.
 app.use((req, res, next) => {
