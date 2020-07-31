@@ -128,7 +128,7 @@ router.get("/name/:sourceName", (req, res, next) => {
       } else {
         res.status(404).json({
           response: {
-            message: "No database entry for provided active status",
+            message: "No database entry for provided name",
             success: false,
           },
         });
