@@ -22,7 +22,7 @@ router.get("/", (req, res, next) => {
             return {
               ID: doc._id,
               Article: doc.article,
-              fake: doc.fake,
+              Fake: doc.fake,
             };
           }),
         },
