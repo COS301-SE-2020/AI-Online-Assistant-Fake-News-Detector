@@ -728,3 +728,44 @@
 [31/Jul/2020 03:06:21] - DB_Server listening on port 3000
 [31/Jul/2020 03:07:15] - API_Server listening on port 8080
 [31/Jul/2020 03:07:15] - DB_Server listening on port 3000
+[03/Aug/2020 07:45:52] - API_Server listening on port 8080
+[03/Aug/2020 07:45:53] - DB_Server listening on port 3000
+[03/Aug/2020 07:58:35] - API_Server listening on port 8080
+[03/Aug/2020 07:58:35] - DB_Server listening on port 3000
+[03/Aug/2020 07:59:59] - DB_Server listening on port 3000
+[03/Aug/2020 07:59:59] - API_Server listening on port 8080
+[03/Aug/2020 08:00:24] - DB_Server listening on port 3000
+[03/Aug/2020 08:00:24] - API_Server listening on port 8080
+[03/Aug/2020 08:03:38] - DB_Server listening on port 3000
+[03/Aug/2020 08:03:38] - API_Server listening on port 8080
+[03/Aug/2020 08:07:15] - DB_Server listening on port 3000
+[03/Aug/2020 08:08:32] - DB_Server listening on port 3000
+[03/Aug/2020 08:14:03] - DB_Server listening on port 3000
+[03/Aug/2020 08:14:08] - DB_Server listening on port 3000
+[03/Aug/2020 08:14:08] - API_Server listening on port 8080
+[03/Aug/2020 08:15:41] - DB_Server listening on port 3000
+[03/Aug/2020 08:15:41] - API_Server listening on port 8080
+[03/Aug/2020 08:41:03] - DB_Server listening on port 3000
+[03/Aug/2020 08:41:03] - API_Server listening on port 8080
+[03/Aug/2020 08:42:20] - DB_Server listening on port 3000
+[03/Aug/2020 08:42:20] - API_Server listening on port 8080
+[03/Aug/2020 08:46:54] - DB_Server listening on port 3000
+[03/Aug/2020 08:46:54] - API_Server listening on port 8080
+[03/Aug/2020 08:46:59] - Source was created.
+[03/Aug/2020 08:47:01] - Source was updated.
+[03/Aug/2020 08:47:02] - Source was deleted.
+[03/Aug/2020 08:59:25] - DB_Server listening on port 3000
+[03/Aug/2020 08:59:25] - API_Server listening on port 8080
+[03/Aug/2020 08:59:30] - Source was created.
+[03/Aug/2020 08:59:32] - Source was updated.
+[03/Aug/2020 08:59:33] - Source was deleted.
+[03/Aug/2020 08:59:33] - Fact was created.
+[03/Aug/2020 08:59:35] - Fact was Deleted.
+[03/Aug/2020 08:59:35] - Moderator was created.
+[03/Aug/2020 08:59:37] - Moderator was Deleted.
+[03/Aug/2020 08:59:37] - Report was Created.
+[03/Aug/2020 08:59:39] - Report was deleted.
+[03/Aug/2020 08:59:39] - New nnModel was created.
+[03/Aug/2020 08:59:41] - nnModel was deleted.
+[03/Aug/2020 08:59:41] - Training Record was created.
+[03/Aug/2020 08:59:42] - Training Record was Deleted.

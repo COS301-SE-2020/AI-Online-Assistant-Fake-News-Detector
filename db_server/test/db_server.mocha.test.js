@@ -10,7 +10,9 @@ const { response } = require("../../api_server/api_server");
 chai.should();
 
 chai.use(chaihttp);
-
+/////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////   SOURCES   ////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 describe("Sources Api", () => {
   it("It should POST a test source", (done) => {
     const source = {
@@ -19,20 +21,20 @@ describe("Sources Api", () => {
       rating: 500,
     };
     chai
-    .request(server)
-    .post("/sources")
-    .send(source)
-    .end((err, response) => {
-  response.should.have.status(201);
-  response.body.should.be.a("object");
-  response.body.response.Source.should.be.a("object");
-  response.body.response.Source.Rating.should.equal(500);
-  response.body.response.Source.should.have.property("Name");
-  response.body.response.Source.should.have.property("Domain Name");
-  response.body.response.Source.should.have.property("ID");
-  response.body.response.Source.should.have.property("Rating");
-  done();
-  });
+      .request(server)
+      .post("/sources")
+      .send(source)
+      .end((err, response) => {
+        response.should.have.status(201);
+        response.body.should.be.a("object");
+        response.body.response.Source.should.be.a("object");
+        response.body.response.Source.Rating.should.equal(500);
+        response.body.response.Source.should.have.property("Name");
+        response.body.response.Source.should.have.property("Domain Name");
+        response.body.response.Source.should.have.property("ID");
+        response.body.response.Source.should.have.property("Rating");
+        done();
+      });
   });
 
   it("It should get all known fake news sources", (done) => {
@@ -53,64 +55,64 @@ describe("Sources Api", () => {
         done();
       });
   });
+
   it("It should not get any known fake news sources", (done) => {
-    chai
-    .request(server)
+      chai
+      .request(server)
       .get("/sourcey")
       .end((err, response) => {
         response.should.have.status(404);
         done();
       });
-    });
+  });
     
-    it("It should get a source by id", (done) => {
-      chai
+  it("It should get a source by id", (done) => {
+    chai
       .request(server)
       .get("/Sources")
       .end((err, res) => {
         chai
-        .request(server)
-        .get("/sources/id/" + res.body.response.Sources[0].ID)
-        .end((err, response) => {
-          expect(err).to.be.null;
-          response.should.have.status(200);
-          response.body.should.be.a("object");
+          .request(server)
+          .get("/sources/id/" + res.body.response.Sources[0].ID)
+          .end((err, response) => {
+            expect(err).to.be.null;
+            response.should.have.status(200);
+            response.body.should.be.a("object");
             response.body.response.Source.should.have.property("ID");
             response.body.response.Source.should.have.property("Name");
             response.body.response.Source.should.have.property("Domain Name");
             response.body.response.Source.Name.should.equal(
               res.body.response.Sources[0].Name
-              );
-              response.body.response.Source["Domain Name"].should.equal(
-                res.body.response.Sources[0]["Domain Name"]
-                );
-                done();
-              });
-            });
+            );
+            response.body.response.Source["Domain Name"].should.equal(
+              res.body.response.Sources[0]["Domain Name"]
+            );
+            done();
           });
+      });
+  });
           
-          it("It should get NO source", (done) => {
-            const sourceId = "5edf31165d617a2850632424";
-            chai
-            .request(server)
-            .get("/sources/id/" + sourceId)
-            .end((err, response) => {
-              response.should.have.status(404);
-              response.body.response.should.be.a("object");
-              response.body.response.should.have
-              .property("message")
-              .eq("No database entry for provided ID");
-              done();
-            });
-          });
+  it("It should get NO source", (done) => {
+    const sourceId = "5edf31165d617a2850632424";
+    chai
+      .request(server)
+      .get("/sources/id/" + sourceId)
+      .end((err, response) => {
+        response.should.have.status(404);
+        response.body.response.should.be.a("object");
+        response.body.response.should.have.property("message")
+        .eq("No database entry for provided ID");
+        done();
+    });
+  });
           
     
-    it("Post request should fail, because no name is given", (done) => {
-      const source = {
-        tld: "www.mochatest.com",
-        rating: "500",
-      };
-      chai
+  it("Post request should fail, because no name is given", (done) => {
+    const source = {
+      tld: "www.mochatest.com",
+      rating: "500",
+    };
+    chai
       .request(server)
       .post("/sources")
       .send(source)
@@ -119,13 +121,13 @@ describe("Sources Api", () => {
         response.body.should.be.a("object");
         done();
       });
-    });
+  });
     
-    it("It should update a source rating", (done) => {
-      const source = {
-        rating: 550,
-      };
-      chai
+  it("It should update a source rating", (done) => {
+    const source = {
+      rating: 550,
+    };
+    chai
       .request(server)
       .get("/sources")
       .end((err, res) => {
@@ -134,72 +136,73 @@ describe("Sources Api", () => {
         .put(
           "/sources/id/" +
           res.body.response.Sources[res.body.response.Sources.length - 1].ID
-          )
-          .send(source)
-          .end((err, response) => {
-            response.should.have.status(200);
-            response.body.should.be.a("object");
-            response.body.response.should.have.property("message");
-            response.body.response.message.should.equal(
-              "Source details updated"
-              );
-              done();
-            });
-          });
+        )
+        .send(source)
+        .end((err, response) => {
+          response.should.have.status(200);
+          response.body.should.be.a("object");
+          response.body.response.should.have.property("message");
+          response.body.response.message.should.equal(
+            "Source details updated"
+          );
+          done();
         });
+      });
+  });
         
-        it("It should GET a source based on name", (done) => {
-          chai
+  it("It should GET a source based on name", (done) => {
+    chai
+      .request(server)
+      .get("/sources")
+      .end((err, res) => {
+        chai
           .request(server)
-          .get("/sources")
-          .end((err, res) => {
-            chai
-            .request(server)
-            .get("/sources/name/" + encodeURI(res.body.response.Sources[0].Name))
-            .end((err, response) => {
-              expect(err).to.be.null;
-              response.should.have.status(200);
-              response.body.response.should.be.a("object");
-              response.body.response.Source.should.have.property("ID");
-              response.body.response.Source.should.have.property("Name");
-              response.body.response.Source.should.have.property("Domain Name");
-              response.body.response.Source.Name.should.equal(
-                decodeURI(res.body.response.Sources[0].Name)
-                );
-                response.body.response.Source["Domain Name"].should.equal(
-                  res.body.response.Sources[0]["Domain Name"]
-                  );
-                  done();
-                });
-              });
-    });
+          .get("/sources/name/" + encodeURI(res.body.response.Sources[0].Name))
+          .end((err, response) => {
+            expect(err).to.be.null;
+            response.should.have.status(200);
+            response.body.response.should.be.a("object");
+            response.body.response.Source.should.have.property("ID");
+            response.body.response.Source.should.have.property("Name");
+            response.body.response.Source.should.have.property("Domain Name");
+            response.body.response.Source.Name.should.equal(
+              decodeURI(res.body.response.Sources[0].Name)
+            );
+            response.body.response.Source["Domain Name"].should.equal(
+              res.body.response.Sources[0]["Domain Name"]
+            );
+            done();
+          });
+      });
+  });
 
   it("It should delete a single source", (done) => {
-      chai
-        .request(server)
-        .get("/sources")
-        .end((err, res) => {
-            chai
-              .request(server)
-              .delete(
-                  "/sources/id/" +
-                    res.body.response.Sources[res.body.response.count - 1].ID
-                )
+    chai
+      .request(server)
+      .get("/sources")
+      .end((err, res) => {
+        chai
+          .request(server)
+          .delete(
+            "/sources/id/" +
+            res.body.response.Sources[res.body.response.count - 1].ID
+          )
           .end(function (error, res) {
-              res.should.have.status(200);
-              res.should.be.json;
-              res.body.should.be.a("object");
-              res.body.should.have.property("response");
-              res.body.response.should.have.property("message");
-              res.body.response.message.should.be.a("string");
-              res.body.response.message.should.be.eql("Source deleted");
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.be.a("object");
+            res.body.should.have.property("response");
+            res.body.response.should.have.property("message");
+            res.body.response.message.should.be.a("string");
+            res.body.response.message.should.be.eql("Source deleted");
             done();
           });
       });
   });
 });
-// ///////////////////////////////////////////////////////////////////////////////////
-// ///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////   FACTS   /////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 describe("Facts Api", () => {
   it("It should create a new fact in the database", (done) => {
     chai
@@ -218,6 +221,7 @@ describe("Facts Api", () => {
         done();
       });
   });
+
   it("It should get all known fake facts", (done) => {
     chai
       .request(server)
@@ -269,7 +273,6 @@ describe("Facts Api", () => {
       });
   });
 
-
   it("It should delete a single fact from the database /DELETE facts/:factId", (done) => {
     chai
       .request(server)
@@ -290,8 +293,9 @@ describe("Facts Api", () => {
       });
   });
 });
-///////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////   MODERATORS  ///////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 describe("Moderators Api", () => {
   it("It should add a Moderator to the database", function (done) {
     chai
@@ -379,8 +383,9 @@ describe("Moderators Api", () => {
       });
   });
 });
-// ///////////////////////////////////////////////////////////////////////////////////
-// ///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////   REPORTS  /////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 describe("Reports Api", () => {
   it("It should add a Report to the database", function (done) {
     chai
@@ -449,6 +454,131 @@ describe("Reports Api", () => {
             res.body.response.should.have.property("message");
             res.body.response.message.should.be.a("string");
             res.body.response.message.should.be.eql("Report deleted");
+            done();
+          });
+      });
+  });
+});
+/////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////   NNMODELS  ////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+describe("nnModels Api", () => {
+  it("It should add a Neural Network model to the database", function (done) {
+    chai
+      .request(server)
+      .post("/nnModels")
+      .send({
+        name: "testmodel",
+        date: "2020-06-06",
+        model: []
+      })
+      .end(function (err, res) {
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a("object");
+        res.body.response.should.have.property("message");
+        res.body.response.nnModel.should.be.a("object");
+        res.body.response.nnModel.should.have.property("Name");
+        res.body.response.nnModel.should.have.property("Date");
+        res.body.response.nnModel.should.have.property("ID");
+        done();
+      });
+  });
+  it("It should GET a nnModel based on name", (done) => {
+    chai
+      .request(server)
+      .get("/nnModels")
+      .end((err, res) => {
+        chai
+          .request(server)
+          .get("/nnModels/" + encodeURI(res.body.response.Models[0].Name))
+          .end((err, response) => {
+            expect(err).to.be.null;
+            response.should.have.status(200);
+            response.body.response.should.be.a("object");
+            response.body.response.Source.should.have.property("ID");
+            response.body.response.Source.should.have.property("Name");
+            response.body.response.Source.should.have.property("Date");
+            response.body.response.Source.should.have.property("Model");
+            response.body.response.Source.Name.should.equal(
+              decodeURI(res.body.response.Models[0].Name)
+            );
+            done();
+          });
+      });
+  });
+  it("It should delete a Neural Network model from database", function (done) {
+    chai
+      .request(server)
+      .get("/nnModels")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .delete("/nnModels/" + responder.body.response.Models[0].ID)
+          .end(function (error, res) {
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.be.a("object");
+            res.body.response.should.have.property("message");
+            res.body.response.message.should.be.eql("Model deleted");
+            done();
+          });
+      });
+  });
+});
+/////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////   TRAINING  ////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+describe("Training Api", () => {
+  it("It should add a Training Record to the database", function (done) {
+    chai
+      .request(server)
+      .post("/Training")
+      .send({
+        article: "Fake news mocha test article",
+        fake: true
+      })
+      .end(function (err, res) {
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a("object");
+        res.body.response.should.have.property("message");
+        res.body.response.trainingRecord.should.be.a("object");
+        res.body.response.trainingRecord.should.have.property("ID");
+        done();
+      });
+  });
+  it("It should get all Training Data", (done) => {
+    chai
+      .request(server)
+      .get("/Training")
+      .end((err, res) => {
+        expect(err).to.be.null;
+        res.should.have.status(200);
+        res.body.should.be.a("object");
+        res.body.should.have.property("response");
+        res.body.response.should.have.property("message");
+        res.body.response.should.have.property("count");
+        res.body.response.TrainingData[0].should.have.property("ID");
+        res.body.response.TrainingData[0].should.have.property("Article");
+        res.body.response.TrainingData[0].should.have.property("Fake");
+        done();
+      });
+  });
+  it("It should delete a Training Record based on ID", function (done) {
+    chai
+      .request(server)
+      .get("/Training")
+      .end((err, responder) => {
+        chai
+          .request(server)
+          .delete("/Training/" + responder.body.response.TrainingData[0].ID)
+          .end(function (error, res) {
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.be.a("object");
+            res.body.response.should.have.property("message");
+            res.body.response.message.should.be.eql("Training Record deleted");
             done();
           });
       });
