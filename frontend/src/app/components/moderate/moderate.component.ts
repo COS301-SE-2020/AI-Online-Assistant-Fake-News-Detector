@@ -10,7 +10,9 @@ import { Subject } from 'rxjs/Subject';
 import { Observable, Subscription } from 'rxjs';
 import { stringToKeyValue } from '@angular/flex-layout/extended/typings/style/style-transforms';
 import { DeleteSourceService } from 'src/app/delete-source.service';
-
+import {FormBuilder} from '@angular/forms';
+import {AutocompleteService} from 'src/app/autocomplete.service';
+import { tap, startWith, debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-moderate',
@@ -23,6 +25,9 @@ export class ModerateComponent implements OnInit {
   SourceInputForm: FormGroup;
   FactInputForm: FormGroup;
   factslist: FactsList[];
+  myControl = new FormControl();
+  options = [];
+  filteredOptions: Observable<any[]>;
 
   dismiss: boolean;
   sourceDeleteResponse: boolean;
@@ -31,18 +36,33 @@ export class ModerateComponent implements OnInit {
 
   //sourceID:string;
   receivedID:string;
+  value: string;
 
   constructor(private factslistService: FactslistService, private _factinputService: FactInputService,
-    private searchService: SearchSourceService ,public http: HttpClient, private _deleteService: DeleteSourceService) { 
+    private searchService: SearchSourceService ,public http: HttpClient, private _deleteService: DeleteSourceService,
+    private autocompleteService: AutocompleteService) { 
     this.dismiss=false;
     this.sourceDeleteResponse=false;
     this.insertFactResponse=false;
     this.searchResponse=false;
+
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap(val => {
+            return this.filter(val || '')
+       }) 
+    )
   }
   
   
 
   ngOnInit(): void {
+    /*autocomplete functionality*/
+
+    /*end of autocomplete*/
+
 
     /* Fetching list of facts that populate bottom section on Moderator page */
     this.getFacts();
@@ -64,20 +84,47 @@ export class ModerateComponent implements OnInit {
 
     /* End of instance of form group */
 
+
   }
+
+      /*----------------fuzzy search---------*/
+
+        filter(val: string): Observable<any[]> {
+          // call the service which makes the http-request
+          return this.autocompleteService.getData()
+          .pipe(
+            map( 
+              response => response.sources.filter(option => { 
+              return option.name.toLowerCase().indexOf(val.toLowerCase()) === 0
+            }))
+          )
+        }  
+      /*---------------end of fuzzy search ----------*/
+
 
         /*function that fetches source by name */
         Search(){
-            
+           
+        this.sourceDeleteResponse=false;
+        this.searchResponse=false;
+        
+
         this.searchService.search(this.SourceInputForm.value.SourceName).
         subscribe((data: any={}) =>{
             this.sourcelist = data;
             this.dismiss=true;
-            this.sourceDeleteResponse=false;
+
+
             //this.testSearch=true;
            // this.sourceID = data.source._id;
            
-        })
+        },
+          error => {
+            this.searchResponse=true;
+            console.log("HTTP error ", error);
+          }
+           
+        )
         
       }
        /*end of fetch source function */ 
