@@ -5,25 +5,26 @@
 
     </div>
 
+    <app-togglebutton (changed)="checked=$event">
+    </app-togglebutton>
     
-
     &nbsp; &nbsp; &nbsp; &nbsp; 
     <div class="container w-container">
 
-        
-        <form [formGroup]="SourceInputForm" (ngSubmit)="Search()">
+        <!--Form for searching a source-->
+        <form [formGroup]="SourceInputForm" (ngSubmit)="Search()" *ngIf="!checked">
             
 
                 <mat-form-field color="primary" id="sourceInput"  class="example-form-field">
                     <mat-label>Enter source name (e.g CNN)</mat-label>
-                    <input matInput  type="text" formControlName="SourceName" [(ngModel)]="value"
+                    <input matInput  type="text" formControlName="SourceName" [(ngModel)]="clearSearchSourceName"
                     aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
                           {{option.name}}
                         </mat-option>
                       </mat-autocomplete>
-                    <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                    <button mat-button *ngIf="clearSearchSourceName" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchSourceName=''">
                         <mat-icon>close</mat-icon>
                       </button>
                 </mat-form-field>
@@ -33,6 +34,45 @@
                 </div>
                
         </form>
+
+         <!--End of Form for searching a source-->
+
+
+         <!--Form for Inserting a source-->
+        <form [formGroup]="InsertSourceForm" (ngSubmit)="onSourceSubmit()" *ngIf="checked">
+  
+            <mat-form-field id="statement" class="example-form-field">
+                <mat-label>Source Name</mat-label>
+                <input matInput type="text" formControlName="name" [(ngModel)]="clearInsertSourceName">
+                <button mat-button *ngIf="clearInsertSourceName" matSuffix mat-icon-button aria-label="Clear" (click)="clearInsertSourceName=''">
+                    <mat-icon>close</mat-icon>
+                  </button>
+            </mat-form-field>
+
+              <span></span>
+
+              <mat-form-field id="statement" class="example-form-field">
+                <mat-label>Source URL</mat-label>
+                <input matInput type="url" formControlName="tld" [(ngModel)]="clearUrl">
+                <button mat-button *ngIf="clearUrl" matSuffix mat-icon-button aria-label="Clear" (click)="clearUrl=''">
+                    <mat-icon>close</mat-icon>
+                  </button>
+            </mat-form-field>
+
+              <span></span>
+
+              <mat-form-field id="popularity" class="example-form-field">
+                <mat-label>Rating between 0-100</mat-label>
+                <input matInput matInput id="popularity" type="number" formControlName="rating">
+              </mat-form-field>
+     
+        <div>
+            <button mat-raised-button color="accent" (click)="insertSourceResponse=true" type="submit">Insert Source</button>
+        </div>
+
+        </form>
+
+        <!--End of Form for searching a source-->
 
 
         <!--Building autocomplete functionality
@@ -49,7 +89,7 @@
 
          End of autocomplete functionality-->
        
-            <div  *ngIf="sourcelist.source">
+            <div  *ngIf="sourcelist.source && !checked">
                 <mat-card id="SearchResponseCard" class="example-card" *ngIf="dismiss">
                     <mat-card-header>
                       <div mat-card-avatar class="example-header-image"><img id="cardImg" src="assets/img/5bitslogo.png"/></div>
@@ -67,7 +107,7 @@
             </div>
 
             <!--Alternate divs that load when specific events occur-->
-            <div *ngIf="sourceDeleteResponse">
+            <div *ngIf="sourceDeleteResponse && !checked">
                 <mat-card id="SearchResponseCard" class="example-card">
                     <mat-card-content>
                         <p> Source has been deleted...Good riddance.</p> 
@@ -76,7 +116,7 @@
 
             </div>
 
-            <div *ngIf="searchResponse">
+            <div *ngIf="searchResponse && !checked">
                 <mat-card id="SearchResponseCard" class="example-card">
                     <mat-card-content>
                         <p> Unfortunately, we do not know about that source.</p> 
@@ -84,6 +124,16 @@
                   </mat-card>
 
             </div>
+
+            <div *ngIf="insertSourceResponse && checked">
+                <mat-card color="primary" id="SearchResponseCard" class="example-card">
+                    <mat-card-content>
+                        <p> New source has been added.</p> 
+                    </mat-card-content>
+                </mat-card>
+    
+            </div>
+    
 
 
             <!--End of alternative divs-->
