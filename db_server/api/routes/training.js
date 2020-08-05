@@ -5,6 +5,7 @@ const Logger = require("../../../winston");
 const logger = new Logger(express);
 
 const Training = require("../models/training");
+const { response } = require("express");
 
 /**
  * @description get request for all training data
@@ -17,8 +18,8 @@ router.get("/", (req, res, next) => {
     .then((docs) => {
       const response = {
         response: {
-          message: "Training Data retrieved successfully",
           success: true,
+          message: "Training Data retrieved successfully",
           count: docs.length,
           TrainingData: docs.map((doc) => {
             return {
@@ -30,6 +31,64 @@ router.get("/", (req, res, next) => {
         },
       };
       res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(500).json({ response: { message: err, success: false } });
+    });
+});
+
+/**
+ * @description get request for given range of training data
+ * @author Quinton Coetzee
+ */
+router.get("/range/", (req, res, next) => {
+  const total = req.body.start + req.body.amount;
+  const returnArray = [];
+  Training.find()
+    .select("_id article fake")
+    .exec()
+    .then((docs) => {
+      if ((total<=docs.length)&&(req.body.start>=0)&&(req.body.amount>0)) {
+        for (let i = req.body.start; i < total; i++) {
+          returnArray.push(docs[i]);
+        }
+        res.status(200).json({
+          response: {
+            success: true,
+            message: "Training range retrieved successfully",
+            count: req.body.amount,
+            trainingData: returnArray.map((i)=>{
+              return{
+                ID: i._id,
+                Article: i.article,
+                Fake: i.fake
+              }
+            })
+          }
+        });
+      } else {
+        res.status(404).json({
+          response: {
+            success: false,
+            message: "Range requested is out of bounds",
+          },
+        });
+      }
+      // const response = {
+      //   response: {
+      //     message: "Training Data retrieved successfully",
+      //     success: true,
+      //     count: docs.length,
+      //     TrainingData: docs.map((doc) => {
+      //       return {
+      //         ID: doc._id,
+      //         Article: doc.article,
+      //         Fake: doc.fake,
+      //       };
+      //     }),
+      //   },
+      // };
+      // res.status(200).json(response);
     })
     .catch((err) => {
       res.status(500).json({ response: { message: err, success: false } });
