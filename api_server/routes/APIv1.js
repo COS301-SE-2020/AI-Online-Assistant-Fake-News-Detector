@@ -163,7 +163,7 @@ api.get("/sources/id/:sourceId", (req, res, next) => {
  * @author Stuart Barclay
  */
 
-api.put("/sources/:sourceId", (req, res, next) => {
+api.put("/sources/id/:sourceId", (req, res, next) => {
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -176,7 +176,7 @@ api.put("/sources/:sourceId", (req, res, next) => {
     {
       host: "localhost",
       port: 3000,
-      path: "/sources/" + req.params.sourceId,
+      path: "/sources/id/" + req.params.sourceId,
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -210,12 +210,12 @@ api.put("/sources/:sourceId", (req, res, next) => {
  * @author Stuart Barclay
  */
 
-api.delete("/sources/:sourceId", (req, res, next) => {
+api.delete("/sources/id/:sourceId", (req, res, next) => {
   const request = http.request(
     {
       host: "localhost",
       port: 3000,
-      path: "/sources/" + req.params.sourceId,
+      path: "/sources/id/" + req.params.sourceId,
       method: "DELETE",
     },
     (response) => {
@@ -595,17 +595,17 @@ api.get("/reports/update", (req, res, next) => {
   let data = "";
   getRequest("http://localhost:8080/api/reports/active/1", (data) => {
     data = JSON.parse(data);
-    let prevReport = data.reports[0];
-    for (report of data.reports) {
+    let prevReport = data.response.Reports[0];
+    for (report of data.response.Reports) {
       if (
         report["Report Data"].toLowerCase() ===
           prevReport["Report Data"].toLowerCase() &&
-        report["_id"] !== prevReport["_id"]
+        report["ID"] !== prevReport["ID"]
       ) {
         ++prevReport["Report Count"];
         putRequest(
           "localhost",
-          "/api/reports/id/" + prevReport["_id"],
+          "/api/reports/id/" + prevReport["ID"],
           {
             reportCount: prevReport["Report Count"],
           },
@@ -613,7 +613,7 @@ api.get("/reports/update", (req, res, next) => {
         );
         putRequest(
           "localhost",
-          "/api/reports/id/" + report["_id"],
+          "/api/reports/id/" + report["ID"],
           {
             bActive: 0,
           },
@@ -623,7 +623,7 @@ api.get("/reports/update", (req, res, next) => {
         prevReport = report;
       }
     }
-    if (data !== "") res.status(200).send({ responseData: data });
+    if (data !== "") res.status(200).send(data);
     else {
       let error = new Error("No Updates Occurred Due To An Error");
       error.status = 500;

@@ -15,9 +15,12 @@ describe("Use Case 1.8 - Flag Source", () => {
         expect(err).to.be.null;
         res.should.have.status(200);
         res.body.should.be.a("object");
-        res.body.reports[0].should.have.property("_id");
-        res.body.reports[0].should.have.property("type");
-        res.body.reports[0].should.have.property("Date Captured");
+        res.body.response.Reports[0].should.have.property("ID");
+        res.body.response.Reports[0].should.have.property("Type");
+        res.body.response.Reports[0].should.have.property("Report Data");
+        res.body.response.Reports[0].should.have.property("Report Count");
+        res.body.response.Reports[0].should.have.property("Date Captured");
+        res.body.response.Reports[0].should.have.property("Active Status");
         done();
       });
   });
@@ -31,14 +34,15 @@ describe("Use Case 1.8 - Flag Source", () => {
         description: "https://bunkerkings.com",
       })
       .end(function (err, res) {
-        res.should.have.status(200);
+        res.should.have.status(201);
         res.should.be.json;
         res.body.should.be.a("object");
-        res.body.should.have.property("message");
-        res.body["Report Details"].should.be.a("object");
-        res.body["Report Details"].should.have.property("type");
-        res.body["Report Details"].should.have.property("Report Data");
-        res.body["Report Details"].should.have.property("_id");
+        res.body.should.have.property("response");
+        res.body.response.should.have.property("message");
+        res.body.response.Report.should.be.a("object");
+        res.body.response.Report.should.have.property("Type");
+        res.body.response.Report.should.have.property("Report Data");
+        res.body.response.Report.should.have.property("ID");
         done();
       });
   });
@@ -51,9 +55,12 @@ describe("Use Case 1.8 - Flag Source", () => {
         expect(err).to.be.null;
         res.should.have.status(200);
         res.body.should.be.a("object");
-        res.body.reports[0].should.have.property("_id");
-        res.body.reports[0].should.have.property("type");
-        res.body.reports[0].should.have.property("Date Captured");
+        res.body.response.Reports[0].should.have.property("ID");
+        res.body.response.Reports[0].should.have.property("Type");
+        res.body.response.Reports[0].should.have.property("Report Data");
+        res.body.response.Reports[0].should.have.property("Report Count");
+        res.body.response.Reports[0].should.have.property("Date Captured");
+        res.body.response.Reports[0].should.have.property("Active Status");
         done();
       });
   });

@@ -8339,7 +8339,7 @@
   padding: 10px;
   display: inline-block;
   border-radius: 4px;
-  background: rgba(0, 0, 0, 0.1);
+  background: #fff;
 }
 .swagger-ui .model-box .model-jump-to-path {
   position: relative;

@@ -7,6 +7,23 @@ const server = require("../api_server");
 chai.use(chaiHttp);
 
 describe("Facts", () => {
+  it("It should add a single fact to the database /POST facts", function (done) {
+    chai
+      .request(server)
+      .post("/API/Facts")
+      .send({ statement: "Elephants can fly", popularity: 18 })
+      .end(function (err, res) {
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a("object");
+        res.body.response.should.have.property("message");
+        res.body.response.Fact.should.be.a("object");
+        res.body.response.Fact.should.have.property("Statement");
+        res.body.response.Fact.should.have.property("Popularity");
+        res.body.response.Fact.should.have.property("ID");
+        done();
+      });
+  });
   it("It should retrieve all facts in database /GET facts", (done) => {
     chai
       .request(server)
@@ -15,9 +32,9 @@ describe("Facts", () => {
         expect(err).to.be.null;
         res.should.have.status(200);
         res.body.should.be.a("object");
-        res.body.facts[0].should.have.property("_id");
-        res.body.facts[0].should.have.property("statement");
-        res.body.facts[0].should.have.property("popularity");
+        res.body.response.Facts[0].should.have.property("ID");
+        res.body.response.Facts[0].should.have.property("Statement");
+        res.body.response.Facts[0].should.have.property("Popularity");
         done();
       });
   });
@@ -29,42 +46,25 @@ describe("Facts", () => {
       .end((err, responder) => {
         chai
           .request(server)
-          .get("/API/Facts/" + responder.body["facts"][0]._id)
+          .get("/API/Facts/" + responder.body.response.Facts[0].ID)
           .end((err, res) => {
             expect(err).to.be.null;
             res.should.have.status(200);
             res.body.should.be.a("object");
-            res.body.doc.should.have.property("_id");
-            res.body.doc.should.have.property("statement");
-            res.body.doc.should.have.property("popularity");
-            res.body.doc.statement.should.equal(
-              responder.body["facts"][0]["statement"]
+            res.body.response.Fact.should.have.property("ID");
+            res.body.response.Fact.should.have.property("Statement");
+            res.body.response.Fact.should.have.property("Popularity");
+            res.body.response.Fact.Statement.should.equal(
+              responder.body.response.Facts[0].Statement
             );
-            res.body.doc.popularity.should.equal(
-              responder.body["facts"][0]["popularity"]
+            res.body.response.Fact.Popularity.should.equal(
+              responder.body.response.Facts[0].Popularity
             );
             done();
           });
       });
   });
 
-  it("It should add a single fact to the database /POST facts", function (done) {
-    chai
-      .request(server)
-      .post("/API/Facts")
-      .send({ statement: "Elephants can fly", popularity: "18" })
-      .end(function (err, res) {
-        res.should.have.status(201);
-        res.should.be.json;
-        res.body.should.be.a("object");
-        res.body.should.have.property("message");
-        res.body.createdFact.should.be.a("object");
-        res.body.createdFact.should.have.property("statement");
-        res.body.createdFact.should.have.property("popularity");
-        res.body.createdFact.should.have.property("_id");
-        done();
-      });
-  });
 
   it("It should delete a single fact from the database /DELETE facts/:factId", function (done) {
     chai
@@ -75,15 +75,17 @@ describe("Facts", () => {
           .request(server)
           .delete(
             "/API/Facts/" +
-              responder.body["facts"][responder.body["facts"].length - 1]._id
+              responder.body.response.Facts[
+                responder.body.response.Facts.length - 1
+              ].ID
           )
           .end(function (error, res) {
             res.should.have.status(200);
             res.should.be.json;
             res.body.should.be.a("object");
-            res.body.should.have.property("deletedCount");
-            res.body.deletedCount.should.be.a("number");
-            res.body.deletedCount.should.be.eql(1);
+            res.body.response.should.have.property("message");
+            res.body.response.success.should.be.a("boolean");
+            res.body.response.success.should.be.eql(true);
             done();
           });
       });
@@ -91,6 +93,25 @@ describe("Facts", () => {
 });
 
 describe("Sources", () => {
+  it("It should add a single source to the database /POST sources", function (done) {
+    chai
+      .request(server)
+      .post("/API/sources")
+      .send({ name: "gmail", rating: 5, tld: "https://gmail.com/" })
+      .end(function (err, res) {
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a("object");
+        res.body.response.should.have.property("message");
+        res.body.response.Source.should.be.a("object");
+        res.body.response.Source.should.have.property("Name");
+        res.body.response.Source.should.have.property("Domain Name");
+        res.body.response.Source.should.have.property("ID");
+        res.body.response.Source.should.have.property("Rating");
+        res.body.response.Source.Rating.should.equal(5);
+        done();
+      });
+  });
   it("It should retrieve all sources in the database", (done) => {
     chai
       .request(server)
@@ -99,9 +120,13 @@ describe("Sources", () => {
         expect(err).to.be.null;
         res.should.have.status(200);
         res.body.should.be.a("object");
-        res.body.sources[0].should.have.property("_id");
-        res.body.sources[0].should.have.property("name");
-        res.body.sources[0].should.have.property("tld");
+        res.body.should.have.property("response");
+        res.body.response.should.have.property("message");
+        res.body.response.should.have.property("count");
+        res.body.response.Sources[0].should.have.property("ID");
+        res.body.response.Sources[0].should.have.property("Name");
+        res.body.response.Sources[0].should.have.property("Rating");
+        res.body.response.Sources[0].should.have.property("Domain Name");
         done();
       });
   });
@@ -113,19 +138,19 @@ describe("Sources", () => {
       .end((err, responder) => {
         chai
           .request(server)
-          .get("/API/Sources/id/" + responder.body["sources"][0]._id)
+          .get("/API/Sources/id/" + responder.body.response.Sources[0].ID)
           .end((err, res) => {
             expect(err).to.be.null;
             res.should.have.status(200);
             res.body.should.be.a("object");
-            res.body["source"].should.have.property("_id");
-            res.body["source"].should.have.property("name");
-            res.body["source"].should.have.property("tld");
-            res.body["source"].name.should.equal(
-              responder.body["sources"][0]["name"]
+            res.body.response.Source.should.have.property("ID");
+            res.body.response.Source.should.have.property("Name");
+            res.body.response.Source.should.have.property("Domain Name");
+            res.body.response.Source.Name.should.equal(
+              responder.body.response.Sources[0].Name
             );
-            res.body["source"].tld.should.equal(
-              responder.body["sources"][0]["tld"]
+            res.body.response.Source["Domain Name"].should.equal(
+              responder.body.response.Sources[0]["Domain Name"]
             );
             done();
           });
@@ -139,44 +164,25 @@ describe("Sources", () => {
       .end((err, responder) => {
         chai
           .request(server)
-          .get("/API/Sources/name/" + responder.body["sources"][0].name)
+          .get("/API/Sources/name/" + responder.body.response.Sources[0].Name)
           .end((err, res) => {
             expect(err).to.be.null;
             res.should.have.status(200);
             res.body.should.be.a("object");
-            res.body["source"].should.have.property("_id");
-            res.body["source"].should.have.property("name");
-            res.body["source"].should.have.property("tld");
-            res.body["source"].name.should.equal(
-              decodeURI(responder.body["sources"][0]["name"])
+            res.body.response.Source.should.have.property("ID");
+            res.body.response.Source.should.have.property("Name");
+            res.body.response.Source.should.have.property("Domain Name");
+            res.body.response.Source.Name.should.equal(
+              decodeURI(responder.body.response.Sources[0]["Name"])
             );
-            res.body["source"].tld.should.equal(
-              responder.body["sources"][0]["tld"]
+            res.body.response.Source["Domain Name"].should.equal(
+              responder.body.response.Sources[0]["Domain Name"]
             );
             done();
           });
       });
   });
 
-  it("It should add a single source to the database /POST sources", function (done) {
-    chai
-      .request(server)
-      .post("/API/sources")
-      .send({ name: "gmail", rating: 5, tld: "https://gmail.com/" })
-      .end(function (err, res) {
-        res.should.have.status(201);
-        res.should.be.json;
-        res.body.should.be.a("object");
-        res.body.should.have.property("message");
-        res.body.createdSource.should.be.a("object");
-        res.body.createdSource.should.have.property("name");
-        res.body.createdSource.should.have.property("tld");
-        res.body.createdSource.should.have.property("_id");
-        res.body.createdSource.should.have.property("rating");
-        res.body.createdSource.rating.should.equal(5);
-        done();
-      });
-  });
 
   it("It should update a single source in the database /PUT sources/:SourceId", function (done) {
     chai
@@ -186,17 +192,23 @@ describe("Sources", () => {
         chai
           .request(server)
           .put(
-            "/API/Sources/" +
-              responder.body["sources"][responder.body["sources"].length - 1]
-                ._id
+            "/API/Sources/id/" +
+              responder.body.response.Sources[
+                responder.body.response.Sources.length - 1
+              ].ID
           )
-          .send({ name: "google", tld: "https://google.co.za" })
+          .send({
+            name: "google",
+            tld: "https://google.co.za?" + (Math.random() * 100).toFixed(0),
+          })
           .end(function (error, response) {
             response.should.have.status(200);
             response.should.be.json;
             response.body.should.be.a("object");
-            response.body.should.have.property("message");
-            response.body.message.should.equal("Source Updated");
+            response.body.response.should.have.property("message");
+            response.body.response.message.should.equal(
+              "Source details updated"
+            );
             done();
           });
       });
@@ -210,17 +222,19 @@ describe("Sources", () => {
         chai
           .request(server)
           .delete(
-            "/API/Sources/" +
-              responder.body["sources"][responder.body["sources"].length - 1]
-                ._id
+            "/API/Sources/id/" +
+              responder.body.response.Sources[
+                responder.body.response.Sources.length - 1
+              ].ID
           )
           .end(function (error, res) {
+            console.log(res.body);
             res.should.have.status(200);
             res.should.be.json;
             res.body.should.be.a("object");
-            res.body.should.have.property("message");
-            res.body.message.should.be.a("string");
-            res.body.message.should.be.eql("Source Deleted");
+            res.body.response.should.have.property("message");
+            res.body.response.message.should.be.a("string");
+            res.body.response.message.should.be.eql("Source deleted");
             done();
           });
       });
@@ -228,6 +242,29 @@ describe("Sources", () => {
 });
 
 describe("Moderators", () => {
+  it("It should add a Moderator to the database /POST Moderators", function (done) {
+    chai
+      .request(server)
+      .post("/API/Moderators")
+      .send({
+        emailAddress: "5Bits@gmail.com",
+        password: "Stuart",
+        fName: "Stuart" + (Math.random() * 100).toFixed(0),
+        lName: "Barclay",
+        phoneNumber: "0793580784",
+      })
+      .end(function (err, res) {
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a("object");
+        res.body.response.should.have.property("message");
+        res.body.response.Moderator.should.be.a("object");
+        res.body.response.Moderator.should.have.property("Name");
+        res.body.response.Moderator.should.have.property("Email Address");
+        res.body.response.Moderator.should.have.property("ID");
+        done();
+      });
+  });
   it("It should retrieve all moderators in the database", (done) => {
     chai
       .request(server)
@@ -236,9 +273,9 @@ describe("Moderators", () => {
         expect(err).to.be.null;
         res.should.have.status(200);
         res.body.should.be.a("object");
-        res.body.moderators[0].should.have.property("_id");
-        res.body.moderators[0].should.have.property("Name");
-        res.body.moderators[0].should.have.property("Email Address");
+        res.body.response.Moderators[0].should.have.property("ID");
+        res.body.response.Moderators[0].should.have.property("Name");
+        res.body.response.Moderators[0].should.have.property("Email Address");
         done();
       });
   });
@@ -251,46 +288,27 @@ describe("Moderators", () => {
         chai
           .request(server)
           .get(
-            "/API/Moderators/" + responder.body.moderators[0]["Email Address"]
+            "/API/Moderators/" +
+              responder.body.response.Moderators[0]["Email Address"]
           )
           .end((err, res) => {
             expect(err).to.be.null;
             res.should.have.status(200);
             res.body.should.be.a("object");
-            res.body.should.have.property("_id");
-            res.body.should.have.property("Name");
-            res.body.should.have.property("Email Address");
-            res.body.should.have.property("Authentication Level");
-            res.body.Name.should.equal(responder.body.moderators[0]["Name"]);
+            res.body.response.Moderator.should.have.property("ID");
+            res.body.response.Moderator.should.have.property("Name");
+            res.body.response.Moderator.should.have.property("Email Address");
+            res.body.response.Moderator.should.have.property(
+              "Authentication Level"
+            );
+            res.body.response.Moderator.Name.should.equal(
+              responder.body.response.Moderators[0].Name
+            );
             done();
           });
       });
   });
 
-  it("It should add a Moderator to the database /POST Moderators", function (done) {
-    chai
-      .request(server)
-      .post("/API/Moderators")
-      .send({
-        emailAddress: "5Bits@gmail.com",
-        password: "Stuart123456789",
-        fName: "Stuart",
-        lName: "Barclay",
-        phoneNumber: "0793580784",
-      })
-      .end(function (err, res) {
-        res.should.have.status(200);
-        res.should.be.json;
-        res.body.should.be.a("object");
-        res.body.should.have.property("message");
-        res.body["Moderator Details"].should.be.a("object");
-        res.body["Moderator Details"].should.have.property("fName");
-        res.body["Moderator Details"].should.have.property("emailAddress");
-        res.body["Moderator Details"].should.have.property("_id");
-        res.body["Moderator Details"].should.have.property("lName");
-        done();
-      });
-  });
 
   it("It should update a moderator in the database /PUT Moderators/:emailAddress", function (done) {
     chai
@@ -301,17 +319,19 @@ describe("Moderators", () => {
           .request(server)
           .put(
             "/API/Moderators/" +
-              responder.body.moderators[responder.body.count - 1][
-                "Email Address"
-              ]
+              responder.body.response.Moderators[
+                responder.body.response.count - 1
+              ]["Email Address"]
           )
           .send({ fName: "test", authenticationLevel: 2 })
           .end(function (error, response) {
             response.should.have.status(200);
             response.should.be.json;
             response.body.should.be.a("object");
-            response.body.should.have.property("message");
-            response.body.message.should.equal("Moderator Details Updated");
+            response.body.response.should.have.property("message");
+            response.body.response.message.should.equal(
+              "Moderator details updated"
+            );
             done();
           });
       });
@@ -326,17 +346,19 @@ describe("Moderators", () => {
           .request(server)
           .delete(
             "/API/Moderators/" +
-              responder.body.moderators[responder.body.count - 1][
-                "Email Address"
-              ]
+              responder.body.response.Moderators[
+                responder.body.response.count - 1
+              ]["Email Address"]
           )
           .end(function (error, res) {
             res.should.have.status(200);
             res.should.be.json;
             res.body.should.be.a("object");
-            res.body.should.have.property("message");
-            res.body.message.should.be.a("string");
-            res.body.message.should.be.eql("Moderator deleted");
+            res.body.response.should.have.property("message");
+            res.body.response.message.should.be.a("string");
+            res.body.response.message.should.be.eql(
+              "Moderator deleted successfully"
+            );
             done();
           });
       });
@@ -353,14 +375,14 @@ describe("Reports", () => {
         description: "Mocha Test",
       })
       .end(function (err, res) {
-        res.should.have.status(200);
+        res.should.have.status(201);
         res.should.be.json;
         res.body.should.be.a("object");
-        res.body.should.have.property("message");
-        res.body["Report Details"].should.be.a("object");
-        res.body["Report Details"].should.have.property("type");
-        res.body["Report Details"].should.have.property("Report Data");
-        res.body["Report Details"].should.have.property("_id");
+        res.body.response.should.have.property("message");
+        res.body.response.Report.should.be.a("object");
+        res.body.response.Report.should.have.property("Type");
+        res.body.response.Report.should.have.property("Report Data");
+        res.body.response.Report.should.have.property("ID");
         done();
       });
   });
@@ -373,9 +395,9 @@ describe("Reports", () => {
         expect(err).to.be.null;
         res.should.have.status(200);
         res.body.should.be.a("object");
-        res.body.reports[0].should.have.property("_id");
-        res.body.reports[0].should.have.property("type");
-        res.body.reports[0].should.have.property("Date Captured");
+        res.body.response.Reports[0].should.have.property("ID");
+        res.body.response.Reports[0].should.have.property("Type");
+        res.body.response.Reports[0].should.have.property("Date Captured");
         done();
       });
   });
@@ -387,17 +409,17 @@ describe("Reports", () => {
       .end((err, responder) => {
         chai
           .request(server)
-          .get("/API/Reports/id/" + responder.body.reports[0]["_id"])
+          .get("/API/Reports/id/" + responder.body.response.Reports[0].ID)
           .end((err, res) => {
             expect(err).to.be.null;
             res.should.have.status(200);
             res.body.should.be.a("object");
-            res.body.Report.should.have.property("_id");
-            res.body.Report.should.have.property("type");
-            res.body.Report.should.have.property("Report Data");
-            res.body.Report.should.have.property("Date Captured");
-            res.body.Report.type.should.equal(
-              responder.body.reports[0]["type"]
+            res.body.response.Report.should.have.property("ID");
+            res.body.response.Report.should.have.property("Type");
+            res.body.response.Report.should.have.property("Report Data");
+            res.body.response.Report.should.have.property("Date Captured");
+            res.body.response.Report.Type.should.equal(
+              responder.body.response.Reports[0]["Type"]
             );
             done();
           });
@@ -412,10 +434,10 @@ describe("Reports", () => {
         expect(err).to.be.null;
         res.should.have.status(200);
         res.body.should.be.a("object");
-        res.body.reports[0].should.have.property("_id");
-        res.body.reports[0].should.have.property("type");
-        res.body.reports[0].should.have.property("Report Data");
-        res.body.reports[0].should.have.property("Date Captured");
+        res.body.response.Reports[0].should.have.property("ID");
+        res.body.response.Reports[0].should.have.property("Type");
+        res.body.response.Reports[0].should.have.property("Report Data");
+        res.body.response.Reports[0].should.have.property("Date Captured");
         done();
       });
   });
@@ -432,10 +454,10 @@ describe("Reports", () => {
             expect(err).to.be.null;
             res.should.have.status(200);
             res.body.should.be.a("object");
-            res.body.reports[0].should.have.property("_id");
-            res.body.reports[0].should.have.property("type");
-            res.body.reports[0].should.have.property("Report Data");
-            res.body.reports[0].should.have.property("Date Captured");
+            res.body.response.Reports[0].should.have.property("ID");
+            res.body.response.Reports[0].should.have.property("Type");
+            res.body.response.Reports[0].should.have.property("Report Data");
+            res.body.response.Reports[0].should.have.property("Date Captured");
             done();
           });
       });
@@ -454,8 +476,10 @@ describe("Reports", () => {
             response.should.have.status(200);
             response.should.be.json;
             response.body.should.be.a("object");
-            response.body.should.have.property("message");
-            response.body.message.should.equal("Report Updated");
+            response.body.response.should.have.property("message");
+            response.body.response.message.should.equal(
+              "Report details updated"
+            );
             done();
           });
       });
@@ -474,8 +498,10 @@ describe("Reports", () => {
             response.should.have.status(200);
             response.should.be.json;
             response.body.should.be.a("object");
-            response.body.should.have.property("message");
-            response.body.message.should.equal("Report Updated");
+            response.body.response.should.have.property("message");
+            response.body.response.message.should.equal(
+              "Report details updated"
+            );
             done();
           });
       });
@@ -490,15 +516,18 @@ describe("Reports", () => {
           .request(server)
           .put(
             "/API/Reports/id/" +
-              responder.body.reports[responder.body.count - 1]["_id"]
+              responder.body.response.Reports[responder.body.response.count - 1]
+                .ID
           )
           .send({ bActive: 0 })
           .end(function (error, response) {
             response.should.have.status(200);
             response.should.be.json;
             response.body.should.be.a("object");
-            response.body.should.have.property("message");
-            response.body.message.should.equal("Report Updated");
+            response.body.response.should.have.property("message");
+            response.body.response.message.should.equal(
+              "Report details updated"
+            );
             done();
           });
       });
@@ -511,14 +540,14 @@ describe("Reports", () => {
       .end((err, responder) => {
         chai
           .request(server)
-          .delete("/API/Reports/id/" + responder.body.reports[0]["_id"])
+          .delete("/API/Reports/id/" + responder.body.response.Reports[0].ID)
           .end(function (error, res) {
             res.should.have.status(200);
             res.should.be.json;
             res.body.should.be.a("object");
-            res.body.should.have.property("message");
-            res.body.message.should.be.a("string");
-            res.body.message.should.be.eql("Report deleted");
+            res.body.response.should.have.property("message");
+            res.body.response.message.should.be.a("string");
+            res.body.response.message.should.be.eql("Report deleted");
             done();
           });
       });

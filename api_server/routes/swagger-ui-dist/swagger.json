@@ -22,7 +22,7 @@
       "description": "Processing Routes"
     }
   ],
-  "host": "fakenewsdetector.tech",
+  "host": "localhost:8080",
   "basePath": "/API",
   "schemes": [
     "http"
@@ -44,7 +44,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -82,7 +84,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -112,11 +116,15 @@
               "$ref": "#/definitions/GET Specific Fact"
             }
           },
-          "400": {
-            "description": "No database entry for provided ID"
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -144,8 +152,15 @@
               "$ref": "#/definitions/DELETE Specific Fact"
             }
           },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -160,13 +175,15 @@
         "operationId": "",
         "produces": "application/json",
         "responses": {
-          "201": {
+          "200": {
             "schema": {
               "$ref": "#/definitions/GET Source"
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -183,18 +200,25 @@
         "produces": "application/json",
         "parameters": [
           {
-            "name": "statement",
+            "name": "name",
             "in": "formData",
-            "description": "Fact that is to be added",
+            "description": "Source to be added",
             "required": true,
             "type": "string"
           },
           {
-            "name": "popularity",
+            "name": "tld",
             "in": "formData",
             "description": "Popularity rating",
             "required": true,
-            "type": "integer"
+            "type": "string"
+          },
+          {
+            "name": "rating",
+            "in": "formData",
+            "description": "Rating of source",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -204,12 +228,14 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
     },
-    "/Sources/{SourceId}": {
+    "/Sources/id/{SourceId}": {
       "get": {
         "tags": [
           "Sources"
@@ -235,11 +261,13 @@
           },
           "404": {
             "schema": {
-              "$ref": "#/definitions/GET Specific Source 404"
+              "$ref": "#/definitions/Not Found"
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -267,8 +295,15 @@
               "$ref": "#/definitions/DELETE Specific Source"
             }
           },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -309,8 +344,57 @@
               "$ref": "#/definitions/PUT Specific Source"
             }
           },
+          "202": {
+            "schema": {
+              "$ref": "#/definitions/No Update"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Sources/name/{SourceName}": {
+      "get": {
+        "tags": [
+          "Sources"
+        ],
+        "summary": "Get a specific known fake news source from the database",
+        "description": "Get request to retrieve a specific known fake news sources from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "SourceName",
+            "in": "path",
+            "description": "ID of source to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Source"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -331,7 +415,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -384,13 +470,15 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "schema": {
               "$ref": "#/definitions/POST Moderator"
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -425,7 +513,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -453,8 +543,15 @@
               "$ref": "#/definitions/DELETE Specific Moderator"
             }
           },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -516,8 +613,20 @@
               "$ref": "#/definitions/PUT Specific Moderator"
             }
           },
+          "202": {
+            "schema": {
+              "$ref": "#/definitions/No Update"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -538,7 +647,9 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -570,13 +681,15 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "schema": {
               "$ref": "#/definitions/POST Reports"
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -605,8 +718,15 @@
               "$ref": "#/definitions/GET Specific Report ID"
             }
           },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -634,8 +754,15 @@
               "$ref": "#/definitions/DELETE Specific Report ID"
             }
           },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -676,8 +803,20 @@
               "$ref": "#/definitions/PUT Specific Report ID"
             }
           },
+          "202": {
+            "schema": {
+              "$ref": "#/definitions/No Update"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -706,8 +845,15 @@
               "$ref": "#/definitions/GET Specific Report Type"
             }
           },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -748,8 +894,20 @@
               "$ref": "#/definitions/PUT Specific Report Type"
             }
           },
+          "202": {
+            "schema": {
+              "$ref": "#/definitions/No Update"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -778,8 +936,15 @@
               "$ref": "#/definitions/GET Specific Report Active"
             }
           },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -807,8 +972,15 @@
               "$ref": "#/definitions/DELETE Specific Report Active"
             }
           },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
@@ -852,8 +1024,20 @@
               "$ref": "#/definitions/PUT Specific Report Active"
             }
           },
+          "202": {
+            "schema": {
+              "$ref": "#/definitions/No Update"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -887,13 +1071,15 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "schema": {
               "$ref": "#/definitions/POST Process"
             }
           },
           "500": {
-            "description": "Server Error"
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -919,28 +1105,40 @@
     "GET Fact": {
       "type": "object",
       "properties": {
-        "statement": {
-          "type": "string",
-          "example": "There is no moon"
-        },
-        "popularity": {
-          "type": "integer",
-          "example": "100"
-        },
-        "_id": {
-          "type": "string",
-          "example": "5ee08d65b9bd0cd05ed2a352"
-        },
-        "request": {
+        "response": {
           "type": "object",
           "properties": {
-            "type": {
+            "message": {
               "type": "string",
-              "example": "GET"
+              "example": "Facts retrieved successfully"
             },
-            "url": {
-              "type": "string",
-              "example": "/facts/5ee08d65b9bd0cd05ed2a352"
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "count": {
+              "type": "integer",
+              "example": 10
+            },
+            "Facts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5ee08d65b9bd0cd05ed2a352"
+                  },
+                  "Statement": {
+                    "type": "string",
+                    "example": "There is no moon"
+                  },
+                  "Popularity": {
+                    "type": "integer",
+                    "example": "100"
+                  }
+                }
+              }
             }
           }
         }
@@ -949,35 +1147,31 @@
     "POST Fact": {
       "type": "object",
       "properties": {
-        "message": {
-          "type": "string",
-          "example": "Created fact successfully"
-        },
-        "createdFact": {
+        "response": {
           "type": "object",
           "properties": {
-            "_id": {
+            "message": {
               "type": "string",
-              "example": "5ee08d65b9bd0cd05ed2a352"
+              "example": "Fact created successfully"
             },
-            "statement": {
-              "type": "string",
-              "example": "There is no moon"
+            "success": {
+              "type": "boolean",
+              "example": true
             },
-            "popularity": {
-              "type": "integer",
-              "example": "100"
-            },
-            "request": {
+            "Fact": {
               "type": "object",
               "properties": {
-                "type": {
+                "ID": {
                   "type": "string",
-                  "example": "POST"
+                  "example": "5ee08d65b9bd0cd05ed2a352"
                 },
-                "url": {
+                "Statement": {
                   "type": "string",
-                  "example": "/facts/5ee08d65b9bd0cd05ed2a352"
+                  "example": "There is no moon"
+                },
+                "Popularity": {
+                  "type": "integer",
+                  "example": 100
                 }
               }
             }
@@ -988,95 +1182,98 @@
     "GET Specific Fact": {
       "type": "object",
       "properties": {
-        "_id": {
-          "type": "string",
-          "example": "5ee08e846d1156d1aaa15a53"
-        },
-        "statement": {
-          "type": "string",
-          "example": "The earth is flat"
-        },
-        "popularity": {
-          "type": "integer",
-          "example": 100
-        },
-        "_v": {
-          "type": "integer",
-          "example": 0
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Retrieved fact successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "Fact": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5ee08e846d1156d1aaa15a53"
+                },
+                "Statement": {
+                  "type": "string",
+                  "example": "The earth is flat"
+                },
+                "Popularity": {
+                  "type": "integer",
+                  "example": 100
+                }
+              }
+            }
+          }
         }
       }
     },
     "DELETE Specific Fact": {
       "type": "object",
       "properties": {
-        "n": {
-          "type": "integer",
-          "example": 1
-        },
-        "opTime": {
+        "response": {
           "type": "object",
           "properties": {
-            "ts": {
+            "message": {
               "type": "string",
-              "example": "6847981318001655813"
+              "example": "Fact deleted successfully"
             },
-            "t": {
-              "type": "integer",
-              "example": 9
+            "success": {
+              "type": "boolean",
+              "example": true
             }
           }
-        },
-        "electionId": {
-          "type": "string",
-          "example": "7fffffff0000000000000009"
-        },
-        "ok": {
-          "type": "integer",
-          "example": 1
-        },
-        "$clusterTime": {
-          "type": "object",
-          "properties": {
-            "clusterTime": {
-              "type": "string",
-              "example": "6847981318001655813"
-            },
-            "signature": {
-              "type": "object",
-              "properties": {
-                "hash": {
-                  "type": "string",
-                  "example": "eSazwwZUt1sfyEiijzLHwAvs36Y="
-                },
-                "keyId": {
-                  "type": "string",
-                  "example": "6835849740492472323"
-                }
-              }
-            }
-          }
-        },
-        "operationTime": {
-          "type": "string",
-          "example": "6847981318001655813"
-        },
-        "deletedCount": {
-          "type": "integer",
-          "example": 1
         }
       }
     },
     "GET Source": {
       "type": "object",
       "properties": {
-        "count": {
-          "type": "integer",
-          "example": 10
-        },
-        "sources": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Source"
+        "response": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "message": {
+              "type": "string",
+              "example": "Sources retrieved successfully"
+            },
+            "count": {
+              "type": "integer",
+              "example": 10
+            },
+            "Sources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5ee08d65b9bd0cd05ed2a352"
+                  },
+                  "Name": {
+                    "type": "string",
+                    "example": "New York Times"
+                  },
+                  "Domain Name": {
+                    "type": "string",
+                    "example": "https://www.nytimes.com/"
+                  },
+                  "Rating": {
+                    "type": "integer",
+                    "example": 100
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1084,39 +1281,31 @@
     "POST Source": {
       "type": "object",
       "properties": {
-        "message": {
-          "type": "string",
-          "example": "Created source successfully"
-        },
-        "createdSource": {
+        "response": {
           "type": "object",
           "properties": {
-            "_id": {
+            "message": {
               "type": "string",
-              "example": "5ee186e05de6721c0ccbc14a"
+              "example": "Created source successfully"
             },
-            "name": {
-              "type": "string",
-              "example": "Fox News"
-            },
-            "tld": {
-              "type": "string",
-              "example": "https://www.foxnews.com"
-            },
-            "rating": {
-              "type": "integer",
-              "example": 2
-            },
-            "request": {
+            "Source": {
               "type": "object",
               "properties": {
-                "type": {
+                "ID": {
                   "type": "string",
-                  "example": "POST"
+                  "example": "5ee186e05de6721c0ccbc14a"
                 },
-                "url": {
+                "Name": {
                   "type": "string",
-                  "example": "/Sources/5ee186e05de6721c0ccbc14a"
+                  "example": "Fox News"
+                },
+                "Domain Name": {
+                  "type": "string",
+                  "example": "https://www.foxnews.com"
+                },
+                "Rating": {
+                  "type": "integer",
+                  "example": 2
                 }
               }
             }
@@ -1136,28 +1325,37 @@
     "GET Specific Source": {
       "type": "object",
       "properties": {
-        "doc": {
+        "response": {
           "type": "object",
           "properties": {
-            "_id": {
+            "message": {
               "type": "string",
-              "example": "5ee186e05de6721c0ccbc14a"
+              "example": "Retrieved source successfully"
             },
-            "name": {
-              "type": "string",
-              "example": "Fox News"
+            "success": {
+              "type": "boolean",
+              "example": true
             },
-            "tld": {
-              "type": "string",
-              "example": "https://www.foxnews.com"
-            },
-            "rating": {
-              "type": "integer",
-              "example": 20
-            },
-            "_v": {
-              "type": "integer",
-              "example": 0
+            "Source": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5ee186e05de6721c0ccbc14a"
+                },
+                "Name": {
+                  "type": "string",
+                  "example": "Fox News"
+                },
+                "Domain Name": {
+                  "type": "string",
+                  "example": "https://www.foxnews.com"
+                },
+                "Rating": {
+                  "type": "integer",
+                  "example": 20
+                }
+              }
             }
           }
         }
@@ -1166,149 +1364,74 @@
     "PUT Specific Source": {
       "type": "object",
       "properties": {
-        "n": {
-          "type": "integer",
-          "example": 1
-        },
-        "nModified": {
-          "type": "integer",
-          "example": 1
-        },
-        "opTime": {
+        "response": {
           "type": "object",
           "properties": {
-            "ts": {
+            "message": {
               "type": "string",
-              "example": "6847981318001655813"
+              "example": "Source details updated"
             },
-            "t": {
-              "type": "integer",
-              "example": 9
+            "success": {
+              "type": "boolean",
+              "example": true
             }
           }
-        },
-        "electionId": {
-          "type": "string",
-          "example": "7fffffff0000000000000009"
-        },
-        "ok": {
-          "type": "integer",
-          "example": 1
-        },
-        "$clusterTime": {
-          "type": "object",
-          "properties": {
-            "clusterTime": {
-              "type": "string",
-              "example": "6847981318001655813"
-            },
-            "signature": {
-              "type": "object",
-              "properties": {
-                "hash": {
-                  "type": "string",
-                  "example": "eSazwwZUt1sfyEiijzLHwAvs36Y="
-                },
-                "keyId": {
-                  "type": "string",
-                  "example": "6835849740492472323"
-                }
-              }
-            }
-          }
-        },
-        "operationTime": {
-          "type": "string",
-          "example": "6847981318001655813"
         }
       }
     },
     "DELETE Specific Source": {
       "type": "object",
       "properties": {
-        "n": {
-          "type": "integer",
-          "example": 1
-        },
-        "opTime": {
+        "response": {
           "type": "object",
           "properties": {
-            "ts": {
+            "message": {
               "type": "string",
-              "example": "6847981318001655813"
+              "example": "Source deleted"
             },
-            "t": {
-              "type": "integer",
-              "example": 9
+            "success": {
+              "type": "boolean",
+              "example": true
             }
           }
-        },
-        "electionId": {
-          "type": "string",
-          "example": "7fffffff0000000000000009"
-        },
-        "ok": {
-          "type": "integer",
-          "example": 1
-        },
-        "$clusterTime": {
-          "type": "object",
-          "properties": {
-            "clusterTime": {
-              "type": "string",
-              "example": "6847981318001655813"
-            },
-            "signature": {
-              "type": "object",
-              "properties": {
-                "hash": {
-                  "type": "string",
-                  "example": "eSazwwZUt1sfyEiijzLHwAvs36Y="
-                },
-                "keyId": {
-                  "type": "string",
-                  "example": "6835849740492472323"
-                }
-              }
-            }
-          }
-        },
-        "operationTime": {
-          "type": "string",
-          "example": "6847981318001655813"
-        },
-        "deletedCount": {
-          "type": "integer",
-          "example": 1
         }
       }
     },
     "GET Moderator": {
       "type": "object",
       "properties": {
-        "count": {
-          "type": "integer",
-          "example": 1
-        },
-        "moderators": {
-          "type": "array",
-          "items": {
-            "properties": {
-              "_id": {
-                "type": "string",
-                "example": "5f091f148f6a9946bc8f60a1"
-              },
-              "Name": {
-                "type": "string",
-                "example": "Stuart Barclay"
-              },
-              "Email Address": {
-                "type": "string",
-                "example": "5bits@gmail.com"
-              },
-              "Authentication Level": {
-                "type": "integer",
-                "example": 1
+        "response": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "count": {
+              "type": "integer",
+              "example": 1
+            },
+            "Moderators": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5f091f148f6a9946bc8f60a1"
+                  },
+                  "Name": {
+                    "type": "string",
+                    "example": "Stuart Barclay"
+                  },
+                  "Email Address": {
+                    "type": "string",
+                    "example": "5bits@gmail.com"
+                  },
+                  "Authentication Level": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
               }
             }
           }
@@ -1318,32 +1441,41 @@
     "POST Moderator": {
       "type": "object",
       "properties": {
-        "message": {
-          "type": "string",
-          "example": "Successfully added new moderator"
-        },
-        "Moderator Details": {
+        "response": {
           "type": "object",
           "properties": {
-            "_id": {
+            "message": {
               "type": "string",
-              "example": "5f0a2e72e4cb0f487064c4e0"
+              "example": "Moderator created successfully"
             },
-            "emailAddress": {
-              "type": "string",
-              "example": "u15015069@tuks.co.za"
+            "success": {
+              "type": "boolean",
+              "example": true
             },
-            "fName": {
-              "type": "string",
-              "example": "Stuart"
-            },
-            "lName": {
-              "type": "string",
-              "example": "Barclay"
-            },
-            "phoneNumber": {
-              "type": "string",
-              "example": "0793580784"
+            "Moderator": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5f0a2e72e4cb0f487064c4e0"
+                },
+                "Name": {
+                  "type": "string",
+                  "example": "Stuart"
+                },
+                "Email Address": {
+                  "type": "string",
+                  "example": "u15015069@tuks.co.za"
+                },
+                "Phone Number": {
+                  "type": "string",
+                  "example": "0793580784"
+                },
+                "Authentication Level": {
+                  "type": "integer",
+                  "example": 1
+                }
+              }
             }
           }
         }
@@ -1352,21 +1484,43 @@
     "GET Specific Moderator": {
       "type": "object",
       "properties": {
-        "_id": {
-          "type": "string",
-          "example": "5f0a2e72e4cb0f487064c4e0"
-        },
-        "Name": {
-          "type": "string",
-          "example": "Stuart Barclay"
-        },
-        "Email Address": {
-          "type": "string",
-          "example": "u15015069@tuks.co.za"
-        },
-        "Authentication Level": {
-          "type": "integer",
-          "example": 1
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Retrieved moderator successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "Moderator": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5f0a2e72e4cb0f487064c4e0"
+                },
+                "Name": {
+                  "type": "string",
+                  "example": "Stuart Barclay"
+                },
+                "Email Address": {
+                  "type": "string",
+                  "example": "u15015069@tuks.co.za"
+                },
+                "Phone Number": {
+                  "type": "string",
+                  "example": "0793580785"
+                },
+                "Authentication Level": {
+                  "type": "integer",
+                  "example": 1
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -1382,52 +1536,83 @@
     "DELETE Specific Moderator": {
       "type": "object",
       "properties": {
-        "message": {
-          "type": "string",
-          "example": "Moderator deleted"
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Moderator deleted successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
         }
       }
     },
     "PUT Specific Moderator": {
       "type": "object",
       "properties": {
-        "message": {
-          "type": "string",
-          "example": "Moderator Details Updated"
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Moderator details updated"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
         }
       }
     },
     "GET Reports": {
       "type": "object",
       "properties": {
-        "count": {
-          "type": "integer",
-          "example": 10
-        },
-        "reports": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string",
-                "example": "5f1622e15643f25f14fb6b31"
-              },
-              "type": {
-                "type": "string",
-                "example": "Fact"
-              },
-              "Report Data": {
-                "type": "integer",
-                "example": "This is a facts report"
-              },
-              "Date Captured": {
-                "type": "Date",
-                "example": "2020-07-20T23:01:08.926Z"
-              },
-              "Report Count": {
-                "type": "integer",
-                "example": 1
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Reports retireved successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "count": {
+              "type": "integer",
+              "example": 1
+            },
+            "Reports": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5f1622e15643f25f14fb6b31"
+                  },
+                  "Type": {
+                    "type": "string",
+                    "example": "Fact"
+                  },
+                  "Report Data": {
+                    "type": "integer",
+                    "example": "This is a facts report"
+                  },
+                  "Date Captured": {
+                    "type": "Date",
+                    "example": "2020-07-20T23:01:08.926Z"
+                  },
+                  "Report Count": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
               }
             }
           }
@@ -1437,28 +1622,45 @@
     "GET Specific Report ID": {
       "type": "object",
       "properties": {
-        "Report": {
+        "response": {
           "type": "object",
           "properties": {
-            "_id": {
+            "message": {
               "type": "string",
-              "example": "5ee186e05de6721c0ccbc14a"
+              "example": "Retrieved report successfully"
             },
-            "type": {
-              "type": "string",
-              "example": "Fact"
+            "success": {
+              "type": "boolean",
+              "example": true
             },
-            "Report Data": {
-              "type": "integer",
-              "example": "This is a facts report"
-            },
-            "Date Captured": {
-              "type": "Date",
-              "example": "2020-07-20T23:01:08.926Z"
-            },
-            "Report Count": {
-              "type": "integer",
-              "example": 1
+            "Report": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5f1622e15643f25f14fb6b31"
+                },
+                "Type": {
+                  "type": "string",
+                  "example": "Fact"
+                },
+                "Report Data": {
+                  "type": "integer",
+                  "example": "This is a facts report"
+                },
+                "Date Captured": {
+                  "type": "Date",
+                  "example": "2020-07-20T23:01:08.926Z"
+                },
+                "Report Count": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "Active Status": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
             }
           }
         }
@@ -1467,34 +1669,51 @@
     "GET Specific Report Type": {
       "type": "object",
       "properties": {
-        "count": {
-          "type": "integer",
-          "example": 2
-        },
-        "reports": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string",
-                "example": "5ee186e05de6721c0ccbc14a"
-              },
-              "type": {
-                "type": "string",
-                "example": "Fact"
-              },
-              "Report Data": {
-                "type": "integer",
-                "example": "This is a facts report"
-              },
-              "Date Captured": {
-                "type": "Date",
-                "example": "2020-07-20T23:01:08.926Z"
-              },
-              "Report Count": {
-                "type": "integer",
-                "example": 1
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Retrieved reports successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "count": {
+              "type": "integer",
+              "example": 1
+            },
+            "Reports": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5f1622e15643f25f14fb6b31"
+                  },
+                  "Type": {
+                    "type": "string",
+                    "example": "Fact"
+                  },
+                  "Report Data": {
+                    "type": "integer",
+                    "example": "This is a facts report"
+                  },
+                  "Date Captured": {
+                    "type": "Date",
+                    "example": "2020-07-20T23:01:08.926Z"
+                  },
+                  "Report Count": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "Active Status": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
               }
             }
           }
@@ -1504,34 +1723,47 @@
     "GET Specific Report Active": {
       "type": "object",
       "properties": {
-        "count": {
-          "type": "integer",
-          "example": 2
-        },
-        "reports": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string",
-                "example": "5ee186e05de6721c0ccbc14a"
-              },
-              "type": {
-                "type": "string",
-                "example": "Fact"
-              },
-              "Report Data": {
-                "type": "integer",
-                "example": "This is a facts report"
-              },
-              "Date Captured": {
-                "type": "Date",
-                "example": "2020-07-20T23:01:08.926Z"
-              },
-              "Report Count": {
-                "type": "integer",
-                "example": 1
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Retrieved reports successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "count": {
+              "type": "integer",
+              "example": 1
+            },
+            "Reports": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5f1622e15643f25f14fb6b31"
+                  },
+                  "Type": {
+                    "type": "string",
+                    "example": "Fact"
+                  },
+                  "Report Data": {
+                    "type": "integer",
+                    "example": "This is a facts report"
+                  },
+                  "Date Captured": {
+                    "type": "Date",
+                    "example": "2020-07-20T23:01:08.926Z"
+                  },
+                  "Report Count": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
               }
             }
           }
@@ -1541,67 +1773,16 @@
     "PUT Specific Report ID": {
       "type": "object",
       "properties": {
-        "message": {
-          "type": "string",
-          "example": "Report Updated"
-        },
-        "result": {
+        "response": {
           "type": "object",
           "properties": {
-            "n": {
-              "type": "integer",
-              "example": 1
-            },
-            "nModified": {
-              "type": "integer",
-              "example": 1
-            },
-            "opTime": {
-              "type": "object",
-              "properties": {
-                "ts": {
-                  "type": "string",
-                  "example": "6847981318001655813"
-                },
-                "t": {
-                  "type": "integer",
-                  "example": 9
-                }
-              }
-            },
-            "electionId": {
+            "message": {
               "type": "string",
-              "example": "7fffffff0000000000000009"
+              "example": "Report details updated"
             },
-            "ok": {
-              "type": "integer",
-              "example": 1
-            },
-            "$clusterTime": {
-              "type": "object",
-              "properties": {
-                "clusterTime": {
-                  "type": "string",
-                  "example": "6847981318001655813"
-                },
-                "signature": {
-                  "type": "object",
-                  "properties": {
-                    "hash": {
-                      "type": "string",
-                      "example": "eSazwwZUt1sfyEiijzLHwAvs36Y="
-                    },
-                    "keyId": {
-                      "type": "string",
-                      "example": "6835849740492472323"
-                    }
-                  }
-                }
-              }
-            },
-            "operationTime": {
-              "type": "string",
-              "example": "6847981318001655813"
+            "success": {
+              "type": "boolean",
+              "example": true
             }
           }
         }
@@ -1610,67 +1791,16 @@
     "DELETE Specific Report ID": {
       "type": "object",
       "properties": {
-        "message": {
-          "type": "string",
-          "example": "Report deleted"
-        },
-        "result": {
+        "response": {
           "type": "object",
           "properties": {
-            "n": {
-              "type": "integer",
-              "example": 1
-            },
-            "opTime": {
-              "type": "object",
-              "properties": {
-                "ts": {
-                  "type": "string",
-                  "example": "6847981318001655813"
-                },
-                "t": {
-                  "type": "integer",
-                  "example": 9
-                }
-              }
-            },
-            "electionId": {
+            "message": {
               "type": "string",
-              "example": "7fffffff0000000000000009"
+              "example": "Report deleted"
             },
-            "ok": {
-              "type": "integer",
-              "example": 1
-            },
-            "$clusterTime": {
-              "type": "object",
-              "properties": {
-                "clusterTime": {
-                  "type": "string",
-                  "example": "6847981318001655813"
-                },
-                "signature": {
-                  "type": "object",
-                  "properties": {
-                    "hash": {
-                      "type": "string",
-                      "example": "eSazwwZUt1sfyEiijzLHwAvs36Y="
-                    },
-                    "keyId": {
-                      "type": "string",
-                      "example": "6835849740492472323"
-                    }
-                  }
-                }
-              }
-            },
-            "operationTime": {
-              "type": "string",
-              "example": "6847981318001655813"
-            },
-            "deletedCount": {
-              "type": "integer",
-              "example": 1
+            "success": {
+              "type": "boolean",
+              "example": true
             }
           }
         }
@@ -1679,67 +1809,16 @@
     "PUT Specific Report Active": {
       "type": "object",
       "properties": {
-        "message": {
-          "type": "string",
-          "example": "Report Updated"
-        },
-        "result": {
+        "response": {
           "type": "object",
           "properties": {
-            "n": {
-              "type": "integer",
-              "example": 1
-            },
-            "nModified": {
-              "type": "integer",
-              "example": 1
-            },
-            "opTime": {
-              "type": "object",
-              "properties": {
-                "ts": {
-                  "type": "string",
-                  "example": "6847981318001655813"
-                },
-                "t": {
-                  "type": "integer",
-                  "example": 9
-                }
-              }
-            },
-            "electionId": {
+            "message": {
               "type": "string",
-              "example": "7fffffff0000000000000009"
+              "example": "Report details updated"
             },
-            "ok": {
-              "type": "integer",
-              "example": 1
-            },
-            "$clusterTime": {
-              "type": "object",
-              "properties": {
-                "clusterTime": {
-                  "type": "string",
-                  "example": "6847981318001655813"
-                },
-                "signature": {
-                  "type": "object",
-                  "properties": {
-                    "hash": {
-                      "type": "string",
-                      "example": "eSazwwZUt1sfyEiijzLHwAvs36Y="
-                    },
-                    "keyId": {
-                      "type": "string",
-                      "example": "6835849740492472323"
-                    }
-                  }
-                }
-              }
-            },
-            "operationTime": {
-              "type": "string",
-              "example": "6847981318001655813"
+            "success": {
+              "type": "boolean",
+              "example": true
             }
           }
         }
@@ -1748,67 +1827,16 @@
     "DELETE Specific Report Active": {
       "type": "object",
       "properties": {
-        "message": {
-          "type": "string",
-          "example": "Report deleted"
-        },
-        "result": {
+        "response": {
           "type": "object",
           "properties": {
-            "n": {
-              "type": "integer",
-              "example": 1
-            },
-            "opTime": {
-              "type": "object",
-              "properties": {
-                "ts": {
-                  "type": "string",
-                  "example": "6847981318001655813"
-                },
-                "t": {
-                  "type": "integer",
-                  "example": 9
-                }
-              }
-            },
-            "electionId": {
+            "message": {
               "type": "string",
-              "example": "7fffffff0000000000000009"
+              "example": "Report deleted"
             },
-            "ok": {
-              "type": "integer",
-              "example": 1
-            },
-            "$clusterTime": {
-              "type": "object",
-              "properties": {
-                "clusterTime": {
-                  "type": "string",
-                  "example": "6847981318001655813"
-                },
-                "signature": {
-                  "type": "object",
-                  "properties": {
-                    "hash": {
-                      "type": "string",
-                      "example": "eSazwwZUt1sfyEiijzLHwAvs36Y="
-                    },
-                    "keyId": {
-                      "type": "string",
-                      "example": "6835849740492472323"
-                    }
-                  }
-                }
-              }
-            },
-            "operationTime": {
-              "type": "string",
-              "example": "6847981318001655813"
-            },
-            "deletedCount": {
-              "type": "integer",
-              "example": 1
+            "success": {
+              "type": "boolean",
+              "example": true
             }
           }
         }
@@ -1817,67 +1845,16 @@
     "PUT Specific Report Type": {
       "type": "object",
       "properties": {
-        "message": {
-          "type": "string",
-          "example": "Report Updated"
-        },
-        "result": {
+        "response": {
           "type": "object",
           "properties": {
-            "n": {
-              "type": "integer",
-              "example": 1
-            },
-            "nModified": {
-              "type": "integer",
-              "example": 1
-            },
-            "opTime": {
-              "type": "object",
-              "properties": {
-                "ts": {
-                  "type": "string",
-                  "example": "6847981318001655813"
-                },
-                "t": {
-                  "type": "integer",
-                  "example": 9
-                }
-              }
-            },
-            "electionId": {
+            "message": {
               "type": "string",
-              "example": "7fffffff0000000000000009"
+              "example": "Report details updated"
             },
-            "ok": {
-              "type": "integer",
-              "example": 1
-            },
-            "$clusterTime": {
-              "type": "object",
-              "properties": {
-                "clusterTime": {
-                  "type": "string",
-                  "example": "6847981318001655813"
-                },
-                "signature": {
-                  "type": "object",
-                  "properties": {
-                    "hash": {
-                      "type": "string",
-                      "example": "eSazwwZUt1sfyEiijzLHwAvs36Y="
-                    },
-                    "keyId": {
-                      "type": "string",
-                      "example": "6835849740492472323"
-                    }
-                  }
-                }
-              }
-            },
-            "operationTime": {
-              "type": "string",
-              "example": "6847981318001655813"
+            "success": {
+              "type": "boolean",
+              "example": true
             }
           }
         }
@@ -1886,28 +1863,37 @@
     "POST Reports": {
       "type": "object",
       "properties": {
-        "message": {
-          "type": "string",
-          "example": "Successfully added new report"
-        },
-        "Report Details": {
+        "response": {
           "type": "object",
           "properties": {
-            "_id": {
+            "message": {
               "type": "string",
-              "example": "5f162e4c1ad7363464fb0b2a"
+              "example": "Report created successfully"
             },
-            "type": {
-              "type": "string",
-              "example": "Sources"
+            "success": {
+              "type": "boolean",
+              "example": true
             },
-            "Report Data": {
-              "type": "integer",
-              "example": "This is a facts report"
-            },
-            "Date Captured": {
-              "type": "Date",
-              "example": "2020-07-20T23:01:08.926Z"
+            "Report": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5f162e4c1ad7363464fb0b2a"
+                },
+                "Type": {
+                  "type": "string",
+                  "example": "Sources"
+                },
+                "Report Data": {
+                  "type": "integer",
+                  "example": "This is a facts report"
+                },
+                "Date Captured": {
+                  "type": "Date",
+                  "example": "2020-07-20T23:01:08.926Z"
+                }
+              }
             }
           }
         }
@@ -1951,6 +1937,60 @@
             "url": {
               "type": "string",
               "example": "/Sources/5edf31165d617a2850632422"
+            }
+          }
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Server Error"
+            },
+            "success": {
+              "type": "boolean",
+              "example": false
+            }
+          }
+        }
+      }
+    },
+    "Not Found": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Not found"
+            },
+            "success": {
+              "type": "boolean",
+              "example": false
+            }
+          }
+        }
+      }
+    },
+    "No Update": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Not updated"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
             }
           }
         }
