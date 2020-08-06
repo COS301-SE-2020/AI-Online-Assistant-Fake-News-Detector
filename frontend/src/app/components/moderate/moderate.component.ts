@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter , Output} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FactslistService } from 'src/app/factslist.service';
 import { FactInputService } from 'src/app/fact-input.service';
+import { SourceInputService } from 'src/app/source-input.service';
 import { SearchSourceService} from 'src/app/search-source.service';
 import { Sources } from 'src/app/sources'
 import { FactsList } from 'src/app/factslist';
@@ -24,6 +25,7 @@ export class ModerateComponent implements OnInit {
   sourcelist: any = {};
   SourceInputForm: FormGroup;
   FactInputForm: FormGroup;
+  InsertSourceForm: FormGroup;
   factslist: FactsList[];
   myControl = new FormControl();
   options = [];
@@ -32,18 +34,23 @@ export class ModerateComponent implements OnInit {
   dismiss: boolean;
   sourceDeleteResponse: boolean;
   insertFactResponse: boolean;
+  insertSourceResponse: boolean;
   searchResponse:boolean;
+  checked: boolean;
 
   //sourceID:string;
   receivedID:string;
-  value: string;
+  clearSearchSourceName: string;
+  clearInsertSourceName: string;
+  clearUrl: string;
 
-  constructor(private factslistService: FactslistService, private _factinputService: FactInputService,
+  constructor(private factslistService: FactslistService, private _factinputService: FactInputService, private _sourceinputService: SourceInputService,
     private searchService: SearchSourceService ,public http: HttpClient, private _deleteService: DeleteSourceService,
     private autocompleteService: AutocompleteService) { 
     this.dismiss=false;
     this.sourceDeleteResponse=false;
     this.insertFactResponse=false;
+    this.insertSourceResponse=false;
     this.searchResponse=false;
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -77,12 +84,21 @@ export class ModerateComponent implements OnInit {
     /* End of instance of form group */
 
 
-    /* instance of form group */
+    /* instance of search form group */
     this.SourceInputForm = new FormGroup({
       SourceName: new FormControl(),
     })
 
-    /* End of instance of form group */
+    /* End of instance search of form group */
+
+    /* instance of insert source form group */
+    this.InsertSourceForm = new FormGroup({
+      name: new FormControl(),
+      tld: new FormControl(),
+      rating: new FormControl()
+    })
+
+    /* End of instance of insert source form group */
 
 
   }
@@ -141,6 +157,18 @@ export class ModerateComponent implements OnInit {
           });
         }
       /* end of fetch list function */ 
+
+        /* function that submits source*/
+
+        onSourceSubmit() {
+          console.log(this.InsertSourceForm.value);
+          this._sourceinputService.SubmitSource(this.InsertSourceForm.value)
+            .subscribe(
+              response => console.log('Success!', response),
+              error => console.error('Error!', error)
+            );
+        }
+      /* End of source input submit */
 
 
       /* function that submits fact*/
