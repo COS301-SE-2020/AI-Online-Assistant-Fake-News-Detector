@@ -35,7 +35,7 @@ export class ModerateComponent implements OnInit {
   sourceDeleteResponse: boolean;
   insertFactResponse: boolean;
   insertSourceResponse: boolean;
-  searchResponse:boolean;
+  searchNotFound:boolean;
   checked: boolean;
 
   //sourceID:string;
@@ -43,6 +43,7 @@ export class ModerateComponent implements OnInit {
   clearSearchSourceName: string;
   clearInsertSourceName: string;
   clearUrl: string;
+  clearInsertFactStatement: string;
 
   constructor(private factslistService: FactslistService, private _factinputService: FactInputService, private _sourceinputService: SourceInputService,
     private searchService: SearchSourceService ,public http: HttpClient, private _deleteService: DeleteSourceService,
@@ -51,7 +52,7 @@ export class ModerateComponent implements OnInit {
     this.sourceDeleteResponse=false;
     this.insertFactResponse=false;
     this.insertSourceResponse=false;
-    this.searchResponse=false;
+    this.searchNotFound=false;
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -122,7 +123,7 @@ export class ModerateComponent implements OnInit {
         Search(){
            
         this.sourceDeleteResponse=false;
-        this.searchResponse=false;
+        this.searchNotFound=false;
         
 
         this.searchService.search(this.SourceInputForm.value.SourceName).
@@ -130,13 +131,15 @@ export class ModerateComponent implements OnInit {
             this.sourcelist = data;
             this.dismiss=true;
 
-
             //this.testSearch=true;
            // this.sourceID = data.source._id;
            
         },
           error => {
-            this.searchResponse=true;
+            if(this.SourceInputForm.valid){
+              this.searchNotFound=true;
+            }
+            
             console.log("HTTP error ", error);
           }
            
@@ -164,8 +167,18 @@ export class ModerateComponent implements OnInit {
           console.log(this.InsertSourceForm.value);
           this._sourceinputService.SubmitSource(this.InsertSourceForm.value)
             .subscribe(
-              response => console.log('Success!', response),
-              error => console.error('Error!', error)
+              response => {
+                if(this.InsertSourceForm.valid){
+                  this.insertSourceResponse = true;
+                }
+              console.log('Success!', response)}
+              ,
+              error => {
+                if(this.InsertSourceForm.valid){
+                  this.insertSourceResponse = false;
+                }
+              console.error('Error!', error)
+            }
             );
         }
       /* End of source input submit */
@@ -177,8 +190,18 @@ export class ModerateComponent implements OnInit {
         console.log(this.FactInputForm.value);
         this._factinputService.SubmitFact(this.FactInputForm.value)
           .subscribe(
-            response => console.log('Success!', response),
-            error => console.error('Error!', error)
+            response => {
+              if(this.FactInputForm.valid){
+                this.insertFactResponse = true;
+              }
+              console.log('Success!', response)
+          },
+            error => {
+              if(this.FactInputForm.valid){
+                this.insertFactResponse = true;
+              }
+              console.error('Error!', error)
+          }
           );
       }
     /* End of fact input submit */
@@ -197,7 +220,31 @@ export class ModerateComponent implements OnInit {
     }
   /* End of source delete function */    
 
+  /* Function that clears response cards */
+    ResetResponseCards(){
 
+        if(this.SourceInputForm.valid){
+          this.SourceInputForm.reset();
+          this.sourcelist.source = "";
+          this.searchNotFound = false;
+        }
+        
+        if(this.sourceDeleteResponse){
+          this.sourceDeleteResponse = false;
+        }
+
+        if(this.FactInputForm.valid){
+          this.FactInputForm.reset();
+          this.insertFactResponse = false;
+        }
+     
+        if(this.InsertSourceForm.valid){
+          this.InsertSourceForm.reset();
+          this.insertSourceResponse = false;
+        }
+        
+    }
+  /* End of function that clears response cards */
 
 
 }
