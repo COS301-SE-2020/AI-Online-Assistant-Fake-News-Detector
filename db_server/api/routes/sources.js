@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-
+const Logger = require("../../../winston");
+const logger = new Logger(express);
 const Source = require("../models/source");
 
 /**
@@ -48,6 +49,7 @@ router.post("/", (req, res, next) => {
   source
     .save()
     .then((result) => {
+      logger.info("Source was created.");
       res.status(201).json({
         response: {
           message: "Source created successfully",
@@ -63,15 +65,15 @@ router.post("/", (req, res, next) => {
     .catch((err) => {
       res.status(500).json({ response: { message: err, success: false } });
     });
-});
-
-/**
- * @description get request to get a single fake news source by id
- * @author Quinton Coetzee
- */
-router.get("/id/:sourceId", (req, res, next) => {
-  const id = req.params.sourceId;
-  Source.findById(id)
+  });
+  
+  /**
+   * @description get request to get a single fake news source by id
+   * @author Quinton Coetzee
+   */
+  router.get("/id/:sourceId", (req, res, next) => {
+    const id = req.params.sourceId;
+    Source.findById(id)
     .select("name tld rating _id")
     .exec()
     .then((doc) => {
@@ -100,15 +102,15 @@ router.get("/id/:sourceId", (req, res, next) => {
     .catch((err) => {
       res.status(500).json({ response: { message: err, success: false } });
     });
-});
-
-/**
- * @description get source by name
- * @author Quinton Coetzee
- */
-router.get("/name/:sourceName", (req, res, next) => {
-  const name = decodeURI(req.params.sourceName);
-  Source.findOne({ name: new RegExp(name, "i") })
+  });
+  
+  /**
+   * @description get source by name
+   * @author Quinton Coetzee
+   */
+  router.get("/name/:sourceName", (req, res, next) => {
+    const name = decodeURI(req.params.sourceName);
+    Source.findOne({ name: new RegExp(name, "i") })
     .select("name tld rating _id")
     .exec()
     .then((doc) => {
@@ -128,7 +130,7 @@ router.get("/name/:sourceName", (req, res, next) => {
       } else {
         res.status(404).json({
           response: {
-            message: "No database entry for provided active status",
+            message: "No database entry for provided name",
             success: false,
           },
         });
@@ -137,19 +139,20 @@ router.get("/name/:sourceName", (req, res, next) => {
     .catch((err) => {
       res.status(500).json({ response: { message: err, success: false } });
     });
-});
-
-/**
- * @description put request to update rating of news source based on ID
- * @author Quinton Coetzee
- */
-router.put("/id/:sourceId", (req, res, next) => {
-  const id = req.params.sourceId;
-  Source.updateOne({ _id: id }, { $set: req.body })
+  });
+  
+  /**
+   * @description put request to update rating of news source based on ID
+   * @author Quinton Coetzee
+   */
+  router.put("/id/:sourceId", (req, res, next) => {
+    const id = req.params.sourceId;
+    Source.updateOne({ _id: id }, { $set: req.body })
     .exec()
     .then((result) => {
       // Entry found and modified
       if (result.nModified > 0 && result.n > 0) {
+        logger.info("Source was updated.");
         res.status(200).json({
           response: {
             message: "Source details updated",
@@ -186,23 +189,24 @@ router.put("/id/:sourceId", (req, res, next) => {
 router.delete("/id/:sourceId", (req, res, next) => {
   const id = req.params.sourceId;
   Source.deleteOne({ _id: id })
-    .exec()
-    .then((result) => {
-      if (result.deletedCount > 0)
-        res.status(200).json({
-          response: {
-            message: "Source deleted",
-            success: true,
-          },
-        });
-      else
-        res.status(404).json({
-          response: {
-            message: "Source not deleted",
-            success: false,
-          },
-        });
-    })
+  .exec()
+  .then((result) => {
+    logger.info("Source was deleted.");
+    if (result.deletedCount > 0)
+    res.status(200).json({
+      response: {
+        message: "Source deleted",
+        success: true,
+      },
+    });
+    else
+    res.status(404).json({
+      response: {
+        message: "Source not deleted",
+        success: false,
+      },
+    });
+  })
     .catch((err) => {
       res.status(500).json({ response: { message: err, success: false } });
     });

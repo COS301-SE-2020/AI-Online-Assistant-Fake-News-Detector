@@ -7,6 +7,23 @@ const server = require("../api_server");
 chai.use(chaiHttp);
 
 describe("Facts", () => {
+  it("It should add a single fact to the database /POST facts", function (done) {
+    chai
+      .request(server)
+      .post("/API/Facts")
+      .send({ statement: "Elephants can fly", popularity: 18 })
+      .end(function (err, res) {
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a("object");
+        res.body.response.should.have.property("message");
+        res.body.response.Fact.should.be.a("object");
+        res.body.response.Fact.should.have.property("Statement");
+        res.body.response.Fact.should.have.property("Popularity");
+        res.body.response.Fact.should.have.property("ID");
+        done();
+      });
+  });
   it("It should retrieve all facts in database /GET facts", (done) => {
     chai
       .request(server)
@@ -48,23 +65,6 @@ describe("Facts", () => {
       });
   });
 
-  it("It should add a single fact to the database /POST facts", function (done) {
-    chai
-      .request(server)
-      .post("/API/Facts")
-      .send({ statement: "Elephants can fly", popularity: 18 })
-      .end(function (err, res) {
-        res.should.have.status(201);
-        res.should.be.json;
-        res.body.should.be.a("object");
-        res.body.response.should.have.property("message");
-        res.body.response.Fact.should.be.a("object");
-        res.body.response.Fact.should.have.property("Statement");
-        res.body.response.Fact.should.have.property("Popularity");
-        res.body.response.Fact.should.have.property("ID");
-        done();
-      });
-  });
 
   it("It should delete a single fact from the database /DELETE facts/:factId", function (done) {
     chai
@@ -93,6 +93,25 @@ describe("Facts", () => {
 });
 
 describe("Sources", () => {
+  it("It should add a single source to the database /POST sources", function (done) {
+    chai
+      .request(server)
+      .post("/API/sources")
+      .send({ name: "gmail", rating: 5, tld: "https://gmail.com/" })
+      .end(function (err, res) {
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a("object");
+        res.body.response.should.have.property("message");
+        res.body.response.Source.should.be.a("object");
+        res.body.response.Source.should.have.property("Name");
+        res.body.response.Source.should.have.property("Domain Name");
+        res.body.response.Source.should.have.property("ID");
+        res.body.response.Source.should.have.property("Rating");
+        res.body.response.Source.Rating.should.equal(5);
+        done();
+      });
+  });
   it("It should retrieve all sources in the database", (done) => {
     chai
       .request(server)
@@ -164,25 +183,6 @@ describe("Sources", () => {
       });
   });
 
-  it("It should add a single source to the database /POST sources", function (done) {
-    chai
-      .request(server)
-      .post("/API/sources")
-      .send({ name: "gmail", rating: 5, tld: "https://gmail.com/" })
-      .end(function (err, res) {
-        res.should.have.status(201);
-        res.should.be.json;
-        res.body.should.be.a("object");
-        res.body.response.should.have.property("message");
-        res.body.response.Source.should.be.a("object");
-        res.body.response.Source.should.have.property("Name");
-        res.body.response.Source.should.have.property("Domain Name");
-        res.body.response.Source.should.have.property("ID");
-        res.body.response.Source.should.have.property("Rating");
-        res.body.response.Source.Rating.should.equal(5);
-        done();
-      });
-  });
 
   it("It should update a single source in the database /PUT sources/:SourceId", function (done) {
     chai
@@ -242,6 +242,29 @@ describe("Sources", () => {
 });
 
 describe("Moderators", () => {
+  it("It should add a Moderator to the database /POST Moderators", function (done) {
+    chai
+      .request(server)
+      .post("/API/Moderators")
+      .send({
+        emailAddress: "5Bits@gmail.com",
+        password: "Stuart",
+        fName: "Stuart" + (Math.random() * 100).toFixed(0),
+        lName: "Barclay",
+        phoneNumber: "0793580784",
+      })
+      .end(function (err, res) {
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a("object");
+        res.body.response.should.have.property("message");
+        res.body.response.Moderator.should.be.a("object");
+        res.body.response.Moderator.should.have.property("Name");
+        res.body.response.Moderator.should.have.property("Email Address");
+        res.body.response.Moderator.should.have.property("ID");
+        done();
+      });
+  });
   it("It should retrieve all moderators in the database", (done) => {
     chai
       .request(server)
@@ -286,29 +309,6 @@ describe("Moderators", () => {
       });
   });
 
-  it("It should add a Moderator to the database /POST Moderators", function (done) {
-    chai
-      .request(server)
-      .post("/API/Moderators")
-      .send({
-        emailAddress: "5Bits@gmail.com",
-        password: "Stuart",
-        fName: "Stuart" + (Math.random() * 100).toFixed(0),
-        lName: "Barclay",
-        phoneNumber: "0793580784",
-      })
-      .end(function (err, res) {
-        res.should.have.status(201);
-        res.should.be.json;
-        res.body.should.be.a("object");
-        res.body.response.should.have.property("message");
-        res.body.response.Moderator.should.be.a("object");
-        res.body.response.Moderator.should.have.property("Name");
-        res.body.response.Moderator.should.have.property("Email Address");
-        res.body.response.Moderator.should.have.property("ID");
-        done();
-      });
-  });
 
   it("It should update a moderator in the database /PUT Moderators/:emailAddress", function (done) {
     chai

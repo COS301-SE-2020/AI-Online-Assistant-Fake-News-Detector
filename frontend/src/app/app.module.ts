@@ -28,6 +28,8 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { ModerateComponent } from './components/moderate/moderate.component';
 import { HowtoComponent } from './components/howto/howto.component';
+import {SearchSourceService} from './search-source.service';
+import {AutocompleteService} from 'src/app/autocomplete.service';
 
 import { AiMaterialModule } from './app-material.module';
 import { StyleManagerService } from './style-manager.service';
@@ -39,6 +41,8 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { TogglebuttonComponent } from 'src/app/togglebutton/togglebutton.component';
 
 @NgModule({
 	declarations: [
@@ -54,7 +58,8 @@ import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-shee
 		HowtoComponent,
 		ShareSheetComponent,
 		ShareButtonComponent,
-		NotfoundComponent
+		NotfoundComponent,
+		TogglebuttonComponent
 	],
 	imports: [
 		BrowserModule,
@@ -73,7 +78,8 @@ import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-shee
 		MatCardModule,
 		AiMaterialModule,
 		FlexLayoutModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		MatAutocompleteModule,
 	],
 	entryComponents: [ ShareButtonComponent, ShareSheetComponent ],
 	providers: [
@@ -83,6 +89,8 @@ import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-shee
 		HttpClientModule,
 		StyleManagerService,
 		ThemeService,
+		SearchSourceService,
+		AutocompleteService,
 		{
 			provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
 			useValue: { appearance: 'fill' }
