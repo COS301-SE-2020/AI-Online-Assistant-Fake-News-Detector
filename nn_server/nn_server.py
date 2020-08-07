@@ -29,7 +29,7 @@ coreNN.addInput(factInput)
 app = flask.Flask(__name__)
 
 # route for supported requests
-@app.route('/api/check', methods=['POST'])
+@app.route('/verify', methods=['POST'])
 def check():
     body = request.get_json(force=True, silent=True)
     if body:

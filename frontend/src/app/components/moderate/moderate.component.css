@@ -114,3 +114,7 @@ ul{
   #cardImg{
 	  width: 50px;
   }
+  
+  toggle-button {
+	margin: 0 auto;
+  } 

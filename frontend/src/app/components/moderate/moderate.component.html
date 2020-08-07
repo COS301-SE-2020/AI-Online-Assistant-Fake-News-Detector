@@ -3,18 +3,30 @@
             <h4>We value your contribution </h4>
             <p id="heading">As a moderator, your input will help improve our AI's accuracy...so please tread carefully.</p>
 
-    </div>
+</div>
 
+    <app-togglebutton (click)="ResetResponseCards()" (changed)="checked=$event">
+    </app-togglebutton>
+    
     &nbsp; &nbsp; &nbsp; &nbsp; 
     <div class="container w-container">
 
-        
-        <form [formGroup]="SourceInputForm" (ngSubmit)="Search()">
+        <!--Form for searching a source-->
+        <form [formGroup]="SourceInputForm" (ngSubmit)="Search()" *ngIf="!checked">
             
 
                 <mat-form-field color="primary" id="sourceInput"  class="example-form-field">
                     <mat-label>Enter source name (e.g CNN)</mat-label>
-                    <input matInput  type="text" formControlName="SourceName">
+                    <input matInput  type="text" formControlName="SourceName" [(ngModel)]="clearSearchSourceName"
+                    aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" required>
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+                          {{option.name}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    <button mat-button *ngIf="clearSearchSourceName" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchSourceName=''">
+                        <mat-icon (click)="ResetResponseCards()">close</mat-icon>
+                      </button>
                 </mat-form-field>
 
                 <div>
@@ -23,51 +35,97 @@
                
         </form>
 
-           
+         <!--End of Form for searching a source-->
+
+
+         <!--Form for Inserting a source-->
+        <form [formGroup]="InsertSourceForm" (ngSubmit)="onSourceSubmit()" *ngIf="checked">
+  
+            <mat-form-field id="statement" class="example-form-field">
+                <mat-label>Source Name</mat-label>
+                <input matInput type="text" formControlName="name" [(ngModel)]="clearInsertSourceName" required>
+                <button mat-button *ngIf="clearInsertSourceName" matSuffix mat-icon-button aria-label="Clear" (click)="clearInsertSourceName=''">
+                    <mat-icon (click)="ResetResponseCards()">close</mat-icon>
+                  </button>
+            </mat-form-field>
+
+              <span></span>
+
+              <mat-form-field id="statement" class="example-form-field">
+                <mat-label>Source URL</mat-label>
+                <input matInput type="url" formControlName="tld" [(ngModel)]="clearUrl" required>
+                <button mat-button *ngIf="clearUrl" matSuffix mat-icon-button aria-label="Clear" (click)="clearUrl=''">
+                    <mat-icon (click)="ResetResponseCards()">close</mat-icon>
+                  </button>
+            </mat-form-field>
+
+              <span></span>
+
+              <mat-form-field id="popularity" class="example-form-field">
+                <mat-label>Rating between 0-100</mat-label>
+                <input matInput matInput id="popularity" type="number" formControlName="rating" required>
+              </mat-form-field>
+     
+        <div>
+            <button mat-raised-button color="accent" type="submit">Insert Source</button>
+        </div>
+
+        </form>
+
+        <!--End of Form for searching a source-->
        
-            <div  *ngIf="sourcelist.source">
-                <mat-card id="SearchResponseCard" class="example-card" *ngIf="dismiss">
-                    <mat-card-header>
-                      <div mat-card-avatar class="example-header-image"><img id="cardImg" src="assets/img/5bitslogo.png"/></div>
-                      <mat-card-title>{{sourcelist.source?.name}}</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <p> <span>Source URL: </span> <i>{{sourcelist.source?.tld}}</i></p>
-                       <p> <span>Popularity Rating: </span><i>{{sourcelist.source?.rating}}</i></p> 
-                    </mat-card-content>
-                    <mat-card-actions>
-                      <button mat-raised-button color="accent" (click)="dismiss=false">Dismiss</button>
-                      <button mat-raised-button color="accent" (click)="DeleteSource(sourcelist.source?._id)">Delete Source</button>
-                    </mat-card-actions>
-                  </mat-card>
+             <div class="Response-Cards">
+                    <div  *ngIf="sourcelist.source">
+                        <mat-card id="SearchResponseCard" class="example-card" *ngIf="dismiss">
+                            <mat-card-header>
+                            <div mat-card-avatar class="example-header-image"><img id="cardImg" src="assets/img/5bitslogo.png"/></div>
+                            <mat-card-title>{{sourcelist.source?.name}}</mat-card-title>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <p> <span>Source URL: </span> <i>{{sourcelist.source?.tld}}</i></p>
+                            <p> <span>Popularity Rating: </span><i>{{sourcelist.source?.rating}}</i></p> 
+                            </mat-card-content>
+                            <mat-card-actions>
+                            <button mat-raised-button color="accent" (click)="dismiss=false">Dismiss</button>
+                            <button mat-raised-button color="accent" (click)="DeleteSource(sourcelist.source?._id)">Delete Source</button>
+                            </mat-card-actions>
+                        </mat-card>
+                    </div>
+                    
 
-            </div>
+                        <!--Alternate divs that load when specific events occur-->
+                        <div *ngIf="sourceDeleteResponse">
+                            <mat-card id="SearchResponseCard" class="example-card">
+                                <mat-card-content>
+                                    <p> Source has been deleted...Good riddance.</p> 
+                                </mat-card-content>
+                            </mat-card>
 
-            <!--Alternate divs that load when specific events occur-->
-            <div *ngIf="sourceDeleteResponse">
-                <mat-card id="SearchResponseCard" class="example-card">
-                    <mat-card-content>
-                        <p> Source has been deleted...Good riddance.</p> 
-                    </mat-card-content>
-                  </mat-card>
+                        </div>
 
-            </div>
+                        <div *ngIf="searchNotFound">
+                            <mat-card id="SearchResponseCard" class="example-card">
+                                <mat-card-content>
+                                    <p> Unfortunately, we do not know about that source.</p> 
+                                </mat-card-content>
+                            </mat-card>
 
-            <div *ngIf="searchResponse">
-                <mat-card id="SearchResponseCard" class="example-card">
-                    <mat-card-content>
-                        <p> Unfortunately, we do not know about that source.</p> 
-                    </mat-card-content>
-                  </mat-card>
+                        </div>
 
-            </div>
+                        <div *ngIf="insertSourceResponse">
+                            <mat-card color="primary" id="SearchResponseCard" class="example-card">
+                                <mat-card-content>
+                                    <p> New source has been added.</p> 
+                                </mat-card-content>
+                            </mat-card>
+                
+                        </div>
+                
 
 
-            <!--End of alternative divs-->
-
-
-       
-                 
+                        <!--End of alternative divs-->
+                 </div>                   
+         
 
     </div>
 
@@ -91,19 +149,6 @@
 
         <!--Start of fact input form-->
 
-        <!--
-        <mat-form-field class="example-form-field">
-            <mat-label>Source/URL</mat-label>
-            <input matInput type="text" [(ngModel)]="statement">
-            <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-              <mat-icon>close</mat-icon>
-            </button>
-          </mat-form-field>
-          
-            <div class="example-button-row">
-              <button mat-raised-button (click)="onSubmit()">Check</button>
-            </div>
-        -->
 
         <div class="container-fluid">
   
@@ -112,18 +157,21 @@
   
                 <mat-form-field id="statement" class="example-form-field">
                     <mat-label>Type in a fact</mat-label>
-                    <input matInput type="text" formControlName="statement">
+                    <input matInput type="text" formControlName="statement" [(ngModel)]="clearInsertFactStatement" required>
+                    <button mat-button *ngIf="clearInsertFactStatement" matSuffix mat-icon-button aria-label="Clear" (click)="clearInsertFactStatement=''">
+                        <mat-icon (click)="ResetResponseCards()">close</mat-icon>
+                      </button>
                 </mat-form-field>
 
                   <span></span>
 
                   <mat-form-field id="popularity" class="example-form-field">
                     <mat-label>Rating between 0-100</mat-label>
-                    <input matInput matInput id="popularity" type="number" formControlName="popularity">
+                    <input matInput matInput id="popularity" type="number" formControlName="popularity" required>
                   </mat-form-field>
          
             <div>
-                <button mat-raised-button color="accent" (click)="insertFactResponse=true" type="submit">Insert Fact</button>
+                <button mat-raised-button color="accent" type="submit">Insert Fact</button>
             </div>
     
             </form>
@@ -132,18 +180,19 @@
 
      <!--End of fact input form-->
 
+     <div class="Response-Cards">
+            <!--Alternate divs that load when specific events occur-->
+                <div *ngIf="insertFactResponse">
+                    <mat-card color="primary" id="SearchResponseCard" class="example-card">
+                        <mat-card-content>
+                            <p> False fact has been added.</p> 
+                        </mat-card-content>
+                    </mat-card>
 
-     <!--Alternate divs that load when specific events occur-->
-        <div *ngIf="insertFactResponse">
-            <mat-card color="primary" id="SearchResponseCard" class="example-card">
-                <mat-card-content>
-                    <p> False fact has been added.</p> 
-                </mat-card-content>
-            </mat-card>
+                </div>
 
-        </div>
-
-        <!--End of alternative divs-->
+                <!--End of alternative divs-->
+     </div>
     
 </div>
 

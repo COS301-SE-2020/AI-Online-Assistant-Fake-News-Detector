@@ -1,0 +1,64 @@
+:host {
+    display: block;
+    position: relative;
+    width: 16.6em;
+    height: 20px;
+    margin-left: auto;
+    margin-right:auto ;
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+  
+  input[type="checkbox"] {
+    display: none; 
+  }
+
+  .toggle-button-switch {
+    margin-left: auto;
+    margin-right:auto ;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 120px;
+    height: 38px;
+    background-color: #fff;
+    border-radius: 50px;
+    cursor: pointer;
+    z-index: 100;
+    transition: left 0.3s;
+  }
+
+  
+  .toggle-button-text {
+    height: 3em;
+    margin-left: auto;
+    margin-right:auto ;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    overflow: hidden;
+    background-color: #fc3164;
+    border-radius: 25px;
+    box-shadow: 2px 2px 5px 0 rgba(50, 50, 50, 0.75);
+    transition: background-color 0.3s;
+  }
+
+  .toggle-button-text-on,
+  .toggle-button-text-off {
+    float: left;
+    width: 50%;
+    height: 100%;
+    line-height: 45px;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+  }
+
+
+  input[type="checkbox"]:checked ~ .toggle-button-switch {
+    left: 7.9em;
+  }
+
+
+  input[type="checkbox"]:checked ~ .toggle-button-text {
+    background-color: #3dbf87;
+  }

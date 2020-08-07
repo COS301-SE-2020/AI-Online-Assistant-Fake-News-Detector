@@ -20,7 +20,7 @@ export class SearchSourceService {
 				return response;
 			}),
 			catchError(error => {
-				return throwError('Something went wrong');
+				return throwError(/*'Something went wrong'*/error);
 			})
 		);
 	}
