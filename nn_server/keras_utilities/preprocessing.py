@@ -1,19 +1,15 @@
-import time
-import random
 import math
-import json
-import os
-import errno
-import pathlib
-import multiprocessing
-from multiprocessing import Process, Manager
-import spacy
+import spacy as sp
+import keras as ks
+import numpy as np
+import multiprocessing as mp
 import nltk
+from dataset_manager import loadTrainingFile
 
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing import text_dataset_from_directory
+sp.prefer_gpu()
+
 
 class Filter:
     """
@@ -87,6 +83,7 @@ class FilterWrapper(Filter):
     def getFeatureCount(self):
         return self._filter.getFeatureCount()
 
+
 class SimpleFilter(Filter):
     """
     @author: AlistairPaynUP
@@ -129,7 +126,7 @@ class ComplexFilter(Filter):
     def __init__(self):  # sampleLen should be multiple of 3
         super().__init__()
         self.__featureCount = 3
-        self.__nlp = spacy.load("en_core_web_sm")
+        self.__nlp = sp.load("en_core_web_lg")
 
     def __call__(self, text):
         """
@@ -151,10 +148,114 @@ class ComplexFilter(Filter):
         return self.__featureCount
 
 
-class TrainingFilterAdapter(FilterAdapter):
+class SimpleVectorizationFilter(Filter):
     """
     @author: AlistairPaynUP
-    Used to wrap training data with the format {'text': 'body of text', 'label': 'some_label'}
+    Slower but includes word relationships and many more parts of speech, uses spacy at core.
+    Wrap with TrainingFilterAdapter when working with training data.
+    This filter also vectorizes the dataset.
+    """
+
+    def __init__(self, sampleLength, maxWords):  # sampleLen should be multiple of 3
+        super().__init__()
+        self.__sampleLength = sampleLength
+        self.__maxWords = maxWords
+        self.__featureCount = 2
+        if self.__sampleLength % self.__featureCount:
+            raise Exception("Symmetry error: sampleLength must be a multiple of featureCount")
+
+    def __call__(self, text):
+        """
+       @author: AlistairPaynUP
+       @:param text: A string of lowercase text to be processed.
+       @:return A list of features extracted from text: ['text', 'pos', 'dep', 'text', 'pos', 'dep',...], where text=word, pos=word part of speech, dep=word contextual dependency.
+       """
+        partsOfSpeech = ["PDT", "PRP", "FW", "JJ", "JJR", "JJS", "NN", "NNS",
+                         "NNP", "NNPS", "POS", "RB", "RBR", "RBS", "VB",
+                         "VBD", "VBG", "VBN", "VBP", "VBZ", "EX"]
+        results = []
+        sample = []
+        doc = nltk.pos_tag(nltk.word_tokenize(text))
+        for token in doc:
+            if token[1] in partsOfSpeech:
+                hot = ks.preprocessing.text.one_hot(token[0], self.__maxWords)
+                if not len(hot):
+                    hot = [0]
+                sample.append(hot[0])
+                hot = ks.preprocessing.text.one_hot(token[1], self.__maxWords)
+                if not len(hot):
+                    hot = [0]
+                sample.append(hot[0])
+                if len(sample) >= self.__sampleLength:
+                    results.append(sample)
+                    sample = []
+        if len(sample):
+            sample.extend(np.repeat(0, self.__sampleLength - len(sample)))
+            results.append(sample)
+        return results
+
+    def getFeatureCount(self):
+        return self.__featureCount
+
+
+class ComplexVectorizationFilter(Filter):
+    """
+    @author: AlistairPaynUP
+    This does the sample preprocessing as ComplexFilter but also vectorizes the result.
+    Slower but includes word relationships and more parts of speech, uses spacy at core.
+    Wrap with TrainingFilterAdapter when working with training data.
+    This filter also vectorizes the dataset.
+    """
+
+    def __init__(self, sampleLength, maxWords):  # sampleLen should be multiple of 3
+        super().__init__()
+        self.__sampleLength = sampleLength
+        self.__maxWords = maxWords
+        self.__featureCount = 3
+        self.__nlp = sp.load("en_core_web_lg")
+        if self.__sampleLength % self.__featureCount:
+            raise Exception("Symmetry error: sampleLength must be a multiple of featureCount")
+
+    def __call__(self, text):
+        """
+       @author: AlistairPaynUP
+       @:param text: A string of lowercase text to be processed.
+       @:return A list of features extracted from text: ['text', 'pos', 'dep', 'text', 'pos', 'dep',...], where text=word, pos=word part of speech, dep=word contextual dependency.
+       """
+        results = []
+        sample = []
+        doc = self.__nlp(text)
+        for token in doc:
+            if not token.is_punct:
+                if token.tag_ != "_SP":
+                    hot = ks.preprocessing.text.one_hot(token.text, self.__maxWords)
+                    if not len(hot):
+                        hot = [0]
+                    sample.append(hot[0])
+                    hot = ks.preprocessing.text.one_hot(token.tag_, self.__maxWords)
+                    if not len(hot):
+                        hot = [0]
+                    sample.append(hot[0])
+                    hot = ks.preprocessing.text.one_hot(token.dep_, self.__maxWords)
+                    if not len(hot):
+                        hot = [0]
+                    sample.append(hot[0])
+                    if len(sample) >= self.__sampleLength:
+                        results.append(sample)
+                        sample = []
+        if len(sample):
+            sample.extend(np.repeat(0, self.__sampleLength - len(sample)))
+            results.append(sample)
+        return results
+
+    def getFeatureCount(self):
+        return self.__featureCount
+
+
+class RawDataFilterAdapter(FilterAdapter):
+    """
+    @author: AlistairPaynUP
+    Used to wrap raw JSON training data with the JSON format {'text': 'body of text', 'label': 'some_label'}
     """
 
     def __init__(self, filter):
@@ -167,16 +268,18 @@ class TrainingFilterAdapter(FilterAdapter):
         @:return (feature_list, label), e.g: (['text', 'pos', 'dep', 'text', 'pos', 'dep',...], 'some_label')
         """
         samples = self._filter(sample['text'])
-        label = sample['label']
+        sampleLabel = sample['label']
+        sampleId = sample['id']
         results = []
         for sample in samples:
             results.append(sample)
-        return (results, label)
+        return {'id': sampleId, 'text': results, 'label': sampleLabel}
 
 
 class ParallelFilterWrapper(FilterWrapper):
     """
     @author: AlistairPaynUP
+    This doesn't work on Windows due to differences in python multiprocessing, works for unix OS.
     Used to wrap a Filter that can be run in parallel.
     """
 
@@ -204,8 +307,8 @@ class ParallelFilterWrapper(FilterWrapper):
         @:return [(feature_list, label), (feature_list, label),...], e.g: [(['text', 'pos', 'dep', 'text', 'pos', 'dep',...], 'some_label'),...]
         """
         # using multiprocessing instead of multithreading because CPU bound and python GIL prevents useful CPU bound threading
-        manager = Manager()
-        processorCount = multiprocessing.cpu_count()
+        manager = mp.Manager()
+        processorCount = mp.cpu_count()
         segmentSize = math.floor(len(sampleList) / processorCount)
         processGlobalResultsList = manager.list()
         processGlobalResultsLock = manager.Lock()
@@ -216,7 +319,7 @@ class ParallelFilterWrapper(FilterWrapper):
                 endSegment = len(sampleList)
             else:
                 endSegment = (p + 1) * segmentSize
-            newProcess = Process(target=self.__processJob, args=(
+            newProcess = mp.Process(target=self.__processJob, args=(
                 sampleList[startSegment:endSegment], processGlobalResultsList,
                 processGlobalResultsLock))  # create a copy of a specific range for the process
             newProcess.start()
@@ -226,8 +329,13 @@ class ParallelFilterWrapper(FilterWrapper):
         return processGlobalResultsList
 
 
-
 class SequentialFilterWrapper(FilterWrapper):
+    """
+    @author: AlistairPaynUP
+    Use this if using Windows, or implement Windows compatible parallel processing.
+    Used to wrap a Filter to run.
+    """
+
     def __init__(self, filter):
         super().__init__(filter)
 
@@ -238,273 +346,76 @@ class SequentialFilterWrapper(FilterWrapper):
         return results
 
 
+class VectorizationFilter(Filter):
+    """
+    @author: AlistairPaynUP
+    Vectorizes text to fixed length vectors, and uses 0 as mask.
+    Use this if you have implemented other filters which need to run after passing data through a ComplexOrSimple filter.
+    """
 
-def loadTrainingFile(filePath):
-    jsonFile = open(filePath, 'r', encoding="utf8")
-    jsonString = jsonFile.read()
-    jsonFile.close()
-    sampleList = list(json.loads(jsonString.lower()))
-    random.shuffle(sampleList)
-    return sampleList[:50]
-
-class VectorizeAndLabelFilter(Filter):
-    def __init__(self, featureCount, sampleLength=30, maxWords=10000000000):
+    def __init__(self, featureCount, sampleLength=60, maxWords=1000000):
         super().__init__()
-        self.__mask = 0
-        self.__tokenizer = Tokenizer(num_words=maxWords, oov_token=self.__mask)
         self.__featureCount = featureCount
         self.__sampleLength = sampleLength
-        if not sampleLength % featureCount:
+        self.__maxWords = maxWords
+        self.__mask = 0
+        if self.__sampleLength % self.__featureCount:
             raise Exception("sampleLength must be a multiple of featureCount")
 
-    def __call__(self, sampleList):
+    def __call__(self, filteredData):
         """
         @author: AlistairPaynUP
-        @:param sampleList: A list of samples filtered by a Filter.
+        @:param sampleList: A list of sample filtered by a Filter e.g: SimpleFilter or ComplexFilter.
         @:return A list of vectorized features extracted from text.
         """
         results = []
-        for sample in sampleList:
-            text = sample[0]
-            label = sample[1]
-            result = []
-            self.__tokenizer.fit_on_texts(text)
-            sequences = self.__tokenizer.texts_to_sequences(text)
-            counter = 0
-            vector = []
-            for sequence in sequences:
-                id = self.__mask
-                if len(sequence):
-                    id = sequence[0]
-                if counter < self.__sampleLength:
-                    vector.append(id)
-                    counter += 1
-                else:
-                    result.append(vector)
-                    vector = []
-                    counter = 0
-            if counter != self.__sampleLength:
-                for pad in range(counter, self.__sampleLength):
-                    vector.append(self.__mask)
-                result.append(vector)
-            results.append((result, label))
+        sample = []
+        for s in range(0, len(filteredData), self.__featureCount):
+            for f in range(0, self.__featureCount):
+                hot = ks.preprocessing.text.one_hot(filteredData[s + f], self.__maxWords)
+                if not len(hot):
+                    hot = [0]
+                sample.append(hot[0])
+            if len(sample) >= self.__sampleLength:
+                results.append(sample)
+                sample = []
+        if len(sample):
+            sample.extend(np.repeat(0, self.__sampleLength - len(sample)))
+            results.append(sample)
         return results
 
+    def getSampleLength(self):
+        return self.__sampleLength
 
-class VectorizeAndEncodeFilter(Filter):
-    def __init__(self, featureCount, sampleLength=30, maxWords=10000000000):
-        super().__init__()
-        self.__mask = 0
-        self.__tokenizer = Tokenizer(num_words=maxWords, oov_token=self.__mask)
-        self.__featureCount = featureCount
-        self.__sampleLength = sampleLength
-        if not sampleLength % featureCount:
-            raise Exception("sampleLength must be a multiple of featureCount")
+    def getMaxWords(self):
+        return self.__maxWords
 
-    def __call__(self, sampleList):
-        """
-        @author: AlistairPaynUP
-        @:param sampleList: A list of samples filtered by a Filter.
-        @:return A list of vectorized features extracted from text.
-        """
-        results = []
-        for sample in sampleList:
-            text = sample[0]
-            label = sample[1]
-            result = []
-            self.__tokenizer.fit_on_texts(text)
-            sequences = self.__tokenizer.texts_to_sequences(text)
-            counter = 0
-            vector = []
-            for sequence in sequences:
-                id = self.__mask
-                if len(sequence):
-                    id = sequence[0]
-                if counter < self.__sampleLength:
-                    vector.append(id)
-                    counter += 1
-                else:
-                    result.append(vector)
-                    vector = []
-                    counter = 0
-            if counter != self.__sampleLength:
-                for pad in range(counter, self.__sampleLength):
-                    vector.append(self.__mask)
-                result.append(vector)
-            results.append((result, label))
-        return results
+    def getFeatureCount(self):
+        return self.__featureCount
 
-class VectorizeFilter(Filter):
-    def __init__(self, featureCount, sampleLength=30, maxWords=10000000000):
-        super().__init__()
-        self.__mask = 0
-        self.__featureCount = featureCount
-        self.__sampleLength = sampleLength
-        if not sampleLength % featureCount:
-            raise Exception("sampleLength must be a multiple of featureCount")
-
-    def __call__(self, sampleList):
-        """
-        @author: AlistairPaynUP
-        @:param sampleList: A list of samples filtered by a Filter.
-        @:return A list of vectorized features extracted from text.
-        """
-        results = []
-        for sample in sampleList:
-            text = sample[0]
-            label = sample[1]
-            result = []
-            counter = 0
-            vector = []
-            for word in text:
-                if counter < self.__sampleLength:
-                    vector.append(word)
-                    counter += 1
-                else:
-                    result.append(vector)
-                    vector = []
-                    counter = 0
-            if counter != self.__sampleLength:
-                for pad in range(counter, self.__sampleLength):
-                    vector.append(self.__mask)
-                result.append(vector)
-            results.append((result, label))
-        return results
-
-class DatasetDirectoryManager:
-    def __init__(self):
-        self.__realCounter = 0
-        self.__fakeCounter = 0
-        self.__rootDir = os.path.join(pathlib.Path(__file__).parent.absolute(), "data")
-        self.__trainDir = os.path.join(self.__rootDir, "train")
-        self.__realDir = os.path.join(self.__trainDir, "real")
-        self.__fakeDir = os.path.join(self.__trainDir, "fake")
-        try:
-            os.makedirs(self.__rootDir)
-            os.makedirs(self.__realDir)
-            os.makedirs(self.__fakeDir)
-        except OSError as e:
-            if e.errno != errno.EEXIST:
-                raise
-
-    def addToDataset(self, sampleList):
-        for sample in sampleList:
-            file = None
-            if sample[1] == "real":
-                file = open(os.path.join(self.__realDir, "real_" + str(self.__realCounter) + ".txt"), 'w',
-                            encoding="utf8")
-                self.__realCounter += 1
-            elif sample[1] == "fake":
-                file = open(os.path.join(self.__fakeDir, "fake_" + str(self.__fakeCounter) + ".txt"), 'w',
-                            encoding="utf8")
-                self.__fakeCounter += 1
-            if file:
-                output = ""
-                for vector in sample[0]:
-                    first = True
-                    for feature in vector:
-                        if first:
-                            first = False
-                        else:
-                            output += ","
-                        output += str(feature)
-                    output += "\n"
-                file.write(output)
-                file.close()
-
-    def getTrainDataset(self):
-        return text_dataset_from_directory(self.__trainDir)
-
-class DatasetFileManager:
-    def __init__(self):
-        self.__realCounter = 0
-        self.__fakeCounter = 0
-        self.__rootDir = os.path.join(pathlib.Path(__file__).parent.absolute(), "data")
-        self.__trainDir = os.path.join(self.__rootDir, "train")
-        self.__realDir = os.path.join(self.__trainDir, "real")
-        self.__fakeDir = os.path.join(self.__trainDir, "fake")
-        try:
-            os.makedirs(self.__rootDir)
-            os.makedirs(self.__realDir)
-            os.makedirs(self.__fakeDir)
-        except OSError as e:
-            if e.errno != errno.EEXIST:
-                raise
-
-    def addToDataset(self, sampleList):
-        for sample in sampleList:
-            file = None
-            if sample[1] == "real":
-                file = open(os.path.join(self.__realDir, "real.txt"), 'a',
-                            encoding="utf8")
-                self.__realCounter += 1
-            elif sample[1] == "fake":
-                file = open(os.path.join(self.__fakeDir, "fake.txt"), 'a',
-                            encoding="utf8")
-                self.__fakeCounter += 1
-            if file:
-                output = ""
-                for vector in sample[0]:
-                    first = True
-                    for feature in vector:
-                        if first:
-                            first = False
-                        else:
-                            output += " "
-                        output += str(feature)
-                    output += "\n"
-                file.write(output)
-                file.close()
+"""
 
 if __name__ == "__main__":
-    data = loadTrainingFile("fake_or_real.json")  # array of dicts
-    dataset = DatasetDirectoryManager()
+    maxWords = 100000
+    sampleLength = 60
 
-    filterSS = SequentialFilterWrapper(TrainingFilterAdapter(SimpleFilter()))
-    filterPS = ParallelFilterWrapper(TrainingFilterAdapter(SimpleFilter()))
-    filterSC = SequentialFilterWrapper(TrainingFilterAdapter(ComplexFilter()))
-    filterPC = ParallelFilterWrapper(TrainingFilterAdapter(ComplexFilter()))
+    # load data file
+    data = loadTrainingFile("fake_or_real.json")
+    data = data[:1]
+    print("Raw data: \n" + str(data) + "\n\n")
 
-    s = SimpleFilter()
-    c = ComplexFilter()
-    # print(s("Here's the text that has been filtered by runnning a Simple Filter."))
-    # print(c("Here's the text that has been filtered by running a Complex Filter."))
-    t0 = time.time()
-    print("Original")
-    print(data[0])
-    data = filterSC(data)
-    print("Labelled")
-    print(data[0])
-    prep = VectorizeFilter(featureCount=filterSC.getFeatureCount(), sampleLength=100)
-    data = prep(data)
-    print("Tokenized")
-    print(data)
-    t1 = time.time()
-    print(t1 - t0)
-    dataset.addToDataset(data)
-    print(dataset.getTrainDataset())
-    """
-    print("Sequential Simple")
-    t0 = time.time()
-    filterSS(data)
-    t1 = time.time()
-    print(t1 - t0)
-    
-    print("Parallel Simple")
-    t0 = time.time()
-    filterPS(data)
-    t1 = time.time()
-    print(t1 - t0)
-    
-    print("Sequential Complex")
-    t0 = time.time()
-    filterSC(data)
-    t1 = time.time()
-    print(t1 - t0)
-    
-    print("Parallel Complex")
-    t0 = time.time()
-    filterPC(data)
-    t1 = time.time()
-    print(t1 - t0)
-    """
+    # use filter with vectorization built-in
+    preprocessor = ParallelFilterWrapper(filter=RawDataFilterAdapter(filter=ComplexVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)))
+    print("Preprocessed and vectorized data: \n" + str(preprocessor(data)) + "\n\n")
+
+    # use separate pre-processing and vectorization steps
+    preprocessor = ParallelFilterWrapper(filter=RawDataFilterAdapter(filter=ComplexFilter()))
+    # pre-processing step
+    data = preprocessor(data)
+    print("Filtered data: \n" + str(data) + "\n\n")
+    # vectorization step
+    vectorizer = ParallelFilterWrapper(filter=RawDataFilterAdapter(filter=VectorizationFilter(featureCount=preprocessor.getFeatureCount(), sampleLength=sampleLength, maxWords=maxWords)))
+    print("Vectorized data: \n" + str(vectorizer(data)) + "\n\n")
+
+
+"""
