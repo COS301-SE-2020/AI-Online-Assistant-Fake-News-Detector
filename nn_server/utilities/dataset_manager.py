@@ -2,12 +2,13 @@ import os
 import errno
 import pathlib
 import json
+import pickle
 import tensorflow as tf
-import numpy as np
+
 
 class DatasetManager:
     def __init__(self):
-        self.__TFRecordDatasets = []
+        self.__dataset = ([], [])
         self.__dataDir = os.path.join(pathlib.Path(__file__).parent.absolute(), "data")
         try:
             os.makedirs(self.__dataDir)
@@ -17,40 +18,34 @@ class DatasetManager:
 
     def addToDataset(self, sampleList):
         if len(sampleList):
-            dataset = None
             for sample in sampleList:
-                if len(sample[0]):
+                if len(sample['text']):
                     label = [0, 0]
-                    if sample[1] == 'real':
+                    if sample['label'] == 'real':
                         label = [1, 0]
-                    elif sample[1] == 'fake':
+                    elif sample['label'] == 'fake':
                         label = [0, 1]
-                    record = tf.data.Dataset.from_tensors((sample[0], np.repeat(label, len(sample[0]))))
-                    if dataset:
-                        dataset.concatenate(record)
-                    else:
-                        dataset = record
-            self.__TFRecordDatasets.append(dataset)
+                    for data in sample['text']:
+                        self.__dataset[0].append(data)
+                        self.__dataset[1].append(label)
 
-    def getTrainDataset(self):
-        return self.__TFRecordDatasets
+    def writeDatasetToFile(self, filePath):
+        file = open(filePath, 'wb')
+        pickle.dump(self.__dataset, file)
+        file.close()
 
+    def readDatasetFromFile(self, filePath):
+        file = open(filePath, 'rb')
+        self.__dataset = pickle.load(file)
+        file.close()
 
-def loadTrainingFile(filePath):
-    jsonFile = open(filePath, 'r', encoding="utf8")
-    jsonString = jsonFile.read()
-    jsonFile.close()
-    sampleList = list(json.loads(jsonString.lower()))
-    return sampleList
+    def getDataset(self):
+        return self.__dataset
 
-if __name__ == "__main__":
-    data = []
-    data.extend(loadTrainingFile("fake_or_real.json"))
-    # data.extend(loadTrainingFile("data_file1.json"))
-    # data.extend(loadTrainingFile("data_file2.json"))
-    # data.extend(loadTrainingFile("data_file3.json"))
-    # data.extend(loadTrainingFile("data_file4.json"))
-    # data.extend(loadTrainingFile("data_file5.json"))
-    # data.extend(loadTrainingFile("data_file6.json"))
-    # data.extend(loadTrainingFile("data_file7.json"))
-    # random.shuffle(data)
+    @staticmethod
+    def loadRawJSONFile(filePath):
+        jsonFile = open(filePath, 'r', encoding="utf8")
+        jsonString = jsonFile.read()
+        jsonFile.close()
+        sampleList = list(json.loads(jsonString.lower()))
+        return sampleList

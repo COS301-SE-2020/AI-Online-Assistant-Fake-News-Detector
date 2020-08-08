@@ -1,14 +1,23 @@
 import math
 import spacy as sp
-import keras as ks
-import numpy as np
+import random
+#import keras as ks # windwos
+import tensorflow.keras as ks # linux
 import multiprocessing as mp
 import nltk
-from dataset_manager import loadTrainingFile
+import tensorflow as tf
+from dataset_manager import DatasetManager
+#physical_devices = tf.config.list_physical_devices('GPU') # linux
+#tf.config.experimental.set_memory_growth(physical_devices[0], enable=True) # linux
+
+import stacked_bidirectional_lstm as sbl
 
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 sp.prefer_gpu()
+
+defaultSampleLength = 60
+defaultMaxWords = 1200000
 
 
 class Filter:
@@ -156,7 +165,7 @@ class SimpleVectorizationFilter(Filter):
     This filter also vectorizes the dataset.
     """
 
-    def __init__(self, sampleLength, maxWords):  # sampleLen should be multiple of 3
+    def __init__(self, sampleLength=defaultSampleLength, maxWords=defaultMaxWords):  # sampleLen should be multiple of 3
         super().__init__()
         self.__sampleLength = sampleLength
         self.__maxWords = maxWords
@@ -190,12 +199,19 @@ class SimpleVectorizationFilter(Filter):
                     results.append(sample)
                     sample = []
         if len(sample):
-            sample.extend(np.repeat(0, self.__sampleLength - len(sample)))
+            for i in range(len(sample), self.__sampleLength):
+                sample.append(0)
             results.append(sample)
         return results
 
     def getFeatureCount(self):
         return self.__featureCount
+
+    def getSampleLength(self):
+        return self.__sampleLength
+
+    def getMaxWords(self):
+        return self.__maxWords
 
 
 class ComplexVectorizationFilter(Filter):
@@ -207,7 +223,7 @@ class ComplexVectorizationFilter(Filter):
     This filter also vectorizes the dataset.
     """
 
-    def __init__(self, sampleLength, maxWords):  # sampleLen should be multiple of 3
+    def __init__(self, sampleLength=defaultSampleLength, maxWords=defaultMaxWords):  # sampleLen should be multiple of 3
         super().__init__()
         self.__sampleLength = sampleLength
         self.__maxWords = maxWords
@@ -244,12 +260,19 @@ class ComplexVectorizationFilter(Filter):
                         results.append(sample)
                         sample = []
         if len(sample):
-            sample.extend(np.repeat(0, self.__sampleLength - len(sample)))
+            for i in range(len(sample), self.__sampleLength):
+                sample.append(0)
             results.append(sample)
         return results
 
     def getFeatureCount(self):
         return self.__featureCount
+
+    def getSampleLength(self):
+        return self.__sampleLength
+
+    def getMaxWords(self):
+        return self.__maxWords
 
 
 class RawDataFilterAdapter(FilterAdapter):
@@ -276,7 +299,7 @@ class RawDataFilterAdapter(FilterAdapter):
         return {'id': sampleId, 'text': results, 'label': sampleLabel}
 
 
-class ParallelFilterWrapper(FilterWrapper):
+class ParallelPreprocessor(FilterWrapper):
     """
     @author: AlistairPaynUP
     This doesn't work on Windows due to differences in python multiprocessing, works for unix OS.
@@ -329,7 +352,7 @@ class ParallelFilterWrapper(FilterWrapper):
         return processGlobalResultsList
 
 
-class SequentialFilterWrapper(FilterWrapper):
+class SequentialPreprocessor(FilterWrapper):
     """
     @author: AlistairPaynUP
     Use this if using Windows, or implement Windows compatible parallel processing.
@@ -353,7 +376,7 @@ class VectorizationFilter(Filter):
     Use this if you have implemented other filters which need to run after passing data through a ComplexOrSimple filter.
     """
 
-    def __init__(self, featureCount, sampleLength=60, maxWords=1000000):
+    def __init__(self, featureCount, sampleLength=defaultSampleLength, maxWords=defaultMaxWords):
         super().__init__()
         self.__featureCount = featureCount
         self.__sampleLength = sampleLength
@@ -380,9 +403,13 @@ class VectorizationFilter(Filter):
                 results.append(sample)
                 sample = []
         if len(sample):
-            sample.extend(np.repeat(0, self.__sampleLength - len(sample)))
+            for i in range(len(sample), self.__sampleLength):
+                sample.append(0)
             results.append(sample)
         return results
+
+    def getFeatureCount(self):
+        return self.__featureCount
 
     def getSampleLength(self):
         return self.__sampleLength
@@ -390,32 +417,57 @@ class VectorizationFilter(Filter):
     def getMaxWords(self):
         return self.__maxWords
 
-    def getFeatureCount(self):
-        return self.__featureCount
-
-"""
 
 if __name__ == "__main__":
-    maxWords = 100000
-    sampleLength = 60
+    maxWords = 1200000
+    sampleLength = 120
 
-    # load data file
-    data = loadTrainingFile("fake_or_real.json")
-    data = data[:1]
-    print("Raw data: \n" + str(data) + "\n\n")
+    datasetManager = DatasetManager()
 
-    # use filter with vectorization built-in
-    preprocessor = ParallelFilterWrapper(filter=RawDataFilterAdapter(filter=ComplexVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)))
-    print("Preprocessed and vectorized data: \n" + str(preprocessor(data)) + "\n\n")
+    rawFiles = ["./training_data/data_file0.json",
+                "./training_data/data_file1.json",
+                "./training_data/data_file2.json",
+                "./training_data/data_file3.json",
+                "./training_data/data_file4.json"]
+    """
+                "./training_data/data_file5.json",
+                "./training_data/data_file6.json",
+                "./training_data/data_file7.json"]
+    """
+    """
+    
+    
+    
+    simplePrep = ParallelFilterWrapper(
+        filter=RawDataFilterAdapter(filter=SimpleVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)))
 
-    # use separate pre-processing and vectorization steps
-    preprocessor = ParallelFilterWrapper(filter=RawDataFilterAdapter(filter=ComplexFilter()))
-    # pre-processing step
-    data = preprocessor(data)
-    print("Filtered data: \n" + str(data) + "\n\n")
-    # vectorization step
-    vectorizer = ParallelFilterWrapper(filter=RawDataFilterAdapter(filter=VectorizationFilter(featureCount=preprocessor.getFeatureCount(), sampleLength=sampleLength, maxWords=maxWords)))
-    print("Vectorized data: \n" + str(vectorizer(data)) + "\n\n")
+    complexPrep = ParallelFilterWrapper(
+        filter=RawDataFilterAdapter(filter=ComplexVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)))
 
+    for file in rawFiles:
+        print("Processing: " + str(file))
+        data = DatasetManager.loadRawJSONFile(file)
+        data = simplePrep(data)
+        print("Adding...")
+        datasetManager.addToDataset(data)
+    print("Done processing, writing.")
+    datasetManager.writeDatasetToFile("simple_prep.json")
+    """
+    datasetManager.readDatasetFromFile("simple_prep.pickle")
+    data = datasetManager.getDataset()
+    #data = (data[0][:1000], data[1][:1000])
+    print("Dataset size: " + str(len(data[0])))
+    validPercent = 0.1
+    validEnd = int(len(data[1]) * validPercent)
+    valid = (data[0][:validEnd], data[1][:validEnd])
+    train = (data[0][validEnd:], data[1][validEnd:])
+    data = None
 
-"""
+    filter = SimpleVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)
+    preprocessor = ParallelPreprocessor(filter=RawDataFilterAdapter(filter=filter))
+    nn = sbl.StackedBidirectionalLSTM(filter=filter)
+    #nn.trainModel(trainingDataset=train, validationDataset=valid, saveFilePath="newModel.hdf5")
+    nn.importCheckpoint()
+
+    check = nn.process("Donald Trump")
+    print(check)
