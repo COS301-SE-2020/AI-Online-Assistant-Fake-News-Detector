@@ -2,16 +2,10 @@ import keras as ks
 import tensorflow as tf
 
 class StackedBidirectionalLSTM:
-    def __init__(self, filter, outputCount=2, vectorizer=None):
-        self.__filter = filter
-        self.__outputCount = outputCount
-        self.__vectorizer = vectorizer
-        if vectorizer is None: # if vectorizer not provided, assume filter is vectorizing filter
-            self.__sampleLength = filter.getSampleLength()
-            self.__maxWords = filter.getMaxWords()
-        else: # if vectorizer provided, use the vectorizer
-            self.__sampleLength = vectorizer.getSampleLength()
-            self.__maxWords = vectorizer.getMaxWords()
+    def __init__(self, sampleLength, maxWords, outputUnits):
+        self.__sampleLength = sampleLength
+        self.__maxWords = maxWords
+        self.__outputUnits = outputUnits
         self.__model = None
 
     def __initialize(self):
@@ -23,7 +17,7 @@ class StackedBidirectionalLSTM:
         layers = ks.layers.Bidirectional(ks.layers.LSTM(units=64, dropout=0.05, return_sequences=True))(layers)
         layers = ks.layers.Bidirectional(ks.layers.LSTM(units=64))(layers)
         # Add a classifier
-        outputs = ks.layers.Dense(units=self.__outputCount, activation="softmax")(layers)
+        outputs = ks.layers.Dense(units=self.__outputUnits, activation="softmax")(layers)
         self.__model = ks.Model(inputs=inputs, outputs=outputs)
         self.__model.summary()
 
@@ -42,21 +36,17 @@ class StackedBidirectionalLSTM:
         latest = tf.train.latest_checkpoint(fileDir)
         self.__model.load_weights(latest)
 
-    def trainModel(self, saveFilePath, trainingDataset, validationDataset = None):
+    def trainModel(self, saveFilePath, trainingDataset, saveCheckpoints = False, validationDataset = None):
         self.__initialize()
-        checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoint.ckpt", save_weights_only=True, verbose=1)
         self.__model.compile("adam", "binary_crossentropy", metrics=["accuracy"])
-        if validationDataset is not None:
-            self.__model.fit(x=trainingDataset[0], y=trainingDataset[1], validation_data=validationDataset, batch_size=256, epochs=5, callbacks=[checkpoint])
+        if saveCheckpoints:
+            checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoint.ckpt", save_weights_only=True, verbose=1)
+            self.__model.fit(trainingDataset, validation_split=0.1, batch_size=256, epochs=5, callbacks=[checkpoint])
         else:
-            self.__model.fit(trainingDataset, batch_size=256, epochs=5, callbacks=[checkpoint])
+            self.__model.fit(trainingDataset, validation_split=0.1, batch_size=256, epochs=5)
         self.exportModel(saveFilePath)
 
-    def process(self, text):
+    def process(self, preparedData):
         if self.__model is None:
             raise Exception("Cannot use uninitialized model.")
-        prep = self.__filter(text.lower())
-        if self.__vectorizer is not None:
-            prep = self.__vectorizer(prep)
-        pred = self.__model.predict(prep)
-        return pred
+        return self.__model.predict(preparedData)

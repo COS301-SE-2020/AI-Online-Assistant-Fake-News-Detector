@@ -479,7 +479,6 @@ if __name__ == "__main__":
         print(d)
     nn = sbl.StackedBidirectionalLSTM(filter=filter, outputCount=2)
     nn.trainModel(trainingDataset=data, saveFilePath="newModel.hdf5")
-    #nn.importCheckpoint()
-
-    check = nn.process("Donald Trump")
+    prepData = filter(text="This is where the fakes news goes")
+    check = nn.process(prepData)
     print(check)
