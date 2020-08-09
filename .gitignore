@@ -1,3 +1,5 @@
 node_modules
 frontend/dist
-logfiles
+logfiles/access.log
+logfiles/error.log
+logfiles/info.log

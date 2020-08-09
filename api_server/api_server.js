@@ -51,9 +51,9 @@ const getRequest = (_host, _path, _port, callBack) => {
         });
       }
     )
-    .on("error", (e) => {
+    .on("error", (err) => {
       morgan(":date[clf] :method :url :status :response-time ms", {
-        stream: fs.createWriteStream(path.join(root, "logs", "error.log"), {
+        stream: fs.createWriteStream(path.join(root, "logfiles", "error.log"), {
           flags: "a",
         }),
       });
@@ -78,6 +78,7 @@ morgan.token("date", (req, res, tz) => {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
+    hour12: false,
   });
   const [
     { value: month },
@@ -138,8 +139,17 @@ server.use("*", (req, res, next) => {
     .sendFile(path.join(root, "frontend", "dist", "AiNews", "index.html"));
 });
 
-let listener = server.listen(port, () =>
-  logger.info("API_Server listening on port " + listener.address().port)
-);
+let listener = server.listen(port, () => {
+  logger.info("API_Server listening on port " + listener.address().port);
+  if (process.env.NODE_ENV === "production")
+    [8090, 8091, 8092].forEach((e) =>
+      getRequest(
+        "localhost",
+        "/api/start/" + e,
+        8080,
+        (statusCode, response) => {}
+      )
+    );
+});
 
 module.exports = server;

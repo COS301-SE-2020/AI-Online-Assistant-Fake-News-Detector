@@ -57,7 +57,7 @@ describe("Sources Api", () => {
   });
 
   it("It should not get any known fake news sources", (done) => {
-      chai
+    chai
       .request(server)
       .get("/sourcey")
       .end((err, response) => {
@@ -65,7 +65,7 @@ describe("Sources Api", () => {
         done();
       });
   });
-    
+
   it("It should get a source by id", (done) => {
     chai
       .request(server)
@@ -91,7 +91,7 @@ describe("Sources Api", () => {
           });
       });
   });
-          
+
   it("It should get NO source", (done) => {
     const sourceId = "5edf31165d617a2850632424";
     chai
@@ -100,13 +100,13 @@ describe("Sources Api", () => {
       .end((err, response) => {
         response.should.have.status(404);
         response.body.response.should.be.a("object");
-        response.body.response.should.have.property("message")
-        .eq("No database entry for provided ID");
+        response.body.response.should.have
+          .property("message")
+          .eq("No database entry for provided ID");
         done();
-    });
+      });
   });
-          
-    
+
   it("Post request should fail, because no name is given", (done) => {
     const source = {
       tld: "www.mochatest.com",
@@ -122,7 +122,7 @@ describe("Sources Api", () => {
         done();
       });
   });
-    
+
   it("It should update a source rating", (done) => {
     const source = {
       rating: 550,
@@ -132,24 +132,24 @@ describe("Sources Api", () => {
       .get("/sources")
       .end((err, res) => {
         chai
-        .request(server)
-        .put(
-          "/sources/id/" +
-          res.body.response.Sources[res.body.response.Sources.length - 1].ID
-        )
-        .send(source)
-        .end((err, response) => {
-          response.should.have.status(200);
-          response.body.should.be.a("object");
-          response.body.response.should.have.property("message");
-          response.body.response.message.should.equal(
-            "Source details updated"
-          );
-          done();
-        });
+          .request(server)
+          .put(
+            "/sources/id/" +
+              res.body.response.Sources[res.body.response.Sources.length - 1].ID
+          )
+          .send(source)
+          .end((err, response) => {
+            response.should.have.status(200);
+            response.body.should.be.a("object");
+            response.body.response.should.have.property("message");
+            response.body.response.message.should.equal(
+              "Source details updated"
+            );
+            done();
+          });
       });
   });
-        
+
   it("It should GET a source based on name", (done) => {
     chai
       .request(server)
@@ -185,7 +185,7 @@ describe("Sources Api", () => {
           .request(server)
           .delete(
             "/sources/id/" +
-            res.body.response.Sources[res.body.response.count - 1].ID
+              res.body.response.Sources[res.body.response.count - 1].ID
           )
           .end(function (error, res) {
             res.should.have.status(200);
@@ -296,93 +296,93 @@ describe("Facts Api", () => {
 /////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////   MODERATORS  ///////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-describe("Moderators Api", () => {
-  it("It should add a Moderator to the database", function (done) {
-    chai
-      .request(server)
-      .post("/Moderators")
-      .send({
-        emailAddress: "5Bits@gmail.com",
-        password: "Stuart",
-        fName: "Stuart" + (Math.random() * 100).toFixed(0),
-        lName: "Barclay",
-        phoneNumber: "0793580784",
-      })
-      .end(function (err, res) {
-        res.should.have.status(201);
-        res.should.be.json;
-        res.body.should.be.a("object");
-        res.body.response.should.have.property("message");
-        res.body.response.Moderator.should.be.a("object");
-        res.body.response.Moderator.should.have.property("Name");
-        res.body.response.Moderator.should.have.property("Email Address");
-        res.body.response.Moderator.should.have.property("ID");
-        done();
-      });
-  });
-  it("It should get all moderators from the database", (done) => {
-    chai
-      .request(server)
-      .get("/Moderators")
-      .end((err, response) => {
-        expect(err).to.be.null;
-        response.should.have.status(200);
-        response.body.should.be.a("object");
-        response.body.response.Moderators[0].should.have.property("ID");
-        response.body.response.Moderators[0].should.have.property("Name");
-        response.body.response.Moderators[0].should.have.property(
-          "Email Address"
-        );
-        done();
-      });
-  });
+// describe("Moderators Api", () => {
+//   it("It should add a Moderator to the database", function (done) {
+//     chai
+//       .request(server)
+//       .post("/Moderators")
+//       .send({
+//         emailAddress: "5Bits@gmail.com",
+//         password: "Stuart",
+//         fName: "Stuart" + (Math.random() * 100).toFixed(0),
+//         lName: "Barclay",
+//         phoneNumber: "0793580784",
+//       })
+//       .end(function (err, res) {
+//         res.should.have.status(201);
+//         res.should.be.json;
+//         res.body.should.be.a("object");
+//         res.body.response.should.have.property("message");
+//         res.body.response.Moderator.should.be.a("object");
+//         res.body.response.Moderator.should.have.property("Name");
+//         res.body.response.Moderator.should.have.property("Email Address");
+//         res.body.response.Moderator.should.have.property("ID");
+//         done();
+//       });
+//   });
+//   it("It should get all moderators from the database", (done) => {
+//     chai
+//       .request(server)
+//       .get("/Moderators")
+//       .end((err, response) => {
+//         expect(err).to.be.null;
+//         response.should.have.status(200);
+//         response.body.should.be.a("object");
+//         response.body.response.Moderators[0].should.have.property("ID");
+//         response.body.response.Moderators[0].should.have.property("Name");
+//         response.body.response.Moderators[0].should.have.property(
+//           "Email Address"
+//         );
+//         done();
+//       });
+//   });
 
-  it("It should get a specific moderator based on email", (done) => {
-    chai
-      .request(server)
-      .get("/Moderators")
-      .end((err, res) => {
-        chai
-          .request(server)
-          .get(
-            "/Moderators/" + res.body.response.Moderators[0]["Email Address"]
-          )
-          .end((err, response) => {
-            response.should.have.status(200);
-            response.body.response.Moderator.Name.should.equal(
-              res.body.response.Moderators[0]["Name"]
-            );
-            done();
-          });
-      });
-  });
-  it("It should delete a single moderator from the database", function (done) {
-    chai
-      .request(server)
-      .get("/Moderators")
-      .end((err, responder) => {
-        chai
-          .request(server)
-          .delete(
-            "/Moderators/" +
-              responder.body.response.Moderators[
-                responder.body.response.count - 1
-              ]["Email Address"]
-          )
-          .end(function (error, res) {
-            res.should.have.status(200);
-            res.should.be.json;
-            res.body.should.be.a("object");
-            res.body.response.should.have.property("message");
-            res.body.response.message.should.be.a("string");
-            res.body.response.message.should.be.eql(
-              "Moderator deleted successfully"
-            );
-            done();
-          });
-      });
-  });
-});
+//   it("It should get a specific moderator based on email", (done) => {
+//     chai
+//       .request(server)
+//       .get("/Moderators")
+//       .end((err, res) => {
+//         chai
+//           .request(server)
+//           .get(
+//             "/Moderators/" + res.body.response.Moderators[0]["Email Address"]
+//           )
+//           .end((err, response) => {
+//             response.should.have.status(200);
+//             response.body.response.Moderator.Name.should.equal(
+//               res.body.response.Moderators[0]["Name"]
+//             );
+//             done();
+//           });
+//       });
+//   });
+//   it("It should delete a single moderator from the database", function (done) {
+//     chai
+//       .request(server)
+//       .get("/Moderators")
+//       .end((err, responder) => {
+//         chai
+//           .request(server)
+//           .delete(
+//             "/Moderators/" +
+//               responder.body.response.Moderators[
+//                 responder.body.response.count - 1
+//               ]["Email Address"]
+//           )
+//           .end(function (error, res) {
+//             res.should.have.status(200);
+//             res.should.be.json;
+//             res.body.should.be.a("object");
+//             res.body.response.should.have.property("message");
+//             res.body.response.message.should.be.a("string");
+//             res.body.response.message.should.be.eql(
+//               "Moderator deleted successfully"
+//             );
+//             done();
+//           });
+//       });
+//   });
+// });
 /////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////   REPORTS  /////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
@@ -470,7 +470,7 @@ describe("nnModels Api", () => {
       .send({
         name: "testmodel",
         date: "2020-06-06",
-        model: []
+        model: [],
       })
       .end(function (err, res) {
         res.should.have.status(201);
@@ -536,7 +536,7 @@ describe("Training Api", () => {
       .post("/Training")
       .send({
         article: "Fake news mocha test article",
-        fake: true
+        fake: true,
       })
       .end(function (err, res) {
         res.should.have.status(201);
