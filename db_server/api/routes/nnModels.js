@@ -57,7 +57,7 @@ router.post("/", (req, res, next) => {
         response: {
           message: "New Neural Network model stored successfully",
           success: true,
-          nnModel: {
+          Model: {
             ID: result.id,
             Name: result.name,
             Date: result.date,
@@ -86,7 +86,7 @@ router.get("/:modelName", (req, res, next) => {
           response: {
             message: "Retrieved model successfully",
             success: true,
-            Source: {
+            Model: {
               ID: doc._id,
               Name: doc.name,
               Date: doc.date,

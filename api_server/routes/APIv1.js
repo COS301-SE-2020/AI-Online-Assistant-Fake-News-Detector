@@ -902,6 +902,8 @@ api.post("/verify", (req, res, next) => {
   }
 });
 
+// Fetches
+
 api.get("/training", (req, res, next) => {
   getRequest("localhost", "/training", 3000, (statusCode, response) => {
     if (statusCode == 500) next(response);
@@ -929,6 +931,8 @@ api.post("/training/range", (req, res, next) => {
     }
   );
 });
+
+// Creates a new training entry
 
 api.post("/training", (req, res, next) => {
   /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
@@ -1035,9 +1039,9 @@ api.get("/start/:port", (req, res, next) => {
   }
 });
 
-api.get("/close", (req, res, next) => {
+api.get("/close/:port", (req, res, next) => {
   logger.info("Closing nn_server images");
-  res.sendStatus(204);
+  res.sendStatus(501);
 });
 
 /**
