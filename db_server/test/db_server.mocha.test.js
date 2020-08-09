@@ -470,17 +470,17 @@ describe("nnModels Api", () => {
       .send({
         name: "testmodel",
         date: "2020-06-06",
-        model: [],
+        model: "",
       })
       .end(function (err, res) {
         res.should.have.status(201);
         res.should.be.json;
         res.body.should.be.a("object");
         res.body.response.should.have.property("message");
-        res.body.response.nnModel.should.be.a("object");
-        res.body.response.nnModel.should.have.property("Name");
-        res.body.response.nnModel.should.have.property("Date");
-        res.body.response.nnModel.should.have.property("ID");
+        res.body.response.Model.should.be.a("object");
+        res.body.response.Model.should.have.property("Name");
+        res.body.response.Model.should.have.property("Date");
+        res.body.response.Model.should.have.property("ID");
         done();
       });
   });
@@ -496,11 +496,11 @@ describe("nnModels Api", () => {
             expect(err).to.be.null;
             response.should.have.status(200);
             response.body.response.should.be.a("object");
-            response.body.response.Source.should.have.property("ID");
-            response.body.response.Source.should.have.property("Name");
-            response.body.response.Source.should.have.property("Date");
-            response.body.response.Source.should.have.property("Model");
-            response.body.response.Source.Name.should.equal(
+            response.body.response.Model.should.have.property("ID");
+            response.body.response.Model.should.have.property("Name");
+            response.body.response.Model.should.have.property("Date");
+            response.body.response.Model.should.have.property("Model");
+            response.body.response.Model.Name.should.equal(
               decodeURI(res.body.response.Models[0].Name)
             );
             done();
