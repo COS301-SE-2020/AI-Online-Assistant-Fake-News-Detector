@@ -16,8 +16,8 @@ nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 sp.prefer_gpu()
 
-defaultSampleLength = 60
-defaultMaxWords = 1200000
+DEFAULT_SAMPLE_LENGTH = 60
+DEFAULT_MAX_WORDS = 1200000
 
 
 class Filter:
@@ -165,7 +165,7 @@ class SimpleVectorizationFilter(Filter):
     This filter also vectorizes the dataset.
     """
 
-    def __init__(self, sampleLength=defaultSampleLength, maxWords=defaultMaxWords):  # sampleLen should be multiple of 3
+    def __init__(self, sampleLength=DEFAULT_SAMPLE_LENGTH, maxWords=DEFAULT_MAX_WORDS):  # sampleLen should be multiple of 3
         super().__init__()
         self.__sampleLength = sampleLength
         self.__maxWords = maxWords
@@ -223,7 +223,7 @@ class ComplexVectorizationFilter(Filter):
     This filter also vectorizes the dataset.
     """
 
-    def __init__(self, sampleLength=defaultSampleLength, maxWords=defaultMaxWords):  # sampleLen should be multiple of 3
+    def __init__(self, sampleLength=DEFAULT_SAMPLE_LENGTH, maxWords=DEFAULT_MAX_WORDS):  # sampleLen should be multiple of 3
         super().__init__()
         self.__sampleLength = sampleLength
         self.__maxWords = maxWords
@@ -275,7 +275,7 @@ class ComplexVectorizationFilter(Filter):
         return self.__maxWords
 
 
-class RawDataFilterAdapter(FilterAdapter):
+class RawFakeNewsDataFilterAdapter(FilterAdapter):
     """
     @author: AlistairPaynUP
     Used to wrap raw JSON training data with the JSON format {'text': 'body of text', 'label': 'some_label'}
@@ -290,13 +290,16 @@ class RawDataFilterAdapter(FilterAdapter):
         @:param sample: A dict with the format {'text': 'body of text', 'label': 'some_label'}
         @:return (feature_list, label), e.g: (['text', 'pos', 'dep', 'text', 'pos', 'dep',...], 'some_label')
         """
-        samples = self._filter(sample['text'])
-        sampleLabel = sample['label']
-        sampleId = sample['id']
+        filtered = self._filter(sample['text'])
         results = []
-        for sample in samples:
-            results.append(sample)
-        return {'id': sampleId, 'text': results, 'label': sampleLabel}
+        for data in filtered:
+            results.append(data)
+        label = sample['label']
+        if sample['label'] == 'real':
+            label = [1, 0]
+        elif sample['label'] == 'fake':
+            label = [0, 1]
+        return {'id': sample['id'], 'text': results, 'label': label}
 
 
 class ParallelPreprocessor(FilterWrapper):
@@ -376,7 +379,7 @@ class VectorizationFilter(Filter):
     Use this if you have implemented other filters which need to run after passing data through a ComplexOrSimple filter.
     """
 
-    def __init__(self, featureCount, sampleLength=defaultSampleLength, maxWords=defaultMaxWords):
+    def __init__(self, featureCount, sampleLength=DEFAULT_SAMPLE_LENGTH, maxWords=DEFAULT_MAX_WORDS):
         super().__init__()
         self.__featureCount = featureCount
         self.__sampleLength = sampleLength
@@ -425,19 +428,17 @@ if __name__ == "__main__":
     datasetManager = DatasetManager()
 
     rawFiles = ["./training_data/data_file0.json",
-                "./training_data/data_file1.json",
+                "./training_data/data_file1.json"]
+    """
                 "./training_data/data_file2.json",
                 "./training_data/data_file3.json",
                 "./training_data/data_file4.json"]
-    """
+    
                 "./training_data/data_file5.json",
                 "./training_data/data_file6.json",
                 "./training_data/data_file7.json"]
     """
     """
-    
-    
-    
     simplePrep = ParallelFilterWrapper(
         filter=RawDataFilterAdapter(filter=SimpleVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)))
 
@@ -453,21 +454,32 @@ if __name__ == "__main__":
     print("Done processing, writing.")
     datasetManager.writeDatasetToFile("simple_prep.json")
     """
-    datasetManager.readDatasetFromFile("simple_prep.pickle")
-    data = datasetManager.getDataset()
+
+
+    #datasetManager.readDatasetFromFile("simple_prep.pickle")
+
     #data = (data[0][:1000], data[1][:1000])
-    print("Dataset size: " + str(len(data[0])))
+    """
+     print("Dataset size: " + str(len(data[0])))
     validPercent = 0.1
     validEnd = int(len(data[1]) * validPercent)
     valid = (data[0][:validEnd], data[1][:validEnd])
     train = (data[0][validEnd:], data[1][validEnd:])
-    data = None
+    data = None   
+    """
 
+    data = DatasetManager.loadRawJSONFile("fake_or_real.json")
     filter = SimpleVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)
-    preprocessor = ParallelPreprocessor(filter=RawDataFilterAdapter(filter=filter))
-    nn = sbl.StackedBidirectionalLSTM(filter=filter)
-    #nn.trainModel(trainingDataset=train, validationDataset=valid, saveFilePath="newModel.hdf5")
-    nn.importCheckpoint()
+    preprocessor = SequentialPreprocessor(filter=RawFakeNewsDataFilterAdapter(filter=filter))
+    data = preprocessor(data[:20])
+    datasetManager.addToDataset(data)
+    data = datasetManager.getDataset()
+    print(data)
+    for d in data:
+        print(d)
+    nn = sbl.StackedBidirectionalLSTM(filter=filter, outputCount=2)
+    nn.trainModel(trainingDataset=data, saveFilePath="newModel.hdf5")
+    #nn.importCheckpoint()
 
     check = nn.process("Donald Trump")
     print(check)

@@ -8,7 +8,7 @@ import tensorflow as tf
 
 class DatasetManager:
     def __init__(self):
-        self.__dataset = ([], [])
+        self.__dataset = None
         self.__dataDir = os.path.join(pathlib.Path(__file__).parent.absolute(), "data")
         try:
             os.makedirs(self.__dataDir)
@@ -18,16 +18,22 @@ class DatasetManager:
 
     def addToDataset(self, sampleList):
         if len(sampleList):
+            dataX = []
+            dataY = []
             for sample in sampleList:
                 if len(sample['text']):
-                    label = [0, 0]
-                    if sample['label'] == 'real':
-                        label = [1, 0]
-                    elif sample['label'] == 'fake':
-                        label = [0, 1]
+                    label = sample['label']
                     for data in sample['text']:
-                        self.__dataset[0].append(data)
-                        self.__dataset[1].append(label)
+                        dataX.append(data)
+                        dataY.append(label)
+                if self.__dataset is None:
+                    print("create")
+                    self.__dataset = tf.data.Dataset.from_tensors((dataX, dataY))
+                else:
+                    print("concat")
+                    data = tf.data.Dataset.from_tensors((dataX, dataY))
+                    print(data)
+                    self.__dataset = self.__dataset.concatenate(data)
 
     def writeDatasetToFile(self, filePath):
         file = open(filePath, 'wb')
