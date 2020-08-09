@@ -132,7 +132,6 @@
     
 </div>
 
-
 <div class="topsection tophero"> 
     <div class="topcontainer w-container">
         <h4>You believe there is a fact that our AI doesn't know about?</h4>
@@ -175,24 +174,27 @@
             </div>
     
             </form>
+            
 
-    </div>
-
-     <!--End of fact input form-->
+                 <!--End of fact input form-->
 
      <div class="Response-Cards">
-            <!--Alternate divs that load when specific events occur-->
-                <div *ngIf="insertFactResponse">
-                    <mat-card color="primary" id="SearchResponseCard" class="example-card">
-                        <mat-card-content>
-                            <p> False fact has been added.</p> 
-                        </mat-card-content>
-                    </mat-card>
+        <!--Alternate divs that load when specific events occur-->
+            <div *ngIf="insertFactResponse">
+                <mat-card color="primary" id="SearchResponseCard" class="example-card">
+                    <mat-card-content>
+                        <p> False fact has been added.</p> 
+                    </mat-card-content>
+                </mat-card>
 
-                </div>
+            </div>
 
-                <!--End of alternative divs-->
-     </div>
+            <!--End of alternative divs-->
+ </div>
+    </div>
+
+
     
+</div>
 </div>
 

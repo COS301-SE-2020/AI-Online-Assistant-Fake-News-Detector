@@ -43,6 +43,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { TogglebuttonComponent } from 'src/app/togglebutton/togglebutton.component';
+import {UserAccountbuttonComponent} from 'src/app/user-accountbutton/user-accountbutton.component'
 
 @NgModule({
 	declarations: [
@@ -59,7 +60,8 @@ import { TogglebuttonComponent } from 'src/app/togglebutton/togglebutton.compone
 		ShareSheetComponent,
 		ShareButtonComponent,
 		NotfoundComponent,
-		TogglebuttonComponent
+		TogglebuttonComponent,
+		UserAccountbuttonComponent
 	],
 	imports: [
 		BrowserModule,
