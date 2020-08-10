@@ -1,0 +1,2801 @@
+{
+  "swagger": "2.0",
+  "tags": [
+    {
+      "name": "Facts",
+      "description": "All known fake facts"
+    },
+    {
+      "name": "Sources",
+      "description": "All known fake sources"
+    },
+    {
+      "name": "Moderators",
+      "description": "All system moderators"
+    },
+    {
+      "name": "Reports",
+      "description": "All reports made"
+    },
+    {
+      "name": "Neural Network",
+      "description": "Neural Network Processing Routes"
+    }
+  ],
+  "host": "localhost:8080",
+  "basePath": "/API",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/Facts": {
+      "get": {
+        "tags": [
+          "Facts"
+        ],
+        "summary": "Get all facts from the database",
+        "description": "Get request to retrieve all facts from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Fact"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Facts"
+        ],
+        "summary": "Adds a new facts to the database",
+        "description": "Post request to add a new fact to the database",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "statement",
+            "in": "formData",
+            "description": "Fact that is to be added",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "popularity",
+            "in": "formData",
+            "description": "Popularity rating",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/POST Fact"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Facts/{FactId}": {
+      "get": {
+        "tags": [
+          "Facts"
+        ],
+        "summary": "Gets a specific fact, based off its ID, from the database",
+        "description": "Get request to fetch a fact from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "FactId",
+            "in": "path",
+            "description": "ID of fact to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/GET Specific Fact"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Facts"
+        ],
+        "summary": "Removes a fact, based off of it's ID, from the database",
+        "description": "Delete request to remove a fact from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "FactId",
+            "in": "path",
+            "description": "ID of source to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DELETE Specific Fact"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Sources": {
+      "get": {
+        "tags": [
+          "Sources"
+        ],
+        "summary": "Get all known fake news sources from the database",
+        "description": "Get request to retrieve all known fake news sources from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Source"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Sources"
+        ],
+        "summary": "Adds a new fake news source to the database",
+        "description": "Post request to add a new fake news source to the database",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "Source to be added",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tld",
+            "in": "formData",
+            "description": "Popularity rating",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "rating",
+            "in": "formData",
+            "description": "Rating of source",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/POST Source"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Sources/id/{SourceId}": {
+      "get": {
+        "tags": [
+          "Sources"
+        ],
+        "summary": "Get a specific known fake news source from the database",
+        "description": "Get request to retrieve a specific known fake news sources from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "SourceId",
+            "in": "path",
+            "description": "ID of source to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Source"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Sources"
+        ],
+        "summary": "Removes a specific known fake news source, based off of it's ID, from the database",
+        "description": "Delete request to remove a specific known fake news source from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "SourceId",
+            "in": "path",
+            "description": "ID of known fake news source to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DELETE Specific Source"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Sources"
+        ],
+        "summary": "Update a specific known fake news source",
+        "description": "Put request to update a specific known fake news source",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "SourceId",
+            "in": "path",
+            "description": "ID of source to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "New name for the known fake news source",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tld",
+            "in": "formData",
+            "description": "New website address for the known fake news source",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/PUT Specific Source"
+            }
+          },
+          "202": {
+            "schema": {
+              "$ref": "#/definitions/No Update"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Sources/name/{SourceName}": {
+      "get": {
+        "tags": [
+          "Sources"
+        ],
+        "summary": "Get a specific known fake news source from the database",
+        "description": "Get request to retrieve a specific known fake news sources from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "SourceName",
+            "in": "path",
+            "description": "ID of source to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Source"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Moderators": {
+      "get": {
+        "tags": [
+          "Moderators"
+        ],
+        "summary": "Get all system moderators from the database",
+        "description": "Get request to retrieve system moderators from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "JWT Access Token - Get from login",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Moderator"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/Not Authorised"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Moderators"
+        ],
+        "summary": "Adds a new moderator to the database",
+        "description": "Post request to add a new moderator to the database",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "JWT Access Token - Get from login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "emailAddress",
+            "in": "formData",
+            "description": "Moderator's Email Address",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Moderator's password",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fName",
+            "in": "formData",
+            "description": "Moderator's Firstname",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lName",
+            "in": "formData",
+            "description": "Moderator's Lastname",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "phoneNumber",
+            "in": "formData",
+            "description": "Moderator's cell phone number",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/POST Moderator"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/Not Authorised"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Moderators/login": {
+      "post": {
+        "tags": [
+          "Moderators"
+        ],
+        "summary": "Logs a moderator into the system",
+        "description": "Post request to log into the system",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "emailAddress",
+            "in": "formData",
+            "description": "Moderator's Email Address",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Moderator's password",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/POST Moderator Login"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Moderators/emailAddress/{EmailAddress}": {
+      "get": {
+        "tags": [
+          "Moderators"
+        ],
+        "summary": "Get a specific moderator source from the database",
+        "description": "Get request to retrieve a specific moderator from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "JWT Access Token - Get from login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "EmailAddress",
+            "in": "path",
+            "description": "Email address of moderator",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Moderator"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/Not Authorised"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Moderator 404"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Moderators/id/{id}": {
+      "get": {
+        "tags": [
+          "Moderators"
+        ],
+        "summary": "Get a specific moderator source from the database",
+        "description": "Get request to retrieve a specific moderator from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "JWT Access Token - Get from login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Email address of moderator",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Moderator"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/Not Authorised"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Moderator 404"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Moderators/{EmailAddress}": {
+      "delete": {
+        "tags": [
+          "Moderators"
+        ],
+        "summary": "Removes a specific moderator, based off of their email address, from the database",
+        "description": "Delete request to remove a specific moderator from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "JWT Access Token - Get from login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "EmailAddress",
+            "in": "path",
+            "description": "Email address of moderator to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DELETE Specific Moderator"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/Not Authorised"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Moderators"
+        ],
+        "summary": "Update moderators details",
+        "description": "Put request to update a moderators details",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "JWT Access Token - Get from login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "EmailAddress",
+            "in": "path",
+            "description": "Email Address of source to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "New password for the moderator",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "fName",
+            "in": "formData",
+            "description": "Update the moderators firstname",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "lName",
+            "in": "formData",
+            "description": "Update the moderators lastname",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "phoneNumber",
+            "in": "formData",
+            "description": "Update the moderators phone number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "authenticationLevel",
+            "in": "formData",
+            "description": "Update the moderators authentication level",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/PUT Specific Moderator"
+            }
+          },
+          "202": {
+            "schema": {
+              "$ref": "#/definitions/No Update"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/Not Authorised"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Reports": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Get all reports made",
+        "description": "Get request to retrieve all reports",
+        "operationId": "",
+        "produces": "application/json",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Reports"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Adds a new report to the database",
+        "description": "Post request to add a new report to the database",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "formData",
+            "description": "The type of report being made. 1 = Fact, 2 = Source",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "description": "The body of the report",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/POST Reports"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Reports/id/{id}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Get a specific report made",
+        "description": "Get request to retrieve a specific report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of report to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Report ID"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Removes a report, based off of it's ID, from the database",
+        "description": "Delete request to remove a report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of report to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DELETE Specific Report ID"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Update report",
+        "description": "Put request to update a reports active status",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of report to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "bActive",
+            "in": "formData",
+            "description": "Update the reports active status",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "reportCount",
+            "in": "formData",
+            "description": "Update the reports count",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/PUT Specific Report ID"
+            }
+          },
+          "202": {
+            "schema": {
+              "$ref": "#/definitions/No Update"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Reports/type/{type}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Get a specific report made",
+        "description": "Get request to retrieve a specific report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "description": "Type of reports to be fetched. 1 = Facts, 2 = Sources",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Report Type"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Update moderators details",
+        "description": "Put request to update a moderators details",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "description": "Type of reports to be updated. 1 = Facts, 2 = Sources",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "bActive",
+            "in": "formData",
+            "description": "Update the reports active status",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "reportCount",
+            "in": "formData",
+            "description": "Update the reports count",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/PUT Specific Report Type"
+            }
+          },
+          "202": {
+            "schema": {
+              "$ref": "#/definitions/No Update"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Reports/active/{active}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Get a specific report made",
+        "description": "Get request to retrieve a specific report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "active",
+            "in": "path",
+            "description": "Active status of report to be fetched",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Report Active"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Removes a report, based off of it's active status, from the database",
+        "description": "Delete request to remove a report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "active",
+            "in": "path",
+            "description": "Active status of reports to be deleted",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DELETE Specific Report Active"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Update reports details",
+        "description": "Put request to update a reports active status",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "active",
+            "in": "path",
+            "description": "Active status of reports to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "bActive",
+            "in": "formData",
+            "description": "Update the reports active status",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "reportCount",
+            "in": "formData",
+            "description": "Update the reports count",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/PUT Specific Report Active"
+            }
+          },
+          "202": {
+            "schema": {
+              "$ref": "#/definitions/No Update"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/verify": {
+      "post": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Checks the article",
+        "description": "Post request to add a new report to the database",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "formData",
+            "description": "The type of report being made. ",
+            "default": "text",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "in": "formData",
+            "description": "The body of the report",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/POST Process"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/training": {
+      "get": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Get all training data files",
+        "description": "Get request to fetch training files from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Training"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Checks the article",
+        "description": "Post request to add a new report to the database",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "article",
+            "in": "formData",
+            "description": "The article's content",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fake",
+            "in": "formData",
+            "description": "Indication if the article is fake or not",
+            "required": true,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/POST Training"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/training/range": {
+      "post": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Checks the article",
+        "description": "Post request to add a new report to the database",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "formData",
+            "description": "The starting record to be returned (index from 0)",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "amount",
+            "in": "formData",
+            "description": "The amount of training records to be returned",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/POST Training Range"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/training/{trainingId}": {
+      "delete": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Removes a report, based off of it's active status, from the database",
+        "description": "Delete request to remove a report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "trainingId",
+            "in": "path",
+            "description": "ID of training data to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DELETE Training"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/nnModels": {
+      "get": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Get a specific report made",
+        "description": "Get request to retrieve a specific report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET nnModel"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Checks the article",
+        "description": "Post request to add a new report to the database",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "The model's given name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "model",
+            "in": "formData",
+            "description": "The model's body",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/POST nnModel"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/nnModels/{modelName}": {
+      "get": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Get a specific report made",
+        "description": "Get request to retrieve a specific report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "modelName",
+            "in": "path",
+            "description": "The name of the model to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET nnModel Specific"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/nnModels/{modelId}": {
+      "delete": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Removes a report, based off of it's active status, from the database",
+        "description": "Delete request to remove a report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "ID of model to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DELETE Specific Report Active"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/start/{port}": {
+      "get": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Request to register a new Neural Network instance on the port provided",
+        "description": "The provided port number will have a new Neural Network instance registered to it",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "port",
+            "in": "path",
+            "description": "Port number for new Neural Network instance",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/close/{port}": {
+      "get": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Request to deregister a Neural Network instance on the port provided",
+        "description": "The provided port number will have the Neural Network instance deregistered",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "port",
+            "in": "path",
+            "description": "Active status of report to be fetched",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "501": {
+            "schema": {
+              "$ref": "#/definitions/Not Implemented"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {},
+  "definitions": {
+    "GET Fact": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Facts retrieved successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "count": {
+              "type": "integer",
+              "example": 10
+            },
+            "Facts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5ee08d65b9bd0cd05ed2a352"
+                  },
+                  "Statement": {
+                    "type": "string",
+                    "example": "There is no moon"
+                  },
+                  "Popularity": {
+                    "type": "integer",
+                    "example": "100"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "POST Fact": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Fact created successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "Fact": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5ee08d65b9bd0cd05ed2a352"
+                },
+                "Statement": {
+                  "type": "string",
+                  "example": "There is no moon"
+                },
+                "Popularity": {
+                  "type": "integer",
+                  "example": 100
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "GET Specific Fact": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Retrieved fact successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "Fact": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5ee08e846d1156d1aaa15a53"
+                },
+                "Statement": {
+                  "type": "string",
+                  "example": "The earth is flat"
+                },
+                "Popularity": {
+                  "type": "integer",
+                  "example": 100
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "DELETE Specific Fact": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Fact deleted successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "GET Source": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "message": {
+              "type": "string",
+              "example": "Sources retrieved successfully"
+            },
+            "count": {
+              "type": "integer",
+              "example": 10
+            },
+            "Sources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5ee08d65b9bd0cd05ed2a352"
+                  },
+                  "Name": {
+                    "type": "string",
+                    "example": "New York Times"
+                  },
+                  "Domain Name": {
+                    "type": "string",
+                    "example": "https://www.nytimes.com/"
+                  },
+                  "Rating": {
+                    "type": "integer",
+                    "example": 100
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "POST Source": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Created source successfully"
+            },
+            "Source": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5ee186e05de6721c0ccbc14a"
+                },
+                "Name": {
+                  "type": "string",
+                  "example": "Fox News"
+                },
+                "Domain Name": {
+                  "type": "string",
+                  "example": "https://www.foxnews.com"
+                },
+                "Rating": {
+                  "type": "integer",
+                  "example": 2
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "GET Specific Source 404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "No database entry for provided ID"
+        }
+      }
+    },
+    "GET Specific Source": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Retrieved source successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "Source": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5ee186e05de6721c0ccbc14a"
+                },
+                "Name": {
+                  "type": "string",
+                  "example": "Fox News"
+                },
+                "Domain Name": {
+                  "type": "string",
+                  "example": "https://www.foxnews.com"
+                },
+                "Rating": {
+                  "type": "integer",
+                  "example": 20
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "PUT Specific Source": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Source details updated"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "DELETE Specific Source": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Source deleted"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "GET Moderator": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "count": {
+              "type": "integer",
+              "example": 1
+            },
+            "Moderators": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5f091f148f6a9946bc8f60a1"
+                  },
+                  "Name": {
+                    "type": "string",
+                    "example": "Stuart Barclay"
+                  },
+                  "Email Address": {
+                    "type": "string",
+                    "example": "5bits@gmail.com"
+                  },
+                  "Authentication Level": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "POST Moderator": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Moderator created successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "Moderator": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5f0a2e72e4cb0f487064c4e0"
+                },
+                "Name": {
+                  "type": "string",
+                  "example": "Stuart"
+                },
+                "Email Address": {
+                  "type": "string",
+                  "example": "u15015069@tuks.co.za"
+                },
+                "Phone Number": {
+                  "type": "string",
+                  "example": "0793580784"
+                },
+                "Authentication Level": {
+                  "type": "integer",
+                  "example": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "GET Specific Moderator": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Retrieved moderator successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "Moderator": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5f0a2e72e4cb0f487064c4e0"
+                },
+                "Name": {
+                  "type": "string",
+                  "example": "Stuart Barclay"
+                },
+                "Email Address": {
+                  "type": "string",
+                  "example": "u15015069@tuks.co.za"
+                },
+                "Phone Number": {
+                  "type": "string",
+                  "example": "0793580785"
+                },
+                "Authentication Level": {
+                  "type": "integer",
+                  "example": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "GET Specific Moderator 404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "No database entry for provided user name"
+        }
+      }
+    },
+    "DELETE Specific Moderator": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Moderator deleted successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "PUT Specific Moderator": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Moderator details updated"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "GET Reports": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Reports retireved successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "count": {
+              "type": "integer",
+              "example": 1
+            },
+            "Reports": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5f1622e15643f25f14fb6b31"
+                  },
+                  "Type": {
+                    "type": "string",
+                    "example": "Fact"
+                  },
+                  "Report Data": {
+                    "type": "integer",
+                    "example": "This is a facts report"
+                  },
+                  "Date Captured": {
+                    "type": "Date",
+                    "example": "2020-07-20T23:01:08.926Z"
+                  },
+                  "Report Count": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "GET Specific Report ID": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Retrieved report successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "Report": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5f1622e15643f25f14fb6b31"
+                },
+                "Type": {
+                  "type": "string",
+                  "example": "Fact"
+                },
+                "Report Data": {
+                  "type": "integer",
+                  "example": "This is a facts report"
+                },
+                "Date Captured": {
+                  "type": "Date",
+                  "example": "2020-07-20T23:01:08.926Z"
+                },
+                "Report Count": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "Active Status": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "GET Specific Report Type": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Retrieved reports successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "count": {
+              "type": "integer",
+              "example": 1
+            },
+            "Reports": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5f1622e15643f25f14fb6b31"
+                  },
+                  "Type": {
+                    "type": "string",
+                    "example": "Fact"
+                  },
+                  "Report Data": {
+                    "type": "integer",
+                    "example": "This is a facts report"
+                  },
+                  "Date Captured": {
+                    "type": "Date",
+                    "example": "2020-07-20T23:01:08.926Z"
+                  },
+                  "Report Count": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "Active Status": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "GET Specific Report Active": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Retrieved reports successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "count": {
+              "type": "integer",
+              "example": 1
+            },
+            "Reports": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5f1622e15643f25f14fb6b31"
+                  },
+                  "Type": {
+                    "type": "string",
+                    "example": "Fact"
+                  },
+                  "Report Data": {
+                    "type": "integer",
+                    "example": "This is a facts report"
+                  },
+                  "Date Captured": {
+                    "type": "Date",
+                    "example": "2020-07-20T23:01:08.926Z"
+                  },
+                  "Report Count": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "PUT Specific Report ID": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Report details updated"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "DELETE Specific Report ID": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Report deleted"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "PUT Specific Report Active": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Report details updated"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "DELETE Specific Report Active": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Report deleted"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "PUT Specific Report Type": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Report details updated"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "POST Moderator Login": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Login successful"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "id": {
+              "type": "string",
+              "example": "5f30067783ff0b2ce0b16d7c"
+            },
+            "token": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMzAwNjc3ODNmZjBiMmNlMGIxNmQ3YyIsImlhdCI6MTU5NzAwNjExOSwiZXhwIjoxNTk3MDE2OTE5fQ.ktSzXVQm2MGatCwl3FWgyU05gfGVNjG08CvGQECjWmI"
+            }
+          }
+        }
+      }
+    },
+    "POST Reports": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Report created successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "Report": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5f162e4c1ad7363464fb0b2a"
+                },
+                "Type": {
+                  "type": "string",
+                  "example": "Sources"
+                },
+                "Report Data": {
+                  "type": "integer",
+                  "example": "This is a facts report"
+                },
+                "Date Captured": {
+                  "type": "Date",
+                  "example": "2020-07-20T23:01:08.926Z"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "POST Process": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "text"
+        },
+        "content": {
+          "type": "string",
+          "example": "News alert:..."
+        }
+      }
+    },
+    "GET Training": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "message": {
+              "type": "string",
+              "example": "Training Data retrieved successfully"
+            },
+            "count": {
+              "type": "integer",
+              "example": 1
+            },
+            "TrainingData": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5f1622e15643f25f14fb6b31"
+                  },
+                  "Article": {
+                    "type": "string",
+                    "example": "Fact"
+                  },
+                  "Report Data": {
+                    "type": "integer",
+                    "example": "Fake news article"
+                  },
+                  "Fake": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "POST Training": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "New Training record stored successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "trainingRecord": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5f162e4c1ad7363464fb0b2a"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "POST Training Range": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "message": {
+              "type": "string",
+              "example": "Training range retrieved successfully"
+            },
+            "count": {
+              "type": "integer",
+              "example": 1
+            },
+            "TrainingData": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5f1622e15643f25f14fb6b31"
+                  },
+                  "Article": {
+                    "type": "string",
+                    "example": "Fact"
+                  },
+                  "Fake": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "DELETE Training": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "message": {
+              "type": "string",
+              "example": "Training Record deleted"
+            }
+          }
+        }
+      }
+    },
+    "GET nnModel": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Models retrieved successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "count": {
+              "type": "integer",
+              "example": 1
+            },
+            "Models": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5f1622e15643f25f14fb6b31"
+                  },
+                  "Name": {
+                    "type": "string",
+                    "example": "2020_07_20_SpellingModel"
+                  },
+                  "Date": {
+                    "type": "Date",
+                    "example": "2020-07-20T23:01:08.926Z"
+                  },
+                  "Model": {
+                    "type": "string",
+                    "example": "5edf31165d617a2850632422sdfbvdfh84"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "POST nnModel": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "New Neural Network model stored successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "nnModel": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5f162e4c1ad7363464fb0b2a"
+                },
+                "Name": {
+                  "type": "string",
+                  "example": "2020_07_20_SpellingModel"
+                },
+                "Date": {
+                  "type": "Date",
+                  "example": "2020-07-20T23:01:08.926Z"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "GET nnModel Specific": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "message": {
+              "type": "string",
+              "example": "Retrieved model successfully"
+            },
+            "Model": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5f1622e15643f25f14fb6b31"
+                },
+                "Name": {
+                  "type": "string",
+                  "example": "2020_07_20_SpellingModel"
+                },
+                "Date": {
+                  "type": "Date",
+                  "example": "2020-07-20T23:01:08.926Z"
+                },
+                "Model": {
+                  "type": "string",
+                  "example": "5edf31165d617a2850632422sdfbvdfh84"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "DELETE nnModel": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Model deleted"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "Source": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "CNN"
+        },
+        "tld": {
+          "type": "string",
+          "example": "https://edition.cnn.com/"
+        },
+        "_id": {
+          "type": "string",
+          "example": "5edf31165d617a2850632422"
+        },
+        "request": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "GET"
+            },
+            "url": {
+              "type": "string",
+              "example": "/Sources/5edf31165d617a2850632422"
+            }
+          }
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Server Error"
+            },
+            "success": {
+              "type": "boolean",
+              "example": false
+            }
+          }
+        }
+      }
+    },
+    "Not Found": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Not found"
+            },
+            "success": {
+              "type": "boolean",
+              "example": false
+            }
+          }
+        }
+      }
+    },
+    "Not Authorised": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Not authorised"
+            },
+            "success": {
+              "type": "boolean",
+              "example": false
+            }
+          }
+        }
+      }
+    },
+    "No Update": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Not updated"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "Not Implemented": {
+      "type": "string",
+      "example": "Not Implemented"
+    }
+  }
+}
