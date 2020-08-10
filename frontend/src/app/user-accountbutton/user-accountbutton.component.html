@@ -1,0 +1,48 @@
+<button mat-icon-button [matMenuTriggerFor]="login"> <mat-icon>account_circle</mat-icon> </button>
+
+<mat-menu #login="matMenu">
+    <a (click)="$event.stopPropagation();">
+    <form *ngIf="signIn && !signUp">
+        
+            <mat-form-field id="statement" class="example-form-field">
+                 <mat-label>Email Address</mat-label>
+                <input matInput type="email" required>
+            </mat-form-field>
+
+            <mat-form-field id="statement" class="example-form-field">
+            <mat-label>Password</mat-label>
+             <input  matInput type="password" required> <br>
+            </mat-form-field>
+            <!-- <div class="help-block text-center"><a href="">Forget the password ?</a></div> --> 
+        
+        <div>
+             <button type="submit" mat-raised-button color="primary"> Sign in </button>
+        </div> <br>
+        <div class="help-block text-center"><h4 id="signupText">Are You New Here? <a  (click)="toggleForm()"> Sign Up</a> </h4>  </div>
+    </form>
+
+    <form class="form" *ngIf="signUp && !signIn">
+    
+        <mat-form-field id="statement" class="example-form-field">
+            <mat-label>Username</mat-label>
+           <input matInput type="text" required>
+       </mat-form-field>
+
+        <mat-form-field id="statement" class="example-form-field">
+             <mat-label>Email Address</mat-label>
+            <input matInput type="email" required>
+        </mat-form-field>
+
+        <mat-form-field id="statement" class="example-form-field">
+        <mat-label>Password</mat-label>
+         <input matInput type="password" required> <br>
+        </mat-form-field>
+        <!-- <div class="help-block text-center"><a href="">Forget the password ?</a></div> --> 
+    
+    <div>
+         <button type="submit" mat-raised-button color="primary">Sign Up</button>
+    </div> <br>
+    <div class="help-block text-center"><h4 id="signupText">Already have one? <a  (click)="toggleForm()"> Sign In</a> </h4>  </div>
+</form>
+    </a>
+  </mat-menu>

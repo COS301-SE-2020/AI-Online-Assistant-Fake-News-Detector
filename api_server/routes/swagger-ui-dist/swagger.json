@@ -18,8 +18,8 @@
       "description": "All reports made"
     },
     {
-      "name": "Process",
-      "description": "Processing Routes"
+      "name": "Neural Network",
+      "description": "Neural Network Processing Routes"
     }
   ],
   "host": "localhost:8080",
@@ -408,10 +408,24 @@
         "description": "Get request to retrieve system moderators from the database",
         "operationId": "",
         "produces": "application/json",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "JWT Access Token - Get from login",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "schema": {
               "$ref": "#/definitions/GET Moderator"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/Not Authorised"
             }
           },
           "500": {
@@ -433,6 +447,13 @@
         ],
         "produces": "application/json",
         "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "JWT Access Token - Get from login",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "emailAddress",
             "in": "formData",
@@ -475,6 +496,11 @@
               "$ref": "#/definitions/POST Moderator"
             }
           },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/Not Authorised"
+            }
+          },
           "500": {
             "schema": {
               "$ref": "#/definitions/Error"
@@ -483,7 +509,49 @@
         }
       }
     },
-    "/Moderators/{EmailAddress}": {
+    "/Moderators/login": {
+      "post": {
+        "tags": [
+          "Moderators"
+        ],
+        "summary": "Logs a moderator into the system",
+        "description": "Post request to log into the system",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "emailAddress",
+            "in": "formData",
+            "description": "Moderator's Email Address",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Moderator's password",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/POST Moderator Login"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Moderators/emailAddress/{EmailAddress}": {
       "get": {
         "tags": [
           "Moderators"
@@ -493,6 +561,13 @@
         "operationId": "",
         "produces": "application/json",
         "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "JWT Access Token - Get from login",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "EmailAddress",
             "in": "path",
@@ -507,6 +582,11 @@
               "$ref": "#/definitions/GET Specific Moderator"
             }
           },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/Not Authorised"
+            }
+          },
           "404": {
             "schema": {
               "$ref": "#/definitions/GET Specific Moderator 404"
@@ -518,7 +598,58 @@
             }
           }
         }
-      },
+      }
+    },
+    "/Moderators/id/{id}": {
+      "get": {
+        "tags": [
+          "Moderators"
+        ],
+        "summary": "Get a specific moderator source from the database",
+        "description": "Get request to retrieve a specific moderator from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "JWT Access Token - Get from login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Email address of moderator",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Moderator"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/Not Authorised"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/GET Specific Moderator 404"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Moderators/{EmailAddress}": {
       "delete": {
         "tags": [
           "Moderators"
@@ -528,6 +659,13 @@
         "operationId": "",
         "produces": "application/json",
         "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "JWT Access Token - Get from login",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "EmailAddress",
             "in": "path",
@@ -541,6 +679,11 @@
             "description": "successful operation",
             "schema": {
               "$ref": "#/definitions/DELETE Specific Moderator"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/Not Authorised"
             }
           },
           "404": {
@@ -564,6 +707,13 @@
         "operationId": "",
         "produces": "application/json",
         "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "JWT Access Token - Get from login",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "EmailAddress",
             "in": "path",
@@ -616,6 +766,11 @@
           "202": {
             "schema": {
               "$ref": "#/definitions/No Update"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/Not Authorised"
             }
           },
           "404": {
@@ -1042,12 +1197,12 @@
         }
       }
     },
-    "/Check": {
+    "/verify": {
       "post": {
         "tags": [
-          "Process"
+          "Neural Network"
         ],
-        "summary": "Checks the ",
+        "summary": "Checks the article",
         "description": "Post request to add a new report to the database",
         "operationId": "",
         "consumes": [
@@ -1058,12 +1213,13 @@
           {
             "name": "type",
             "in": "formData",
-            "description": "The type of report being made. 1 = Fact, 2 = Source",
+            "description": "The type of report being made. ",
+            "default": "text",
             "required": true,
-            "type": "integer"
+            "type": "string"
           },
           {
-            "name": "description",
+            "name": "content",
             "in": "formData",
             "description": "The body of the report",
             "required": true,
@@ -1071,7 +1227,7 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "schema": {
               "$ref": "#/definitions/POST Process"
             }
@@ -1083,24 +1239,350 @@
           }
         }
       }
-    }
-  },
-  "securityDefinitions": {
-    "petstore_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:pets": "modify pets in your account",
-        "read:pets": "read your pets"
+    },
+    "/training": {
+      "get": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Get all training data files",
+        "description": "Get request to fetch training files from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET Training"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Checks the article",
+        "description": "Post request to add a new report to the database",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "article",
+            "in": "formData",
+            "description": "The article's content",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fake",
+            "in": "formData",
+            "description": "Indication if the article is fake or not",
+            "required": true,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/POST Training"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
       }
     },
-    "api_key": {
-      "type": "apiKey",
-      "name": "api_key",
-      "in": "header"
+    "/training/range": {
+      "post": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Checks the article",
+        "description": "Post request to add a new report to the database",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "formData",
+            "description": "The starting record to be returned (index from 0)",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "amount",
+            "in": "formData",
+            "description": "The amount of training records to be returned",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/POST Training Range"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/training/{trainingId}": {
+      "delete": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Removes a report, based off of it's active status, from the database",
+        "description": "Delete request to remove a report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "trainingId",
+            "in": "path",
+            "description": "ID of training data to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DELETE Training"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/nnModels": {
+      "get": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Get a specific report made",
+        "description": "Get request to retrieve a specific report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET nnModel"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Checks the article",
+        "description": "Post request to add a new report to the database",
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "The model's given name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "model",
+            "in": "formData",
+            "description": "The model's body",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/POST nnModel"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/nnModels/{modelName}": {
+      "get": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Get a specific report made",
+        "description": "Get request to retrieve a specific report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "modelName",
+            "in": "path",
+            "description": "The name of the model to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GET nnModel Specific"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/nnModels/{modelId}": {
+      "delete": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Removes a report, based off of it's active status, from the database",
+        "description": "Delete request to remove a report from the database",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "ID of model to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DELETE Specific Report Active"
+            }
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Not Found"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/start/{port}": {
+      "get": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Request to register a new Neural Network instance on the port provided",
+        "description": "The provided port number will have a new Neural Network instance registered to it",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "port",
+            "in": "path",
+            "description": "Port number for new Neural Network instance",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/close/{port}": {
+      "get": {
+        "tags": [
+          "Neural Network"
+        ],
+        "summary": "Request to deregister a Neural Network instance on the port provided",
+        "description": "The provided port number will have the Neural Network instance deregistered",
+        "operationId": "",
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "port",
+            "in": "path",
+            "description": "Active status of report to be fetched",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "501": {
+            "schema": {
+              "$ref": "#/definitions/Not Implemented"
+            }
+          }
+        }
+      }
     }
   },
+  "securityDefinitions": {},
   "definitions": {
     "GET Fact": {
       "type": "object",
@@ -1860,6 +2342,32 @@
         }
       }
     },
+    "POST Moderator Login": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Login successful"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "id": {
+              "type": "string",
+              "example": "5f30067783ff0b2ce0b16d7c"
+            },
+            "token": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMzAwNjc3ODNmZjBiMmNlMGIxNmQ3YyIsImlhdCI6MTU5NzAwNjExOSwiZXhwIjoxNTk3MDE2OTE5fQ.ktSzXVQm2MGatCwl3FWgyU05gfGVNjG08CvGQECjWmI"
+            }
+          }
+        }
+      }
+    },
     "POST Reports": {
       "type": "object",
       "properties": {
@@ -1906,9 +2414,280 @@
           "type": "string",
           "example": "text"
         },
-        "tycontentpe": {
+        "content": {
           "type": "string",
           "example": "News alert:..."
+        }
+      }
+    },
+    "GET Training": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "message": {
+              "type": "string",
+              "example": "Training Data retrieved successfully"
+            },
+            "count": {
+              "type": "integer",
+              "example": 1
+            },
+            "TrainingData": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5f1622e15643f25f14fb6b31"
+                  },
+                  "Article": {
+                    "type": "string",
+                    "example": "Fact"
+                  },
+                  "Report Data": {
+                    "type": "integer",
+                    "example": "Fake news article"
+                  },
+                  "Fake": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "POST Training": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "New Training record stored successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "trainingRecord": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5f162e4c1ad7363464fb0b2a"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "POST Training Range": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "message": {
+              "type": "string",
+              "example": "Training range retrieved successfully"
+            },
+            "count": {
+              "type": "integer",
+              "example": 1
+            },
+            "TrainingData": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5f1622e15643f25f14fb6b31"
+                  },
+                  "Article": {
+                    "type": "string",
+                    "example": "Fact"
+                  },
+                  "Fake": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "DELETE Training": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "message": {
+              "type": "string",
+              "example": "Training Record deleted"
+            }
+          }
+        }
+      }
+    },
+    "GET nnModel": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Models retrieved successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "count": {
+              "type": "integer",
+              "example": 1
+            },
+            "Models": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "string",
+                    "example": "5f1622e15643f25f14fb6b31"
+                  },
+                  "Name": {
+                    "type": "string",
+                    "example": "2020_07_20_SpellingModel"
+                  },
+                  "Date": {
+                    "type": "Date",
+                    "example": "2020-07-20T23:01:08.926Z"
+                  },
+                  "Model": {
+                    "type": "string",
+                    "example": "5edf31165d617a2850632422sdfbvdfh84"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "POST nnModel": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "New Neural Network model stored successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "nnModel": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5f162e4c1ad7363464fb0b2a"
+                },
+                "Name": {
+                  "type": "string",
+                  "example": "2020_07_20_SpellingModel"
+                },
+                "Date": {
+                  "type": "Date",
+                  "example": "2020-07-20T23:01:08.926Z"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "GET nnModel Specific": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "message": {
+              "type": "string",
+              "example": "Retrieved model successfully"
+            },
+            "Model": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "string",
+                  "example": "5f1622e15643f25f14fb6b31"
+                },
+                "Name": {
+                  "type": "string",
+                  "example": "2020_07_20_SpellingModel"
+                },
+                "Date": {
+                  "type": "Date",
+                  "example": "2020-07-20T23:01:08.926Z"
+                },
+                "Model": {
+                  "type": "string",
+                  "example": "5edf31165d617a2850632422sdfbvdfh84"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "DELETE nnModel": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Model deleted"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
         }
       }
     },
@@ -1978,6 +2757,24 @@
         }
       }
     },
+    "Not Authorised": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Not authorised"
+            },
+            "success": {
+              "type": "boolean",
+              "example": false
+            }
+          }
+        }
+      }
+    },
     "No Update": {
       "type": "object",
       "properties": {
@@ -1995,6 +2792,10 @@
           }
         }
       }
+    },
+    "Not Implemented": {
+      "type": "string",
+      "example": "Not Implemented"
     }
   }
 }

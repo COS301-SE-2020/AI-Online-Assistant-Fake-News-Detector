@@ -9,7 +9,7 @@ const moderatorRoutes = require("./api/routes/moderators");
 const reportRoutes = require("./api/routes/reports");
 const nnModelRoutes = require("./api/routes/nnModels");
 const trainingRoutes = require("./api/routes/training");
-require('dotenv').config();
+require("dotenv").config();
 
 if (process.env.NODE_ENV != "dev") {
   mongoose.connect(
@@ -26,9 +26,8 @@ if (process.env.NODE_ENV != "dev") {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }
-  )
+  );
 }
-
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));

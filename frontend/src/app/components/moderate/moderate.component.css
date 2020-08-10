@@ -4,7 +4,7 @@
 }
 
 .section.hero {
-	padding-bottom: 92px;
+	padding-bottom: 2em;
 	padding-top: 92px;
 	background-color: #c72c69;
 	text-align: center;
@@ -17,7 +17,7 @@
 
 .topsection {
 	padding-top: 70px;
-	padding-bottom: 0px;
+	padding-bottom: 2em;
 	/* 
     moved this to assets/css for dark/light
     background-color: #e7e8ea; */
@@ -108,9 +108,13 @@ ul{
 	  margin-left: auto;
 	  margin-right: auto;
 	  margin-top: 3em;
-	  margin-bottom: 3em;
+	  margin-bottom: 2em;
   }
 
   #cardImg{
 	  width: 50px;
   }
+  
+  toggle-button {
+	margin: 0 auto;
+  } 
