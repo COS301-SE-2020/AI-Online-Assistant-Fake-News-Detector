@@ -90,7 +90,6 @@ describe("API-DB Integration, Get and Update", () => {
               ].ID
           )
           .end(function (error, res) {
-            console.log(res.body);
             res.should.have.status(200);
             res.should.be.json;
             res.body.should.be.a("object");
