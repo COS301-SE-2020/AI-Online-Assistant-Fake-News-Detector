@@ -1,14 +1,9 @@
 import math
 import spacy as sp
-import random
-#import keras as ks # windwos
-import tensorflow.keras as ks # linux
+import tensorflow.keras as ks
 import multiprocessing as mp
 import nltk
-import tensorflow as tf
 from dataset_manager import DatasetManager
-#physical_devices = tf.config.list_physical_devices('GPU') # linux
-#tf.config.experimental.set_memory_growth(physical_devices[0], enable=True) # linux
 
 import stacked_bidirectional_lstm as sbl
 
@@ -426,59 +421,21 @@ if __name__ == "__main__":
     sampleLength = 120
 
     datasetManager = DatasetManager()
-
-    rawFiles = ["./training_data/data_file0.json",
-                "./training_data/data_file1.json"]
     """
+    rawFiles = ["./training_data/data_file0.json",
+                "./training_data/data_file1.json",
                 "./training_data/data_file2.json",
                 "./training_data/data_file3.json",
-                "./training_data/data_file4.json"]
-    
+                "./training_data/data_file4.json",
                 "./training_data/data_file5.json",
                 "./training_data/data_file6.json",
                 "./training_data/data_file7.json"]
     """
-    """
-    simplePrep = ParallelFilterWrapper(
-        filter=RawDataFilterAdapter(filter=SimpleVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)))
-
-    complexPrep = ParallelFilterWrapper(
-        filter=RawDataFilterAdapter(filter=ComplexVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)))
-
-    for file in rawFiles:
-        print("Processing: " + str(file))
-        data = DatasetManager.loadRawJSONFile(file)
-        data = simplePrep(data)
-        print("Adding...")
-        datasetManager.addToDataset(data)
-    print("Done processing, writing.")
-    datasetManager.writeDatasetToFile("simple_prep.json")
-    """
-
-
-    #datasetManager.readDatasetFromFile("simple_prep.pickle")
-
-    #data = (data[0][:1000], data[1][:1000])
-    """
-     print("Dataset size: " + str(len(data[0])))
-    validPercent = 0.1
-    validEnd = int(len(data[1]) * validPercent)
-    valid = (data[0][:validEnd], data[1][:validEnd])
-    train = (data[0][validEnd:], data[1][validEnd:])
-    data = None   
-    """
-
-    data = DatasetManager.loadRawJSONFile("fake_or_real.json")
-    filter = SimpleVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)
-    preprocessor = SequentialPreprocessor(filter=RawFakeNewsDataFilterAdapter(filter=filter))
-    data = preprocessor(data[:20])
-    datasetManager.addToDataset(data)
-    data = datasetManager.getDataset()
-    print(data)
-    for d in data:
-        print(d)
-    nn = sbl.StackedBidirectionalLSTM(filter=filter, outputCount=2)
-    nn.trainModel(trainingDataset=data, saveFilePath="newModel.hdf5")
+    filter = ComplexVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)
+    preprocessor = ParallelPreprocessor(filter=RawFakeNewsDataFilterAdapter(filter=filter))
+    nn = sbl.StackedBidirectionalLSTM(sampleLength=sampleLength, maxWords=maxWords, outputUnits=2)
+    nn.trainModel(datasetManager.generator(), saveFilePath="newModel.hdf5")
     prepData = filter(text="This is where the fakes news goes")
     check = nn.process(prepData)
     print(check)
+
