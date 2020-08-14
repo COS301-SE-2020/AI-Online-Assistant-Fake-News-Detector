@@ -48,14 +48,15 @@ class StackedBidirectionalLSTM:
         latest = tf.train.latest_checkpoint(fileDir)
         self.__model.load_weights(latest)
 
-    def trainModel(self, generator, saveFilePath, saveCheckpoints = False, validationDataset = None):
+    def trainModel(self, generator, datasetSize, saveFilePath, saveCheckpoints = False, validationDataset = None):
         self.__initialize()
         self.__model.compile("adam", "binary_crossentropy", metrics=["accuracy"])
+        batchSize = 128
         if saveCheckpoints:
             checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoint.ckpt", save_weights_only=True, verbose=1)
-            self.__model.fit(generator, batch_size=64, epochs=5, callbacks=[checkpoint])
+            self.__model.fit(generator, steps_per_epoch=datasetSize/batchSize, batch_size=batchSize, epochs=5, callbacks=[checkpoint])
         else:
-            self.__model.fit(generator, batch_size=64, epochs=5)
+            self.__model.fit(generator, steps_per_epoch=datasetSize/batchSize, batch_size=batchSize, epochs=5)
         self.exportModel(saveFilePath)
 
     def process(self, preparedData):

@@ -1,93 +1,66 @@
 import os
 import errno
-import pathlib
 import json
 import numpy as np
 import tensorflow as tf
 
 class DatasetManager:
-    def __init__(self, dirPath=pathlib.Path(__file__).parent.absolute()):
-        self.__dataId = []
-        self.__dataX = []
-        self.__dataY = []
-        self.__dataDir = os.path.join(dirPath, "data")
-        self.__manifestPath = os.path.join(self.__dataDir, "manifest")
-        self.__maxFileSize = 100000
-        self.__dataFilePrefix = os.path.join(self.__dataDir, "dataset_")
+    def __init__(self, datasetPath):
+        self.__datasetPath = datasetPath
         try:
-            os.makedirs(self.__dataDir)
+            os.makedirs(self.__datasetPath)
         except OSError as e:
             if e.errno != errno.EEXIST:
-                raise
+                print("Error creating directory: " + str(e))
+
+    def __loadManifest(self):
+        manifest = {'datasetSize': 0, 'maxFileSize': 100000, 'sampleLength': 0, 'fileCounter': 0, 'files': []}
+        try:
+            file = open(os.path.join(self.__datasetPath, "manifest.json"), 'r')
+            manifest = json.loads(file.read())
+            file.close()
+        except IOError:
+            print("Created new manifest.")
+        return manifest
+
+    def __saveManifest(self, manifest):
+        try:
+            file = open(os.path.join(self.__datasetPath, "manifest.json"), 'w')
+            file.write(json.dumps(manifest))
+            file.close()
+        except IOError as e:
+            print("Error saving manifest: " + str(e))
 
     def addToDataset(self, sampleList):
-        if len(sampleList):
+        try:
+            manifest = self.__loadManifest()
+            fileSizeCounter = 0
+            newFile = "dataset_" + str(manifest['fileCounter'])
+            datasetFile = open(os.path.join(self.__datasetPath, newFile), 'w')
+            manifest['fileCounter'] += 1
+            manifest['files'].append(newFile)
             for sample in sampleList:
-                dataId = []
-                dataX = []
-                dataY = []
                 if len(sample['text']):
+                    manifest['sampleLength'] = len(sample['text'][0])
+                    manifest['outputUnits'] = len(sample['label'])
                     label = sample['label']
                     id = sample['id']
                     for data in sample['text']:
-                        self.__dataId.append(id)
-                        self.__dataX.append(np.array(data, dtype=np.int64))
-                        self.__dataY.append(np.array(label, dtype=np.int64))
-
-    def clearDataset(self):
-        try:
-            manifestFile = open(self.__manifestPath, 'r')
-            for datasetFile in manifestFile:
-                try:
-                    os.remove(datasetFile.rstrip('\n'))
-                except OSError as e:
-                    print("File in manifest already removed: " + str(e))
-            manifestFile.close()
-        except IOError:
-            print("No manifest.")
-
-    def saveDataset(self):
-        self.clearDataset()
-        try:
-            manifestFile = open(self.__manifestPath, 'w')
-            datasetFile = None
-            fileSizeCounter = 0
-            newFileCounter = 0
-            newFile = self.__dataFilePrefix + str(newFileCounter)
-            datasetFile = open(newFile, 'w')
-            manifestFile.write(newFile + '\n')
-            for i in range(len(self.__dataX)):
-                if fileSizeCounter > self.__maxFileSize:
-                    datasetFile.close()
-                    newFileCounter += 1
-                    newFile = self.__dataFilePrefix + str(newFileCounter)
-                    datasetFile = open(newFile, 'w')
-                    manifestFile.write(newFile + '\n')
-                    fileSizeCounter = 0
-                datasetFile.write(json.dumps({'id': self.__dataId[i], 'x': self.__dataX[i].tolist(), 'y': self.__dataY[i].tolist()}))
-                datasetFile.write('\n')
-                fileSizeCounter += 1
+                        if fileSizeCounter > manifest['maxFileSize']:
+                            datasetFile.close()
+                            newFile = "dataset_" + str(manifest['fileCounter'])
+                            datasetFile = open(os.path.join(self.__datasetPath, newFile), 'w')
+                            manifest['fileCounter'] += 1
+                            manifest['files'].append(newFile)
+                            fileSizeCounter = 0
+                        datasetFile.write(json.dumps({'id': id, 'x': np.array(data, dtype=np.int64).tolist(), 'y': np.array(label, dtype=np.int64).tolist()}))
+                        manifest['datasetSize'] += 1
+                        datasetFile.write('\n')
+                    fileSizeCounter += 1
             datasetFile.close()
-            manifestFile.close()
+            self.__saveManifest(manifest)
         except IOError as e:
             print("Error writing dataset: " + str(e))
-
-    def loadDataset(self):
-        self.__dataX = []
-        self.__dataY = []
-        try:
-            manifestFile = open(self.__manifestPath, 'r')
-            for datasetFile in manifestFile:
-                file = open(datasetFile.rstrip('\n'), 'r')
-                for line in file:
-                    data = json.loads(line)
-                    self.__dataId.append(data['id'])
-                    self.__dataX.append(np.array(data['x'], dtype=np.int64))
-                    self.__dataY.append(np.array(data['y'], dtype=np.int64))
-                file.close()
-            manifestFile.close()
-        except IOError as e:
-            print("Error reading dataset: " + str(e))
 
     def __generator(self):
         dataX = []
@@ -96,9 +69,9 @@ class DatasetManager:
         batchSize = 1024
         while True:
             try:
-                manifestFile = open(self.__manifestPath, 'r')
-                for datasetFile in manifestFile:
-                    file = open(datasetFile.rstrip('\n'), 'r')
+                manifest = self.__loadManifest()
+                for datasetFile in manifest['files']:
+                    file = open(os.path.join(self.__datasetPath, datasetFile), 'r')
                     for line in file:
                         data = json.loads(line)
                         dataX.append(np.array(data['x'], dtype=np.int64))
@@ -110,22 +83,21 @@ class DatasetManager:
                             dataY = []
                             batchCount = 0
                     file.close()
-                manifestFile.close()
             except IOError as e:
                 print("Error reading dataset: " + str(e))
 
-    def generator(self):
-        return tf.data.Dataset.from_generator(self.__generator, output_types=(np.int64, np.int64), output_shapes=((None, 120), (None, 2)))
+    def getGenerator(self):
+        manifest = self.__loadManifest()
+        return tf.data.Dataset.from_generator(self.__generator, output_types=(np.int64, np.int64),
+                                                 output_shapes=((None, manifest['sampleLength']), (None, manifest['outputUnits'])))
 
-    def getDataX(self):
-        return np.array(self.__dataX, dtype=np.int64)
-
-    def getDataY(self):
-        return np.array(self.__dataY, dtype=np.int64)
+    def getDatasetSize(self):
+        manifest = self.__loadManifest()
+        return manifest['datasetSize']
 
     @staticmethod
     def downloadRawJSONFile(url):
-        return 0
+        raise Exception("Not implemented.")
 
     @staticmethod
     def loadRawJSONFile(filePath):

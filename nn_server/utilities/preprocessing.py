@@ -1,3 +1,6 @@
+import random
+import os
+import pathlib
 import math
 import spacy as sp
 import tensorflow.keras as ks
@@ -417,13 +420,9 @@ class VectorizationFilter(Filter):
 
 
 if __name__ == "__main__":
-    maxWords = 1200000
-    sampleLength = 120
-
-    datasetManager = DatasetManager()
-    """
     rawFiles = ["./training_data/data_file0.json",
-                "./training_data/data_file1.json",
+                "./training_data/data_file1.json"]
+    """
                 "./training_data/data_file2.json",
                 "./training_data/data_file3.json",
                 "./training_data/data_file4.json",
@@ -431,10 +430,21 @@ if __name__ == "__main__":
                 "./training_data/data_file6.json",
                 "./training_data/data_file7.json"]
     """
+    maxWords = 1200000
+    sampleLength = 120
+
     filter = ComplexVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)
     preprocessor = ParallelPreprocessor(filter=RawFakeNewsDataFilterAdapter(filter=filter))
+
+    datasetManager = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), "preprocessed"))
+
+    for file in rawFiles:
+        data = DatasetManager.loadRawJSONFile(file)
+        random.shuffle(data)
+        datasetManager.addToDataset(preprocessor(data))
+
     nn = sbl.StackedBidirectionalLSTM(sampleLength=sampleLength, maxWords=maxWords, outputUnits=2)
-    nn.trainModel(datasetManager.generator(), saveFilePath="newModel.hdf5")
+    nn.trainModel(generator=datasetManager.getGenerator(), datasetSize=datasetManager.getDatasetSize(), saveFilePath="newModel.hdf5")
     prepData = filter(text="This is where the fakes news goes")
     check = nn.process(prepData)
     print(check)
