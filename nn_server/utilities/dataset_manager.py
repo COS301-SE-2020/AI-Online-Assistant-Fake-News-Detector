@@ -56,7 +56,7 @@ class DatasetManager:
                         datasetFile.write(json.dumps({'id': id, 'x': np.array(data, dtype=np.int64).tolist(), 'y': np.array(label, dtype=np.int64).tolist()}))
                         manifest['datasetSize'] += 1
                         datasetFile.write('\n')
-                    fileSizeCounter += 1
+                        fileSizeCounter += 1
             datasetFile.close()
             self.__saveManifest(manifest)
         except IOError as e:
@@ -66,7 +66,7 @@ class DatasetManager:
         dataX = []
         dataY = []
         batchCount = 0
-        batchSize = 1024
+        batchSize = 256
         while True:
             try:
                 manifest = self.__loadManifest()
@@ -77,7 +77,7 @@ class DatasetManager:
                         dataX.append(np.array(data['x'], dtype=np.int64))
                         dataY.append(np.array(data['y'], dtype=np.int64))
                         batchCount += 1
-                        if batchCount > batchSize:
+                        if batchCount >= batchSize:
                             yield (np.array(dataX, dtype=np.int64), np.array(dataY, dtype=np.int64))
                             dataX = []
                             dataY = []

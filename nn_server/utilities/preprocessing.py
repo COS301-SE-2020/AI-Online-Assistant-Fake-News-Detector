@@ -421,31 +421,34 @@ class VectorizationFilter(Filter):
 
 if __name__ == "__main__":
     rawFiles = ["./training_data/data_file0.json",
-                "./training_data/data_file1.json"]
-    """
+                "./training_data/data_file1.json",
                 "./training_data/data_file2.json",
                 "./training_data/data_file3.json",
                 "./training_data/data_file4.json",
                 "./training_data/data_file5.json",
                 "./training_data/data_file6.json",
                 "./training_data/data_file7.json"]
-    """
+
     maxWords = 1200000
-    sampleLength = 120
+    sampleLength = 360
 
     filter = ComplexVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)
     preprocessor = ParallelPreprocessor(filter=RawFakeNewsDataFilterAdapter(filter=filter))
 
     datasetManager = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), "preprocessed"))
-
+    """
     for file in rawFiles:
+        print("Processing: " + file)
         data = DatasetManager.loadRawJSONFile(file)
         random.shuffle(data)
+        print("Writing...")
         datasetManager.addToDataset(preprocessor(data))
-
+    print("Done.")
+    """
     nn = sbl.StackedBidirectionalLSTM(sampleLength=sampleLength, maxWords=maxWords, outputUnits=2)
-    nn.trainModel(generator=datasetManager.getGenerator(), datasetSize=datasetManager.getDatasetSize(), saveFilePath="newModel.hdf5")
-    prepData = filter(text="This is where the fakes news goes")
-    check = nn.process(prepData)
+    nn.trainModel(generator=datasetManager.getGenerator(), datasetSize=datasetManager.getDatasetSize(), saveFilePath="newModel.hdf5", saveCheckpoints=True)
+    nn.importModel(filePath="newModel.hdf5")
+    prepData = filter(text="Hillary Clinton is the best president")
+    check = nn.process(preparedData=prepData)
     print(check)
 

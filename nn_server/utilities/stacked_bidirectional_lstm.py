@@ -22,12 +22,12 @@ class StackedBidirectionalLSTM:
         self.__model = None
 
     def __initialize(self):
-        inputs = ks.Input(shape=(self.__sampleLength,), dtype="int32")
-        layers = ks.layers.Embedding(input_dim=self.__maxWords, input_length=self.__sampleLength, output_dim=64, mask_zero=True)(inputs)
+        inputs = ks.Input(shape=(self.__sampleLength,), dtype="int64")
+        layers = ks.layers.Embedding(input_dim=self.__maxWords, input_length=self.__sampleLength, output_dim=128, mask_zero=True)(inputs)
         # Stack bidirectional LSTMs
+        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=128, dropout=0.2, return_sequences=True))(layers)
         layers = ks.layers.Bidirectional(ks.layers.LSTM(units=128, dropout=0.1, return_sequences=True))(layers)
-        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=64, dropout=0.1, return_sequences=True))(layers)
-        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=64))(layers)
+        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=128))(layers)
         # Add a classifier
         outputs = ks.layers.Dense(units=self.__outputUnits, activation="softmax")(layers)
         self.__model = ks.Model(inputs=inputs, outputs=outputs)
@@ -48,15 +48,15 @@ class StackedBidirectionalLSTM:
         latest = tf.train.latest_checkpoint(fileDir)
         self.__model.load_weights(latest)
 
-    def trainModel(self, generator, datasetSize, saveFilePath, saveCheckpoints = False, validationDataset = None):
+    def trainModel(self, generator, datasetSize, saveFilePath, saveCheckpoints = False):
         self.__initialize()
         self.__model.compile("adam", "binary_crossentropy", metrics=["accuracy"])
         batchSize = 128
         if saveCheckpoints:
             checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoint.ckpt", save_weights_only=True, verbose=1)
-            self.__model.fit(generator, steps_per_epoch=datasetSize/batchSize, batch_size=batchSize, epochs=5, callbacks=[checkpoint])
+            self.__model.fit(generator, steps_per_epoch=datasetSize/batchSize, batch_size=batchSize, epochs=3, callbacks=[checkpoint])
         else:
-            self.__model.fit(generator, steps_per_epoch=datasetSize/batchSize, batch_size=batchSize, epochs=5)
+            self.__model.fit(generator, steps_per_epoch=datasetSize/batchSize, batch_size=batchSize, epochs=3)
         self.exportModel(saveFilePath)
 
     def process(self, preparedData):
