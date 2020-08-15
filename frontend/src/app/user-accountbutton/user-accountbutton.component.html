@@ -16,9 +16,9 @@
             <!-- <div class="help-block text-center"><a href="">Forget the password ?</a></div> --> 
         
         <div>
-             <button type="submit" mat-raised-button color="primary"> Sign in </button>
+             <button type="submit" mat-raised-button color="accent"> Sign in </button>
         </div> <br>
-        <div class="help-block text-center"><h4 id="signupText">Are You New Here? <a  (click)="toggleForm()"> Sign Up</a> </h4>  </div>
+        <div class="help-block text-center"><h4 id="signupText">Are You New Here? <a  color="link" (click)="toggleForm()"> Sign Up</a> </h4>  </div>
     </form>
 
     <form class="form" *ngIf="signUp && !signIn">
@@ -40,9 +40,9 @@
         <!-- <div class="help-block text-center"><a href="">Forget the password ?</a></div> --> 
     
     <div>
-         <button type="submit" mat-raised-button color="primary">Sign Up</button>
+         <button type="submit" mat-raised-button color="accent">Sign Up</button>
     </div> <br>
-    <div class="help-block text-center"><h4 id="signupText">Already have one? <a  (click)="toggleForm()"> Sign In</a> </h4>  </div>
+    <div class="help-block text-center"><h4 id="signupText">Already have one? <a color="link" (click)="toggleForm()"> Sign In</a> </h4>  </div>
 </form>
     </a>
   </mat-menu>

@@ -19,7 +19,7 @@ img {
 	margin-bottom: 0em;
 }
 
-h2 {
-	color: rgba(0, 0, 0, 0.4);
-	font-size: 3px;
+p {
+	padding-top: 10px;
+	font-size: 1.3em;
 }
