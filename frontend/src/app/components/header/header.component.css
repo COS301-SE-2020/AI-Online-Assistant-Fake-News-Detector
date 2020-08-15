@@ -1,3 +1,16 @@
+@font-face {
+    font-family: LogoHeading;
+    src: url("/assets/fonts/aquire-font/AquireLight-YzE0o.otf") format("truetype");
+}
+
+.logoHead{
+	font-family: LogoHeading;
+}
+
+#heading_link{
+	font-weight: 400;
+}
+
 img {
 	max-width: 20%;
 	height: auto;
