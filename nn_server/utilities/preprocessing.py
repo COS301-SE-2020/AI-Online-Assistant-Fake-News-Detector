@@ -8,13 +8,14 @@ import multiprocessing as mp
 import nltk
 from dataset_manager import DatasetManager
 
+import sys
 import stacked_bidirectional_lstm as sbl
 
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 sp.prefer_gpu()
 
-DEFAULT_SAMPLE_LENGTH = 60
+DEFAULT_SAMPLE_LENGTH = 360
 DEFAULT_MAX_WORDS = 1200000
 
 
@@ -146,7 +147,7 @@ class ComplexFilter(Filter):
         for token in doc:
             if not token.is_punct:
                 if token.tag_ != "_SP":
-                    results.append(token.text)
+                    results.append(token.lemma_)
                     results.append(token.tag_)
                     results.append(token.dep_)
         return results
@@ -242,7 +243,7 @@ class ComplexVectorizationFilter(Filter):
         for token in doc:
             if not token.is_punct:
                 if token.tag_ != "_SP":
-                    hot = ks.preprocessing.text.one_hot(token.text, self.__maxWords)
+                    hot = ks.preprocessing.text.one_hot(token.lemma_, self.__maxWords)
                     if not len(hot):
                         hot = [0]
                     sample.append(hot[0])
@@ -271,6 +272,51 @@ class ComplexVectorizationFilter(Filter):
 
     def getMaxWords(self):
         return self.__maxWords
+
+
+class ReadabilityFilter(Filter):
+    """
+    NOT IMPLEMENTED
+    @author: AlistairPaynUP
+    Calculates the readability of a passage of text using readability formulae.
+    """
+
+    def __init__(self):
+        super().__init__()
+
+    def __call__(self, text):
+        """
+        @author: AlistairPaynUP
+        @:param text: A string of lowercase text to be processed.
+        @:return A list of features extracted from text.
+        """
+        raise Exception("__call__ not implemented!")
+
+    def getFeatureCount(self):
+        raise Exception("getFeatureCount not implemented!")
+
+
+class POSFilter(Filter):
+    """
+    NOT IMPLEMENTED
+    @author: AlistairPaynUP
+    Totals the number of all the different parts of speech in the article, divides each by word count.
+    Also returns the
+    """
+
+    def __init__(self):
+        super().__init__()
+
+    def __call__(self, text):
+        """
+        @author: AlistairPaynUP
+        @:param text: A string of lowercase text to be processed.
+        @:return A list of features extracted from text: ['posp', 'mode', 'posp', 'mode',...], where posp=part of speech proportion, mode=most common word for the pos.
+        """
+        raise Exception("__call__ not implemented!")
+
+    def getFeatureCount(self):
+        raise Exception("getFeatureCount not implemented!")
 
 
 class RawFakeNewsDataFilterAdapter(FilterAdapter):
@@ -424,19 +470,20 @@ if __name__ == "__main__":
                 "./training_data/data_file1.json",
                 "./training_data/data_file2.json",
                 "./training_data/data_file3.json",
-                "./training_data/data_file4.json",
+                "./training_data/data_file4.json"]
+    """
                 "./training_data/data_file5.json",
                 "./training_data/data_file6.json",
                 "./training_data/data_file7.json"]
-
-    maxWords = 1200000
+    """
+    maxWords = 360000
     sampleLength = 360
 
     filter = ComplexVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)
     preprocessor = ParallelPreprocessor(filter=RawFakeNewsDataFilterAdapter(filter=filter))
 
     datasetManager = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), "preprocessed"))
-    """
+
     for file in rawFiles:
         print("Processing: " + file)
         data = DatasetManager.loadRawJSONFile(file)
@@ -444,11 +491,15 @@ if __name__ == "__main__":
         print("Writing...")
         datasetManager.addToDataset(preprocessor(data))
     print("Done.")
-    """
+
     nn = sbl.StackedBidirectionalLSTM(sampleLength=sampleLength, maxWords=maxWords, outputUnits=2)
     nn.trainModel(generator=datasetManager.getGenerator(), datasetSize=datasetManager.getDatasetSize(), saveFilePath="newModel.hdf5", saveCheckpoints=True)
-    nn.importModel(filePath="newModel.hdf5")
-    prepData = filter(text="Hillary Clinton is the best president")
-    check = nn.process(preparedData=prepData)
-    print(check)
+    #nn.importModel(filePath="newModel.hdf5")
+    #nn.importCheckpoint()
 
+    print("Enter a news article to check: ")
+    for line in sys.stdin:
+        prepData = filter(text=line)
+        check = nn.process(preparedData=prepData)
+        print(check)
+        print("Enter a news article to check: ")

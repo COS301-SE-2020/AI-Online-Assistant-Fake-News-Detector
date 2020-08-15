@@ -3,6 +3,9 @@ import errno
 import json
 import numpy as np
 import tensorflow as tf
+import random
+
+DEFAULT_MAX_FILE_SIZE = 100000
 
 class DatasetManager:
     def __init__(self, datasetPath):
@@ -14,7 +17,7 @@ class DatasetManager:
                 print("Error creating directory: " + str(e))
 
     def __loadManifest(self):
-        manifest = {'datasetSize': 0, 'maxFileSize': 100000, 'sampleLength': 0, 'fileCounter': 0, 'files': []}
+        manifest = {'datasetSize': 0, 'maxFileSize': DEFAULT_MAX_FILE_SIZE, 'sampleLength': 0, 'outputUnits': 0, 'fileCounter': 0, 'files': []}
         try:
             file = open(os.path.join(self.__datasetPath, "manifest.json"), 'r')
             manifest = json.loads(file.read())
@@ -70,6 +73,8 @@ class DatasetManager:
         while True:
             try:
                 manifest = self.__loadManifest()
+                files = manifest['files']
+                random.shuffle(files)
                 for datasetFile in manifest['files']:
                     file = open(os.path.join(self.__datasetPath, datasetFile), 'r')
                     for line in file:
