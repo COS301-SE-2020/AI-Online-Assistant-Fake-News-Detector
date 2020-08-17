@@ -1,4 +1,4 @@
-import random
+import numpy as np
 import tensorflow.keras as ks
 import tensorflow as tf
 
@@ -22,6 +22,8 @@ class StackedBidirectionalLSTM:
         self.__model = None
 
     def __initialize(self):
+        self.__model = None
+        tf.keras.backend.clear_session()
         inputs = ks.Input(shape=(self.__sampleLength,), dtype="int64")
         layers = ks.layers.Embedding(input_dim=self.__maxWords, input_length=self.__sampleLength, output_dim=128, mask_zero=True)(inputs)
         # Stack bidirectional LSTMs
@@ -53,7 +55,7 @@ class StackedBidirectionalLSTM:
         self.__model.compile("adam", "binary_crossentropy", metrics=["accuracy"])
         batchSize = 128
         if saveCheckpoints:
-            checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoint.ckpt", save_weights_only=True, verbose=1)
+            checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath=saveFilePath + ".ckpt", save_weights_only=True, verbose=1)
             self.__model.fit(generator, steps_per_epoch=datasetSize/batchSize, batch_size=batchSize, epochs=3, callbacks=[checkpoint])
         else:
             self.__model.fit(generator, steps_per_epoch=datasetSize/batchSize, batch_size=batchSize, epochs=3)
@@ -62,4 +64,13 @@ class StackedBidirectionalLSTM:
     def process(self, preparedData):
         if self.__model is None:
             raise Exception("Cannot use uninitialized model.")
-        return self.__model.predict(preparedData)
+        results = self.__model.predict(preparedData)
+        sums = []
+        for i in range(len(results[0])):
+            sums.append(0)
+        for result in results:
+            for i in range(len(result)):
+                sums[i] += result[i]
+        for i in range(len(sums)):
+            sums[i] /= len(results)
+        return sums

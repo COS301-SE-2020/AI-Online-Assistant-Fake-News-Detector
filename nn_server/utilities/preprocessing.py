@@ -1,15 +1,8 @@
-import random
-import os
-import pathlib
 import math
 import spacy as sp
 import tensorflow.keras as ks
 import multiprocessing as mp
 import nltk
-from dataset_manager import DatasetManager
-
-import sys
-import stacked_bidirectional_lstm as sbl
 
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
@@ -463,43 +456,3 @@ class VectorizationFilter(Filter):
 
     def getMaxWords(self):
         return self.__maxWords
-
-
-if __name__ == "__main__":
-    rawFiles = ["./training_data/data_file0.json",
-                "./training_data/data_file1.json",
-                "./training_data/data_file2.json",
-                "./training_data/data_file3.json",
-                "./training_data/data_file4.json"]
-    """
-                "./training_data/data_file5.json",
-                "./training_data/data_file6.json",
-                "./training_data/data_file7.json"]
-    """
-    maxWords = 360000
-    sampleLength = 360
-
-    filter = ComplexVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)
-    preprocessor = ParallelPreprocessor(filter=RawFakeNewsDataFilterAdapter(filter=filter))
-
-    datasetManager = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), "preprocessed"))
-
-    for file in rawFiles:
-        print("Processing: " + file)
-        data = DatasetManager.loadRawJSONFile(file)
-        random.shuffle(data)
-        print("Writing...")
-        datasetManager.addToDataset(preprocessor(data))
-    print("Done.")
-
-    nn = sbl.StackedBidirectionalLSTM(sampleLength=sampleLength, maxWords=maxWords, outputUnits=2)
-    nn.trainModel(generator=datasetManager.getGenerator(), datasetSize=datasetManager.getDatasetSize(), saveFilePath="newModel.hdf5", saveCheckpoints=True)
-    #nn.importModel(filePath="newModel.hdf5")
-    #nn.importCheckpoint()
-
-    print("Enter a news article to check: ")
-    for line in sys.stdin:
-        prepData = filter(text=line)
-        check = nn.process(preparedData=prepData)
-        print(check)
-        print("Enter a news article to check: ")
