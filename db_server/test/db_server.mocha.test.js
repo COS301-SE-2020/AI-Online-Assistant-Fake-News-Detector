@@ -295,6 +295,7 @@ describe("Facts Api", () => {
 });
 /////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////   MODERATORS  ///////////////////////////////////
+/////////// taken out because authentication doesn't happen from db server //////////
 /////////////////////////////////////////////////////////////////////////////////////
 // describe("Moderators Api", () => {
 //   it("It should add a Moderator to the database", function (done) {
@@ -530,24 +531,26 @@ describe("nnModels Api", () => {
 ////////////////////////////////////   TRAINING  ////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 describe("Training Api", () => {
+  for (let counter = 0; counter < 3; counter++) {
   it("It should add a Training Record to the database", function (done) {
-    chai
-      .request(server)
-      .post("/Training")
-      .send({
-        article: "Fake news mocha test article",
-        fake: true,
-      })
-      .end(function (err, res) {
-        res.should.have.status(201);
-        res.should.be.json;
-        res.body.should.be.a("object");
-        res.body.response.should.have.property("message");
-        res.body.response.trainingRecord.should.be.a("object");
-        res.body.response.trainingRecord.should.have.property("ID");
-        done();
+      chai
+        .request(server)
+        .post("/Training")
+        .send({
+          article: "Fake news mocha test article",
+          fake: true,
+        })
+        .end(function (err, res) {
+          res.should.have.status(201);
+          res.should.be.json;
+          res.body.should.be.a("object");
+          res.body.response.should.have.property("message");
+          res.body.response.trainingRecord.should.be.a("object");
+          res.body.response.trainingRecord.should.have.property("ID");
+          done();
+        });
       });
-  });
+  }
   it("It should get all Training Data", (done) => {
     chai
       .request(server)
@@ -565,22 +568,24 @@ describe("Training Api", () => {
         done();
       });
   });
+  for (let counter = 0; counter < 3; counter++) {
   it("It should delete a Training Record based on ID", function (done) {
-    chai
+      chai
       .request(server)
       .get("/Training")
       .end((err, responder) => {
-        chai
-          .request(server)
-          .delete("/Training/" + responder.body.response.TrainingData[0].ID)
-          .end(function (error, res) {
-            res.should.have.status(200);
-            res.should.be.json;
-            res.body.should.be.a("object");
-            res.body.response.should.have.property("message");
-            res.body.response.message.should.be.eql("Training Record deleted");
-            done();
+          chai
+            .request(server)
+            .delete("/Training/" + responder.body.response.TrainingData[0].ID)
+            .end(function (error, res) {
+              res.should.have.status(200);
+              res.should.be.json;
+              res.body.should.be.a("object");
+              res.body.response.should.have.property("message");
+              res.body.response.message.should.be.eql("Training Record deleted");
+              done();
+            });
           });
-      });
-  });
+        });
+        }
 });
