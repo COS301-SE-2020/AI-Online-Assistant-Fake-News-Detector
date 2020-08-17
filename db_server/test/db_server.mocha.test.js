@@ -4,7 +4,7 @@ const chai = require("chai");
 process.env.NODE_ENV = "dev";
 const server = require("../db_server");
 const { expect } = require("chai");
-const { response } = require("../../api_server/api_server");
+const { response, resource } = require("../../api_server/api_server");
 
 //Assertion Style
 chai.should();
@@ -532,29 +532,29 @@ describe("nnModels Api", () => {
 /////////////////////////////////////////////////////////////////////////////////////
 describe("Training Api", () => {
   for (let counter = 0; counter < 3; counter++) {
-  it("It should add a Training Record to the database", function (done) {
-      chai
-        .request(server)
-        .post("/Training")
-        .send({
-          article: "Fake news mocha test article",
-          fake: true,
-        })
-        .end(function (err, res) {
-          res.should.have.status(201);
-          res.should.be.json;
-          res.body.should.be.a("object");
-          res.body.response.should.have.property("message");
-          res.body.response.trainingRecord.should.be.a("object");
-          res.body.response.trainingRecord.should.have.property("ID");
-          done();
+    it("It should add a Training Record to the database", function (done) {
+        chai
+          .request(server)
+          .post("/Training")
+          .send({
+            article: "Fake news mocha test article",
+            fake: true,
+          })
+          .end(function (err, res) {
+            res.should.have.status(201);
+            res.should.be.json;
+            res.body.should.be.a("object");
+            res.body.response.should.have.property("message");
+            res.body.response.trainingRecord.should.be.a("object");
+            res.body.response.trainingRecord.should.have.property("ID");
+            done();
+          });
         });
-      });
   }
   it("It should get all Training Data", (done) => {
-    chai
-      .request(server)
-      .get("/Training")
+        chai
+        .request(server)
+        .get("/Training")
       .end((err, res) => {
         expect(err).to.be.null;
         res.should.have.status(200);
@@ -568,6 +568,57 @@ describe("Training Api", () => {
         done();
       });
   });
+  it("It should get a range of training data containing the first 2 records", function (done) {
+      const range = {
+        start: 0,
+        amount: 2,
+      };
+      chai
+        .request(server)
+        .post("/Training/range/")
+        .send(range)
+        .end(function (err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a("object");
+          res.body.response.should.have.property("message");
+          done();
+        });
+    });
+    it("It should fail to get a range due to negative index", function (done) {
+      const range = {
+        start: -1,
+        amount: 2,
+      };
+      chai
+        .request(server)
+        .post("/Training/range/")
+        .send(range)
+        .end(function (err, res) {
+          res.should.have.status(404);
+          res.should.be.json;
+          res.body.should.be.a("object");
+          res.body.response.should.have.property("message");
+          done();
+        });
+    });  
+    it("It should fail to get a range due to going over the top bound", function (done) {
+      const range = {
+        start: 0,
+        amount: 20,
+      };
+      chai
+        .request(server)
+        .post("/Training/range/")
+        .send(range)
+        .end(function (err, res) {
+          res.should.have.status(404);
+          res.should.be.json;
+          res.body.should.be.a("object");
+          res.body.response.should.have.property("message");
+          done();
+        });
+    });  
   for (let counter = 0; counter < 3; counter++) {
   it("It should delete a Training Record based on ID", function (done) {
       chai
