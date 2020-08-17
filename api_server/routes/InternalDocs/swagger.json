@@ -22,8 +22,8 @@
       "description": "Neural Network Processing Routes"
     }
   ],
-  "host": "localhost:8080",
-  "basePath": "/API",
+  "host": "localhost:3000",
+  "basePath": "/",
   "schemes": [
     "http"
   ],
