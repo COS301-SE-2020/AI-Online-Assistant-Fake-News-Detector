@@ -44,6 +44,8 @@ import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-shee
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { TogglebuttonComponent } from 'src/app/togglebutton/togglebutton.component';
 import {UserAccountbuttonComponent} from 'src/app/user-accountbutton/user-accountbutton.component'
+import {LoginComponent} from 'src/app/user-accountbutton/login/login.component'
+import {SignUpComponent} from 'src/app/user-accountbutton/sign-up/sign-up.component'
 
 @NgModule({
 	declarations: [
@@ -61,7 +63,9 @@ import {UserAccountbuttonComponent} from 'src/app/user-accountbutton/user-accoun
 		ShareButtonComponent,
 		NotfoundComponent,
 		TogglebuttonComponent,
-		UserAccountbuttonComponent
+		UserAccountbuttonComponent,
+		LoginComponent,
+		SignUpComponent
 	],
 	imports: [
 		BrowserModule,
