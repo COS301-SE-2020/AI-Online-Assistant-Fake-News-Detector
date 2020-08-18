@@ -1,5 +1,5 @@
 $(() => {
-    const Url='http://localhost:3000/Sources'
+    const sourcesUrl='http://54.172.96.111:8080/api/Sources/'
     $('#input').show();
     $('#output').hide();
     $('#input').html('<input type="button" id="close" value="Close">');
@@ -10,7 +10,7 @@ $(() => {
             '<input type="text" id="article">'+
             '<input type="button" id="analyse" value="Analyse">')
         } else if($('#slct').val()==2){
-            $('#input').html('<label for="source">News Source:</label><br>'+
+            $('#input').html('<label for="source">News Source URL:</label><br>'+
             '<input type="text" id="checkSource">'+
             '<input type="button" id="sourceCheck" value="Check Source">')
         } else{
@@ -19,32 +19,62 @@ $(() => {
             '<input type="button" id="sourceReport" value="Report Source">')
         }
     });
-
+ //////////////////////////////////////////////////////   
+ ///////////////////ANALYSE NEWS ARTICLE///////////////
+ //////////////////////////////////////////////////////   
     $('#input').on('click', 'input[value="Analyse"]', function() {
-        alert('Analyse');
+        if (!$('#article').val()) {
+            $('#article').css("border", "#E0115F 2px solid");
+        } else {
+            
+        }
     });
+//////////////////////////////////////////////////////   
+///////////////////CHECK NEWS SOURCE//////////////////
+//////////////////////////////////////////////////////   
     $('#input').on('click', 'input[value="Check Source"]', function() {
+        let found = false;
+        let userInput = $('#checkSource').val();
         if (!$('#checkSource').val()) {
             $('#checkSource').css("border", "#E0115F 2px solid");
         } else {
-            $.ajax({
-                url: 'http://localhost:3000/sources',
-                type: "GET",
-                success: function(result){
-                    alert(result[count]);
-                },
-                error: function(error){
-                    alert(error);
+            getSources().then(data => {
+                let tld = userInput.substring(0,userInput.indexOf('/',8)+1);
+                data['response']['Sources'].forEach(source => {
+                    if (source['Domain Name']===tld) {
+                        $('#input').html('<h3>'+ source['Name'] +' has been spreading fake news recently</h3>'+
+                        '<input type="button" id="close" value="Close">');
+                        found = true;
+                    }
+                });
+                if (found == false) {
+                    $('#input').html('<h3>This source can be trusted</h3>'+
+                    '<input type="button" id="close" value="Close">');
                 }
-            })
+            });
         }
     });
+    //////////////////////////////////////////////////////   
+    //////////////////REPORT NEWS SOURCE//////////////////
+    //////////////////////////////////////////////////////   
     $('#input').on('click', 'input[value="Report Source"]', function() {
-        alert('Report');
+        if (!$('#reportSource').val()) {
+            $('#reportSource').css("border", "#E0115F 2px solid");
+        } else {
+            
+        }
     });
- 
-    $('#close').on('click', function(){
+    $('#input').on('click', 'input[value="Close"]', function() {
         window.close();
     });
     
+    $('#close').on('click', function(){
+    });
+    function getSources(){
+        return $.ajax({
+            url: sourcesUrl,
+            dataType: "json",
+            type: "GET",
+        });
+      }
 });
