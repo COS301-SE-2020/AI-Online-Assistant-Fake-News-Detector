@@ -4,7 +4,7 @@ from flask_api import status
 
 import sys, os, pathlib
 dirname = pathlib.Path(__file__).parent.absolute()
-sys.path.append(os.path.join(dirname, 'utilities'))
+sys.path.append(os.path.join(dirname, 'neural_network_utilities'))
 from preprocessing import ComplexVectorizationFilter, GrammarVectorizationFilter, RawFakeNewsDataFilterAdapter, ParallelPreprocessor
 from dataset_manager import DatasetManager
 from stacked_bidirectional_lstm import StackedBidirectionalLSTM
