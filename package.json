@@ -11,6 +11,7 @@
     "install:db": "cd db_server && npm install && npm audit fix",
     "install:api": "cd api_server && npm install && npm audit fix",
     "postinstall": "run-p install:*",
+    "posttest": "cd nn_server && pytest nn_server_test.py --mocha --disable-warnings",
     "test": "mocha --exit \"**/*.mocha.test.js\" --timeout 30000",
     "start": "cd api_server && npm start"
   },
