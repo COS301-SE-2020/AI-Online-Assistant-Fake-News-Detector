@@ -2,29 +2,28 @@ import flask
 from flask import request, jsonify
 from flask_api import status
 
-import sys, os
-dirname = os.path.dirname(__file__)
-sys.path.append(os.path.join(dirname, 'classifier_utilities'))
-sys.path.append(os.path.join(dirname, 'core_nn'))
-sys.path.append(os.path.join(dirname, 'nn_fact_input'))
-sys.path.append(os.path.join(dirname, 'nn_spelling_input'))
-from combined_classifier import CombinedClassifier
-from core_nn import CoreNN
-from nn_fact_input import NNFactInput
-from nn_spelling_input import NNSpellingInput
+import sys, os, pathlib
+dirname = pathlib.Path(__file__).parent.absolute()
+sys.path.append(os.path.join(dirname, 'utilities'))
+from preprocessing import ComplexVectorizationFilter, GrammarVectorizationFilter, RawFakeNewsDataFilterAdapter, ParallelPreprocessor
+from dataset_manager import DatasetManager
+from stacked_bidirectional_lstm import StackedBidirectionalLSTM
 
-dirname = os.path.dirname(os.path.realpath(__file__))
-factInputModelPath = os.path.join(dirname, "trained_models/nn_fact_input.model")
-coreNNModelPath = os.path.join(dirname, "trained_models/core_nn.model")
+trained_models = os.path.join(dirname, 'trained_models')
+grammarModel = os.path.join(trained_models, "grammar_model.hdf5")
+complexModel = os.path.join(trained_models, "complex_model.hdf5")
 
-factInput = NNFactInput()
-factInput.importModelFromFile(factInputModelPath)
-spellingInput = NNSpellingInput()
+sampleLength = 360
 
-coreNN = CoreNN()
-coreNN.importModelFromFile(coreNNModelPath)
-coreNN.addInput(factInput)
-#coreNN.addInput(spellingInput) # very slow, need another method
+grammarFilter = GrammarVectorizationFilter(sampleLength=sampleLength)
+grammarLSTM = StackedBidirectionalLSTM(sampleLength=grammarFilter.getSampleLength(),
+                                       maxWords=grammarFilter.getMaxWords(), outputUnits=2)
+grammarLSTM.importModel(grammarModel)
+
+complexFilter = ComplexVectorizationFilter(sampleLength=sampleLength, maxWords=80000)
+complexLSTM = StackedBidirectionalLSTM(sampleLength=complexFilter.getSampleLength(),
+                                       maxWords=complexFilter.getMaxWords(), outputUnits=2)
+complexLSTM.importModel(complexModel)
 
 app = flask.Flask(__name__)
 
@@ -36,8 +35,17 @@ def check():
         if 'type' in body.keys():
             if 'content' in body.keys():
                 if body['type'] == 'text':
-                    response = coreNN.process(body['content'].lower())
-                    return jsonify({"result" : response})
+                    text = body['content'].lower()
+                    complexResult = complexLSTM.process(preparedData=complexFilter(text))
+                    grammarResult = grammarLSTM.process(preparedData=grammarFilter(text))
+                    real = (complexResult[0] + grammarResult[0]) / 2
+                    fake = (complexResult[1] + grammarResult[1]) / 2
+                    label = "real"
+                    value = real
+                    if real < fake:
+                        label = "fake"
+                        value = fake                        
+                    return jsonify({"result" : {"label": label, "value": value}})
     return "Bad request body.", status.HTTP_400_BAD_REQUEST
 
 # route for unsupported requests

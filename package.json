@@ -6,6 +6,8 @@
     "install:frontend": "cd frontend && npm install && npm audit fix",
     "install:nn": "cd nn_server && pip3 install -r requirements.txt",
     "install:classifierUtil": "cd nn_server/classifier_utilities && pip3 install -r requirements.txt",
+    "install:neuralNetworkUtil": "cd nn_server/neural_network_utilities && pip3 install -r requirements.txt",
+    "install:spacyModel": "cd nn_server/neural_network_utilities && python -m spacy download en_core_web_sm",
     "install:coreNN": "cd nn_server/core_nn && pip3 install -r requirements.txt",
     "install:spellingNN": "cd nn_server/nn_spelling_input && pip3 install -r requirements.txt",
     "install:factNN": "cd nn_server/nn_fact_input && pip3 install -r requirements.txt",
