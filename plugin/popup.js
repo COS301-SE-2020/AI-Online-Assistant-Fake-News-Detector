@@ -1,5 +1,7 @@
 $(() => {
-    const sourcesUrl='http://54.172.96.111:8080/api/Sources/'
+    const tld='http://54.172.96.111:8080/api/'
+    const sourcesUrl=tld+'Sources/'
+    const reportsUrl=tld+'Reports/'
     $('#input').show();
     $('#output').hide();
     $('#input').html('<input type="button" id="close" value="Close">');
@@ -14,7 +16,7 @@ $(() => {
             '<input type="text" id="checkSource">'+
             '<input type="button" id="sourceCheck" value="Check Source">')
         } else{
-            $('#input').html('<label for="report">Report Source:</label><br>'+
+            $('#input').html('<label for="report">Source URL:</label><br>'+
             '<input type="text" id="reportSource">'+
             '<input type="button" id="sourceReport" value="Report Source">')
         }
@@ -42,13 +44,13 @@ $(() => {
                 let tld = userInput.substring(0,userInput.indexOf('/',8)+1);
                 data['response']['Sources'].forEach(source => {
                     if (source['Domain Name']===tld) {
-                        $('#input').html('<h3>'+ source['Name'] +' has been spreading fake news recently</h3>'+
+                        $('#input').html('<h3>'+ source['Name'] +' has been spreading fake news recently!</h3>'+
                         '<input type="button" id="close" value="Close">');
                         found = true;
                     }
                 });
                 if (found == false) {
-                    $('#input').html('<h3>This source can be trusted</h3>'+
+                    $('#input').html('<h3>According to our records, this source can be trusted</h3>'+
                     '<input type="button" id="close" value="Close">');
                 }
             });
@@ -61,20 +63,55 @@ $(() => {
         if (!$('#reportSource').val()) {
             $('#reportSource').css("border", "#E0115F 2px solid");
         } else {
-            
+            let name = "";
+            let validUrl = false;
+            let type = 2;
+            let description = $('#reportSource').val();
+            let forwardSlashCount = (description.match(/\//g)||[]).length;
+            if (forwardSlashCount==2) {
+                description+='/';
+                validUrl=true;
+            } else if(forwardSlashCount>=3){
+                description = description.substring(0,description.indexOf('/',8)+1);
+                validUrl=true;
+            }
+            if (validUrl) {
+                postReport(type, description).then(data=>{});
+                if (description[4]==='s') {
+                    name = (description.substring(description.indexOf('.',0)+1,description.indexOf('/',12))).toUpperCase();
+                } else {
+                    name = description.substring(description.indexOf('.',0)+1,description.indexOf('/',11)).toUpperCase();
+                }
+                $('#input').html('<h3>Thanks for reporting '+ name +' </h3>'+
+                        '<h4>Your feedback will be analysed soon.</h4>'+
+                        '<input type="button" id="close" value="Close">');
+            }
+            else{
+                alert(description);
+            }
         }
     });
     $('#input').on('click', 'input[value="Close"]', function() {
         window.close();
     });
     
-    $('#close').on('click', function(){
-    });
     function getSources(){
         return $.ajax({
             url: sourcesUrl,
             dataType: "json",
             type: "GET",
         });
-      }
+    }
+
+    function postReport(iType, sDescription) {
+        return $.ajax({
+            url: reportsUrl,
+            dataType: "json",
+            type: "POST",
+            data: {
+                "type": iType,
+                "description": sDescription
+            }
+        });
+    }
 });

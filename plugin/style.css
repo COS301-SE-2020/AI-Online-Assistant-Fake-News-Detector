@@ -12,7 +12,11 @@ h2{
 }
 h3{
     color: #DDD;
-    text-align: justify;
+    text-align: left;
+}
+h4{
+    color: #AAA;
+    text-align: left;
 }
 input[type=text] {
     padding: 5px;
