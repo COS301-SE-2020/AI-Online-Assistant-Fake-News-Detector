@@ -1,5 +1,15 @@
 const api = require("express").Router();
 const http = require("http");
+const morgan = require("morgan");
+const jwt = require("jsonwebtoken");
+const path = require("path");
+const config = require("../../Util/config");
+const root = require(path.join("../", "../", "Util", "path"));
+const Logger = require("../../winston");
+const logger = new Logger(api);
+const fs = require("fs");
+const shell = require("shelljs");
+const nn_server = [];
 
 const getRequest = (_host, _path, _port, callBack) => {
   const request = http
@@ -23,9 +33,9 @@ const getRequest = (_host, _path, _port, callBack) => {
         });
       }
     )
-    .on("error", (e) => {
+    .on("error", (err) => {
       morgan(":date[clf] :method :url :status :response-time ms", {
-        stream: fs.createWriteStream(path.join(root, "logs", "error.log"), {
+        stream: fs.createWriteStream(path.join(root, "logfiles", "error.log"), {
           flags: "a",
         }),
       });
@@ -61,7 +71,7 @@ const postRequest = (_host, _path, _port, _params, callBack) => {
   );
   request.on("error", (err) => {
     morgan(":date[clf] :method :url :status :response-time ms", {
-      stream: fs.createWriteStream(path.join(root, "logs", "error.log"), {
+      stream: fs.createWriteStream(path.join(root, "logfiles", "error.log"), {
         flags: "a",
       }),
     });
@@ -99,7 +109,7 @@ const putRequest = (_host, _path, _port, params, callBack) => {
     )
     .on("error", (err) => {
       morgan(":date[clf] :method :url :status :response-time ms", {
-        stream: fs.createWriteStream(path.join(root, "logs", "error.log"), {
+        stream: fs.createWriteStream(path.join(root, "logfiles", "error.log"), {
           flags: "a",
         }),
       });
@@ -134,7 +144,7 @@ const deleteRequest = (_host, _path, _port, callBack) => {
 
   request.on("error", (err) => {
     morgan(":date[clf] :method :url :status :response-time ms", {
-      stream: fs.createWriteStream(path.join(root, "logs", "error.log"), {
+      stream: fs.createWriteStream(path.join(root, "logfiles", "error.log"), {
         flags: "a",
       }),
     });
@@ -142,6 +152,49 @@ const deleteRequest = (_host, _path, _port, callBack) => {
   });
 
   request.end();
+};
+
+const validateUser = (token, callBack) => {
+  try {
+    jwt.verify(token, config.secretKey, (err, decode) => {
+      if (err) {
+        morgan(":date[clf] :method :url :status :response-time ms", {
+          stream: fs.createWriteStream(
+            path.join(root, "logfiles", "error.log"),
+            {
+              flags: "a",
+            }
+          ),
+        });
+        callBack(false, 500, err);
+      }
+
+      getRequest(
+        "localhost",
+        "/moderators/id/" + decode.id,
+        3000,
+        (statusCode, response) => {
+          if (
+            response.response.Moderator.ID === decode.id &&
+            response.response.Moderator["Authentication Level"] == 2
+          )
+            callBack(true);
+          else if (
+            response.response.Moderator.ID === decode.id &&
+            response.response.Moderator["Authentication Level"] == 1
+          )
+            callBack(false);
+        }
+      );
+    });
+  } catch (error) {
+    morgan(":date[clf] :method :url :status :response-time ms", {
+      stream: fs.createWriteStream(path.join(root, "logfiles", "error.log"), {
+        flags: "a",
+      }),
+    });
+    callBack(false, 500, "Internal Server Error");
+  }
 };
 
 /**
@@ -336,16 +389,88 @@ api.delete("/facts/:factId", (req, res, next) => {
   );
 });
 
+/**
+ * @description API call to fetch all moderators.
+ * @author Stuart Barclay
+ */
+
 api.get("/moderators", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
-  getRequest("localhost", "/moderators", 3000, (statusCode, response) => {
-    if (statusCode == 500) next(response);
-    else res.status(statusCode).json(response);
+  let token = req.headers["x-access-token"];
+  if (!token)
+    return res.status(401).json({
+      response: {
+        message: "Not authorised",
+        success: false,
+      },
+    });
+
+  validateUser(token, (valid, statusCode, response) => {
+    if (!valid && statusCode === 500) return next(response);
+    else if (!valid)
+      return res.status(401).json({
+        response: {
+          message: "Not authorised",
+          success: false,
+        },
+      });
+
+    getRequest("localhost", "/moderators", 3000, (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    });
   });
 });
 
+/**
+ * @description API call to create a new moderator
+ * @author Stuart Barclay
+ */
+
 api.post("/moderators", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+  let token = req.headers["x-access-token"];
+  if (!token)
+    return res.status(401).json({
+      response: {
+        message: "Not authorised",
+        success: false,
+      },
+    });
+
+  validateUser(token, (valid, statusCode, response) => {
+    if (!valid && statusCode === 500) next(response);
+    else if (!valid)
+      return res.status(401).json({
+        response: {
+          message: "Not authorised",
+          success: false,
+        },
+      });
+    let requestBody = "";
+    try {
+      requestBody = JSON.stringify(req.body);
+    } catch (e) {
+      let error = new Error(e.message);
+      error.status = 500;
+      return next(error);
+    }
+    postRequest(
+      "localhost",
+      "/moderators",
+      3000,
+      requestBody,
+      (statusCode, response) => {
+        res.status(statusCode).json(response);
+      }
+    );
+  });
+});
+
+/**
+ * @description API call to allow a moderator to login
+ * @author Stuart Barclay
+ */
+
+api.post("/moderators/login", (req, res, next) => {
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -356,30 +481,87 @@ api.post("/moderators", (req, res, next) => {
   }
   postRequest(
     "localhost",
-    "/moderators",
+    "/moderators/login",
     3000,
     requestBody,
     (statusCode, response) => {
-      res.status(statusCode).json(response);
+      if (response.response.success == true) {
+        let token = jwt.sign({ id: response.response.id }, config.secretKey, {
+          expiresIn: 10800,
+        });
+        response.response.token = token;
+        res.status(statusCode).json(response);
+      } else res.status(statusCode).json(response);
     }
   );
 });
 
-api.get("/moderators/:emailAddress", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
-  getRequest(
-    "localhost",
-    "/moderators/" + req.params.emailAddress,
-    3000,
-    (statusCode, response) => {
-      if (statusCode == 500) next(response);
-      else res.status(statusCode).json(response);
-    }
-  );
+api.get("/moderators/emailAddress/:emailAddress", (req, res, next) => {
+  let token = req.headers["x-access-token"];
+  if (!token)
+    return res.status(401).json({
+      response: {
+        message: "Not authorised",
+        success: false,
+      },
+    });
+
+  validateUser(token, (valid, statusCode, response) => {
+    if (!valid && statusCode === 500) return next(response);
+    else if (!valid)
+      return res.status(401).json({
+        response: {
+          message: "Not authorised",
+          success: false,
+        },
+      });
+
+    getRequest(
+      "localhost",
+      "/moderators/emailAddress/" + req.params.emailAddress,
+      3000,
+      (statusCode, response) => {
+        if (statusCode == 500) next(response);
+        else res.status(statusCode).json(response);
+      }
+    );
+  });
+});
+
+api.get("/moderators/id/:moderatorId", (req, res, next) => {
+  let token = req.headers["x-access-token"];
+  if (!token)
+    return res.status(401).json({
+      response: {
+        message: "Not authorised",
+        success: false,
+      },
+    });
+
+  validateUser(token, (valid, statusCode, response) => {
+    if (!valid && statusCode === 500) return next(response);
+    else if (!valid)
+      return res.status(401).json({
+        response: {
+          message: "Not authorised",
+          success: false,
+        },
+      });
+
+    /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+    getRequest(
+      "localhost",
+      "/moderators/" + req.params.emailAddress,
+      3000,
+      (statusCode, response) => {
+        if (statusCode == 500) next(response);
+        else res.status(statusCode).json(response);
+      }
+    );
+  });
 });
 
 api.put("/moderators/:emailAddress", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -401,15 +583,33 @@ api.put("/moderators/:emailAddress", (req, res, next) => {
 });
 
 api.delete("/moderators/:emailAddress", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
-  deleteRequest(
-    "localhost",
-    "/moderators/" + req.params.emailAddress,
-    3000,
-    (statusCode, response) => {
-      res.status(statusCode).json(response);
-    }
-  );
+  let token = req.headers["x-access-token"];
+  if (!token)
+    return res.status(401).json({
+      response: {
+        message: "Not authorised",
+        success: false,
+      },
+    });
+
+  validateUser(token, (valid, statusCode, response) => {
+    if (!valid && statusCode === 500) return next(response);
+    else if (!valid)
+      return res.status(401).json({
+        response: {
+          message: "Not authorised",
+          success: false,
+        },
+      });
+    deleteRequest(
+      "localhost",
+      "/moderators/" + encodeURI(req.params.emailAddress),
+      3000,
+      (statusCode, response) => {
+        res.status(statusCode).json(response);
+      }
+    );
+  });
 });
 
 api.get("/reports", (req, res, next) => {
@@ -637,15 +837,211 @@ api.post("/verify", (req, res, next) => {
     error.status = 500;
     next(error);
   }
+  // Checks if there is an idle server
+  let freeServerIndex = nn_server.findIndex((server) => server.busy === false);
+
+  // There is an idle instance
+  if (freeServerIndex !== -1) {
+    nn_server[freeServerIndex].busy = true;
+    let freeCount = nn_server.filter((e) => e.busy === false).length;
+
+    // Start new instance async if no free servers
+    if (freeCount === 0)
+      getRequest(
+        "localhost",
+        "/api/start/" + (nn_server[nn_server.length - 1].port + 1),
+        "8080",
+        (responseCode, response) => {}
+      );
+    postRequest(
+      "localhost",
+      "/verify",
+      nn_server[freeServerIndex].port,
+      requestBody,
+      (statusCode, response) => {
+        nn_server[freeServerIndex].busy = false;
+        res.status(statusCode).json(response);
+      }
+    );
+  }
+  // There are no free instances, create and tell it to be busy
+  else if (freeServerIndex === -1 && nn_server.length < 10) {
+    // Start new instance with incremented port
+    getRequest(
+      "localhost",
+      "/api/start/" + (nn_server[nn_server.length - 1].port + 1),
+      "8080",
+      (responseCode, startResponse) => {
+        startResponse = nn_server.length - 1;
+        // Tell it to be busy
+        nn_server[startResponse].busy = true;
+        postRequest(
+          "localhost",
+          "/verify",
+          nn_server[nn_server.length - 1].port,
+          requestBody,
+          (statusCode, response) => {
+            nn_server[startResponse].busy = false;
+            res.status(statusCode).json(response);
+          }
+        );
+      }
+    );
+  } // if no idle servers and all 10 instances have been created, direct to first instance
+  else {
+    postRequest(
+      "localhost",
+      "/verify",
+      nn_server[0].port,
+      requestBody,
+      (statusCode, response) => {
+        nn_server[0].busy = false;
+        res.status(statusCode).json(response);
+      }
+    );
+  }
+});
+
+// Fetches
+
+api.get("/training", (req, res, next) => {
+  getRequest("localhost", "/training", 3000, (statusCode, response) => {
+    if (statusCode == 500) next(response);
+    else res.status(statusCode).json(response);
+  });
+});
+
+api.post("/training/range", (req, res, next) => {
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  }
   postRequest(
     "localhost",
-    "/verify",
-    8082,
+    "/training/range",
+    3000,
+    requestBody,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    }
+  );
+});
+
+// Creates a new training entry
+
+api.post("/training", (req, res, next) => {
+  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  }
+  postRequest(
+    "localhost",
+    "/training",
+    3000,
     requestBody,
     (statusCode, response) => {
       res.status(statusCode).json(response);
     }
   );
+});
+
+api.delete("/training/:trainingId", (req, res, next) => {
+  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+  deleteRequest(
+    "localhost",
+    "/training/" + req.params.trainingId,
+    3000,
+    (statusCode, response) => {
+      res.status(statusCode).json(response);
+    }
+  );
+});
+
+api.get("/nnModels", (req, res, next) => {
+  getRequest("localhost", "/nnModels", 3000, (statusCode, response) => {
+    if (statusCode == 500) next(response);
+    else res.status(statusCode).json(response);
+  });
+});
+
+api.post("/nnModels", (req, res, next) => {
+  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  }
+  postRequest(
+    "localhost",
+    "/nnModels",
+    3000,
+    requestBody,
+    (statusCode, response) => {
+      res.status(statusCode).json(response);
+    }
+  );
+});
+
+api.get("/nnModels/:modelName", (req, res, next) => {
+  getRequest(
+    "localhost",
+    "/nnModels/" + encodeURI(req.params.modelName),
+    3000,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    }
+  );
+});
+
+api.delete("/nnModels/:modelId", (req, res, next) => {
+  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
+  deleteRequest(
+    "localhost",
+    "/nnModels/" + req.params.modelId,
+    3000,
+    (statusCode, response) => {
+      res.status(statusCode).json(response);
+    }
+  );
+});
+
+api.get("/start/:port", (req, res, next) => {
+  try {
+    shell.cd(path.join(root, "nn_server"));
+    shell.exec(
+      "python nn_server.py " + req.params.port,
+      (err, stdout, stderr) => {
+        if (err) throw new Error(err);
+        // if (stdout.search("127.0.0.1:" + req.params.port) !== -1) {
+        logger.info("New nn_server image created on port " + req.params.port);
+        nn_server.push({ port: Number(req.params.port), busy: false });
+        res.sendStatus(204);
+        // }
+      }
+    );
+    nn_server.push({ port: Number(req.params.port), busy: false });
+  } catch (err) {
+    next(err);
+  }
+});
+
+api.get("/close/:port", (req, res, next) => {
+  logger.info("Closing nn_server images");
+  res.sendStatus(501);
 });
 
 /**

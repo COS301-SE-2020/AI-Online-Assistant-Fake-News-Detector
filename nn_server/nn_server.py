@@ -1,4 +1,8 @@
 import flask
+import sys
+import os
+import json
+import urllib.parse
 from flask import request, jsonify
 from flask_api import status
 
@@ -28,6 +32,21 @@ complexLSTM.importModel(complexModel)
 app = flask.Flask(__name__)
 
 # route for supported requests
+
+
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+
+
+@app.route('/shutdown', methods=['POST'])
+def shutdown():
+    shutdown_server()
+    return 'Server shutting down...'
+
+
 @app.route('/verify', methods=['POST'])
 def check():
     body = request.get_json(force=True, silent=True)
@@ -45,15 +64,17 @@ def check():
                     if real < fake:
                         label = "fake"
                         value = fake                        
-                    return jsonify({"response": {"result" : {"prediction": label, "confidence": value}, "success": True, "message": "Processed Input."})
-    return "Bad request body.", status.HTTP_400_BAD_REQUEST
+                    return jsonify({"response": {"result": {"prediction": label, "confidence": value}, "success": True, "message": "Processed Input"}}), status.HTTP_200_OK
+    return jsonify({"response": {"message": "Bad request body.", "success": False}}), status.HTTP_400_BAD_REQUEST
 
 # route for unsupported requests
+
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
     return "Bad request.", status.HTTP_400_BAD_REQUEST
 
-if __name__ == '__main__':
-    app.run(port=8082)
 
+if __name__ == '__main__':
+    app.run(port=sys.argv[1])

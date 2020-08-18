@@ -1,5 +1,15 @@
+#signupText{
+    font-size: 1em;
+    font-weight: 100;
+    color: #000;
+  }
+
 footer{
-	background-color:  #e7e8ea;
+	background-color:  white;
+}
+
+#footerText{
+	color: black;
 }
 
 body{
