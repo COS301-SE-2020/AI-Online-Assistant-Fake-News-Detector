@@ -60,7 +60,6 @@ def check():
                 if body['type'] == 'text':
                     response = coreNN.process(body['content'].lower())
                     return jsonify({"response": {"result": response, "success": True, "message": "Processed Input"}}), status.HTTP_200_OK
-                    # {"result":  "message": "Processed input", "success" : True}
     return jsonify({"response": {"message": "Bad request body.", "success": False}}), status.HTTP_400_BAD_REQUEST
 
 

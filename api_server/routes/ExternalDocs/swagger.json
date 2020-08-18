@@ -1203,7 +1203,7 @@
           "Neural Network"
         ],
         "summary": "Checks the article",
-        "description": "Post request to add a new report to the database",
+        "description": "Post request to the Neural Network to process text",
         "operationId": "",
         "consumes": [
           "application/x-www-form-urlencoded"
@@ -1213,7 +1213,7 @@
           {
             "name": "type",
             "in": "formData",
-            "description": "The type of report being made. ",
+            "description": "The type of report being made.",
             "default": "text",
             "required": true,
             "type": "string"
@@ -1266,8 +1266,8 @@
         "tags": [
           "Neural Network"
         ],
-        "summary": "Checks the article",
-        "description": "Post request to add a new report to the database",
+        "summary": "Add new training data to the database",
+        "description": "Post request to add a training data to the database",
         "operationId": "",
         "consumes": [
           "application/x-www-form-urlencoded"
@@ -1308,8 +1308,8 @@
         "tags": [
           "Neural Network"
         ],
-        "summary": "Checks the article",
-        "description": "Post request to add a new report to the database",
+        "summary": "Get a range of training data files",
+        "description": "Post request to get a range of training data files from the database",
         "operationId": "",
         "consumes": [
           "application/x-www-form-urlencoded"
@@ -1355,8 +1355,8 @@
         "tags": [
           "Neural Network"
         ],
-        "summary": "Removes a report, based off of it's active status, from the database",
-        "description": "Delete request to remove a report from the database",
+        "summary": "Removes a training file, based off of it's ID, from the database",
+        "description": "Delete request to remove training data from the database",
         "operationId": "",
         "produces": "application/json",
         "parameters": [
@@ -1393,8 +1393,8 @@
         "tags": [
           "Neural Network"
         ],
-        "summary": "Get a specific report made",
-        "description": "Get request to retrieve a specific report from the database",
+        "summary": "Get all Neural Network models",
+        "description": "Get request to retrieve all Neural Network models from the database",
         "operationId": "",
         "produces": "application/json",
         "responses": {
@@ -1414,8 +1414,8 @@
         "tags": [
           "Neural Network"
         ],
-        "summary": "Checks the article",
-        "description": "Post request to add a new report to the database",
+        "summary": "Add new Neural Network Model",
+        "description": "Post request to add a new Neural Network Model to the database",
         "operationId": "",
         "consumes": [
           "application/x-www-form-urlencoded"
@@ -1456,8 +1456,8 @@
         "tags": [
           "Neural Network"
         ],
-        "summary": "Get a specific report made",
-        "description": "Get request to retrieve a specific report from the database",
+        "summary": "Get a specific Neural Network model",
+        "description": "Get request to retrieve a specific Neural Network model from the database",
         "operationId": "",
         "produces": "application/json",
         "parameters": [
@@ -1493,8 +1493,8 @@
         "tags": [
           "Neural Network"
         ],
-        "summary": "Removes a report, based off of it's active status, from the database",
-        "description": "Delete request to remove a report from the database",
+        "summary": "Removes a Neural Network model, based off of it's ID, from the database",
+        "description": "Delete request to remove a Neural Network model from the database",
         "operationId": "",
         "produces": "application/json",
         "parameters": [
@@ -2410,13 +2410,22 @@
     "POST Process": {
       "type": "object",
       "properties": {
-        "type": {
-          "type": "string",
-          "example": "text"
-        },
-        "content": {
-          "type": "string",
-          "example": "News alert:..."
+        "response": {
+          "type": "object",
+          "properties": {
+            "result": {
+              "type": "double",
+              "example": 0.85
+            },
+            "message": {
+              "type": "string",
+              "example": "Processed Input"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            }
+          }
         }
       }
     },
