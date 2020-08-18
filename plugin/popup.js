@@ -1,7 +1,7 @@
 $(() => {
-    const tld='http://54.172.96.111:8080/api/'
-    const sourcesUrl=tld+'Sources/'
-    const reportsUrl=tld+'Reports/'
+    const serverTld='http://54.172.96.111:8080/api/'
+    const sourcesUrl=serverTld+'Sources/'
+    const reportsUrl=serverTld+'Reports/'
     $('#input').show();
     $('#output').hide();
     $('#input').html('<input type="button" id="close" value="Close">');
@@ -31,35 +31,44 @@ $(() => {
             
         }
     });
-//////////////////////////////////////////////////////   
+    //////////////////////////////////////////////////////   
 ///////////////////CHECK NEWS SOURCE//////////////////
 //////////////////////////////////////////////////////   
-    $('#input').on('click', 'input[value="Check Source"]', function() {
-        let found = false;
-        let userInput = $('#checkSource').val();
-        if (!$('#checkSource').val()) {
-            $('#checkSource').css("border", "#E0115F 2px solid");
+$('#input').on('click', 'input[value="Check Source"]', function() {
+    $('.pluginOptions').hide();
+    let found = false;
+    let userInput = $('#checkSource').val();
+    if (!$('#checkSource').val()) {
+        $('#checkSource').css("border", "#E0115F 2px solid");
+        $('#checkSource').val("Required*");
+    } else {
+        let tld = userInput.substring(0,userInput.indexOf('/',8)+1);
+        let forwardSlashCount = (tld.match(/\//g)||[]).length;
+        
+        if (forwardSlashCount==0) {
+            $('#checkSource').val("This doesn't look like a valid URL");
         } else {
             getSources().then(data => {
-                let tld = userInput.substring(0,userInput.indexOf('/',8)+1);
                 data['response']['Sources'].forEach(source => {
                     if (source['Domain Name']===tld) {
-                        $('#input').html('<h3>'+ source['Name'] +' has been spreading fake news recently!</h3>'+
+                        $('#input').html('<div class="output"><h3>'+ source['Name'] +' has been spreading fake news recently!</h3></div>'+
                         '<input type="button" id="close" value="Close">');
                         found = true;
                     }
                 });
                 if (found == false) {
-                    $('#input').html('<h3>According to our records, this source can be trusted</h3>'+
-                    '<input type="button" id="close" value="Close">');
-                }
-            });
+                        $('#input').html('<h3>According to our records, this source can be trusted</h3>'+
+                        '<input type="button" id="close" value="Close">');
+                    }
+                });
+            }
         }
     });
     //////////////////////////////////////////////////////   
     //////////////////REPORT NEWS SOURCE//////////////////
     //////////////////////////////////////////////////////   
     $('#input').on('click', 'input[value="Report Source"]', function() {
+        $('.pluginOptions').hide();
         if (!$('#reportSource').val()) {
             $('#reportSource').css("border", "#E0115F 2px solid");
         } else {
@@ -82,8 +91,8 @@ $(() => {
                 } else {
                     name = description.substring(description.indexOf('.',0)+1,description.indexOf('/',11)).toUpperCase();
                 }
-                $('#input').html('<h3>Thanks for reporting '+ name +' </h3>'+
-                        '<h4>Your feedback will be analysed soon.</h4>'+
+                $('#input').html('<div class="output"><h3>Thanks for reporting '+ name +' </h3>'+
+                        '<h4>Your feedback will be analysed soon.</h4></div>'+
                         '<input type="button" id="close" value="Close">');
             }
             else{

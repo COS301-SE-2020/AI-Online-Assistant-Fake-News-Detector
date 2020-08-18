@@ -12,11 +12,11 @@ h1{
 }
 h3{
     color: #DDD;
-    text-align: left;
+    text-align: center;
 }
 h4{
     color: #AAA;
-    text-align: left;
+    text-align: center;
 }
 input[type=text] {
     padding: 5px;
@@ -154,3 +154,8 @@ select {
     color: hsla(0, 0%, 0%, .6);
     font-size: 16px;
   }
+.output{
+      background-color: #222;
+      padding: 0.3em;
+      margin-bottom: 1em;
+}
