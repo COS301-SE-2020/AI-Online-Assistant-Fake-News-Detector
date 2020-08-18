@@ -45,7 +45,7 @@ select {
     outline: 0;
     box-shadow: none;
     border: 0 !important;
-    background: #E0115F;
+    background: #222;
     background-image: none;
   }
   /* Remove IE arrow */
@@ -59,7 +59,7 @@ select::-ms-expand {
     width: 100%;
     min-width: 13em;
     height: 2em;
-    background: #E0115F;
+    background: #222;
     overflow: hidden;
     border-radius: .25em;
     margin-bottom: 1em;
@@ -70,4 +70,6 @@ select {
     color: #fff;
     cursor: pointer;
 }
-  
+#slct option{
+    background-color: #333;
+}

@@ -1,6 +1,7 @@
 $(() => {
     const Url='http://localhost:3000/Sources'
-
+    $('#input').show();
+    $('#output').hide();
     $('#input').html('<input type="button" id="close" value="Close">');
 
     $('.pluginOptions').on('change', function(){
@@ -19,9 +20,12 @@ $(() => {
         }
     });
 
-    $('#analyse').on('click', function(){
-        if (!$('#article').val()) {
-            $('#article').val('Please enter your text article...');
+    $('#input').on('click', 'input[value="Analyse"]', function() {
+        alert('Analyse');
+    });
+    $('#input').on('click', 'input[value="Check Source"]', function() {
+        if (!$('#checkSource').val()) {
+            $('#checkSource').css("border", "#E0115F 2px solid");
         } else {
             $.ajax({
                 url: 'http://localhost:3000/sources',
@@ -35,13 +39,12 @@ $(() => {
             })
         }
     });
-
-
-
-
-    
+    $('#input').on('click', 'input[value="Report Source"]', function() {
+        alert('Report');
+    });
+ 
     $('#close').on('click', function(){
         window.close();
     });
-
+    
 });
