@@ -5,7 +5,7 @@ from preprocessing import ComplexVectorizationFilter, GrammarVectorizationFilter
 from dataset_manager import DatasetManager
 from stacked_bidirectional_lstm import StackedBidirectionalLSTM
 
-def trainComplex(modelName, sampleLength, maxWords, datasetPath, rawFiles=None):
+def trainComplex(modelName, sampleLength, maxWords, trainDatasetPath, validationDatasetPath, rawTrainFiles=None, rawValidationFiles=None):
     # complex pipeline
     complexFilter = ComplexVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)
     complexPrep = ParallelPreprocessor(filter=RawFakeNewsDataFilterAdapter(filter=complexFilter))
@@ -54,7 +54,7 @@ def trainGrammar(modelName, sampleLength, trainDatasetPath, validationDatasetPat
     model.trainModel(trainGenerator=grammarTrainDataset.getPreparedTensorGenerator(batchSize=batchSize),
                      validationGenerator=grammarValidationDataset.getPreparedTensorGenerator(batchSize=batchSize),
                      trainDatasetSize=grammarTrainDataset.getDatasetSize(), validationDatasetSize=grammarValidationDataset.getDatasetSize(),
-                     batchSize=batchSize, epochs=4, saveFilePath=modelName, saveCheckpoints=False)
+                     batchSize=batchSize, epochs=8, saveFilePath=modelName, saveCheckpoints=False)
     model.clear()
     gc.collect()
 
@@ -85,13 +85,10 @@ if __name__ == "__main__":
     grammarModel = "grammar_model.hdf5"
     grammarTrainDataset = "grammar_train_dataset"
     grammarValidationDataset = "grammar_validation_dataset"
-    trainGrammar(modelName=grammarModel, sampleLength=sampleLength,
-                 trainDatasetPath=grammarTrainDataset, validationDatasetPath=grammarValidationDataset,
-                 rawTrainFiles=rawTrainFiles, rawValidationFiles=rawValidationFiles)
+    #trainGrammar(modelName=grammarModel, sampleLength=sampleLength, trainDatasetPath=grammarTrainDataset, validationDatasetPath=grammarValidationDataset, rawTrainFiles=rawTrainFiles, rawValidationFiles=rawValidationFiles)
 
     complexModel = "complex_model.hdf5"
-    complexDataset = "complex_dataset"
-    #trainComplex(modelName=grammarModel, sampleLength=sampleLength, maxWords=maxWords,
-    #             trainDatasetPath=grammarTrainDataset, validationDatasetPath=grammarValidationDataset,
-    #             rawTrainFiles=rawTrainFiles, rawValidationFiles=rawValidationFiles)
+    complexTrainDataset = "complex_train_dataset"
+    complexValidationDataset = "complex_validation_dataset"
+    trainComplex(modelName=complexModel, sampleLength=sampleLength, maxWords=maxWords, trainDatasetPath=complexTrainDataset, validationDatasetPath=complexValidationDataset)
 
