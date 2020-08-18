@@ -45,7 +45,7 @@ def check():
                     if real < fake:
                         label = "fake"
                         value = fake                        
-                    return jsonify({"result" : {"label": label, "value": value}})
+                    return jsonify({"response": {"result" : {"prediction": label, "confidence": value}, "success": True, "message": "Processed Input."})
     return "Bad request body.", status.HTTP_400_BAD_REQUEST
 
 # route for unsupported requests
