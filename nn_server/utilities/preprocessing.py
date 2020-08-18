@@ -157,7 +157,8 @@ class SimpleVectorizationFilter(Filter):
     This filter also vectorizes the dataset.
     """
 
-    def __init__(self, sampleLength=DEFAULT_SAMPLE_LENGTH, maxWords=DEFAULT_MAX_WORDS):  # sampleLen should be multiple of 3
+    def __init__(self, sampleLength=DEFAULT_SAMPLE_LENGTH,
+                 maxWords=DEFAULT_MAX_WORDS):  # sampleLen should be multiple of 3
         super().__init__()
         self.__sampleLength = sampleLength
         self.__maxWords = maxWords
@@ -215,7 +216,8 @@ class ComplexVectorizationFilter(Filter):
     This filter also vectorizes the dataset.
     """
 
-    def __init__(self, sampleLength=DEFAULT_SAMPLE_LENGTH, maxWords=DEFAULT_MAX_WORDS):  # sampleLen should be multiple of 3
+    def __init__(self, sampleLength=DEFAULT_SAMPLE_LENGTH,
+                 maxWords=DEFAULT_MAX_WORDS):  # sampleLen should be multiple of 3
         super().__init__()
         self.__sampleLength = sampleLength
         self.__maxWords = maxWords
@@ -248,6 +250,72 @@ class ComplexVectorizationFilter(Filter):
                     if not len(hot):
                         hot = [0]
                     sample.append(hot[0])
+                    if len(sample) >= self.__sampleLength:
+                        results.append(sample)
+                        sample = []
+        if len(sample):
+            for i in range(len(sample), self.__sampleLength):
+                sample.append(0)
+            results.append(sample)
+        return results
+
+    def getFeatureCount(self):
+        return self.__featureCount
+
+    def getSampleLength(self):
+        return self.__sampleLength
+
+    def getMaxWords(self):
+        return self.__maxWords
+
+
+class GrammarVectorizationFilter(Filter):
+    """
+    @author: AlistairPaynUP
+    This does the sample preprocessing as ComplexFilter but also vectorizes the result.
+    Slower but includes word relationships and more parts of speech, uses spacy at core.
+    Wrap with TrainingFilterAdapter when working with training data.
+    This filter also vectorizes the dataset.
+    """
+
+    def __init__(self, sampleLength=DEFAULT_SAMPLE_LENGTH):  # sampleLen should be multiple of 3
+        super().__init__()
+        self.__sampleLength = sampleLength
+        self.__featureCount = 2
+        self.__nlp = sp.load("en_core_web_lg")
+        tokens = [
+            'ADJ', 'ADP', 'ADV', 'AUX', 'CONJ', 'CCONJ', 'DET', 'INTJ', 'NOUN', 'NUM',
+            'PART', 'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'SYM', 'VERB', 'X', 'SPACE',
+            'acl', 'advcl', 'advmod', 'agent', 'amod', 'appos', 'attr', 'aux', 'case', 'cc',
+            'ccomp', 'compound', 'conj', 'cop', 'csubj', 'dep', 'det', 'dobj', 'expl', 'intj',
+            'mark', 'meta', 'neg', 'nn', 'nounmod', 'npmod', 'nsubj', 'nsubjpass', 'nummod', 'oprd',
+            'obj', 'obl', 'parataxis', 'pcomp', 'pobj', 'poss', 'preconj', 'prep', 'prt', 'punct',
+            'quantmod', 'relcl', 'xcomp', 'ROOT', 'discourse', 'dislocated', 'fixed', 'flat', 'goeswith', 'iobj',
+            'list', 'mark', 'nmod', 'orphan', 'root', 'vocative', 'npadvmod', 'auxpass', 'acomp', 'dative',
+            'csubjpass', 'predet', 'qmod'
+        ]
+        self.__indices = {}
+        self.__maxWords = 1
+        for token in tokens:
+            self.__indices[token] = self.__maxWords
+            self.__maxWords += 1
+        if self.__sampleLength % self.__featureCount:
+            raise Exception("Symmetry error: sampleLength must be a multiple of featureCount")
+
+    def __call__(self, text):
+        """
+       @author: AlistairPaynUP
+       @:param text: A string of lowercase text to be processed.
+       @:return A list of features extracted from text: ['text', 'pos', 'dep', 'text', 'pos', 'dep',...], where text=word, pos=word part of speech, dep=word contextual dependency.
+       """
+        results = []
+        sample = []
+        doc = self.__nlp(text)
+        for token in doc:
+            if not token.is_punct:
+                if token.tag_ != "_SP":
+                    sample.append(self.__indices[token.pos_])
+                    sample.append(self.__indices[token.dep_])
                     if len(sample) >= self.__sampleLength:
                         results.append(sample)
                         sample = []
@@ -325,7 +393,7 @@ class RawFakeNewsDataFilterAdapter(FilterAdapter):
         """
         @author: AlistairPaynUP
         @:param sample: A dict with the format {'text': 'body of text', 'label': 'some_label'}
-        @:return (feature_list, label), e.g: (['text', 'pos', 'dep', 'text', 'pos', 'dep',...], 'some_label')
+        @:return (feature_list, label), e.g: {'id': 123, 'data': [lemma, pos, dep, lemma, pos, dep, ...], 'label': [0, 1]}
         """
         filtered = self._filter(sample['text'])
         results = []
@@ -336,7 +404,7 @@ class RawFakeNewsDataFilterAdapter(FilterAdapter):
             label = [1, 0]
         elif sample['label'] == 'fake':
             label = [0, 1]
-        return {'id': sample['id'], 'text': results, 'label': label}
+        return {'id': sample['id'], 'data': results, 'label': label}
 
 
 class ParallelPreprocessor(FilterWrapper):
@@ -456,3 +524,9 @@ class VectorizationFilter(Filter):
 
     def getMaxWords(self):
         return self.__maxWords
+
+
+class FilterMultiplexorAdapter(FilterAdapter):
+    """
+    Takes multiple filters but returns a single result.
+    """
