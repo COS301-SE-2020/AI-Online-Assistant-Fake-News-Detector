@@ -10,7 +10,6 @@ const logger = new Logger(api);
 const fs = require("fs");
 const shell = require("shelljs");
 const nn_server = [];
-const nodemailer = require("nodemailer");
 
 const getRequest = (_host, _path, _port, callBack) => {
   const request = http
@@ -1013,6 +1012,24 @@ api.get("/start/:port", (req, res, next) => {
   }
 });
 
+api.post("/sendEmail", (req, res, next) => {
+  transporter.sendMail(
+    {
+      from: "Artifact<" + config.emailAddress + ">",
+      to: config.emailAddress,
+      subject: req.body.subject,
+      text: req.body.body,
+    },
+    (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        logger.info("Email sent: " + info.response);
+      }
+    }
+  );
+});
+
 api.get("/close/:port", (req, res, next) => {
   logger.info("Closing nn_server images");
   res.sendStatus(501);
@@ -1037,32 +1054,5 @@ api.use((error, req, res, next) => {
     },
   });
 });
-
-/**
- * const transporter = nodemailer.createTransport({
-  service: "gmail",
-  host: "smtp.gmail.com",
-  auth: {
-    user: config.emailAddress,
-    pass: config.password,
-  },
-});
-
-transporter.sendMail(
-  {
-    from: "Artifact<" + config.emailAddress + ">",
-    to: config.emailAddress,
-    subject: "Sending Email using Node.js",
-    text: "That was easy!",
-  },
-   (error, info) => {
-    if (error) {
-      console.log(error);
-    } else {
-      logger.info("Email sent: " + info.response);
-    }
-  }
-);
- */
 
 module.exports = api;

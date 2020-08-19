@@ -15,7 +15,6 @@ const InternalDocs = require(__dirname +
   "/routes/InternalDocs").getAbsoluteFSPath();
 const path = require("path");
 const root = require("../Util/path");
-const config = require("../Util/config");
 const cron = require("node-cron");
 const http = require("http");
 const morganFormat =
