@@ -9,6 +9,7 @@ const Logger = require("../../winston");
 const logger = new Logger(api);
 const fs = require("fs");
 const shell = require("shelljs");
+const { response } = require("express");
 const nn_server = [];
 
 const getRequest = (_host, _path, _port, callBack) => {
@@ -1027,17 +1028,39 @@ api.get("/start/:port", (req, res, next) => {
       "python nn_server.py " + req.params.port,
       (err, stdout, stderr) => {
         if (err) throw new Error(err);
-        // if (stdout.search("127.0.0.1:" + req.params.port) !== -1) {
         logger.info("New nn_server image created on port " + req.params.port);
         nn_server.push({ port: Number(req.params.port), busy: false });
         res.sendStatus(204);
-        // }
       }
     );
     nn_server.push({ port: Number(req.params.port), busy: false });
   } catch (err) {
     next(err);
   }
+});
+
+api.get("/close/:port", (req, res, next) => {
+  logger.info("Closing nn_server image on port " + req.params.port);
+  postRequest(
+    "localhost",
+    "/shutdown",
+    req.params.port,
+    "",
+    (statusCode, response) => {
+      if (statusCode == 200) {
+        let index = nn_server.findIndex((ele, i) => {
+          if (ele.port == req.params.port) return i;
+        });
+        try {
+          nn_server.splice(index, 1);
+          res.sendStatus(statusCode).json(response);
+        } catch (error) {}
+      } else {
+        next(response);
+      }
+    }
+  );
+  // res.sendStatus(501);
 });
 
 api.post("/sendEmail", (req, res, next) => {
@@ -1050,18 +1073,13 @@ api.post("/sendEmail", (req, res, next) => {
     },
     (error, info) => {
       if (error) {
-        next();
+        next(error);
       } else {
         logger.info("Email sent: " + info.response);
         res.sendStatus(204);
       }
     }
   );
-});
-
-api.get("/close/:port", (req, res, next) => {
-  logger.info("Closing nn_server images");
-  res.sendStatus(501);
 });
 
 /**
