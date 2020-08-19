@@ -167,15 +167,15 @@ const listener = server.listen(port, () => {
       process.env.NODE_ENV +
       "."
   );
-  // if (process.env.NODE_ENV === "production")
-  [8090, 8091, 8092].forEach((e) =>
-    getRequest(
-      "localhost",
-      "/api/start/" + e,
-      8080,
-      (statusCode, response) => {}
-    )
-  );
+  if (process.env.NODE_ENV === "production")
+    [8090, 8091, 8092].forEach((e) =>
+      getRequest(
+        "localhost",
+        "/api/start/" + e,
+        8080,
+        (statusCode, response) => {}
+      )
+    );
 });
 
 module.exports = server;

@@ -644,7 +644,6 @@ api.get("/reports/update", (req, res, next) => {
         ) {
           ++prevReport["Report Count"];
           prevReport["Reported By"].push(report["Reported By"][0]);
-          console.log(prevReport);
           putRequest(
             "localhost",
             "/api/reports/id/" + prevReport["ID"],
@@ -713,7 +712,6 @@ api.post("/reports", (req, res, next) => {
 });
 
 api.get("/reports/id/:id", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   getRequest(
     "localhost",
     "/reports/id/" + req.params.id,
@@ -1060,7 +1058,6 @@ api.get("/close/:port", (req, res, next) => {
       }
     }
   );
-  // res.sendStatus(501);
 });
 
 api.post("/sendEmail", (req, res, next) => {
