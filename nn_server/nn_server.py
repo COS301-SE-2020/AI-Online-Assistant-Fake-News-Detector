@@ -9,25 +9,24 @@ from flask_api import status
 import sys, os, pathlib
 dirname = pathlib.Path(__file__).parent.absolute()
 sys.path.append(os.path.join(dirname, 'neural_network_utilities'))
-from preprocessing import ComplexVectorizationFilter, GrammarVectorizationFilter, RawFakeNewsDataFilterAdapter, ParallelPreprocessor
+from preprocessing import LexicalVectorizationFilter, GrammaticalVectorizationFilter, RawFakeNewsDataFilterAdapter, ParallelPreprocessor
 from dataset_manager import DatasetManager
 from stacked_bidirectional_lstm import StackedBidirectionalLSTM
+from deep_stacked_bidirectional_lstm import DeepStackedBidirectionalLSTM
 
 trained_models = os.path.join(dirname, 'trained_models')
-grammarModel = os.path.join(trained_models, "grammar_model.hdf5")
-complexModel = os.path.join(trained_models, "complex_model.hdf5")
+grammaticalModel = os.path.join(trained_models, "deep_grammatical_model.hdf5")
+lexicalModel = os.path.join(trained_models, "lexical_model.hdf5")
 
 sampleLength = 360
 
-grammarFilter = GrammarVectorizationFilter(sampleLength=sampleLength)
-grammarLSTM = StackedBidirectionalLSTM(sampleLength=grammarFilter.getSampleLength(),
-                                       maxWords=grammarFilter.getMaxWords(), outputUnits=2)
-grammarLSTM.importModel(grammarModel)
+grammaticalFilter = GrammaticalVectorizationFilter(sampleLength=sampleLength)
+grammaticalLSTM = DeepStackedBidirectionalLSTM(sampleLength=grammaticalFilter.getSampleLength(), maxWords=grammaticalFilter.getMaxWords(), outputUnits=2)
+grammaticalLSTM.importModel(grammaticalModel)
 
-complexFilter = ComplexVectorizationFilter(sampleLength=sampleLength, maxWords=80000)
-complexLSTM = StackedBidirectionalLSTM(sampleLength=complexFilter.getSampleLength(),
-                                       maxWords=complexFilter.getMaxWords(), outputUnits=2)
-complexLSTM.importModel(complexModel)
+lexicalFilter = LexicalVectorizationFilter(sampleLength=sampleLength, maxWords=80000)
+lexicalLSTM = StackedBidirectionalLSTM(sampleLength=lexicalFilter.getSampleLength(), maxWords=lexicalFilter.getMaxWords(), outputUnits=2)
+lexicalLSTM.importModel(lexicalModel)
 
 app = flask.Flask(__name__)
 
@@ -53,12 +52,12 @@ def check():
     if body:
         if 'type' in body.keys():
             if 'content' in body.keys():
-                if body['type'] == 'text':
+                if body['type'] == 'text' and isinstance(body['content'], str):
                     text = body['content'].lower()
-                    complexResult = complexLSTM.process(preparedData=complexFilter(text))
-                    grammarResult = grammarLSTM.process(preparedData=grammarFilter(text))
-                    real = (complexResult[0] + grammarResult[0]) / 2
-                    fake = (complexResult[1] + grammarResult[1]) / 2
+                    grammaticalResult = grammaticalLSTM.process(preparedData=grammaticalFilter(text))
+                    lexicalResult = lexicalLSTM.process(preparedData=lexicalFilter(text))
+                    real = grammaticalResult[0] * 0.7 + lexicalResult[0] * 0.3
+                    fake = grammaticalResult[1] * 0.7 + lexicalResult[1] * 0.3 
                     label = "real"
                     value = real
                     if real < fake:
@@ -77,4 +76,6 @@ def catch_all(path):
 
 
 if __name__ == '__main__':
+    print("Initialize grammatical. " + str(grammaticalLSTM.process(preparedData=grammaticalFilter("Initialize."))))
+    print("Initialize lexical. " + str(lexicalLSTM.process(preparedData=lexicalFilter("Initialize."))))
     app.run(port=sys.argv[1])

@@ -117,7 +117,7 @@ class SimpleFilter(Filter):
         return self.__featureCount
 
 
-class ComplexFilter(Filter):
+class LexicalFilter(Filter):
     """
     @author: AlistairPaynUP
     Slower but includes word relationships and more parts of speech, uses spacy at core.
@@ -207,10 +207,10 @@ class SimpleVectorizationFilter(Filter):
         return self.__maxWords
 
 
-class ComplexVectorizationFilter(Filter):
+class LexicalVectorizationFilter(Filter):
     """
     @author: AlistairPaynUP
-    This does the sample preprocessing as ComplexFilter but also vectorizes the result.
+    This does the sample preprocessing as LexicalFilter but also vectorizes the result.
     Slower but includes word relationships and more parts of speech, uses spacy at core.
     Wrap with TrainingFilterAdapter when working with training data.
     This filter also vectorizes the dataset.
@@ -269,10 +269,10 @@ class ComplexVectorizationFilter(Filter):
         return self.__maxWords
 
 
-class GrammarVectorizationFilter(Filter):
+class GrammaticalVectorizationFilter(Filter):
     """
     @author: AlistairPaynUP
-    This does the sample preprocessing as ComplexFilter but also vectorizes the result.
+    This does the sample preprocessing as LexicalFilter but also vectorizes the result.
     Slower but includes word relationships and more parts of speech, uses spacy at core.
     Wrap with TrainingFilterAdapter when working with training data.
     This filter also vectorizes the dataset.
@@ -481,7 +481,7 @@ class VectorizationFilter(Filter):
     """
     @author: AlistairPaynUP
     Vectorizes text to fixed length vectors, and uses 0 as mask.
-    Use this if you have implemented other filters which need to run after passing data through a ComplexOrSimple filter.
+    Use this if you have implemented other filters which need to run after passing data through a LexicalOrSimple filter.
     """
 
     def __init__(self, featureCount, sampleLength=DEFAULT_SAMPLE_LENGTH, maxWords=DEFAULT_MAX_WORDS):
@@ -496,7 +496,7 @@ class VectorizationFilter(Filter):
     def __call__(self, filteredData):
         """
         @author: AlistairPaynUP
-        @:param sampleList: A list of sample filtered by a Filter e.g: SimpleFilter or ComplexFilter.
+        @:param sampleList: A list of sample filtered by a Filter e.g: SimpleFilter or LexicalFilter.
         @:return A list of vectorized features extracted from text.
         """
         results = []

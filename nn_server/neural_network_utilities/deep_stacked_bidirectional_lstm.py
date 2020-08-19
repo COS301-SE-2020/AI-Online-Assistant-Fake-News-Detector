@@ -2,8 +2,8 @@ from preprocessing import Filter
 import tensorflow.keras as ks
 import tensorflow as tf
 
-class StackedBidirectionalLSTM(Filter):
-    def __init__(self, sampleLength, maxWords, outputUnits, modelName="StackedBidirectionalLSTM"):
+class DeepStackedBidirectionalLSTM(Filter):
+    def __init__(self, sampleLength, maxWords, outputUnits, modelName="DeepStackedBidirectionalLSTM"):
         """
         @author: AlistairPaynUP
         @:param sampleLength: The length of a single sample.
@@ -39,8 +39,11 @@ class StackedBidirectionalLSTM(Filter):
         layers = ks.layers.Embedding(input_dim=self.__maxWords, input_length=self.__sampleLength, output_dim=128, mask_zero=True)(inputs)
         # Stack bidirectional LSTMs
         layers = ks.layers.Bidirectional(ks.layers.LSTM(units=128, dropout=0.2, return_sequences=True))(layers)
-        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=128, dropout=0.1, return_sequences=True))(layers)
-        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=64))(layers)
+        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=128, dropout=0.2, return_sequences=True))(layers)
+        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=64, dropout=0.1, return_sequences=True))(layers)
+        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=64, dropout=0.1, return_sequences=True))(layers)
+        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=32, return_sequences=True))(layers)
+        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=32))(layers)
         # Add a classifier
         outputs = ks.layers.Dense(units=self.__outputUnits, activation="softmax")(layers)
         self.__model = ks.Model(inputs=inputs, outputs=outputs, name=self.__modelName)
