@@ -30,6 +30,7 @@ import { ModerateComponent } from './components/moderate/moderate.component';
 import { HowtoComponent } from './components/howto/howto.component';
 import {SearchSourceService} from './search-source.service';
 import {AutocompleteService} from 'src/app/autocomplete.service';
+import {DownloadPluginComponent} from 'src/app/download-plugin/download-plugin.component';
 
 import { AiMaterialModule } from './app-material.module';
 import { StyleManagerService } from './style-manager.service';
@@ -66,7 +67,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar'
 		TogglebuttonComponent,
 		UserAccountbuttonComponent,
 		LoginComponent,
-		SignUpComponent
+		SignUpComponent,
+		DownloadPluginComponent
 	],
 	imports: [
 		BrowserModule,
