@@ -4,6 +4,7 @@
 
 <mat-menu #menu="matMenu">
   <button *ngFor="let option of options" mat-menu-item (click)="changeTheme(option.value)">
+    
     <mat-icon role="img" svgicon="theme-example" aria-hidden="true">
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"
         viewBox="0 0 80 80" fit="" preserveAspectRatio="xMidYMid meet" focusable="false">
