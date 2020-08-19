@@ -2,7 +2,7 @@
     <div class="container w-container">
             <h4>We value your contribution </h4>
             <p id="heading">As a moderator, your input will help improve our AI's accuracy...so please tread carefully.</p>
-
+            
 </div>
 
     <app-togglebutton (click)="ResetResponseCards()" (changed)="checked=$event">
@@ -137,10 +137,26 @@
         <h4>You believe there is a fact that our AI doesn't know about?</h4>
         <h4>Our AI engine is always hungry for new information. </h4>
 
+
         <div id="listOfFacts">
             
             <ul style="list-style-type:none;"  *ngFor="let fact of factslist; let i = index">
-                <li *ngIf="7 > i">"{{fact.Statement}}"</li>
+                <li *ngIf="7 > i">"{{fact.Statement}}"
+
+                <div class="progress" style="width: 40%;height: 1.5em">
+                    
+                    <div id="bars" [ngClass]="{
+                        'progress-bar bg-success': checkRatingHigh(fact.Popularity),
+                        'progress-bar bg-warning': checkRatingMed(fact.Popularity),
+                        'progress-bar bg-danger': checkRatingLow(fact.Popularity)
+                    }" 
+                    role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" [style.width]="convertRating(fact.Popularity)" style="height:1.5em">
+                       
+                    </div>
+                    
+                </div>
+                
+                </li>
                 
             </ul>
   

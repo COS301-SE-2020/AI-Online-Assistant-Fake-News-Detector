@@ -22,6 +22,7 @@
     moved this to assets/css for dark/light
     background-color: #e7e8ea; */
 	text-align: center;
+
 }
 
 /* .topsection.hero{
@@ -76,6 +77,7 @@ img {
 ul{
   font-size: 1.5em;
   font-weight: 100;
+  text-align: center;
 }
 
 
@@ -118,3 +120,12 @@ ul{
   toggle-button {
 	margin: 0 auto;
   } 
+
+.progress{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	vertical-align: text-bottom;
+}
+
+

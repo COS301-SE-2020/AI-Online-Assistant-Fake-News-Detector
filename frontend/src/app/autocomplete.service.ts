@@ -16,6 +16,6 @@ export class AutocompleteService {
   getData() {
     return this.opts.length ?
       of(this.opts) :
-      this.http.get<any>('http://fakenewsdetector.tech/api/sources').pipe(tap(data => this.opts = data))
+      this.http.get<any>('http://54.172.96.111:8080/api/sources').pipe(tap(data => this.opts = data))
   }
 }

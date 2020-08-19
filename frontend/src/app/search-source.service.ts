@@ -9,7 +9,7 @@ import { Sources } from './sources';
 	providedIn: 'root'
 })
 export class SearchSourceService {
-	baseUrl: string = 'http://fakenewsdetector.tech/api/sources/name/';
+	baseUrl: string = 'http://54.172.96.111:8080/api/sources/name/';
 	//queryUrl: string = '?search=';
 
 	constructor(private http: HttpClient) {}
