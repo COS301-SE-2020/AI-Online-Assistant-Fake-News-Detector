@@ -1,27 +1,4 @@
 $(() => {
-    
-    chrome.browserAction.setIcon({
-      path : {
-          "16": "icon16.png",
-      }
-    });
-    
-    chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
-        let tabUrl = tabs[0].url;
-        let cleanUrl = tabUrl.substring(0,tabUrl.indexOf('/',8)+1);
-        getSources().then(data => {
-            data['response']['Sources'].forEach(source => {
-                if (source['Domain Name']===cleanUrl) {
-                    chrome.browserAction.setIcon({
-                        path : {
-                            "16": "bad.png",
-                        }
-                    });
-                }
-            });
-        })    
-    });
-
     const serverTld='http://54.172.96.111:8080/api/'
     const sourcesUrl=serverTld+'Sources/'
     const reportsUrl=serverTld+'Reports/'
@@ -111,7 +88,7 @@ $('#input').on('click', 'input[value="Check Source"]', function() {
                 let name = "";
                 let validUrl = false;
                 let type = 2;
-                let description = $('#reportInput').val();
+                let description = $('#report').val();
                 let forwardSlashCount = (description.match(/\//g)||[]).length;
                 if (forwardSlashCount==2) {
                     description+='/';
@@ -132,7 +109,7 @@ $('#input').on('click', 'input[value="Check Source"]', function() {
                     '<input type="button" id="close" value="Close">');
                 }
                 else{
-                    alert('error');
+                    alert(description);
                 }
                 //User is trying to report a statement
             } else {
