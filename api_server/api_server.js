@@ -15,15 +15,12 @@ const InternalDocs = require(__dirname +
   "/routes/InternalDocs").getAbsoluteFSPath();
 const path = require("path");
 const root = require("../Util/path");
+const config = require("../Util/config");
 const cron = require("node-cron");
 const http = require("http");
 const morganFormat =
   "[:date] :remote-addr - :remote-user :method :url HTTP/:http-version :status :response-time ms";
-const uri =
-  process.env.NODE_ENV != "dev"
-    ? process.env.production_uri
-    : process.env.development_uri;
-require("dotenv").config();
+require("dotenv").config({ path: path.join(root, ".env") });
 
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
@@ -143,7 +140,7 @@ server.use("*", (req, res, next) => {
     .sendFile(path.join(root, "frontend", "dist", "AiNews", "index.html"));
 });
 
-let listener = server.listen(port, () => {
+const listener = server.listen(port, () => {
   logger.info(
     "API_Server listening on port " +
       listener.address().port +
@@ -151,15 +148,15 @@ let listener = server.listen(port, () => {
       process.env.NODE_ENV +
       "."
   );
-  // if (process.env.NODE_ENV === "production")
-  [8090 /*, 8091, 8092*/].forEach((e) =>
-    getRequest(
-      "localhost",
-      "/api/start/" + e,
-      8080,
-      (statusCode, response) => {}
-    )
-  );
+  if (process.env.NODE_ENV === "production")
+    [8090, 8091, 8092].forEach((e) =>
+      getRequest(
+        "localhost",
+        "/api/start/" + e,
+        8080,
+        (statusCode, response) => {}
+      )
+    );
 });
 
 module.exports = server;

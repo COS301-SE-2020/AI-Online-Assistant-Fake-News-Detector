@@ -238,11 +238,12 @@ describe("Sources", () => {
   });
 });
 
-describe("Moderators", () => {
-  it("It should log a Moderator into the system /POST Moderators/login", (done) => {
+describe("Users", () => {
+  let email = "testEmail" + (Math.random() * 100).toFixed(0) + "@gmail.com";
+  it("It should log a Moderator into the system /POST Users/login", (done) => {
     chai
       .request(server)
-      .post("/API/moderators/login")
+      .post("/API/Users/login")
       .send({
         emailAddress: "5bits@gmail.com",
         password: "5Bits@@",
@@ -256,106 +257,91 @@ describe("Moderators", () => {
       });
   });
 
-  it("It should add a Moderator to the database /POST Moderators", (done) => {
+  it("It should add a Moderator to the database /POST Users", (done) => {
     chai
       .request(server)
-      .post("/API/moderators/login")
+      .post("/API/Users/register")
       .send({
-        emailAddress: "5bits@gmail.com",
-        password: "5Bits@@",
+        emailAddress: email,
+        password: "password",
+        fName: "Stuart" + (Math.random() * 100).toFixed(0),
+        lName: "Barclay",
+        phoneNumber: "0793580784",
+        authenticationLevel: 3,
       })
-      .end((err, responsder) => {
-        let token = responsder.body.response.token;
-        chai
-          .request(server)
-          .post("/API/Moderators")
-          .set("x-access-token", token)
-          .send({
-            emailAddress: "testEmail@gmail.com",
-            password: "Stuart",
-            fName: "Stuart" + (Math.random() * 100).toFixed(0),
-            lName: "Barclay",
-            phoneNumber: "0793580784",
-            authenticationLevel: 2,
-          })
-          .end(function (err, res) {
-            res.should.have.status(201);
-            res.should.be.json;
-            res.body.should.be.a("object");
-            res.body.response.should.have.property("message");
-            res.body.response.Moderator.should.be.a("object");
-            res.body.response.Moderator.should.have.property("Name");
-            res.body.response.Moderator.should.have.property("Email Address");
-            res.body.response.Moderator.should.have.property("ID");
-            done();
-          });
+      .end(function (err, res) {
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a("object");
+        res.body.response.should.have.property("message");
+        res.body.response.User.should.be.a("object");
+        res.body.response.User.should.have.property("Name");
+        res.body.response.User.should.have.property("Email Address");
+        res.body.response.User.should.have.property("ID");
+        done();
       });
   });
 
-  it("It should retrieve all moderators in the database", (done) => {
+  it("It should retrieve all Users in the database", (done) => {
     chai
       .request(server)
-      .post("/API/moderators/login")
+      .post("/API/Users/login")
       .send({
-        emailAddress: "5bits@gmail.com",
-        password: "5Bits@@",
+        emailAddress: email,
+        password: "password",
       })
       .end((err, responsder) => {
         let token = responsder.body.response.token;
         chai
           .request(server)
-          .get("/API/Moderators")
+          .get("/API/Users")
           .set("x-access-token", token)
           .end((err, res) => {
             expect(err).to.be.null;
             res.should.have.status(200);
             res.body.should.be.a("object");
-            res.body.response.Moderators[0].should.have.property("ID");
-            res.body.response.Moderators[0].should.have.property("Name");
-            res.body.response.Moderators[0].should.have.property(
-              "Email Address"
-            );
+            res.body.response.Users[0].should.have.property("ID");
+            res.body.response.Users[0].should.have.property("Name");
+            res.body.response.Users[0].should.have.property("Email Address");
             done();
           });
       });
   });
 
-  it("It should retrieve a specific moderator from the database /GET Moderators/emailAddress/:emailAddress", (done) => {
+  it("It should retrieve a specific moderator from the database /GET Users/emailAddress/:emailAddress", (done) => {
     chai
       .request(server)
-      .post("/API/moderators/login")
+      .post("/API/Users/login")
       .send({
-        emailAddress: "5bits@gmail.com",
-        password: "5Bits@@",
+        emailAddress: email,
+        password: "password",
       })
       .end((err, responsder) => {
         let token = responsder.body.response.token;
         chai
           .request(server)
-          .get("/API/Moderators")
+          .get("/API/Users")
           .set("x-access-token", token)
           .end((err, responder) => {
             chai
               .request(server)
               .get(
-                "/API/moderators/emailAddress/" +
-                  responder.body.response.Moderators[0]["Email Address"]
+                "/API/Users/emailAddress/" +
+                  responder.body.response.Users[0]["Email Address"]
               )
               .set("x-access-token", token)
               .end((err, res) => {
                 expect(err).to.be.null;
                 res.should.have.status(200);
                 res.body.should.be.a("object");
-                res.body.response.Moderator.should.have.property("ID");
-                res.body.response.Moderator.should.have.property("Name");
-                res.body.response.Moderator.should.have.property(
-                  "Email Address"
-                );
-                res.body.response.Moderator.should.have.property(
+                res.body.response.User.should.have.property("ID");
+                res.body.response.User.should.have.property("Name");
+                res.body.response.User.should.have.property("Email Address");
+                res.body.response.User.should.have.property(
                   "Authentication Level"
                 );
-                res.body.response.Moderator.Name.should.equal(
-                  responder.body.response.Moderators[0].Name
+                res.body.response.User.Name.should.equal(
+                  responder.body.response.Users[0].Name
                 );
                 done();
               });
@@ -363,30 +349,30 @@ describe("Moderators", () => {
       });
   });
 
-  it("It should update a moderator in the database /PUT Moderators/:emailAddress", function (done) {
+  it("It should update a moderator in the database /PUT Users/:emailAddress", function (done) {
     chai
       .request(server)
-      .post("/API/moderators/login")
+      .post("/API/Users/login")
       .send({
-        emailAddress: "5bits@gmail.com",
-        password: "5Bits@@",
+        emailAddress: email,
+        password: "password",
       })
       .end((err, responsder) => {
         let token = responsder.body.response.token;
         chai
           .request(server)
-          .get("/API/Moderators")
+          .get("/API/Users")
           .set("x-access-token", token)
           .end((err, responder) => {
             chai
               .request(server)
               .put(
-                "/API/Moderators/" +
-                  responder.body.response.Moderators[
+                "/API/Users/" +
+                  responder.body.response.Users[
                     responder.body.response.count - 1
                   ]["Email Address"]
               )
-              .send({ fName: "test", authenticationLevel: 2 })
+              .send({ fName: "test" })
               .set("x-access-token", token)
               .end(function (error, response) {
                 response.should.have.status(200);
@@ -394,7 +380,7 @@ describe("Moderators", () => {
                 response.body.should.be.a("object");
                 response.body.response.should.have.property("message");
                 response.body.response.message.should.equal(
-                  "Moderator details updated"
+                  "User details updated"
                 );
                 done();
               });
@@ -402,26 +388,26 @@ describe("Moderators", () => {
       });
   });
 
-  it("It should delete a single source from the database /DELETE Moderators/:emailAddress", (done) => {
+  it("It should delete a single user from the database /DELETE Users/:emailAddress", (done) => {
     chai
       .request(server)
-      .post("/API/moderators/login")
+      .post("/API/Users/login")
       .send({
-        emailAddress: "5bits@gmail.com",
-        password: "5Bits@@",
+        emailAddress: email,
+        password: "password",
       })
       .end((err, responsder) => {
         let token = responsder.body.response.token;
         chai
           .request(server)
-          .get("/API/Moderators")
+          .get("/API/Users")
           .set("x-access-token", token)
           .end((err, responder) => {
             chai
               .request(server)
               .delete(
-                "/API/Moderators/" +
-                  responder.body.response.Moderators[
+                "/API/Users/" +
+                  responder.body.response.Users[
                     responder.body.response.count - 1
                   ]["Email Address"]
               )
@@ -433,7 +419,7 @@ describe("Moderators", () => {
                 res.body.response.should.have.property("message");
                 res.body.response.message.should.be.a("string");
                 res.body.response.message.should.be.eql(
-                  "Moderator deleted successfully"
+                  "User deleted successfully"
                 );
                 done();
               });
