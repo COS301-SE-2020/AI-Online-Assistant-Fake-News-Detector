@@ -2901,3 +2901,1271 @@
 [18/Aug/2020 08:45:23] - DB_Server listening on port 3000. Environment: dev.
 [18/Aug/2020 08:46:44] - API_Server listening on port 8080. Environment: dev.
 [18/Aug/2020 08:46:44] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 02:40:22] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 02:40:29] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 10:23:19] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 10:23:26] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 10:24:07] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 10:24:07] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 10:24:41] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 10:24:42] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 10:25:02] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 10:25:02] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 10:25:25] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 10:25:25] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:09:34] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:09:34] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:09:58] - Source was created.
+[18/Aug/2020 11:09:59] - Source was updated.
+[18/Aug/2020 11:10:00] - Source was deleted.
+[18/Aug/2020 11:10:01] - Fact was created.
+[18/Aug/2020 11:10:03] - Fact was Deleted.
+[18/Aug/2020 11:10:04] - Source was created.
+[18/Aug/2020 11:10:08] - Source was updated.
+[18/Aug/2020 11:10:10] - Source was deleted.
+[18/Aug/2020 11:10:13] - Moderator was created.
+[18/Aug/2020 11:10:17] - Moderator was Updated.
+[18/Aug/2020 11:10:18] - Moderator was Deleted.
+[18/Aug/2020 11:10:19] - Report was Created.
+[18/Aug/2020 11:10:26] - Reports were updated based on active status.
+[18/Aug/2020 11:10:27] - Reports were updated based on active status.
+[18/Aug/2020 11:10:28] - Reports were updated based on ID.
+[18/Aug/2020 11:10:29] - Report was deleted.
+[18/Aug/2020 11:10:30] - Report was Created.
+[18/Aug/2020 11:10:32] - Report was Created.
+[18/Aug/2020 11:10:35] - Reports were updated based on ID.
+[18/Aug/2020 11:10:35] - Reports were updated based on ID.
+[18/Aug/2020 11:10:35] - Reports were updated based on ID.
+[18/Aug/2020 11:10:35] - Reports were updated based on ID.
+[18/Aug/2020 11:10:35] - Reports were updated based on ID.
+[18/Aug/2020 11:10:35] - Reports were updated based on ID.
+[18/Aug/2020 11:10:36] - Reports were updated based on ID.
+[18/Aug/2020 11:10:36] - Reports were updated based on ID.
+[18/Aug/2020 11:10:36] - Reports were updated based on ID.
+[18/Aug/2020 11:10:36] - Reports were updated based on ID.
+[18/Aug/2020 11:10:36] - Reports were updated based on ID.
+[18/Aug/2020 11:10:36] - Reports were updated based on ID.
+[18/Aug/2020 11:10:36] - Reports were updated based on ID.
+[18/Aug/2020 11:10:36] - Reports were updated based on ID.
+[18/Aug/2020 11:10:36] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:37] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:38] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:39] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:40] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:41] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:42] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:43] - Reports were updated based on ID.
+[18/Aug/2020 11:10:47] - Source was created.
+[18/Aug/2020 11:10:49] - Source was updated.
+[18/Aug/2020 11:10:50] - Source was deleted.
+[18/Aug/2020 11:10:50] - Fact was created.
+[18/Aug/2020 11:10:52] - Fact was Deleted.
+[18/Aug/2020 11:10:52] - Report was Created.
+[18/Aug/2020 11:10:57] - Report was deleted.
+[18/Aug/2020 11:10:57] - New nnModel was created.
+[18/Aug/2020 11:10:59] - nnModel was deleted.
+[18/Aug/2020 11:10:59] - Training Record was created.
+[18/Aug/2020 11:11:01] - Training Record was Deleted.
+[18/Aug/2020 11:21:07] - DB_Server listening on port 3000. Environment: undefined.
+[18/Aug/2020 11:21:13] - API_Server listening on port 8080. Environment: undefined.
+[18/Aug/2020 11:21:13] - DB_Server listening on port 3000. Environment: undefined.
+[18/Aug/2020 11:21:56] - API_Server listening on port 8080. Environment: undefined.
+[18/Aug/2020 11:21:57] - DB_Server listening on port 3000. Environment: undefined.
+[18/Aug/2020 11:22:30] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:22:31] - DB_Server listening on port 3000. Environment: undefined.
+[18/Aug/2020 11:23:12] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:23:12] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:23:56] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:23:56] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:25:38] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:25:39] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:34:27] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:34:27] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:35:06] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:35:06] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:39:50] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:39:50] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:41:05] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:41:05] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:41:19] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:41:20] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:41:23] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:41:23] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:43:56] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:43:56] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:45:21] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:45:22] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:45:41] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:45:42] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:47:43] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:47:43] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:49:06] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:49:06] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:49:22] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:49:23] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:50:22] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:50:23] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:50:35] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:50:35] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:52:49] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:52:50] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:53:26] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:53:26] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:54:18] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:54:18] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:55:04] - Cron job for updating reports ran.
+[18/Aug/2020 11:56:40] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:56:41] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:56:58] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:56:58] - DB_Server listening on port 3000. Environment: dev.
+[18/Aug/2020 11:57:04] - API_Server listening on port 8080. Environment: dev.
+[18/Aug/2020 11:57:05] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 12:17:32] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 12:18:59] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 12:20:07] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 12:20:08] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 12:36:25] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 12:36:26] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 12:36:56] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 12:36:56] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 12:37:04] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 12:37:04] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 12:37:56] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 12:37:56] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 12:47:26] - Moderator was created.
+[19/Aug/2020 12:56:05] - Moderator was created.
+[19/Aug/2020 12:56:11] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 12:56:11] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 12:59:38] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 12:59:38] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 01:00:27] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 01:00:27] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 01:00:49] - User was updated.
+[19/Aug/2020 01:02:45] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 01:02:45] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 01:02:55] - User was updated.
+[19/Aug/2020 01:03:58] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 01:03:58] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 01:04:30] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 01:04:30] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 01:04:48] - User was updated.
+[19/Aug/2020 01:05:12] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 01:05:13] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 01:06:31] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 01:06:32] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 01:06:56] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 01:06:57] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 01:07:35] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 01:07:36] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 01:08:16] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 01:08:16] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 01:08:40] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 01:08:40] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 01:14:55] - User was updated.
+[19/Aug/2020 01:15:25] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 01:15:25] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 01:15:35] - User was updated.
+[19/Aug/2020 01:16:53] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 01:16:53] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 01:17:56] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 01:18:17] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 01:18:18] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 09:43:07] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 09:43:07] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 09:43:18] - Source was created.
+[19/Aug/2020 09:43:20] - Source was updated.
+[19/Aug/2020 09:43:20] - Source was deleted.
+[19/Aug/2020 09:43:21] - Fact was created.
+[19/Aug/2020 09:43:22] - Fact was Deleted.
+[19/Aug/2020 09:43:22] - Source was created.
+[19/Aug/2020 09:43:24] - Source was updated.
+[19/Aug/2020 09:43:25] - Source was deleted.
+[19/Aug/2020 09:43:57] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 09:43:57] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 09:44:02] - Source was created.
+[19/Aug/2020 09:44:03] - Source was updated.
+[19/Aug/2020 09:44:04] - Source was deleted.
+[19/Aug/2020 09:44:04] - Fact was created.
+[19/Aug/2020 09:44:05] - Fact was Deleted.
+[19/Aug/2020 09:44:06] - Source was created.
+[19/Aug/2020 09:44:08] - Source was updated.
+[19/Aug/2020 09:44:08] - Source was deleted.
+[19/Aug/2020 09:44:43] - User was updated.
+[19/Aug/2020 09:44:44] - Report was Created.
+[19/Aug/2020 09:44:50] - Reports were updated based on active status.
+[19/Aug/2020 09:44:51] - Reports were updated based on active status.
+[19/Aug/2020 09:44:52] - Reports were updated based on ID.
+[19/Aug/2020 09:44:54] - Report was deleted.
+[19/Aug/2020 09:44:55] - Report was Created.
+[19/Aug/2020 09:44:57] - Report was Created.
+[19/Aug/2020 09:45:00] - Reports were updated based on ID.
+[19/Aug/2020 09:45:00] - Reports were updated based on ID.
+[19/Aug/2020 09:45:00] - Reports were updated based on ID.
+[19/Aug/2020 09:45:00] - Reports were updated based on ID.
+[19/Aug/2020 09:45:01] - Reports were updated based on ID.
+[19/Aug/2020 09:45:01] - Reports were updated based on ID.
+[19/Aug/2020 09:45:01] - Reports were updated based on ID.
+[19/Aug/2020 09:45:01] - Reports were updated based on ID.
+[19/Aug/2020 09:45:01] - Reports were updated based on ID.
+[19/Aug/2020 09:45:01] - Reports were updated based on ID.
+[19/Aug/2020 09:45:01] - Reports were updated based on ID.
+[19/Aug/2020 09:45:01] - Reports were updated based on ID.
+[19/Aug/2020 09:45:01] - Reports were updated based on ID.
+[19/Aug/2020 09:45:01] - Reports were updated based on ID.
+[19/Aug/2020 09:45:01] - Reports were updated based on ID.
+[19/Aug/2020 09:45:01] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:02] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:03] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:04] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:05] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:06] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:07] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:08] - Reports were updated based on ID.
+[19/Aug/2020 09:45:12] - Source was created.
+[19/Aug/2020 09:45:13] - Source was updated.
+[19/Aug/2020 09:45:15] - Source was deleted.
+[19/Aug/2020 09:45:15] - Fact was created.
+[19/Aug/2020 09:45:16] - Fact was Deleted.
+[19/Aug/2020 09:45:17] - Report was Created.
+[19/Aug/2020 09:45:21] - Report was deleted.
+[19/Aug/2020 09:45:21] - New nnModel was created.
+[19/Aug/2020 09:45:22] - nnModel was deleted.
+[19/Aug/2020 09:45:23] - Training Record was created.
+[19/Aug/2020 09:45:24] - Training Record was Deleted.
+[19/Aug/2020 09:47:03] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 09:47:03] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 09:47:09] - Source was created.
+[19/Aug/2020 09:47:10] - Source was updated.
+[19/Aug/2020 09:47:11] - Source was deleted.
+[19/Aug/2020 09:47:11] - Fact was created.
+[19/Aug/2020 09:47:12] - Fact was Deleted.
+[19/Aug/2020 09:47:13] - Source was created.
+[19/Aug/2020 09:47:15] - Source was updated.
+[19/Aug/2020 09:47:16] - Source was deleted.
+[19/Aug/2020 09:48:10] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 09:48:10] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 09:48:16] - Source was created.
+[19/Aug/2020 09:48:17] - Source was updated.
+[19/Aug/2020 09:48:18] - Source was deleted.
+[19/Aug/2020 09:48:18] - Fact was created.
+[19/Aug/2020 09:48:19] - Fact was Deleted.
+[19/Aug/2020 09:48:20] - Source was created.
+[19/Aug/2020 09:48:22] - Source was updated.
+[19/Aug/2020 09:48:23] - Source was deleted.
+[19/Aug/2020 09:48:23] - User was created.
+[19/Aug/2020 09:48:26] - Report was Created.
+[19/Aug/2020 09:48:31] - Reports were updated based on active status.
+[19/Aug/2020 09:48:33] - Reports were updated based on active status.
+[19/Aug/2020 09:51:36] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 09:51:36] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 09:51:42] - Source was created.
+[19/Aug/2020 09:51:44] - Source was updated.
+[19/Aug/2020 09:51:44] - Source was deleted.
+[19/Aug/2020 09:51:45] - User was created.
+[19/Aug/2020 09:51:49] - Report was Created.
+[19/Aug/2020 09:51:51] - Report was Created.
+[19/Aug/2020 09:51:54] - Reports were updated based on ID.
+[19/Aug/2020 09:51:54] - Reports were updated based on ID.
+[19/Aug/2020 09:51:54] - Reports were updated based on ID.
+[19/Aug/2020 09:51:54] - Reports were updated based on ID.
+[19/Aug/2020 09:51:54] - Reports were updated based on ID.
+[19/Aug/2020 09:51:54] - Reports were updated based on ID.
+[19/Aug/2020 09:51:54] - Reports were updated based on ID.
+[19/Aug/2020 09:51:54] - Reports were updated based on ID.
+[19/Aug/2020 09:51:54] - Reports were updated based on ID.
+[19/Aug/2020 09:51:54] - Reports were updated based on ID.
+[19/Aug/2020 09:51:54] - Reports were updated based on ID.
+[19/Aug/2020 09:51:54] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:55] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:56] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:57] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:58] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:51:59] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:00] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:01] - Reports were updated based on ID.
+[19/Aug/2020 09:52:05] - Source was created.
+[19/Aug/2020 09:52:07] - Source was updated.
+[19/Aug/2020 09:52:08] - Source was deleted.
+[19/Aug/2020 09:52:08] - Fact was created.
+[19/Aug/2020 09:52:10] - Fact was Deleted.
+[19/Aug/2020 09:52:10] - Report was Created.
+[19/Aug/2020 09:52:14] - Report was deleted.
+[19/Aug/2020 09:52:14] - New nnModel was created.
+[19/Aug/2020 09:52:16] - nnModel was deleted.
+[19/Aug/2020 09:52:16] - Training Record was created.
+[19/Aug/2020 09:52:17] - Training Record was Deleted.
+[19/Aug/2020 09:53:04] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 09:53:04] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 09:54:04] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 09:54:04] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 09:54:14] - Source was created.
+[19/Aug/2020 09:54:16] - Source was updated.
+[19/Aug/2020 09:54:16] - Source was deleted.
+[19/Aug/2020 09:54:17] - User was created.
+[19/Aug/2020 09:54:21] - User was updated.
+[19/Aug/2020 09:54:23] - Report was Created.
+[19/Aug/2020 09:54:25] - Report was Created.
+[19/Aug/2020 09:54:26] - Reports were updated based on ID.
+[19/Aug/2020 09:54:26] - Reports were updated based on ID.
+[19/Aug/2020 09:54:26] - Reports were updated based on ID.
+[19/Aug/2020 09:54:26] - Reports were updated based on ID.
+[19/Aug/2020 09:54:32] - Source was created.
+[19/Aug/2020 09:54:34] - Source was updated.
+[19/Aug/2020 09:54:35] - Source was deleted.
+[19/Aug/2020 09:54:35] - Fact was created.
+[19/Aug/2020 09:54:36] - Fact was Deleted.
+[19/Aug/2020 09:54:37] - Report was Created.
+[19/Aug/2020 09:54:41] - Report was deleted.
+[19/Aug/2020 09:54:41] - New nnModel was created.
+[19/Aug/2020 09:54:42] - nnModel was deleted.
+[19/Aug/2020 09:54:43] - Training Record was created.
+[19/Aug/2020 09:54:44] - Training Record was Deleted.
+[19/Aug/2020 09:55:13] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 09:55:13] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 09:57:51] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 09:57:52] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 09:58:19] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 09:58:19] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 09:59:55] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 09:59:55] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 10:00:18] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 10:00:18] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 10:01:08] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 10:01:08] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 10:01:15] - Source was created.
+[19/Aug/2020 10:01:16] - Source was updated.
+[19/Aug/2020 10:01:17] - Source was deleted.
+[19/Aug/2020 10:01:18] - User was created.
+[19/Aug/2020 10:01:21] - User was updated.
+[19/Aug/2020 10:01:23] - User was deleted.
+[19/Aug/2020 10:01:24] - Report was Created.
+[19/Aug/2020 10:01:26] - Report was Created.
+[19/Aug/2020 10:01:27] - Reports were updated based on ID.
+[19/Aug/2020 10:01:27] - Reports were updated based on ID.
+[19/Aug/2020 10:01:27] - Reports were updated based on ID.
+[19/Aug/2020 10:01:27] - Reports were updated based on ID.
+[19/Aug/2020 10:01:33] - Source was created.
+[19/Aug/2020 10:01:35] - Source was updated.
+[19/Aug/2020 10:01:36] - Source was deleted.
+[19/Aug/2020 10:01:36] - Fact was created.
+[19/Aug/2020 10:01:38] - Fact was Deleted.
+[19/Aug/2020 10:01:38] - Report was Created.
+[19/Aug/2020 10:01:42] - Report was deleted.
+[19/Aug/2020 10:01:43] - New nnModel was created.
+[19/Aug/2020 10:01:44] - nnModel was deleted.
+[19/Aug/2020 10:01:44] - Training Record was created.
+[19/Aug/2020 10:01:45] - Training Record was Deleted.
+[19/Aug/2020 10:03:15] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 10:03:15] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 10:03:19] - Source was created.
+[19/Aug/2020 10:03:21] - Source was updated.
+[19/Aug/2020 10:03:21] - Source was deleted.
+[19/Aug/2020 10:03:22] - User was created.
+[19/Aug/2020 10:03:26] - User was updated.
+[19/Aug/2020 10:03:28] - User was deleted.
+[19/Aug/2020 10:03:29] - Report was Created.
+[19/Aug/2020 10:03:57] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 10:03:57] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 10:04:22] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 10:04:22] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 10:05:34] - User was deleted.
+[19/Aug/2020 10:07:33] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 10:07:34] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 10:07:42] - User was deleted.
+[19/Aug/2020 10:08:08] - User was deleted.
+[19/Aug/2020 10:08:23] - User was deleted.
+[19/Aug/2020 10:08:35] - User was deleted.
+[19/Aug/2020 10:08:58] - User was deleted.
+[19/Aug/2020 10:20:23] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 10:20:23] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 10:20:30] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 10:20:30] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 10:20:59] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 10:20:59] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 10:21:05] - Source was created.
+[19/Aug/2020 10:21:06] - Source was updated.
+[19/Aug/2020 10:21:07] - Source was deleted.
+[19/Aug/2020 10:21:07] - Fact was created.
+[19/Aug/2020 10:21:09] - Fact was Deleted.
+[19/Aug/2020 10:21:09] - Source was created.
+[19/Aug/2020 10:21:11] - Source was updated.
+[19/Aug/2020 10:21:12] - Source was deleted.
+[19/Aug/2020 10:21:13] - User was created.
+[19/Aug/2020 10:21:16] - User was updated.
+[19/Aug/2020 10:21:17] - User was deleted.
+[19/Aug/2020 10:21:18] - Report was Created.
+[19/Aug/2020 10:21:23] - Reports were updated based on active status.
+[19/Aug/2020 10:21:24] - Reports were updated based on active status.
+[19/Aug/2020 10:21:25] - Reports were updated based on ID.
+[19/Aug/2020 10:21:27] - Report was deleted.
+[19/Aug/2020 10:21:28] - Report was Created.
+[19/Aug/2020 10:21:30] - Report was Created.
+[19/Aug/2020 10:21:33] - Reports were updated based on ID.
+[19/Aug/2020 10:21:33] - Reports were updated based on ID.
+[19/Aug/2020 10:21:33] - Reports were updated based on ID.
+[19/Aug/2020 10:21:33] - Reports were updated based on ID.
+[19/Aug/2020 10:21:34] - Reports were updated based on ID.
+[19/Aug/2020 10:21:34] - Reports were updated based on ID.
+[19/Aug/2020 10:21:34] - Reports were updated based on ID.
+[19/Aug/2020 10:21:34] - Reports were updated based on ID.
+[19/Aug/2020 10:21:34] - Reports were updated based on ID.
+[19/Aug/2020 10:21:34] - Reports were updated based on ID.
+[19/Aug/2020 10:21:34] - Reports were updated based on ID.
+[19/Aug/2020 10:21:34] - Reports were updated based on ID.
+[19/Aug/2020 10:21:34] - Reports were updated based on ID.
+[19/Aug/2020 10:21:34] - Reports were updated based on ID.
+[19/Aug/2020 10:21:34] - Reports were updated based on ID.
+[19/Aug/2020 10:21:35] - Reports were updated based on ID.
+[19/Aug/2020 10:21:35] - Reports were updated based on ID.
+[19/Aug/2020 10:21:35] - Reports were updated based on ID.
+[19/Aug/2020 10:21:35] - Reports were updated based on ID.
+[19/Aug/2020 10:21:35] - Reports were updated based on ID.
+[19/Aug/2020 10:21:35] - Reports were updated based on ID.
+[19/Aug/2020 10:21:35] - Reports were updated based on ID.
+[19/Aug/2020 10:21:35] - Reports were updated based on ID.
+[19/Aug/2020 10:21:35] - Reports were updated based on ID.
+[19/Aug/2020 10:21:35] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:36] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:37] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:38] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:39] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:40] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:41] - Reports were updated based on ID.
+[19/Aug/2020 10:21:45] - Source was created.
+[19/Aug/2020 10:21:47] - Source was updated.
+[19/Aug/2020 10:21:48] - Source was deleted.
+[19/Aug/2020 10:21:48] - Fact was created.
+[19/Aug/2020 10:21:50] - Fact was Deleted.
+[19/Aug/2020 10:21:50] - Report was Created.
+[19/Aug/2020 10:21:54] - Report was deleted.
+[19/Aug/2020 10:21:55] - New nnModel was created.
+[19/Aug/2020 10:21:56] - nnModel was deleted.
+[19/Aug/2020 10:21:56] - Training Record was created.
+[19/Aug/2020 10:21:57] - Training Record was Deleted.

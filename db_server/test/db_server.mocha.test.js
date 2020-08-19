@@ -294,14 +294,13 @@ describe("Facts Api", () => {
   });
 });
 /////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////   MODERATORS  ///////////////////////////////////
-/////////// taken out because authentication doesn't happen from db server //////////
+///////////////////////////////////   Users  ///////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-// describe("Moderators Api", () => {
+// describe("Users Api", () => {
 //   it("It should add a Moderator to the database", function (done) {
 //     chai
 //       .request(server)
-//       .post("/Moderators")
+//       .post("/Users")
 //       .send({
 //         emailAddress: "5Bits@gmail.com",
 //         password: "Stuart",
@@ -321,17 +320,17 @@ describe("Facts Api", () => {
 //         done();
 //       });
 //   });
-//   it("It should get all moderators from the database", (done) => {
+//   it("It should get all Users from the database", (done) => {
 //     chai
 //       .request(server)
-//       .get("/Moderators")
+//       .get("/Users")
 //       .end((err, response) => {
 //         expect(err).to.be.null;
 //         response.should.have.status(200);
 //         response.body.should.be.a("object");
-//         response.body.response.Moderators[0].should.have.property("ID");
-//         response.body.response.Moderators[0].should.have.property("Name");
-//         response.body.response.Moderators[0].should.have.property(
+//         response.body.response.Users[0].should.have.property("ID");
+//         response.body.response.Users[0].should.have.property("Name");
+//         response.body.response.Users[0].should.have.property(
 //           "Email Address"
 //         );
 //         done();
@@ -341,17 +340,17 @@ describe("Facts Api", () => {
 //   it("It should get a specific moderator based on email", (done) => {
 //     chai
 //       .request(server)
-//       .get("/Moderators")
+//       .get("/Users")
 //       .end((err, res) => {
 //         chai
 //           .request(server)
 //           .get(
-//             "/Moderators/" + res.body.response.Moderators[0]["Email Address"]
+//             "/Users/" + res.body.response.Users[0]["Email Address"]
 //           )
 //           .end((err, response) => {
 //             response.should.have.status(200);
 //             response.body.response.Moderator.Name.should.equal(
-//               res.body.response.Moderators[0]["Name"]
+//               res.body.response.Users[0]["Name"]
 //             );
 //             done();
 //           });
@@ -360,13 +359,13 @@ describe("Facts Api", () => {
 //   it("It should delete a single moderator from the database", function (done) {
 //     chai
 //       .request(server)
-//       .get("/Moderators")
+//       .get("/Users")
 //       .end((err, responder) => {
 //         chai
 //           .request(server)
 //           .delete(
-//             "/Moderators/" +
-//               responder.body.response.Moderators[
+//             "/Users/" +
+//               responder.body.response.Users[
 //                 responder.body.response.count - 1
 //               ]["Email Address"]
 //           )

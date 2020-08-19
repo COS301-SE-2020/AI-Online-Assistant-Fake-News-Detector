@@ -10,8 +10,8 @@
       "description": "All known fake sources"
     },
     {
-      "name": "Moderators",
-      "description": "All system moderators"
+      "name": "Users",
+      "description": "All system Users"
     },
     {
       "name": "Reports",
@@ -399,13 +399,13 @@
         }
       }
     },
-    "/Moderators": {
+    "/Users": {
       "get": {
         "tags": [
-          "Moderators"
+          "Users"
         ],
-        "summary": "Get all system moderators from the database",
-        "description": "Get request to retrieve system moderators from the database",
+        "summary": "Get all system Users from the database",
+        "description": "Get request to retrieve system Users from the database",
         "operationId": "",
         "produces": "application/json",
         "parameters": [
@@ -437,7 +437,7 @@
       },
       "post": {
         "tags": [
-          "Moderators"
+          "Users"
         ],
         "summary": "Adds a new moderator to the database",
         "description": "Post request to add a new moderator to the database",
@@ -509,10 +509,10 @@
         }
       }
     },
-    "/Moderators/login": {
+    "/Users/login": {
       "post": {
         "tags": [
-          "Moderators"
+          "Users"
         ],
         "summary": "Logs a moderator into the system",
         "description": "Post request to log into the system",
@@ -551,10 +551,10 @@
         }
       }
     },
-    "/Moderators/emailAddress/{EmailAddress}": {
+    "/Users/emailAddress/{EmailAddress}": {
       "get": {
         "tags": [
-          "Moderators"
+          "Users"
         ],
         "summary": "Get a specific moderator source from the database",
         "description": "Get request to retrieve a specific moderator from the database",
@@ -600,10 +600,10 @@
         }
       }
     },
-    "/Moderators/id/{id}": {
+    "/Users/id/{id}": {
       "get": {
         "tags": [
-          "Moderators"
+          "Users"
         ],
         "summary": "Get a specific moderator source from the database",
         "description": "Get request to retrieve a specific moderator from the database",
@@ -649,10 +649,10 @@
         }
       }
     },
-    "/Moderators/{EmailAddress}": {
+    "/Users/{EmailAddress}": {
       "delete": {
         "tags": [
-          "Moderators"
+          "Users"
         ],
         "summary": "Removes a specific moderator, based off of their email address, from the database",
         "description": "Delete request to remove a specific moderator from the database",
@@ -700,10 +700,10 @@
       },
       "put": {
         "tags": [
-          "Moderators"
+          "Users"
         ],
-        "summary": "Update moderators details",
-        "description": "Put request to update a moderators details",
+        "summary": "Update Users details",
+        "description": "Put request to update a Users details",
         "operationId": "",
         "produces": "application/json",
         "parameters": [
@@ -731,28 +731,28 @@
           {
             "name": "fName",
             "in": "formData",
-            "description": "Update the moderators firstname",
+            "description": "Update the Users firstname",
             "required": false,
             "type": "string"
           },
           {
             "name": "lName",
             "in": "formData",
-            "description": "Update the moderators lastname",
+            "description": "Update the Users lastname",
             "required": false,
             "type": "string"
           },
           {
             "name": "phoneNumber",
             "in": "formData",
-            "description": "Update the moderators phone number",
+            "description": "Update the Users phone number",
             "required": false,
             "type": "string"
           },
           {
             "name": "authenticationLevel",
             "in": "formData",
-            "description": "Update the moderators authentication level",
+            "description": "Update the Users authentication level",
             "required": false,
             "type": "integer"
           }
@@ -1016,8 +1016,8 @@
         "tags": [
           "Reports"
         ],
-        "summary": "Update moderators details",
-        "description": "Put request to update a moderators details",
+        "summary": "Update Users details",
+        "description": "Put request to update a Users details",
         "operationId": "",
         "produces": "application/json",
         "parameters": [
@@ -1893,7 +1893,7 @@
               "type": "integer",
               "example": 1
             },
-            "Moderators": {
+            "Users": {
               "type": "array",
               "items": {
                 "properties": {
