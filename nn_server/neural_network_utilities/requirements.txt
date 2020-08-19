@@ -1,0 +1,6 @@
+tensorflow_gpu==2.2.0
+spacy==2.3.2
+numpy==1.19.0
+nltk==3.5
+requests==2.24.0
+tensorflow==2.3.0
