@@ -3,6 +3,8 @@
     "name": "ArtiFact",
     "version": "1.0",
     "description": "Extension for ArtiFact fake news detector",
+    "author": "Quinton Coetzee",
+    "permissions": ["tabs"],
     "icons":{
         "128": "icon128.png",
         "48": "icon48.png",

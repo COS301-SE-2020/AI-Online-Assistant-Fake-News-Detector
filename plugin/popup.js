@@ -1,4 +1,27 @@
 $(() => {
+    
+    chrome.browserAction.setIcon({
+      path : {
+          "16": "icon16.png",
+      }
+    });
+    
+    chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
+        let tabUrl = tabs[0].url;
+        let cleanUrl = tabUrl.substring(0,tabUrl.indexOf('/',8)+1);
+        getSources().then(data => {
+            data['response']['Sources'].forEach(source => {
+                if (source['Domain Name']===cleanUrl) {
+                    chrome.browserAction.setIcon({
+                        path : {
+                            "16": "bad.png",
+                        }
+                    });
+                }
+            });
+        })    
+    });
+
     const serverTld='http://54.172.96.111:8080/api/'
     const sourcesUrl=serverTld+'Sources/'
     const reportsUrl=serverTld+'Reports/'
@@ -40,7 +63,7 @@ $(() => {
             
         }
     });
-    //////////////////////////////////////////////////////   
+//////////////////////////////////////////////////////   
 ///////////////////CHECK NEWS SOURCE//////////////////
 //////////////////////////////////////////////////////   
 $('#input').on('click', 'input[value="Check Source"]', function() {
