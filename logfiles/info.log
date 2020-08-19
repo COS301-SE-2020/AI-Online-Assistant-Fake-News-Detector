@@ -4224,3 +4224,125 @@
 [19/Aug/2020 11:45:48] - DB_Server listening on port 3000. Environment: dev.
 [19/Aug/2020 11:46:17] - API_Server listening on port 8080. Environment: dev.
 [19/Aug/2020 11:46:17] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 11:49:44] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 11:49:44] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 11:51:54] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 11:52:39] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 11:52:39] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 11:54:03] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 11:54:04] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 11:54:32] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 11:54:32] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 11:54:46] - API_Server listening on port 8080. Environment: dev.
+[19/Aug/2020 11:54:47] - DB_Server listening on port 3000. Environment: dev.
+[19/Aug/2020 11:55:03] - Cron job for updating reports ran.
+[20/Aug/2020 12:01:12] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:01:12] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:03:56] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:03:56] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:11:18] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:11:18] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:11:40] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:11:40] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:11:57] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:11:57] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:12:54] - Report was deleted.
+[20/Aug/2020 12:13:19] - Report was deleted.
+[20/Aug/2020 12:14:18] - Report was Created.
+[20/Aug/2020 12:14:24] - Report was Created.
+[20/Aug/2020 12:14:25] - Report was Created.
+[20/Aug/2020 12:14:26] - Report was Created.
+[20/Aug/2020 12:14:26] - Report was Created.
+[20/Aug/2020 12:14:27] - Report was Created.
+[20/Aug/2020 12:14:47] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:14:48] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:15:45] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:15:46] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:16:19] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:16:19] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:16:31] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:16:31] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:16:46] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:16:46] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:17:01] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:17:02] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:17:06] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:17:07] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:17:09] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:17:09] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:17:29] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:17:30] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:17:42] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:17:42] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:17:52] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:17:53] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:19:05] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:19:06] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:20:01] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:20:02] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:21:41] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:21:41] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:21:55] - Reports were updated based on ID.
+[20/Aug/2020 12:21:56] - Reports were updated based on ID.
+[20/Aug/2020 12:21:56] - Reports were updated based on ID.
+[20/Aug/2020 12:21:58] - Reports were updated based on ID.
+[20/Aug/2020 12:21:58] - Reports were updated based on ID.
+[20/Aug/2020 12:21:58] - Reports were updated based on ID.
+[20/Aug/2020 12:21:58] - Reports were updated based on ID.
+[20/Aug/2020 12:21:58] - Reports were updated based on ID.
+[20/Aug/2020 12:21:58] - Reports were updated based on ID.
+[20/Aug/2020 12:21:58] - Cron job for updating reports ran.
+[20/Aug/2020 12:21:58] - Reports were updated based on ID.
+[20/Aug/2020 12:22:13] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:22:14] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:22:22] - Report was deleted.
+[20/Aug/2020 12:22:25] - Report was deleted.
+[20/Aug/2020 12:22:33] - Report was Created.
+[20/Aug/2020 12:22:57] - Cron job for updating reports ran.
+[20/Aug/2020 12:23:44] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:23:44] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:23:57] - Cron job for updating reports ran.
+[20/Aug/2020 12:24:57] - Cron job for updating reports ran.
+[20/Aug/2020 12:25:02] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:25:03] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:25:14] - Report was Created.
+[20/Aug/2020 12:25:15] - Report was Created.
+[20/Aug/2020 12:25:17] - Report was Created.
+[20/Aug/2020 12:25:26] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:25:26] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:25:31] - Reports were updated based on ID.
+[20/Aug/2020 12:25:31] - Reports were updated based on ID.
+[20/Aug/2020 12:25:31] - Reports were updated based on ID.
+[20/Aug/2020 12:25:32] - Reports were updated based on ID.
+[20/Aug/2020 12:25:32] - Reports were updated based on ID.
+[20/Aug/2020 12:25:32] - Reports were updated based on ID.
+[20/Aug/2020 12:25:55] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:25:55] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:26:00] - Report was deleted.
+[20/Aug/2020 12:26:08] - Report was deleted.
+[20/Aug/2020 12:26:10] - Report was Created.
+[20/Aug/2020 12:26:14] - Report was Created.
+[20/Aug/2020 12:26:19] - Report was Created.
+[20/Aug/2020 12:26:26] - Reports were updated based on ID.
+[20/Aug/2020 12:26:26] - Reports were updated based on ID.
+[20/Aug/2020 12:26:27] - Reports were updated based on ID.
+[20/Aug/2020 12:26:28] - Reports were updated based on ID.
+[20/Aug/2020 12:26:38] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:26:39] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:26:57] - API_Server listening on port 8080. Environment: dev.
+[20/Aug/2020 12:26:58] - DB_Server listening on port 3000. Environment: dev.
+[20/Aug/2020 12:27:03] - Report was deleted.
+[20/Aug/2020 12:27:03] - Report was deleted.
+[20/Aug/2020 12:27:11] - Report was Created.
+[20/Aug/2020 12:27:12] - Report was Created.
+[20/Aug/2020 12:27:13] - Report was Created.
+[20/Aug/2020 12:27:14] - Report was Created.
+[20/Aug/2020 12:27:16] - Reports were updated based on ID.
+[20/Aug/2020 12:27:17] - Reports were updated based on ID.
+[20/Aug/2020 12:27:17] - Reports were updated based on ID.
+[20/Aug/2020 12:27:17] - Reports were updated based on ID.
+[20/Aug/2020 12:27:17] - Reports were updated based on ID.
+[20/Aug/2020 12:27:18] - Reports were updated based on ID.
+[20/Aug/2020 12:27:57] - Cron job for updating reports ran.
+[20/Aug/2020 12:28:57] - Cron job for updating reports ran.
+[20/Aug/2020 12:29:26] - API_Server listening on port 8080. Environment: dev.

@@ -68,16 +68,24 @@ cron.schedule("55 23 * * *", () => {
   );
 });
 
-cron.schedule("55 23 * * 0", () => {
+cron.schedule("58 23 * * 0", () => {
+  // cron.schedule("55 * * * * * ", () => {
+  getRequest(
+    "localhost",
+    "/api/reports/active/1",
+    8080,
+    (statusCode, response) => {
+      response.response.Reports.forEach((ele) => {
+        console.log(ele.Type);
+      });
+    }
+  );
   /**
    * 1. Fetch all active reports
    * 2. Send email to notification all provided emails
    * 3. Add reported item to main fact/source table if count > 3
    * 4. Reset count to 1 and deactivate
    */
-  // getRequest("localhost", "/api/reports/update", 8080, () =>
-  //   logger.info("Cron job for updating reports ran.")
-  // );
 });
 
 morgan.token("date", (req, res, tz) => {

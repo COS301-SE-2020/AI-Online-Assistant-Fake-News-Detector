@@ -642,12 +642,15 @@ api.get("/reports/update", (req, res, next) => {
           report["ID"] !== prevReport["ID"]
         ) {
           ++prevReport["Report Count"];
+          prevReport["Reported By"].push(report["Reported By"][0]);
+          console.log(prevReport);
           putRequest(
             "localhost",
             "/api/reports/id/" + prevReport["ID"],
             8080,
             JSON.stringify({
               reportCount: prevReport["Report Count"],
+              reportedBy: prevReport["reportedBy"],
             }),
             (statusCode, _data) => {}
           );
