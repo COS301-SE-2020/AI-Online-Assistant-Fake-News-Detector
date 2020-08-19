@@ -6,7 +6,6 @@
     "install:frontend": "cd frontend && npm install -s && npm audit fix",
     "install:nn": "cd nn_server && pip3 install -r requirements.txt >> install_log.txt",
     "install:spacy": "pip install -U spacy >> install_log.txt && python -m spacy download en_core_web_lg >> install_log.txt",
-    "install:tensorflow": "pip install -U tensorflow >> install_log.txt",
     "install:classifierUtil": "cd nn_server/classifier_utilities && pip3 install -r requirements.txt >> install_log.txt",
     "install:neuralNetworkUtil": "cd nn_server/neural_network_utilities && pip3 install -r requirements.txt >> install_log.txt",
     "install:coreNN": "cd nn_server/core_nn && pip3 install -r requirements.txt >> install_log.txt",
