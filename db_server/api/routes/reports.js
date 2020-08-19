@@ -106,7 +106,7 @@ router.get("/id/:id", (req, res, next) => {
               "Date Captured": doc.dCaptured,
               "Report Count": doc.reportCount,
               "Active Status": doc.bActive,
-              "Reported By": report.reportedBy,
+              "Reported By": doc.reportedBy,
             },
           },
         });
