@@ -408,21 +408,21 @@ api.get("/Users", (req, res, next) => {
       },
     });
 
-  // validateUser(token, (valid, statusCode, response) => {
-  //   if (!valid && statusCode === 500) return next(response);
-  //   else if (!valid)
-  //     return res.status(401).json({
-  //       response: {
-  //         message: "Not authorised",
-  //         success: false,
-  //       },
-  //     });
+  validateUser(token, (valid, statusCode, response) => {
+    if (!valid && statusCode === 500) return next(response);
+    else if (!valid)
+      return res.status(401).json({
+        response: {
+          message: "Not authorised",
+          success: false,
+        },
+      });
 
-  getRequest("localhost", "/Users", 3000, (statusCode, response) => {
-    if (statusCode == 500) next(response);
-    else res.status(statusCode).json(response);
+    getRequest("localhost", "/Users", 3000, (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    });
   });
-  // });
 });
 
 /**
@@ -446,6 +446,32 @@ api.post("/Users/register", (req, res, next) => {
     requestBody,
     (statusCode, response) => {
       res.status(statusCode).json(response);
+    }
+  );
+});
+
+/**
+ * @description API call to request moderator access
+ * @author Stuart Barclay
+ */
+
+api.post("/Users/requestModeratorAccess", (req, res, next) => {
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    return next(error);
+  }
+  postRequest(
+    "localhost",
+    "/api/sendEmail",
+    8080,
+    requestBody,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
     }
   );
 });
@@ -533,7 +559,6 @@ api.get("/Users/id/:moderatorId", (req, res, next) => {
         },
       });
 
-    /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
     getRequest(
       "localhost",
       "/Users/" + req.params.emailAddress,
@@ -1013,18 +1038,19 @@ api.get("/start/:port", (req, res, next) => {
 });
 
 api.post("/sendEmail", (req, res, next) => {
-  transporter.sendMail(
+  config.transporter.sendMail(
     {
       from: "Artifact<" + config.emailAddress + ">",
-      to: config.emailAddress,
+      to: req.body.to,
       subject: req.body.subject,
       text: req.body.body,
     },
     (error, info) => {
       if (error) {
-        console.log(error);
+        next();
       } else {
         logger.info("Email sent: " + info.response);
+        res.sendStatus(204);
       }
     }
   );
