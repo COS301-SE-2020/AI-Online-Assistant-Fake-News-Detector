@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FactInputService {
 
-  url = 'http://fakenewsdetector.tech/api/facts/';
+  url = 'http://54.172.96.111:8080/api/facts/';
 
   constructor(private _http: HttpClient) { }
 

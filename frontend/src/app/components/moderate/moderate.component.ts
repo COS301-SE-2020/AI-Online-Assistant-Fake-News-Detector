@@ -44,6 +44,7 @@ export class ModerateComponent implements OnInit {
   clearInsertSourceName: string;
   clearUrl: string;
   clearInsertFactStatement: string;
+  ratingString:string;
 
   constructor(private factslistService: FactslistService, private _factinputService: FactInputService, private _sourceinputService: SourceInputService,
     private searchService: SearchSourceService ,public http: HttpClient, private _deleteService: DeleteSourceService,
@@ -246,5 +247,41 @@ export class ModerateComponent implements OnInit {
     }
   /* End of function that clears response cards */
 
+  /* Checks the rating of a fact's popularity and determines the class*/
+      checkRatingHigh(rating: number){
+        
+        if(rating > 70){
+            return true;
+        }else{
+          return false;
+        }
+      }
+
+      checkRatingMed(rating: number){
+        
+        if(rating > 40 && rating < 70){
+            return true;
+        }else{
+          return false;
+        }
+      }
+
+      checkRatingLow(rating: number){
+        
+        if(rating < 40 && rating > 0){
+            return true;
+        }else{
+          return false;
+        }
+      }
+
+  /* End of rating checker*/
+
+  /* Convert passed in fact popularity plain number to string */
+  convertRating(rating: number){
+    this.ratingString = rating.toString() + "%";
+    return this.ratingString;
+  }
+  /* end of rating conversion */
 
 }

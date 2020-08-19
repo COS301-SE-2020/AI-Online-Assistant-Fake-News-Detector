@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DeleteSourceService {
 
-  url = 'http://fakenewsdetector.tech/api/sources/id/';
+  url = 'http://54.172.96.111:8080/api/sources/id/';
 
   constructor(private _http: HttpClient) { }
 
