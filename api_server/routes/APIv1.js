@@ -9,8 +9,8 @@ const Logger = require("../../winston");
 const logger = new Logger(api);
 const fs = require("fs");
 const shell = require("shelljs");
+const { response } = require("express");
 const nn_server = [];
-const nodemailer = require("nodemailer");
 
 const getRequest = (_host, _path, _port, callBack) => {
   const request = http
@@ -409,21 +409,21 @@ api.get("/Users", (req, res, next) => {
       },
     });
 
-  // validateUser(token, (valid, statusCode, response) => {
-  //   if (!valid && statusCode === 500) return next(response);
-  //   else if (!valid)
-  //     return res.status(401).json({
-  //       response: {
-  //         message: "Not authorised",
-  //         success: false,
-  //       },
-  //     });
+  validateUser(token, (valid, statusCode, response) => {
+    if (!valid && statusCode === 500) return next(response);
+    else if (!valid)
+      return res.status(401).json({
+        response: {
+          message: "Not authorised",
+          success: false,
+        },
+      });
 
-  getRequest("localhost", "/Users", 3000, (statusCode, response) => {
-    if (statusCode == 500) next(response);
-    else res.status(statusCode).json(response);
+    getRequest("localhost", "/Users", 3000, (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    });
   });
-  // });
 });
 
 /**
@@ -447,6 +447,32 @@ api.post("/Users/register", (req, res, next) => {
     requestBody,
     (statusCode, response) => {
       res.status(statusCode).json(response);
+    }
+  );
+});
+
+/**
+ * @description API call to request moderator access
+ * @author Stuart Barclay
+ */
+
+api.post("/Users/requestModeratorAccess", (req, res, next) => {
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    return next(error);
+  }
+  postRequest(
+    "localhost",
+    "/api/sendEmail",
+    8080,
+    requestBody,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
     }
   );
 });
@@ -534,7 +560,6 @@ api.get("/Users/id/:moderatorId", (req, res, next) => {
         },
       });
 
-    /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
     getRequest(
       "localhost",
       "/Users/" + req.params.emailAddress,
@@ -618,12 +643,15 @@ api.get("/reports/update", (req, res, next) => {
           report["ID"] !== prevReport["ID"]
         ) {
           ++prevReport["Report Count"];
+          prevReport["Reported By"].push(report["Reported By"][0]);
+          console.log(prevReport);
           putRequest(
             "localhost",
             "/api/reports/id/" + prevReport["ID"],
             8080,
             JSON.stringify({
               reportCount: prevReport["Report Count"],
+              reportedBy: prevReport["reportedBy"],
             }),
             (statusCode, _data) => {}
           );
@@ -1000,11 +1028,9 @@ api.get("/start/:port", (req, res, next) => {
       "python nn_server.py " + req.params.port,
       (err, stdout, stderr) => {
         if (err) throw new Error(err);
-        // if (stdout.search("127.0.0.1:" + req.params.port) !== -1) {
         logger.info("New nn_server image created on port " + req.params.port);
         nn_server.push({ port: Number(req.params.port), busy: false });
         res.sendStatus(204);
-        // }
       }
     );
     nn_server.push({ port: Number(req.params.port), busy: false });
@@ -1014,8 +1040,46 @@ api.get("/start/:port", (req, res, next) => {
 });
 
 api.get("/close/:port", (req, res, next) => {
-  logger.info("Closing nn_server images");
-  res.sendStatus(501);
+  logger.info("Closing nn_server image on port " + req.params.port);
+  postRequest(
+    "localhost",
+    "/shutdown",
+    req.params.port,
+    "",
+    (statusCode, response) => {
+      if (statusCode == 200) {
+        let index = nn_server.findIndex((ele, i) => {
+          if (ele.port == req.params.port) return i;
+        });
+        try {
+          nn_server.splice(index, 1);
+          res.sendStatus(statusCode).json(response);
+        } catch (error) {}
+      } else {
+        next(response);
+      }
+    }
+  );
+  // res.sendStatus(501);
+});
+
+api.post("/sendEmail", (req, res, next) => {
+  config.transporter.sendMail(
+    {
+      from: "Artifact<" + config.emailAddress + ">",
+      to: req.body.to,
+      subject: req.body.subject,
+      text: req.body.body,
+    },
+    (error, info) => {
+      if (error) {
+        next(error);
+      } else {
+        logger.info("Email sent: " + info.response);
+        res.sendStatus(204);
+      }
+    }
+  );
 });
 
 /**
@@ -1037,32 +1101,5 @@ api.use((error, req, res, next) => {
     },
   });
 });
-
-/**
- * const transporter = nodemailer.createTransport({
-  service: "gmail",
-  host: "smtp.gmail.com",
-  auth: {
-    user: config.emailAddress,
-    pass: config.password,
-  },
-});
-
-transporter.sendMail(
-  {
-    from: "Artifact<" + config.emailAddress + ">",
-    to: config.emailAddress,
-    subject: "Sending Email using Node.js",
-    text: "That was easy!",
-  },
-   (error, info) => {
-    if (error) {
-      console.log(error);
-    } else {
-      logger.info("Email sent: " + info.response);
-    }
-  }
-);
- */
 
 module.exports = api;

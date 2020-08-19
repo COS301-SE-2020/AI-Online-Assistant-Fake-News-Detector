@@ -8,7 +8,7 @@
     "testUC1.7": "mocha --exit --timeout 30000 \"test/usecase1.7_flag_statement.mocha.test\"",
     "testUC1.8": "mocha --exit --timeout 30000 \"test/usecase1.8_report_source.mocha.test\"",
     "testUC3.3": "mocha --exit --timeout 30000 \"test/usecase3.3_update_reports.mocha.test\"",
-    "start": "NODE_ENV=production concurrently \"nodemon api_server.js\" \"nodemon ../db_server/db_server.js\""
+    "start": "concurrently \"nodemon api_server.js\" \"nodemon ../db_server/db_server.js\""
   },
   "author": "5Bits",
   "license": "ISC",

@@ -15,7 +15,6 @@ const InternalDocs = require(__dirname +
   "/routes/InternalDocs").getAbsoluteFSPath();
 const path = require("path");
 const root = require("../Util/path");
-const config = require("../Util/config");
 const cron = require("node-cron");
 const http = require("http");
 const morganFormat =
@@ -67,6 +66,26 @@ cron.schedule("55 23 * * *", () => {
   getRequest("localhost", "/api/reports/update", 8080, () =>
     logger.info("Cron job for updating reports ran.")
   );
+});
+
+cron.schedule("58 23 * * 0", () => {
+  // cron.schedule("55 * * * * * ", () => {
+  getRequest(
+    "localhost",
+    "/api/reports/active/1",
+    8080,
+    (statusCode, response) => {
+      response.response.Reports.forEach((ele) => {
+        console.log(ele.Type);
+      });
+    }
+  );
+  /**
+   * 1. Fetch all active reports
+   * 2. Send email to notification all provided emails
+   * 3. Add reported item to main fact/source table if count > 3
+   * 4. Reset count to 1 and deactivate
+   */
 });
 
 morgan.token("date", (req, res, tz) => {
@@ -148,15 +167,15 @@ const listener = server.listen(port, () => {
       process.env.NODE_ENV +
       "."
   );
-  if (process.env.NODE_ENV === "production")
-    [8090, 8091, 8092].forEach((e) =>
-      getRequest(
-        "localhost",
-        "/api/start/" + e,
-        8080,
-        (statusCode, response) => {}
-      )
-    );
+  // if (process.env.NODE_ENV === "production")
+  [8090, 8091, 8092].forEach((e) =>
+    getRequest(
+      "localhost",
+      "/api/start/" + e,
+      8080,
+      (statusCode, response) => {}
+    )
+  );
 });
 
 module.exports = server;
