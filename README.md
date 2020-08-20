@@ -28,8 +28,8 @@
       Website
     </a>
     <span> | </span>
-    <a target="_blank" href="https://youtu.be/xQSGfRS1p_s">
-      Demo 2
+    <a target="_blank" href="https://youtu.be/MFLxKsOJi-U">
+      Demo 3
     </a>
   </h5>
 </div>
