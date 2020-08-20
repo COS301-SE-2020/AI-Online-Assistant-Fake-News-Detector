@@ -12,3 +12,5 @@ const transporter = nodemailer.createTransport({
 exports.secretKey = "5Bits2020";
 exports.emailAddress = "5bits301@gmail.com";
 exports.transporter = transporter;
+exports.api_server_port = 8080;
+exports.db_server_port = 3000;

@@ -1,7 +1,6 @@
 const express = require("express");
 const server = express();
 const bodyParser = require("body-parser");
-const port = 8080;
 const helmet = require("helmet");
 const morgan = require("morgan");
 const Logger = require("../winston");
@@ -15,6 +14,8 @@ const InternalDocs = require(__dirname +
   "/routes/InternalDocs").getAbsoluteFSPath();
 const path = require("path");
 const root = require("../Util/path");
+const config = require(path.join(root, "Util", "config"));
+const port = config.api_server_port;
 const cron = require("node-cron");
 const http = require("http");
 const morganFormat =
