@@ -1,6 +1,7 @@
 node_modules
 frontend/dist
 logfiles
+<<<<<<< Updated upstream
 .DS_Store
 frontend/.DS_Store
 frontend/.DS_Store
@@ -8,3 +9,6 @@ frontend/.DS_Store
 frontend/.DS_Store
 frontend/src/.DS_Store
 frontend/src/assets/.DS_Store
+=======
+frontend/src/assets/freezer/.DS_Store
+>>>>>>> Stashed changes
