@@ -11,12 +11,14 @@ import { NotfoundComponent } from './notfound/notfound.component';
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo: 'home',
+		component: HomeComponent,
 		pathMatch: 'full'
 	},
 	{
 		path: 'home',
-		component: HomeComponent,
+		redirectTo: ''
+		//possibly redirect here instead??
+		//component: HomeComponent
 	},
 	{
 		path: 'about',
