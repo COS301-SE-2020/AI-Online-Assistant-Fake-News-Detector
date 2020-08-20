@@ -12,7 +12,8 @@
     "install:api": "cd api_server && npm install && npm audit fix && npm update",
     "postinstall": "run-s install:*",
     "test": "mocha --exit \"**/*.mocha.test.js\" --timeout 30000",
-    "start": "cd api_server && npm start"
+    "start": "cd api_server && npm start",
+    "startP": "cd api_server && npm run \"startP\""
   },
   "repository": {
     "type": "git",
