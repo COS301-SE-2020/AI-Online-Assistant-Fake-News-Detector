@@ -9,7 +9,9 @@ const moderatorRoutes = require("./api/routes/moderators");
 const reportRoutes = require("./api/routes/reports");
 const nnModelRoutes = require("./api/routes/nnModels");
 const trainingRoutes = require("./api/routes/training");
-require("dotenv").config();
+const path = require("path");
+const root = require("../Util/path");
+require("dotenv").config({ path: path.join(root, ".env") });
 
 if (process.env.NODE_ENV != "dev") {
   mongoose.connect(
@@ -49,7 +51,7 @@ app.use((res, req, next) => {
 //Routes which should handle requests
 app.use("/sources", sourceRoutes);
 app.use("/facts", factRoutes);
-app.use("/moderators", moderatorRoutes);
+app.use("/Users", moderatorRoutes);
 app.use("/reports", reportRoutes);
 app.use("/nnModels", nnModelRoutes);
 app.use("/training", trainingRoutes);

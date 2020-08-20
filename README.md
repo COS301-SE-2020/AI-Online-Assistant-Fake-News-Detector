@@ -24,7 +24,7 @@
 
 <div align="center">
   <h5>
-    <a target="_blank" href="http://fakenewsdetector.tech/">
+    <a target="_blank" href="http://142.93.251.101/">
       Website
     </a>
     <span> | </span>
@@ -52,6 +52,7 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 - [Coding Standard](https://www.overleaf.com/read/yhjjwykzjqpk)
 - [Project Management (Trello)](https://trello.com/invite/b/zb3DjGQ1/aa7c49e51f99044974cd1ade64787fc7/capstone-project)
 - [Software Requirement Specification](https://www.overleaf.com/read/rrhpmydtbkhr)
+- [Technical Installation Guide](https://www.overleaf.com/read/khvhcnhhyzym)
 
 ### Links for Demo Videos
 
@@ -59,7 +60,7 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 - [Demo 2 Recording - 24 July 2020](https://youtu.be/xQSGfRS1p_s)
 
 ### Link to our Website
-- [Fake News Detector](http://fakenewsdetector.tech/)
+- [ArtiFact](http://142.93.251.101/)
 
 <a name="team"></a>
 ### Team Members

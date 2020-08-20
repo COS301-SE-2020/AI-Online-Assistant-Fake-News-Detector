@@ -5,7 +5,11 @@
   }
 
 footer{
-	background-color:  #303030;;
+	background-color:  #222;
+}
+
+#footerText{
+	color: white;
 }
 
 body{

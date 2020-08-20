@@ -9,6 +9,7 @@ const Logger = require("../../winston");
 const logger = new Logger(api);
 const fs = require("fs");
 const shell = require("shelljs");
+const { response } = require("express");
 const nn_server = [];
 
 const getRequest = (_host, _path, _port, callBack) => {
@@ -171,19 +172,23 @@ const validateUser = (token, callBack) => {
 
       getRequest(
         "localhost",
-        "/moderators/id/" + decode.id,
+        "/Users/id/" + decode.id,
         3000,
         (statusCode, response) => {
           if (
-            response.response.Moderator.ID === decode.id &&
-            response.response.Moderator["Authentication Level"] == 2
+            response.response.User !== undefined &&
+            response.response.User.ID === decode.id &&
+            response.response.User["Authentication Level"] == 3
           )
             callBack(true);
           else if (
-            response.response.Moderator.ID === decode.id &&
-            response.response.Moderator["Authentication Level"] == 1
+            response.response.User !== undefined &&
+            response.response.User.ID === decode.id &&
+            (response.response.User["Authentication Level"] == 1 ||
+              response.response.User["Authentication Level"] == 2)
           )
             callBack(false);
+          else callBack(false);
         }
       );
     });
@@ -390,11 +395,11 @@ api.delete("/facts/:factId", (req, res, next) => {
 });
 
 /**
- * @description API call to fetch all moderators.
+ * @description API call to fetch all Users.
  * @author Stuart Barclay
  */
 
-api.get("/moderators", (req, res, next) => {
+api.get("/Users", (req, res, next) => {
   let token = req.headers["x-access-token"];
   if (!token)
     return res.status(401).json({
@@ -414,7 +419,7 @@ api.get("/moderators", (req, res, next) => {
         },
       });
 
-    getRequest("localhost", "/moderators", 3000, (statusCode, response) => {
+    getRequest("localhost", "/Users", 3000, (statusCode, response) => {
       if (statusCode == 500) next(response);
       else res.status(statusCode).json(response);
     });
@@ -426,43 +431,50 @@ api.get("/moderators", (req, res, next) => {
  * @author Stuart Barclay
  */
 
-api.post("/moderators", (req, res, next) => {
-  let token = req.headers["x-access-token"];
-  if (!token)
-    return res.status(401).json({
-      response: {
-        message: "Not authorised",
-        success: false,
-      },
-    });
-
-  validateUser(token, (valid, statusCode, response) => {
-    if (!valid && statusCode === 500) next(response);
-    else if (!valid)
-      return res.status(401).json({
-        response: {
-          message: "Not authorised",
-          success: false,
-        },
-      });
-    let requestBody = "";
-    try {
-      requestBody = JSON.stringify(req.body);
-    } catch (e) {
-      let error = new Error(e.message);
-      error.status = 500;
-      return next(error);
+api.post("/Users/register", (req, res, next) => {
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    return next(error);
+  }
+  postRequest(
+    "localhost",
+    "/Users/register",
+    3000,
+    requestBody,
+    (statusCode, response) => {
+      res.status(statusCode).json(response);
     }
-    postRequest(
-      "localhost",
-      "/moderators",
-      3000,
-      requestBody,
-      (statusCode, response) => {
-        res.status(statusCode).json(response);
-      }
-    );
-  });
+  );
+});
+
+/**
+ * @description API call to request moderator access
+ * @author Stuart Barclay
+ */
+
+api.post("/Users/requestModeratorAccess", (req, res, next) => {
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    return next(error);
+  }
+  postRequest(
+    "localhost",
+    "/api/sendEmail",
+    8080,
+    requestBody,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    }
+  );
 });
 
 /**
@@ -470,7 +482,7 @@ api.post("/moderators", (req, res, next) => {
  * @author Stuart Barclay
  */
 
-api.post("/moderators/login", (req, res, next) => {
+api.post("/Users/login", (req, res, next) => {
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -481,7 +493,7 @@ api.post("/moderators/login", (req, res, next) => {
   }
   postRequest(
     "localhost",
-    "/moderators/login",
+    "/Users/login",
     3000,
     requestBody,
     (statusCode, response) => {
@@ -496,7 +508,7 @@ api.post("/moderators/login", (req, res, next) => {
   );
 });
 
-api.get("/moderators/emailAddress/:emailAddress", (req, res, next) => {
+api.get("/Users/emailAddress/:emailAddress", (req, res, next) => {
   let token = req.headers["x-access-token"];
   if (!token)
     return res.status(401).json({
@@ -518,7 +530,7 @@ api.get("/moderators/emailAddress/:emailAddress", (req, res, next) => {
 
     getRequest(
       "localhost",
-      "/moderators/emailAddress/" + req.params.emailAddress,
+      "/Users/emailAddress/" + req.params.emailAddress,
       3000,
       (statusCode, response) => {
         if (statusCode == 500) next(response);
@@ -528,7 +540,7 @@ api.get("/moderators/emailAddress/:emailAddress", (req, res, next) => {
   });
 });
 
-api.get("/moderators/id/:moderatorId", (req, res, next) => {
+api.get("/Users/id/:moderatorId", (req, res, next) => {
   let token = req.headers["x-access-token"];
   if (!token)
     return res.status(401).json({
@@ -548,10 +560,9 @@ api.get("/moderators/id/:moderatorId", (req, res, next) => {
         },
       });
 
-    /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
     getRequest(
       "localhost",
-      "/moderators/" + req.params.emailAddress,
+      "/Users/" + req.params.emailAddress,
       3000,
       (statusCode, response) => {
         if (statusCode == 500) next(response);
@@ -561,7 +572,7 @@ api.get("/moderators/id/:moderatorId", (req, res, next) => {
   });
 });
 
-api.put("/moderators/:emailAddress", (req, res, next) => {
+api.put("/Users/:emailAddress", (req, res, next) => {
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -572,7 +583,7 @@ api.put("/moderators/:emailAddress", (req, res, next) => {
   }
   putRequest(
     "localhost",
-    "/moderators/" + req.params.emailAddress,
+    "/Users/" + req.params.emailAddress,
     3000,
     requestBody,
     (statusCode, response) => {
@@ -582,7 +593,7 @@ api.put("/moderators/:emailAddress", (req, res, next) => {
   );
 });
 
-api.delete("/moderators/:emailAddress", (req, res, next) => {
+api.delete("/Users/:emailAddress", (req, res, next) => {
   let token = req.headers["x-access-token"];
   if (!token)
     return res.status(401).json({
@@ -603,7 +614,7 @@ api.delete("/moderators/:emailAddress", (req, res, next) => {
       });
     deleteRequest(
       "localhost",
-      "/moderators/" + encodeURI(req.params.emailAddress),
+      "/Users/" + encodeURI(req.params.emailAddress),
       3000,
       (statusCode, response) => {
         res.status(statusCode).json(response);
@@ -632,12 +643,14 @@ api.get("/reports/update", (req, res, next) => {
           report["ID"] !== prevReport["ID"]
         ) {
           ++prevReport["Report Count"];
+          prevReport["Reported By"].push(report["Reported By"][0]);
           putRequest(
             "localhost",
             "/api/reports/id/" + prevReport["ID"],
             8080,
             JSON.stringify({
               reportCount: prevReport["Report Count"],
+              reportedBy: prevReport["reportedBy"],
             }),
             (statusCode, _data) => {}
           );
@@ -699,7 +712,6 @@ api.post("/reports", (req, res, next) => {
 });
 
 api.get("/reports/id/:id", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   getRequest(
     "localhost",
     "/reports/id/" + req.params.id,
@@ -712,7 +724,6 @@ api.get("/reports/id/:id", (req, res, next) => {
 });
 
 api.get("/reports/active/:active", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   getRequest(
     "localhost",
     "/reports/active/" + req.params.active,
@@ -725,7 +736,6 @@ api.get("/reports/active/:active", (req, res, next) => {
 });
 
 api.get("/reports/type/:type", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   getRequest(
     "localhost",
     "/reports/type/" + req.params.type,
@@ -738,7 +748,6 @@ api.get("/reports/type/:type", (req, res, next) => {
 });
 
 api.put("/reports/id/:id", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -760,7 +769,6 @@ api.put("/reports/id/:id", (req, res, next) => {
 });
 
 api.put("/reports/active/:active", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -782,7 +790,6 @@ api.put("/reports/active/:active", (req, res, next) => {
 });
 
 api.put("/reports/type/:type", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -804,7 +811,6 @@ api.put("/reports/type/:type", (req, res, next) => {
 });
 
 api.delete("/reports/id/:id", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   deleteRequest(
     "localhost",
     "/reports/id/" + req.params.id,
@@ -816,7 +822,6 @@ api.delete("/reports/id/:id", (req, res, next) => {
 });
 
 api.delete("/reports/active/:active", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   deleteRequest(
     "localhost",
     "/reports/active/" + req.params.active,
@@ -828,7 +833,6 @@ api.delete("/reports/active/:active", (req, res, next) => {
 });
 
 api.post("/verify", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -935,7 +939,6 @@ api.post("/training/range", (req, res, next) => {
 // Creates a new training entry
 
 api.post("/training", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -956,7 +959,6 @@ api.post("/training", (req, res, next) => {
 });
 
 api.delete("/training/:trainingId", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   deleteRequest(
     "localhost",
     "/training/" + req.params.trainingId,
@@ -975,7 +977,6 @@ api.get("/nnModels", (req, res, next) => {
 });
 
 api.post("/nnModels", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   let requestBody = "";
   try {
     requestBody = JSON.stringify(req.body);
@@ -1008,7 +1009,6 @@ api.get("/nnModels/:modelName", (req, res, next) => {
 });
 
 api.delete("/nnModels/:modelId", (req, res, next) => {
-  /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
   deleteRequest(
     "localhost",
     "/nnModels/" + req.params.modelId,
@@ -1026,11 +1026,9 @@ api.get("/start/:port", (req, res, next) => {
       "python nn_server.py " + req.params.port,
       (err, stdout, stderr) => {
         if (err) throw new Error(err);
-        // if (stdout.search("127.0.0.1:" + req.params.port) !== -1) {
         logger.info("New nn_server image created on port " + req.params.port);
         nn_server.push({ port: Number(req.params.port), busy: false });
         res.sendStatus(204);
-        // }
       }
     );
     nn_server.push({ port: Number(req.params.port), busy: false });
@@ -1040,8 +1038,45 @@ api.get("/start/:port", (req, res, next) => {
 });
 
 api.get("/close/:port", (req, res, next) => {
-  logger.info("Closing nn_server images");
-  res.sendStatus(501);
+  logger.info("Closing nn_server image on port " + req.params.port);
+  postRequest(
+    "localhost",
+    "/shutdown",
+    req.params.port,
+    "",
+    (statusCode, response) => {
+      if (statusCode == 200) {
+        let index = nn_server.findIndex((ele, i) => {
+          if (ele.port == req.params.port) return i;
+        });
+        try {
+          nn_server.splice(index, 1);
+          res.sendStatus(statusCode).json(response);
+        } catch (error) {}
+      } else {
+        next(response);
+      }
+    }
+  );
+});
+
+api.post("/sendEmail", (req, res, next) => {
+  config.transporter.sendMail(
+    {
+      from: "Artifact<" + config.emailAddress + ">",
+      to: req.body.to,
+      subject: req.body.subject,
+      text: req.body.body,
+    },
+    (error, info) => {
+      if (error) {
+        next(error);
+      } else {
+        logger.info("Email sent: " + info.response);
+        res.sendStatus(204);
+      }
+    }
+  );
 });
 
 /**

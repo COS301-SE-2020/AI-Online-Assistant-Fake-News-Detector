@@ -14,7 +14,7 @@ export class FactslistService {
 
   constructor(private http: HttpClient) { }
 
-  url = 'http://fakenewsdetector.tech/api/facts/';
+  url = 'http://54.172.96.111:8080/api/facts/';
 
   getFactsList(){
     return this.http.get(this.url).

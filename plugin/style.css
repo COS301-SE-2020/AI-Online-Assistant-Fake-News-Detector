@@ -1,0 +1,176 @@
+body{
+    justify-content: center;
+    align-items: center;
+    background-color: #333333;
+    min-width: 20em;
+}
+h1{
+    color: #E0115F;
+    text-align: center;
+    text-shadow: 2px 2px 5px #222;
+    text-decoration-style: solid;
+}
+h3{
+    color: #DDD;
+    text-align: center;
+}
+h4{
+    color: #AAA;
+    text-align: center;
+}
+input[type=text] {
+    padding: 5px;
+    box-sizing: border-box;
+    border: 2px solid #333;
+    border-radius: 4px;
+    background-color: #555555;
+    resize: none;
+    color: #DDD;
+    margin-bottom: 1em;
+    width: 100%;
+}
+input[type=text]:focus {
+    border: 2px solid #333;
+    background-color: #555;
+}
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #E0115F;
+    border: none;
+    color: #DDD;
+    padding: 0.5em;
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+    font-weight: 700;
+}
+label{
+    color: #DDD;
+}
+  /* Reset Select */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0 !important;
+    background: #222;
+    background-image: none;
+  }
+  /* Remove IE arrow */
+select::-ms-expand {
+    display: none;
+}
+  /* Custom Select */
+.pluginOptions {
+    position: relative;
+    display: flex;
+    width: 100%;
+    min-width: 13em;
+    height: 2em;
+    background: #222;
+    overflow: hidden;
+    border-radius: .25em;
+    margin-bottom: 1em;
+}
+select {
+  flex: 1;
+  padding: 0 .5em;
+    color: #fff;
+    cursor: pointer;
+  }
+  #slct option{
+    background-color: #333;
+}
+
+/* block-$ */
+.block-effect {
+    font-size: calc(8px + 6vw);
+  }
+  
+  .block-reveal {
+    --t: calc(var(--td) + var(--d));
+    
+    color: transparent;
+    padding: 4px;
+    
+    position: relative;
+    overflow: hidden;
+    
+    animation: revealBlock 0s var(--t) forwards;
+  }
+  
+  .block-reveal::after {
+    content: '';
+    
+    width: 0%;
+    height: 100%;
+    padding-bottom: 4px;
+  
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    background: var(--bc);
+    animation: revealingIn var(--td) var(--d) forwards, revealingOut var(--td) var(--t) forwards;
+  }
+  
+  
+  /* animations */
+  @keyframes revealBlock {
+    100% {
+      color: #E0115F;
+    }
+  }
+  
+  @keyframes revealingIn {
+    
+    0% {
+      width: 0;
+    }
+  
+    100% {
+      width: 100%;
+    }
+  }
+  
+  @keyframes revealingOut {
+    
+    0% {
+      transform: translateX(0);
+    }
+    
+    100% {
+      transform: translateX(100%);
+    }
+    
+  }
+  
+  .abs-site-link {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    color: hsla(0, 0%, 0%, .6);
+    font-size: 16px;
+  }
+  .output{
+    background-color: #222;
+    padding: 0.3em;
+    margin-bottom: 1em;
+  }
+  a{
+    color: #E0115F;
+    text-decoration: none;
+  }
+.reportOptions {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-width: 13em;
+  height: 2em;
+  background: #222;
+  overflow: hidden;
+  border-radius: .25em;
+  margin-bottom: 1em;
+}

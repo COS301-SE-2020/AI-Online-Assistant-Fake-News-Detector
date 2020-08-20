@@ -44,6 +44,7 @@ export class ModerateComponent implements OnInit {
   clearInsertSourceName: string;
   clearUrl: string;
   clearInsertFactStatement: string;
+  ratingString:string;
 
   constructor(private factslistService: FactslistService, private _factinputService: FactInputService, private _sourceinputService: SourceInputService,
     private searchService: SearchSourceService ,public http: HttpClient, private _deleteService: DeleteSourceService,
@@ -111,8 +112,8 @@ export class ModerateComponent implements OnInit {
           return this.autocompleteService.getData()
           .pipe(
             map( 
-              response => response.sources.filter(option => { 
-              return option.name.toLowerCase().indexOf(val.toLowerCase()) === 0
+              response => response.response.Sources.filter(option => { 
+              return option.Name.toLowerCase().indexOf(val.toLowerCase()) === 0
             }))
           )
         }  
@@ -128,7 +129,7 @@ export class ModerateComponent implements OnInit {
 
         this.searchService.search(this.SourceInputForm.value.SourceName).
         subscribe((data: any={}) =>{
-            this.sourcelist = data;
+            this.sourcelist = data.response.Source;
             this.dismiss=true;
 
             //this.testSearch=true;
@@ -156,7 +157,7 @@ export class ModerateComponent implements OnInit {
           .getFactsList()
           .subscribe((data:any) => {
             console.log(data);
-            this.factslist = data.facts;
+            this.factslist = data.response.Facts;
           });
         }
       /* end of fetch list function */ 
@@ -225,7 +226,7 @@ export class ModerateComponent implements OnInit {
 
         if(this.SourceInputForm.valid){
           this.SourceInputForm.reset();
-          this.sourcelist.source = "";
+          this.sourcelist = "";
           this.searchNotFound = false;
         }
         
@@ -246,5 +247,41 @@ export class ModerateComponent implements OnInit {
     }
   /* End of function that clears response cards */
 
+  /* Checks the rating of a fact's popularity and determines the class*/
+      checkRatingHigh(rating: number){
+        
+        if(rating > 70){
+            return true;
+        }else{
+          return false;
+        }
+      }
+
+      checkRatingMed(rating: number){
+        
+        if(rating > 40 && rating < 70){
+            return true;
+        }else{
+          return false;
+        }
+      }
+
+      checkRatingLow(rating: number){
+        
+        if(rating < 40 && rating > 0){
+            return true;
+        }else{
+          return false;
+        }
+      }
+
+  /* End of rating checker*/
+
+  /* Convert passed in fact popularity plain number to string */
+  convertRating(rating: number){
+    this.ratingString = rating.toString() + "%";
+    return this.ratingString;
+  }
+  /* end of rating conversion */
 
 }

@@ -6,19 +6,19 @@ const logger = new Logger(router);
 const Moderator = require("../models/moderator");
 
 /**
- * @description get request to return all moderators
+ * @description get request to return all Users
  * @author Stuart Barclay
  */
 router.get("/", (req, res, next) => {
   Moderator.find()
     .select("_id fName lName emailAddress authenticationLevel")
     .exec()
-    .then((moderators) => {
+    .then((Users) => {
       const response = {
         response: {
           success: true,
-          count: moderators.length,
-          Moderators: moderators.map((moderator) => {
+          count: Users.length,
+          Users: Users.map((moderator) => {
             return {
               ID: moderator._id,
               Name: moderator.fName + " " + moderator.lName,
@@ -39,41 +39,61 @@ router.get("/", (req, res, next) => {
  * @description post request to create a new moderator
  * @author Stuart Barclay
  */
-router.post("/", (req, res, next) => {
-  bcrypt.hash(req.body.password, 6, (err, hash) => {
-    if (err) throw err;
-    const moderator = new Moderator({
-      _id: new mongoose.Types.ObjectId(),
-      emailAddress: req.body.emailAddress,
-      password: hash,
-      fName: req.body.fName,
-      lName: req.body.lName,
-      phoneNumber: req.body.phoneNumber,
-    });
-    moderator["authenticationLevel"] =
-      req.body.authenticationLevel !== "" ? req.body.authenticationLevel : "";
-    moderator
-      .save()
-      .then((result) => {
-        logger.info("Moderator was created.");
-        res.status(201).json({
+router.post("/register", (req, res, next) => {
+  Moderator.findOne(
+    { emailAddress: new RegExp(req.body.emailAddress, "i") },
+    "_id"
+  )
+    .exec()
+    .then((doc) => {
+      if (doc === null) {
+        bcrypt.hash(req.body.password, 6, (err, hash) => {
+          if (err) throw err;
+          const moderator = new Moderator({
+            _id: new mongoose.Types.ObjectId(),
+            emailAddress: req.body.emailAddress,
+            password: hash,
+            fName: req.body.fName,
+            lName: req.body.lName,
+            phoneNumber: req.body.phoneNumber,
+          });
+          moderator["authenticationLevel"] =
+            req.body.authenticationLevel !== ""
+              ? req.body.authenticationLevel
+              : "";
+          moderator
+            .save()
+            .then((result) => {
+              logger.info("User was created.");
+              res.status(201).json({
+                response: {
+                  message: "User created successfully",
+                  success: true,
+                  User: {
+                    ID: result.id,
+                    Name: result.fName + " " + result.lName,
+                    "Email Address": result.emailAddress,
+                    "Phone Number": result.phoneNumber,
+                    "Authentication Level": result.authenticationLevel,
+                  },
+                },
+              });
+            })
+            .catch((err) => {
+              res
+                .status(500)
+                .json({ response: { message: err, success: false } });
+            });
+        });
+      } else {
+        res.status(200).json({
           response: {
-            message: "Moderator created successfully",
-            success: true,
-            Moderator: {
-              ID: result.id,
-              Name: result.fName + " " + result.lName,
-              "Email Address": result.emailAddress,
-              "Phone Number": result.phoneNumber,
-              "Authentication Level": result.authenticationLevel,
-            },
+            message: "User already registered",
+            success: false,
           },
         });
-      })
-      .catch((err) => {
-        res.status(500).json({ response: { message: err, success: false } });
-      });
-  });
+      }
+    });
 });
 
 /**
@@ -81,9 +101,8 @@ router.post("/", (req, res, next) => {
  * @author Stuart Barclay
  */
 router.get("/emailAddress/:emailAddress", (req, res, next) => {
-  const id = req.params.emailAddress;
   Moderator.findOne(
-    { emailAddress: id },
+    { emailAddress: new RegExp(req.params.emailAddress, "i") },
     "_id fName lName emailAddress phoneNumber authenticationLevel"
   )
     .exec()
@@ -91,9 +110,9 @@ router.get("/emailAddress/:emailAddress", (req, res, next) => {
       if (doc) {
         res.status(200).json({
           response: {
-            message: "Retrieved moderator successfully",
+            message: "Retrieved user successfully",
             success: true,
-            Moderator: {
+            User: {
               ID: doc._id,
               Name: doc.fName + " " + doc.lName,
               "Email Address": doc.emailAddress,
@@ -131,9 +150,9 @@ router.get("/id/:moderatorId", (req, res, next) => {
       if (doc) {
         res.status(200).json({
           response: {
-            message: "Retrieved moderator successfully",
+            message: "Retrieved user successfully",
             success: true,
-            Moderator: {
+            User: {
               ID: doc._id,
               Name: doc.fName + " " + doc.lName,
               "Email Address": doc.emailAddress,
@@ -157,24 +176,26 @@ router.get("/id/:moderatorId", (req, res, next) => {
 });
 
 /**
- * @description put request to update a moderators details based on the moderators ID
+ * @description put request to update a Users details based on the Users ID
  * @author Stuart Barclay
  */
 router.put("/:emailAddress", (req, res, next) => {
-  const id = req.params.emailAddress;
   if (req.body.password !== undefined && req.body.password !== null) {
     // 6 = salt length
     bcrypt.hash(req.body.password, 6, (err, hash) => {
       req.body.password = hash;
-      Moderator.updateOne({ emailAddress: id }, { $set: req.body })
+      Moderator.updateOne(
+        { emailAddress: new RegExp(req.params.emailAddress, "i") },
+        { $set: req.body }
+      )
         .exec()
         .then((result) => {
-          logger.info("Moderator was Updated.");
+          logger.info("User was updated.");
           // Entry found and modified
           if (result.nModified > 0 && result.n > 0) {
             res.status(200).json({
               response: {
-                message: "Moderator details updated",
+                message: "User details updated",
                 success: true,
               },
             });
@@ -201,15 +222,18 @@ router.put("/:emailAddress", (req, res, next) => {
         });
     });
   } else {
-    Moderator.updateOne({ emailAddress: id }, { $set: req.body })
+    Moderator.updateOne(
+      { emailAddress: new RegExp(req.params.emailAddress, "i") },
+      { $set: req.body }
+    )
       .exec()
       .then((result) => {
-        logger.info("Moderator was Updated.");
+        logger.info("User was updated.");
         // Entry found and modified
         if (result.nModified > 0 && result.n > 0) {
           res.status(200).json({
             response: {
-              message: "Moderator details updated",
+              message: "User details updated",
               success: true,
             },
           });
@@ -242,21 +266,23 @@ router.put("/:emailAddress", (req, res, next) => {
  * @author Stuart Barclay
  */
 router.delete("/:emailAddress", (req, res, next) => {
-  Moderator.deleteOne({ emailAddress: decodeURI(req.params.emailAddress) })
+  Moderator.deleteOne({
+    emailAddress: new RegExp(decodeURI(req.params.emailAddress), "i"),
+  })
     .exec()
     .then((result) => {
-      logger.info("Moderator was Deleted.");
+      logger.info("User was deleted.");
       if (result.deletedCount > 0)
         res.status(200).json({
           response: {
-            message: "Moderator deleted successfully",
+            message: "User deleted successfully",
             success: true,
           },
         });
       else
         res.status(404).json({
           response: {
-            message: "Moderator not deleted",
+            message: "User not deleted",
             success: false,
           },
         });
@@ -272,7 +298,7 @@ router.delete("/:emailAddress", (req, res, next) => {
  */
 router.post("/login", (req, res, next) => {
   Moderator.findOne(
-    { emailAddress: req.body.emailAddress },
+    { emailAddress: new RegExp(req.body.emailAddress, "i") },
     "_id emailAddress password"
   )
     .exec()

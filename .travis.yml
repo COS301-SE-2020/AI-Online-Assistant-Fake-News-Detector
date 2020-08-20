@@ -11,6 +11,6 @@ install: npm install
 notifications:
   email:
     recipients:
-      - u15015069@tuks.co.za
+      - u14272289@tuks.co.za
     on_success: never # default: change
     on_failure: always # default: always

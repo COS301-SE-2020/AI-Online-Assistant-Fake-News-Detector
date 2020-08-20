@@ -9,18 +9,17 @@ const logger = new Logger(server);
 const cors = require("cors");
 const API = require("./routes/APIv1");
 const fs = require("fs");
-const SwaggerUi = require(__dirname +
-  "/routes/swagger-ui-dist").getAbsoluteFSPath();
+const ExternalDocs = require(__dirname +
+  "/routes/ExternalDocs").getAbsoluteFSPath();
+const InternalDocs = require(__dirname +
+  "/routes/InternalDocs").getAbsoluteFSPath();
 const path = require("path");
 const root = require("../Util/path");
 const cron = require("node-cron");
 const http = require("http");
 const morganFormat =
   "[:date] :remote-addr - :remote-user :method :url HTTP/:http-version :status :response-time ms";
-const uri =
-  process.env.NODE_ENV != "dev"
-    ? process.env.production_uri
-    : process.env.development_uri;
+require("dotenv").config({ path: path.join(root, ".env") });
 
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
@@ -67,6 +66,26 @@ cron.schedule("55 23 * * *", () => {
   getRequest("localhost", "/api/reports/update", 8080, () =>
     logger.info("Cron job for updating reports ran.")
   );
+});
+
+cron.schedule("58 23 * * 0", () => {
+  // cron.schedule("55 * * * * * ", () => {
+  getRequest(
+    "localhost",
+    "/api/reports/active/1",
+    8080,
+    (statusCode, response) => {
+      response.response.Reports.forEach((ele) => {
+        console.log(ele.Type);
+      });
+    }
+  );
+  /**
+   * 1. Fetch all active reports
+   * 2. Send email to notification all provided emails
+   * 3. Add reported item to main fact/source table if count > 3
+   * 4. Reset count to 1 and deactivate
+   */
 });
 
 morgan.token("date", (req, res, tz) => {
@@ -130,7 +149,8 @@ if (process.env.NODE_ENV === "production") {
   );
 } else server.use(morgan("dev"));
 
-server.use("/API-Documents", express.static(SwaggerUi));
+server.use("/API-Documents", express.static(ExternalDocs));
+server.use("/API-Internal-Documents", express.static(InternalDocs));
 server.use("/API", API);
 server.use("/", express.static(path.join(root, "frontend", "dist", "AiNews")));
 server.use("*", (req, res, next) => {
@@ -139,8 +159,14 @@ server.use("*", (req, res, next) => {
     .sendFile(path.join(root, "frontend", "dist", "AiNews", "index.html"));
 });
 
-let listener = server.listen(port, () => {
-  logger.info("API_Server listening on port " + listener.address().port);
+const listener = server.listen(port, () => {
+  logger.info(
+    "API_Server listening on port " +
+      listener.address().port +
+      ". Environment: " +
+      process.env.NODE_ENV +
+      "."
+  );
   if (process.env.NODE_ENV === "production")
     [8090, 8091, 8092].forEach((e) =>
       getRequest(

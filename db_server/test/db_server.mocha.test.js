@@ -4,7 +4,7 @@ const chai = require("chai");
 process.env.NODE_ENV = "dev";
 const server = require("../db_server");
 const { expect } = require("chai");
-const { response } = require("../../api_server/api_server");
+const { response, resource } = require("../../api_server/api_server");
 
 //Assertion Style
 chai.should();
@@ -294,13 +294,13 @@ describe("Facts Api", () => {
   });
 });
 /////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////   MODERATORS  ///////////////////////////////////
+///////////////////////////////////   Users  ///////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-// describe("Moderators Api", () => {
+// describe("Users Api", () => {
 //   it("It should add a Moderator to the database", function (done) {
 //     chai
 //       .request(server)
-//       .post("/Moderators")
+//       .post("/Users")
 //       .send({
 //         emailAddress: "5Bits@gmail.com",
 //         password: "Stuart",
@@ -320,17 +320,17 @@ describe("Facts Api", () => {
 //         done();
 //       });
 //   });
-//   it("It should get all moderators from the database", (done) => {
+//   it("It should get all Users from the database", (done) => {
 //     chai
 //       .request(server)
-//       .get("/Moderators")
+//       .get("/Users")
 //       .end((err, response) => {
 //         expect(err).to.be.null;
 //         response.should.have.status(200);
 //         response.body.should.be.a("object");
-//         response.body.response.Moderators[0].should.have.property("ID");
-//         response.body.response.Moderators[0].should.have.property("Name");
-//         response.body.response.Moderators[0].should.have.property(
+//         response.body.response.Users[0].should.have.property("ID");
+//         response.body.response.Users[0].should.have.property("Name");
+//         response.body.response.Users[0].should.have.property(
 //           "Email Address"
 //         );
 //         done();
@@ -340,17 +340,17 @@ describe("Facts Api", () => {
 //   it("It should get a specific moderator based on email", (done) => {
 //     chai
 //       .request(server)
-//       .get("/Moderators")
+//       .get("/Users")
 //       .end((err, res) => {
 //         chai
 //           .request(server)
 //           .get(
-//             "/Moderators/" + res.body.response.Moderators[0]["Email Address"]
+//             "/Users/" + res.body.response.Users[0]["Email Address"]
 //           )
 //           .end((err, response) => {
 //             response.should.have.status(200);
 //             response.body.response.Moderator.Name.should.equal(
-//               res.body.response.Moderators[0]["Name"]
+//               res.body.response.Users[0]["Name"]
 //             );
 //             done();
 //           });
@@ -359,13 +359,13 @@ describe("Facts Api", () => {
 //   it("It should delete a single moderator from the database", function (done) {
 //     chai
 //       .request(server)
-//       .get("/Moderators")
+//       .get("/Users")
 //       .end((err, responder) => {
 //         chai
 //           .request(server)
 //           .delete(
-//             "/Moderators/" +
-//               responder.body.response.Moderators[
+//             "/Users/" +
+//               responder.body.response.Users[
 //                 responder.body.response.count - 1
 //               ]["Email Address"]
 //           )
@@ -530,28 +530,30 @@ describe("nnModels Api", () => {
 ////////////////////////////////////   TRAINING  ////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 describe("Training Api", () => {
-  it("It should add a Training Record to the database", function (done) {
-    chai
-      .request(server)
-      .post("/Training")
-      .send({
-        article: "Fake news mocha test article",
-        fake: true,
-      })
-      .end(function (err, res) {
-        res.should.have.status(201);
-        res.should.be.json;
-        res.body.should.be.a("object");
-        res.body.response.should.have.property("message");
-        res.body.response.trainingRecord.should.be.a("object");
-        res.body.response.trainingRecord.should.have.property("ID");
-        done();
-      });
-  });
+  for (let counter = 0; counter < 3; counter++) {
+    it("It should add a Training Record to the database", function (done) {
+        chai
+          .request(server)
+          .post("/Training")
+          .send({
+            article: "Fake news mocha test article",
+            fake: true,
+          })
+          .end(function (err, res) {
+            res.should.have.status(201);
+            res.should.be.json;
+            res.body.should.be.a("object");
+            res.body.response.should.have.property("message");
+            res.body.response.trainingRecord.should.be.a("object");
+            res.body.response.trainingRecord.should.have.property("ID");
+            done();
+          });
+        });
+  }
   it("It should get all Training Data", (done) => {
-    chai
-      .request(server)
-      .get("/Training")
+        chai
+        .request(server)
+        .get("/Training")
       .end((err, res) => {
         expect(err).to.be.null;
         res.should.have.status(200);
@@ -565,22 +567,75 @@ describe("Training Api", () => {
         done();
       });
   });
+  it("It should get a range of training data containing the first 2 records", function (done) {
+      const range = {
+        start: 0,
+        amount: 2,
+      };
+      chai
+        .request(server)
+        .post("/Training/range/")
+        .send(range)
+        .end(function (err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a("object");
+          res.body.response.should.have.property("message");
+          done();
+        });
+    });
+    it("It should fail to get a range due to negative index", function (done) {
+      const range = {
+        start: -1,
+        amount: 2,
+      };
+      chai
+        .request(server)
+        .post("/Training/range/")
+        .send(range)
+        .end(function (err, res) {
+          res.should.have.status(404);
+          res.should.be.json;
+          res.body.should.be.a("object");
+          res.body.response.should.have.property("message");
+          done();
+        });
+    });  
+    it("It should fail to get a range due to going over the top bound", function (done) {
+      const range = {
+        start: 0,
+        amount: 20,
+      };
+      chai
+        .request(server)
+        .post("/Training/range/")
+        .send(range)
+        .end(function (err, res) {
+          res.should.have.status(404);
+          res.should.be.json;
+          res.body.should.be.a("object");
+          res.body.response.should.have.property("message");
+          done();
+        });
+    });  
+  for (let counter = 0; counter < 3; counter++) {
   it("It should delete a Training Record based on ID", function (done) {
-    chai
+      chai
       .request(server)
       .get("/Training")
       .end((err, responder) => {
-        chai
-          .request(server)
-          .delete("/Training/" + responder.body.response.TrainingData[0].ID)
-          .end(function (error, res) {
-            res.should.have.status(200);
-            res.should.be.json;
-            res.body.should.be.a("object");
-            res.body.response.should.have.property("message");
-            res.body.response.message.should.be.eql("Training Record deleted");
-            done();
+          chai
+            .request(server)
+            .delete("/Training/" + responder.body.response.TrainingData[0].ID)
+            .end(function (error, res) {
+              res.should.have.status(200);
+              res.should.be.json;
+              res.body.should.be.a("object");
+              res.body.response.should.have.property("message");
+              res.body.response.message.should.be.eql("Training Record deleted");
+              done();
+            });
           });
-      });
-  });
+        });
+        }
 });
