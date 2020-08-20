@@ -64,6 +64,7 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 
 - [Demo 1 Recording - 12 June 2020](https://youtu.be/cnF3ivkuhQc)
 - [Demo 2 Recording - 24 July 2020](https://youtu.be/xQSGfRS1p_s)
+- [Demo 3 Recording - 20 August 2020](https://youtu.be/MFLxKsOJi-U)
 
 ### Link to our Website
 
@@ -74,7 +75,7 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 ### Team Members
 
 | Profile                                              | Student Nr. | Description                                                                                                                                                                       |
-| ---------------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|------------------------------------------------------|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [Stuart Barclay](https://stuey61296.github.io/)      | 15015069    | Outgoing, always willing to help and committed. I am a BIT student that loves to learn! I prefer working with backend technologies but love the challenge of a front-end as well. |
 | [Quinton Coetzee](https://quintoncoetzee.github.io/) | 18028510    | Passionate BIT student skilled at both back-end and front-end. Interests include _Artificial Intellegence_, _Photography_ and _Graphic Design_.                                   |
 | [Alistair Payn](https://alistairpaynup.github.io/)   | 14272289    | Computer science student with a passion for geology and geology student with a passion for computer science.                                                                      |
