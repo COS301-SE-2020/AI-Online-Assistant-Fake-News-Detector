@@ -60,7 +60,7 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 - [Demo 2 Recording - 24 July 2020](https://youtu.be/xQSGfRS1p_s)
 
 ### Link to our Website
-- [Fake News Detector](http://fakenewsdetector.tech/)
+- [ArtiFact](http://142.93.251.101/)
 
 <a name="team"></a>
 ### Team Members
