@@ -1,18 +1,30 @@
 @font-face {
-    font-family: LogoHeading;
-    src: url("/assets/fonts/aquire-font/AquireLight-YzE0o.otf") format("truetype");
+	font-family: LogoHeading;
+	src: url("/assets/fonts/aquire-font/AquireLight-YzE0o.otf") format("truetype");
 }
 
-.logoHead{
+#navbar {
+	position: sticky;
+
+	/* make this bottom : 0 for bottom nav bar */
+	top: 0;
+
+	left: 0;
+	z-index: 9999;
+	width: 100%;
+	height: 50px;
+}
+
+.logoHead {
 	font-family: LogoHeading;
 }
 
-#heading_link{
+#heading_link {
 	font-weight: 400;
 }
 
 img {
-	max-width: 20%;
+	max-width: 30%;
 	height: auto;
 	padding: 0px, 0px;
 	margin: 0px, 0px;
@@ -25,11 +37,6 @@ a {
 	/* padding-right: 30px; */
 	font-size: 1em;
 }
-
-/* .navbar-brand {
-	margin: 0;
-	padding-right: 0;
-} */
 
 #navbrand {
 	height: 100%;
@@ -44,15 +51,10 @@ a:visited {
 	color: inherit;
 }
 
-/* nav {
+nav {
 	height: 7em;
-	padding-bottom: 0;
-} */
-
-.spacer {
-	flex: 1 1 auto;
 }
 
 .menu-spacer {
 	flex: 1 1 auto;
-  }
+}
