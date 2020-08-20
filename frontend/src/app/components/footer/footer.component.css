@@ -5,21 +5,15 @@ footer {
 }
 /* Footer Logo Alignment */
 #FooterLogo {
-	display: inline-flexbox;
 	width: 100%;
 	text-align: center;
 	margin-top: 0%;
 	margin-bottom: 0%;
 	padding: 0%;
 }
-
-img {
-	max-width: 5%;
-	height: auto;
-	margin-bottom: 0em;
+#footerText {
+	font-size: 0.6em;
 }
-
 p {
-	padding-top: 10px;
 	font-size: 1.3em;
 }
