@@ -1,1 +1,21 @@
-<button mat-icon-button (click)="download()"><mat-icon>get_app</mat-icon> </button>
+<button matTooltip="Download Chrome Extension"
+        matTooltipPosition ="below"
+        matTooltipHideDelay="2500"
+        aria-label="Button that displays a tooltip when the user agent is desktop Chrome"
+        mat-icon-button
+        *ngIf="!this.isMobile; else elseBlock"
+        (click)="download()">
+        <mat-icon>extension</mat-icon>
+</button>
+
+<ng-template #elseBlock>
+<button matTooltip="Browser does not support plugin"
+        matTooltipPosition ="below"
+        matTooltipHideDelay="2500"
+        aria-label="Button that displays a tooltip when the user agent is mobile or not Chrome"
+        mat-icon-button>
+        <!-- svg> -->
+        <!-- <mat-icon id="elementToAnimate" svgIcon="error_outline" aria-hidden="false" aria-label="error"></mat-icon> -->
+        <mat-icon class="elementToAnimate">error_outline</mat-icon>
+</button >
+</ng-template>
