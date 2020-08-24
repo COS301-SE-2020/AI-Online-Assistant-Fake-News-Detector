@@ -1,105 +1,50 @@
-<!-- <nav class="navbar navbar-expand-sm navbar-light bg-white" data-toggle="affix">
-    <div class="mx-auto d-sm-flex d-block flex-sm-nowrap">
-        <a id="navbrand" class="navbar-brand" routerLink=""><img src="assets/img/5bitslogo.png"> AiNewsDetector </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse text-center" id="navbarsExample11">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" id="heading_link" routerLink="">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="heading_link" routerLink="moderate">Moderate</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="heading_link" routerLink="howto">HowTo</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="heading_link" routerLink="about">About Us</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-
-
-
-<mat-toolbar>
-		<span>
-            <a id="navbrand" class="navbar-brand" routerLink=""><img src="assets/img/5bitslogo.png"> <span>AI News Detector</span></a>
-        </span>
-
-   <span class="spacer"></span>
-  
-  <span><a mat-button class="nav-link" id="heading_link" routerLink="">Home</a></span>
-  <span><a mat-button class="nav-link" id="heading_link" routerLink="moderate">Moderate</a></span>
-  <span><a mat-button class="nav-link" id="heading_link" routerLink="howto">HowTo</a></span>
-  <span><a mat-button class="nav-link" id="heading_link" routerLink="about">About Us </a></span>
-
-    &nbsp;&nbsp;
-
-    <app-sharebutton></app-sharebutton>
-
-
-    <app-menu 
-      [options]="options$ | async"
-      (themeChange)="themeChangeHandler($event)">
-    </app-menu>
-
-</mat-toolbar>
-
--->
-
-
 <!-- Responsive navbar-->
-<div id="nav" style="height: 85vh;">
-  <mat-toolbar>
+
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+
+  <mat-toolbar id="navbar" class="example-toolbar">
     <mat-toolbar-row>
       <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
         <mat-icon>menu</mat-icon>
       </button>
       <span>
-        <a id="navbrand" class="navbar-brand" routerLink=""><img src="assets/img/5bitslogo.png"> <span
-            class="logoHead">ArtiFact
-            </span></a>
+        <a id="navbrand" class="navbar-brand" routerLink=""><img fxShow="true" fxHide.lt-md src="assets/img/5bitslogo.png">
+          <span class="logoHead">ArtiFact</span>
+        </a>
       </span>
       <span class="menu-spacer"></span>
       <div fxShow="true" fxHide.lt-md>
         <!-- The following menu items will be hidden on both SM and XS screen sizes -->
-        <span><a mat-button class="nav-link" id="heading_link" routerLink="">Home</a></span>
+         <!-- moderate should only show for moderators, also auth gaurd route -->
         <span><a mat-button class="nav-link" id="heading_link" routerLink="moderate">Moderate</a></span>
+        <span><a mat-button class="nav-link" id="heading_link" routerLink="">Home</a></span>
         <span><a mat-button class="nav-link" id="heading_link" routerLink="howto">HowTo</a></span>
         <span><a mat-button class="nav-link" id="heading_link" routerLink="about">About Us </a></span>
       </div>
 
-      &nbsp;&nbsp;
-      <app-user-accountbutton></app-user-accountbutton>
+      <!-- <button *ngIf="!mobileQuery.matches" mat-icon-button ><mat-icon>face</mat-icon> </button> -->
       <app-download-plugin></app-download-plugin>
+      <app-user-accountbutton></app-user-accountbutton>
       <app-sharebutton></app-sharebutton>
-
-
-      <app-menu [options]="options$ | async" (themeChange)="themeChangeHandler($event)">
-      </app-menu>
+      <app-menu [options]="options$ | async" (themeChange)="themeChangeHandler($event)"></app-menu>
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <mat-sidenav-container fxFlexFill>
-    <mat-sidenav #sidenav>
+  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
+    <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'push' : 'push'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <mat-nav-list>
-        <a (click)="sidenav.toggle()" mat-list-item>Close</a>
-        <a mat-list-item routerLink="">Home</a>
-        <a mat-list-item routerLink="moderate">Moderate</a>
-        <a mat-list-item routerLink="howto">HowTo</a>
-        <a mat-list-item routerLink="about">About Us </a>
+        <a mat-list-item routerLink="home" (click)="sidenav.toggle()">Home</a>
+        <a mat-list-item routerLink="moderate" (click)="sidenav.toggle()">Moderate</a>
+        <a mat-list-item routerLink="howto" (click)="sidenav.toggle()">HowTo</a>
+        <a mat-list-item routerLink="about" (click)="sidenav.toggle()">About Us</a>
+        <br>
+        <a mat-list-item (click)="sidenav.toggle()">Close</a>
       </mat-nav-list>
     </mat-sidenav>
-
-    <mat-sidenav-content fxFlexFill>
+    <mat-sidenav-content>
       <router-outlet></router-outlet>
+      <app-footer></app-footer>
     </mat-sidenav-content>
-
   </mat-sidenav-container>
 </div>
 
