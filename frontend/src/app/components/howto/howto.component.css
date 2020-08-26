@@ -1,6 +1,11 @@
-.hero {
-    background-image: url('/assets/img/Placeholder.jpg') !important;
-    height: 100%;
-    background-size: cover;
-    background-position: center center;
-  }
+.tophero {
+    width: 50%;
+    margin: auto;
+    margin-top: 10em;
+}
+
+h1 {
+    width: 50%;
+    margin: auto;
+    white-space: nowrap;
+}
