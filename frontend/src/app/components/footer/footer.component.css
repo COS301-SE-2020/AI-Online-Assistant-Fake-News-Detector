@@ -1,25 +1,24 @@
 footer {
-	position: fixed;
-	bottom: 0%;
-	width: 100%;
-}
-/* Footer Logo Alignment */
-#FooterLogo {
-	display: inline-flexbox;
-	width: 100%;
-	text-align: center;
-	margin-top: 0%;
-	margin-bottom: 0%;
-	padding: 0%;
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
 }
 
-img {
-	max-width: 5%;
-	height: auto;
-	margin-bottom: 0em;
+
+/* Footer Logo Alignment */
+
+#FooterLogo {
+    width: 100%;
+    text-align: center;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    padding: 0%;
+}
+
+#footerText {
+    font-size: 0.8em;
 }
 
 p {
-	padding-top: 10px;
-	font-size: 1.3em;
+    font-size: 1.3em;
 }

@@ -3,13 +3,12 @@ const http = require("http");
 const morgan = require("morgan");
 const jwt = require("jsonwebtoken");
 const path = require("path");
-const config = require("../../Util/config");
 const root = require(path.join("../", "../", "Util", "path"));
+const config = require(path.join(root, "Util", "config"));
 const Logger = require("../../winston");
 const logger = new Logger(api);
 const fs = require("fs");
 const shell = require("shelljs");
-const { response } = require("express");
 const nn_server = [];
 
 const getRequest = (_host, _path, _port, callBack) => {
@@ -173,7 +172,7 @@ const validateUser = (token, callBack) => {
       getRequest(
         "localhost",
         "/Users/id/" + decode.id,
-        3000,
+        config.db_server_port,
         (statusCode, response) => {
           if (
             response.response.User !== undefined &&
@@ -216,10 +215,15 @@ api.get("/", (req, res) => {
  */
 
 api.get("/sources", (req, res, next) => {
-  getRequest("localhost", "/sources", 3000, (statusCode, response) => {
-    if (statusCode == 500) next(response);
-    else res.status(statusCode).json(response);
-  });
+  getRequest(
+    "localhost",
+    "/sources",
+    config.db_server_port,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    }
+  );
 });
 
 /**
@@ -239,7 +243,7 @@ api.post("/sources", (req, res, next) => {
   postRequest(
     "localhost",
     "/sources",
-    3000,
+    config.db_server_port,
     requestBody,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
@@ -257,7 +261,7 @@ api.get("/sources/name/:sourceName", (req, res, next) => {
   getRequest(
     "localhost",
     "/sources/name/" + encodeURI(req.params.sourceName),
-    3000,
+    config.db_server_port,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
       else res.status(statusCode).json(response);
@@ -274,7 +278,7 @@ api.get("/sources/id/:sourceId", (req, res, next) => {
   getRequest(
     "localhost",
     "/sources/id/" + req.params.sourceId,
-    3000,
+    config.db_server_port,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
       else res.status(statusCode).json(response);
@@ -299,7 +303,7 @@ api.put("/sources/id/:sourceId", (req, res, next) => {
   putRequest(
     "localhost",
     "/sources/id/" + req.params.sourceId,
-    3000,
+    config.db_server_port,
     requestBody,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
@@ -317,7 +321,7 @@ api.delete("/sources/id/:sourceId", (req, res, next) => {
   deleteRequest(
     "localhost",
     "/sources/id/" + req.params.sourceId,
-    3000,
+    config.db_server_port,
     (statusCode, response) => {
       res.status(statusCode).json(response);
     }
@@ -330,10 +334,15 @@ api.delete("/sources/id/:sourceId", (req, res, next) => {
  */
 
 api.get("/facts", (req, res, next) => {
-  getRequest("localhost", "/facts", 3000, (statusCode, response) => {
-    if (statusCode == 500) next(response);
-    else res.status(statusCode).json(response);
-  });
+  getRequest(
+    "localhost",
+    "/facts",
+    config.db_server_port,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    }
+  );
 });
 
 /**
@@ -353,7 +362,7 @@ api.post("/facts", (req, res, next) => {
   postRequest(
     "localhost",
     "/facts",
-    3000,
+    config.db_server_port,
     requestBody,
     (statusCode, response) => {
       res.status(statusCode).json(response);
@@ -370,7 +379,7 @@ api.get("/facts/:factId", (req, res, next) => {
   getRequest(
     "localhost",
     "/facts/" + req.params.factId,
-    3000,
+    config.db_server_port,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
       else res.status(statusCode).json(response);
@@ -387,7 +396,7 @@ api.delete("/facts/:factId", (req, res, next) => {
   deleteRequest(
     "localhost",
     "/facts/" + req.params.factId,
-    3000,
+    config.db_server_port,
     (statusCode, response) => {
       res.status(statusCode).json(response);
     }
@@ -419,10 +428,15 @@ api.get("/Users", (req, res, next) => {
         },
       });
 
-    getRequest("localhost", "/Users", 3000, (statusCode, response) => {
-      if (statusCode == 500) next(response);
-      else res.status(statusCode).json(response);
-    });
+    getRequest(
+      "localhost",
+      "/Users",
+      config.db_server_port,
+      (statusCode, response) => {
+        if (statusCode == 500) next(response);
+        else res.status(statusCode).json(response);
+      }
+    );
   });
 });
 
@@ -443,7 +457,7 @@ api.post("/Users/register", (req, res, next) => {
   postRequest(
     "localhost",
     "/Users/register",
-    3000,
+    config.db_server_port,
     requestBody,
     (statusCode, response) => {
       res.status(statusCode).json(response);
@@ -468,7 +482,7 @@ api.post("/Users/requestModeratorAccess", (req, res, next) => {
   postRequest(
     "localhost",
     "/api/sendEmail",
-    8080,
+    config.api_server_port,
     requestBody,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
@@ -494,7 +508,7 @@ api.post("/Users/login", (req, res, next) => {
   postRequest(
     "localhost",
     "/Users/login",
-    3000,
+    config.db_server_port,
     requestBody,
     (statusCode, response) => {
       if (response.response.success == true) {
@@ -531,7 +545,7 @@ api.get("/Users/emailAddress/:emailAddress", (req, res, next) => {
     getRequest(
       "localhost",
       "/Users/emailAddress/" + req.params.emailAddress,
-      3000,
+      config.db_server_port,
       (statusCode, response) => {
         if (statusCode == 500) next(response);
         else res.status(statusCode).json(response);
@@ -563,7 +577,7 @@ api.get("/Users/id/:moderatorId", (req, res, next) => {
     getRequest(
       "localhost",
       "/Users/" + req.params.emailAddress,
-      3000,
+      config.db_server_port,
       (statusCode, response) => {
         if (statusCode == 500) next(response);
         else res.status(statusCode).json(response);
@@ -584,7 +598,7 @@ api.put("/Users/:emailAddress", (req, res, next) => {
   putRequest(
     "localhost",
     "/Users/" + req.params.emailAddress,
-    3000,
+    config.db_server_port,
     requestBody,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
@@ -615,7 +629,7 @@ api.delete("/Users/:emailAddress", (req, res, next) => {
     deleteRequest(
       "localhost",
       "/Users/" + encodeURI(req.params.emailAddress),
-      3000,
+      config.db_server_port,
       (statusCode, response) => {
         res.status(statusCode).json(response);
       }
@@ -625,65 +639,75 @@ api.delete("/Users/:emailAddress", (req, res, next) => {
 
 api.get("/reports", (req, res, next) => {
   /** Validate the user token from header before -> if can't res.status(403).json({"message": "You are not authorised to view this content."}), then check moderator level */
-  getRequest("localhost", "/reports", 3000, (statusCode, response) => {
-    if (statusCode == 500) next(response);
-    else res.status(statusCode).json(response);
-  });
+  getRequest(
+    "localhost",
+    "/reports",
+    config.db_server_port,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    }
+  );
 });
 
 api.get("/reports/update", (req, res, next) => {
   let data = "";
-  getRequest("localhost", "/reports/active/1", 3000, (statusCode, data) => {
-    if (data) {
-      let prevReport = data.response.Reports[0];
-      for (report of data.response.Reports) {
-        if (
-          report["Report Data"].toLowerCase() ===
-            prevReport["Report Data"].toLowerCase() &&
-          report["ID"] !== prevReport["ID"]
-        ) {
-          ++prevReport["Report Count"];
-          prevReport["Reported By"].push(report["Reported By"][0]);
-          putRequest(
-            "localhost",
-            "/api/reports/id/" + prevReport["ID"],
-            8080,
-            JSON.stringify({
-              reportCount: prevReport["Report Count"],
-              reportedBy: prevReport["reportedBy"],
-            }),
-            (statusCode, _data) => {}
-          );
-          putRequest(
-            "localhost",
-            "/api/reports/id/" + report["ID"],
-            8080,
-            JSON.stringify({
-              bActive: 0,
-            }),
-            (statusCode, _data) => {}
-          );
-        } else {
-          prevReport = report;
-        }
-      }
-      setTimeout(() => {
-        getRequest(
-          "localhost",
-          "/reports/active/1",
-          3000,
-          (statusCode, data) => {
-            if (data !== "") res.status(200).json(data);
-            else {
-              let error = new Error("No Updates Occurred Due To An Error");
-              error.status = 500;
-              next(error);
-            }
+  getRequest(
+    "localhost",
+    "/reports/active/1",
+    config.db_server_port,
+    (statusCode, data) => {
+      if (data) {
+        let prevReport = data.response.Reports[0];
+        for (report of data.response.Reports) {
+          if (
+            report["Report Data"].toLowerCase() ===
+              prevReport["Report Data"].toLowerCase() &&
+            report["ID"] !== prevReport["ID"]
+          ) {
+            ++prevReport["Report Count"];
+            prevReport["Reported By"].push(report["Reported By"][0]);
+            putRequest(
+              "localhost",
+              "/api/reports/id/" + prevReport["ID"],
+              config.api_server_port,
+              JSON.stringify({
+                reportCount: prevReport["Report Count"],
+                reportedBy: prevReport["reportedBy"],
+              }),
+              (statusCode, _data) => {}
+            );
+            putRequest(
+              "localhost",
+              "/api/reports/id/" + report["ID"],
+              config.api_server_port,
+              JSON.stringify({
+                bActive: 0,
+              }),
+              (statusCode, _data) => {}
+            );
+          } else {
+            prevReport = report;
           }
-        );
-      }, 2000);
+        }
+        setTimeout(() => {
+          getRequest(
+            "localhost",
+            "/reports/active/1",
+            config.db_server_port,
+            (statusCode, data) => {
+              if (data !== "") res.status(200).json(data);
+              else {
+                let error = new Error("No Updates Occurred Due To An Error");
+                error.status = 500;
+                next(error);
+              }
+            }
+          );
+        }, 2000);
+      }
     }
-  });
+  );
 });
 
 api.post("/reports", (req, res, next) => {
@@ -703,7 +727,7 @@ api.post("/reports", (req, res, next) => {
   postRequest(
     "localhost",
     "/reports",
-    3000,
+    config.db_server_port,
     requestBody,
     (statusCode, response) => {
       res.status(statusCode).json(response);
@@ -715,7 +739,7 @@ api.get("/reports/id/:id", (req, res, next) => {
   getRequest(
     "localhost",
     "/reports/id/" + req.params.id,
-    3000,
+    config.db_server_port,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
       else res.status(statusCode).json(response);
@@ -727,7 +751,7 @@ api.get("/reports/active/:active", (req, res, next) => {
   getRequest(
     "localhost",
     "/reports/active/" + req.params.active,
-    3000,
+    config.db_server_port,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
       else res.status(statusCode).json(response);
@@ -739,7 +763,7 @@ api.get("/reports/type/:type", (req, res, next) => {
   getRequest(
     "localhost",
     "/reports/type/" + req.params.type,
-    3000,
+    config.db_server_port,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
       else res.status(statusCode).json(response);
@@ -759,7 +783,7 @@ api.put("/reports/id/:id", (req, res, next) => {
   putRequest(
     "localhost",
     "/reports/id/" + req.params.id,
-    3000,
+    config.db_server_port,
     requestBody,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
@@ -780,7 +804,7 @@ api.put("/reports/active/:active", (req, res, next) => {
   putRequest(
     "localhost",
     "/reports/active/" + req.params.active,
-    3000,
+    config.db_server_port,
     requestBody,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
@@ -801,7 +825,7 @@ api.put("/reports/type/:type", (req, res, next) => {
   putRequest(
     "localhost",
     "/reports/type/" + req.params.type,
-    3000,
+    config.db_server_port,
     requestBody,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
@@ -814,7 +838,7 @@ api.delete("/reports/id/:id", (req, res, next) => {
   deleteRequest(
     "localhost",
     "/reports/id/" + req.params.id,
-    3000,
+    config.db_server_port,
     (statusCode, response) => {
       res.status(statusCode).json(response);
     }
@@ -825,7 +849,7 @@ api.delete("/reports/active/:active", (req, res, next) => {
   deleteRequest(
     "localhost",
     "/reports/active/" + req.params.active,
-    3000,
+    config.db_server_port,
     (statusCode, response) => {
       res.status(statusCode).json(response);
     }
@@ -854,7 +878,7 @@ api.post("/verify", (req, res, next) => {
       getRequest(
         "localhost",
         "/api/start/" + (nn_server[nn_server.length - 1].port + 1),
-        "8080",
+        config.api_server_port,
         (responseCode, response) => {}
       );
     postRequest(
@@ -874,7 +898,7 @@ api.post("/verify", (req, res, next) => {
     getRequest(
       "localhost",
       "/api/start/" + (nn_server[nn_server.length - 1].port + 1),
-      "8080",
+      config.api_server_port,
       (responseCode, startResponse) => {
         startResponse = nn_server.length - 1;
         // Tell it to be busy
@@ -909,10 +933,15 @@ api.post("/verify", (req, res, next) => {
 // Fetches
 
 api.get("/training", (req, res, next) => {
-  getRequest("localhost", "/training", 3000, (statusCode, response) => {
-    if (statusCode == 500) next(response);
-    else res.status(statusCode).json(response);
-  });
+  getRequest(
+    "localhost",
+    "/training",
+    config.db_server_port,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    }
+  );
 });
 
 api.post("/training/range", (req, res, next) => {
@@ -927,7 +956,7 @@ api.post("/training/range", (req, res, next) => {
   postRequest(
     "localhost",
     "/training/range",
-    3000,
+    config.db_server_port,
     requestBody,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
@@ -950,7 +979,7 @@ api.post("/training", (req, res, next) => {
   postRequest(
     "localhost",
     "/training",
-    3000,
+    config.db_server_port,
     requestBody,
     (statusCode, response) => {
       res.status(statusCode).json(response);
@@ -962,7 +991,7 @@ api.delete("/training/:trainingId", (req, res, next) => {
   deleteRequest(
     "localhost",
     "/training/" + req.params.trainingId,
-    3000,
+    config.db_server_port,
     (statusCode, response) => {
       res.status(statusCode).json(response);
     }
@@ -970,10 +999,15 @@ api.delete("/training/:trainingId", (req, res, next) => {
 });
 
 api.get("/nnModels", (req, res, next) => {
-  getRequest("localhost", "/nnModels", 3000, (statusCode, response) => {
-    if (statusCode == 500) next(response);
-    else res.status(statusCode).json(response);
-  });
+  getRequest(
+    "localhost",
+    "/nnModels",
+    config.db_server_port,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    }
+  );
 });
 
 api.post("/nnModels", (req, res, next) => {
@@ -988,7 +1022,7 @@ api.post("/nnModels", (req, res, next) => {
   postRequest(
     "localhost",
     "/nnModels",
-    3000,
+    config.db_server_port,
     requestBody,
     (statusCode, response) => {
       res.status(statusCode).json(response);
@@ -1000,7 +1034,7 @@ api.get("/nnModels/:modelName", (req, res, next) => {
   getRequest(
     "localhost",
     "/nnModels/" + encodeURI(req.params.modelName),
-    3000,
+    config.db_server_port,
     (statusCode, response) => {
       if (statusCode == 500) next(response);
       else res.status(statusCode).json(response);
@@ -1012,7 +1046,7 @@ api.delete("/nnModels/:modelId", (req, res, next) => {
   deleteRequest(
     "localhost",
     "/nnModels/" + req.params.modelId,
-    3000,
+    config.db_server_port,
     (statusCode, response) => {
       res.status(statusCode).json(response);
     }

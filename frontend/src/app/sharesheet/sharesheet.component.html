@@ -1,23 +1,19 @@
 <mat-nav-list>
-  <a mat-list-item (click)="openLink($event,'https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector#team-members')">
-  <div>
+  <a mat-list-item (click)="openLink($event,'https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector#readme')">
     <span mat-line>GitHub</span>
-    <span mat-line>Visit our repo ⊙﹏⊙</span>
-  </div>
+    <span mat-line>Visit our repo ⊙﹏⊙</span><mat-icon>code</mat-icon>
   </a>
 
-  <a mat-list-item (click)="emailCurrentPage()">
-    <span mat-line>Email</span>
-    <span mat-line>Share this page via email</span>
+  <a mat-list-item href="mailto:artifact@gmail.com?subject=Artifact [x__O]" target="_blank" rel="noopener noreferrer">
+    <span mat-line>Contact us</span>
+    <span mat-line>Send us an email</span><mat-icon>mail_outline</mat-icon>
   </a>
 
-  <a mat-list-item (click)="openLink($event,'')">
-    <span mat-line>Twitter</span>
-    <span mat-line>Share this page on Twitter</span>
+  <a mat-list-item (click)="share($event)">
+    <span  id="other" mat-line>Share</span><mat-icon *ngIf="!cantshare">share</mat-icon>
   </a>
 
-  <a mat-list-item (click)="openLink($event,'')">
-    <span mat-line>Facebook</span>
-    <span mat-line>Share this page on Facebook</span>
+  <a *ngIf="cantshare" mat-list-item (click)="copy($event)">
+    <span id="copy" mat-line>Copy link to clipboard</span><mat-icon id="copyicon">content_copy</mat-icon>
   </a>
 </mat-nav-list>
