@@ -1,4 +1,18 @@
 .hero-body {
-	margin-left: 3em;
-	margin-right: 3em;
+    margin-left: 3em;
+    margin-right: 3em;
+}
+
+.example-form-field {
+    width: 100%;
+}
+
+.example-button-row {
+    display: block;
+    text-align: center;
+}
+
+.example-button-row button {
+    display: inline-block;
+    margin-right: 8px;
 }
