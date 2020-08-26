@@ -6,45 +6,53 @@ $(() => {
     $('#output').hide();
     $('#input').html('<input type="button" id="close" value="Close">');
 
-    $('.pluginOptions').on('change', function(){
-        if ($('#slct').val()==1) {
-            $('#input').html(analyseHTML)
-        } else if($('#slct').val()==2){
-            $('#input').html(checkHTML)
-        } else{
-            $('#input').html(reportHTML)
-            // +
-            // '<label for="report">Source URL:</label><br>'+
-            // '<input type="text" id="reportSource">'+
-            // '<input type="button" id="sourceReport" value="Report Source">')
-        }
+    $('#input').on('click', 'span[id="reportSourceSelector"]', function() {
+        $('#reportSourceSelector').addClass('active');
+        $('#reportStatementSelector').removeClass('active');
+        $('#input').html('<label for="report">Source URL:</label><br>'+
+        '<input type="text" id="report">'+
+        '<input type="button" id="reportInput" value="Report Source">')
     });
-    $('#input').on('change', 'select[name="reportSelect"]', function() {
-        if ($('#reportSelect').val()==1) {
-            $('#input').html('<label for="report">Source URL:</label><br>'+
-            '<input type="text" id="report">'+
-            '<input type="button" id="reportInput" value="Report Source">')
-        } else {
-            $('#input').html('<label for="report">Statement:</label><br>'+
-            '<input type="text" id="report">'+
-            '<input type="button" id="reportInput" value="Report Statement">')
-        }
+    $('#input').on('click', 'span[id="reportStatementSelector"]', function() {
+        $('#reportSourceSelector').removeClass('active');
+        $('#reportStatementSelector').addClass('active');
+        $('#input').html('<label for="report">Statement:</label><br>'+
+        '<input type="text" id="report">'+
+        '<input type="button" id="reportInput" value="Report Statement">')
     });
- //////////////////////////////////////////////////////   
- ///////////////////ANALYSE NEWS ARTICLE///////////////
- //////////////////////////////////////////////////////   
-    $('#input').on('click', 'input[value="Analyse"]', function() {
-        if (!$('#article').val()) {
-            $('#article').css("border", "#E0115F 2px solid");
-        } else {
-            
-        }
+    $('.pluginSelector').on('click', 'span[id="articleSelector"]', function() {
+        $('#articleSelector').addClass('active');
+        $('#sourceSelector').removeClass('active');
+        $('#reportSelector').removeClass('active');
+        $('#input').html(analyseHTML);
     });
+    $('.pluginSelector').on('click', 'span[id="sourceSelector"]', function() {
+        $('#articleSelector').removeClass('active');
+        $('#sourceSelector').addClass('active');
+        $('#reportSelector').removeClass('active');
+        $('#input').html(checkHTML);
+    });
+    $('.pluginSelector').on('click', 'span[id="reportSelector"]', function() {
+        $('#articleSelector').removeClass('active');
+        $('#sourceSelector').removeClass('active');
+        $('#reportSelector').addClass('active');
+        $('#input').html(reportHTML);
+    });
+//////////////////////////////////////////////////////   
+///////////////////ANALYSE NEWS ARTICLE///////////////
+//////////////////////////////////////////////////////   
+$('#input').on('click', 'input[value="Analyse"]', function() {
+    if (!$('#article').val()) {
+        $('#article').css("border", "#E0115F 2px solid");
+        $('#article').val("Required*");
+    } else {
+        alert('xd');
+    }
+});
 //////////////////////////////////////////////////////   
 ///////////////////CHECK NEWS SOURCE//////////////////
 //////////////////////////////////////////////////////   
 $('#input').on('click', 'input[value="Check Source"]', function() {
-    $('.pluginOptions').hide();
     let found = false;
     let userInput = $('#checkSource').val();
     if (!$('#checkSource').val()) {
@@ -66,8 +74,8 @@ $('#input').on('click', 'input[value="Check Source"]', function() {
                     }
                 });
                 if (found == false) {
-                        $('#input').html('<h3>According to our records, this source can be trusted</h3>'+
-                        '<input type="button" id="close" value="Close">');
+                    $('#input').html('<h3>According to our records, this source can be trusted</h3>'+
+                    '<input type="button" id="close" value="Close">');
                     }
                 });
             }
@@ -77,11 +85,11 @@ $('#input').on('click', 'input[value="Check Source"]', function() {
     //////////////////REPORT NEWS SOURCE//////////////////
     //////////////////////////////////////////////////////   
     $('#input').on('click', 'input[value="Report Source"], input[value="Report Statement"]', function() {
-        $('.pluginOptions').hide();
         //User is trying to log an empty report
         if (!$('#report').val()) {
             $('#report').css("border", "#E0115F 2px solid");
-        //User has entered data
+            $('#report').val("Required*");
+            //User has entered data
         } else {
             //User is trying to report a source
             if ($('#reportInput').val()==='Report Source') {
@@ -153,11 +161,8 @@ $('#input').on('click', 'input[value="Check Source"]', function() {
     '<input type="text" id="checkSource">'+
     '<input type="button" id="sourceCheck" value="Check Source">';
 
-    const reportHTML = '<div class="reportOptions"><select name="reportSelect" id="reportSelect">'+
-    '<option selected disabled>Choose An Option...</option>'+
-    '<option value="1">Source</option>'+
-    '<option value="2">Statement</option>'+
-    '</select></div>';
-});'<label for="article">News Article:</label><br>'+
-'<input type="text" id="article">'+
-'<input type="button" id="analyse" value="Analyse">'
+    const reportHTML = '<div class="reportSelector">'+
+    '<span id="reportSourceSelector" class="selectionOption">Source</span>'+
+    '<span id="reportStatementSelector" class="selectionOption">Statement</span>'+
+    '</div>';
+});
