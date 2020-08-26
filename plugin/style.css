@@ -167,17 +167,6 @@ a{
   color: #E0115F;
   text-decoration: none;
 }
-.reportOptions {
-position: relative;
-display: flex;
-width: 100%;
-min-width: 13em;
-height: 2em;
-background: #222;
-overflow: hidden;
-border-radius: .25em;
-margin-bottom: 1em;
-}
 .pluginSelector{
 background-color: #222;
 width: 94%;
@@ -226,4 +215,10 @@ margin: auto;
 }
 .primeSource.third{
   width: 75%;
+}
+#loading{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 5%;
 }

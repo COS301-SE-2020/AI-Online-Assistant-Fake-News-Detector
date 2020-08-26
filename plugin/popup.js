@@ -2,6 +2,7 @@ $(() => {
     const serverTld='http://54.172.96.111:8080/api/'
     const sourcesUrl=serverTld+'Sources/'
     const reportsUrl=serverTld+'Reports/'
+    $('#loading').show();
     $('#input').show();
     $('#output').hide();
     $('#input').html('<h3>Watch out for these sources:</h3>');
@@ -24,6 +25,7 @@ $(() => {
         '<h5>*FNR - Fake News Rating</h5>'+
         '<input type="button" id="close" value="Close">'
         );
+    $('#loading').hide();
     })
     $('#input').on('click', 'span[id="reportSourceSelector"]', function() {
         $('#reportSourceSelector').addClass('active');
