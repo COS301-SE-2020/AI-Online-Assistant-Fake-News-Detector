@@ -25,22 +25,11 @@ $(() => {
         '<h5>*FNR - Fake News Rating</h5>'+
         '<input type="button" id="close" value="Close">'
         );
-    $('#loading').hide();
+        $('#loading').hide();
     })
-    $('#input').on('click', 'span[id="reportSourceSelector"]', function() {
-        $('#reportSourceSelector').addClass('active');
-        $('#reportStatementSelector').removeClass('active');
-        $('#input').html('<label for="report">Source URL:</label><br>'+
-        '<input type="text" id="report">'+
-        '<input type="button" id="reportInput" value="Report Source">')
-    });
-    $('#input').on('click', 'span[id="reportStatementSelector"]', function() {
-        $('#reportSourceSelector').removeClass('active');
-        $('#reportStatementSelector').addClass('active');
-        $('#input').html('<label for="report">Statement:</label><br>'+
-        '<input type="text" id="report">'+
-        '<input type="button" id="reportInput" value="Report Statement">')
-    });
+//////////////////////////////////////////////////////   
+///////////////OVERALL SELECTOR FUNCTIONS/////////////
+//////////////////////////////////////////////////////   
     $('.pluginSelector').on('click', 'span[id="articleSelector"]', function() {
         $('#articleSelector').addClass('active');
         $('#sourceSelector').removeClass('active');
@@ -58,6 +47,23 @@ $(() => {
         $('#sourceSelector').removeClass('active');
         $('#reportSelector').addClass('active');
         $('#input').html(reportHTML);
+    });    
+//////////////////////////////////////////////////////   
+///////////////REPORT SELECTOR FUNCTIONS//////////////
+//////////////////////////////////////////////////////   
+    $('#input').on('click', 'span[id="reportSourceSelector"]', function() {
+        $('#input').html(reportHTML+'<label for="report">Source URL:</label><br>'+
+        '<input type="text" id="report">'+
+        '<input type="button" id="reportInput" value="Report Source">')
+        $('#reportSourceSelector').addClass('active');
+        $('#reportStatementSelector').removeClass('active');
+    });
+    $('#input').on('click', 'span[id="reportStatementSelector"]', function() {
+        $('#input').html(reportHTML+'<label for="report">Statement:</label><br>'+
+        '<input type="text" id="report">'+
+        '<input type="button" id="reportInput" value="Report Statement">')
+        $('#reportSourceSelector').removeClass('active');
+        $('#reportStatementSelector').addClass('active');
     });
 //////////////////////////////////////////////////////   
 ///////////////////ANALYSE NEWS ARTICLE///////////////
