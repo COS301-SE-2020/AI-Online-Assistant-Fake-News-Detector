@@ -18,6 +18,10 @@ h4{
   color: #AAA;
   text-align: center;
 }
+h5{
+  color: #AAA;
+  text-align: center;
+}
 input[type=text] {
   padding: 5px;
   box-sizing: border-box;
@@ -202,4 +206,24 @@ padding: 0.3em;
 margin-bottom: 1em;
 font-size: smaller;
 margin: auto;
+}
+.primeSources{
+  background-color: #222;
+  text-align: left;
+  padding: 1em;
+}
+.primeSource{
+  text-align: left;
+  margin-bottom: 0.5em;
+  background-color: #E0115F;
+  color: #222;
+}
+.primeSource.first{
+  width: 95%;
+}
+.primeSource.second{
+  width: 85%;
+}
+.primeSource.third{
+  width: 75%;
 }

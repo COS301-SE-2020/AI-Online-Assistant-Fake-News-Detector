@@ -4,8 +4,27 @@ $(() => {
     const reportsUrl=serverTld+'Reports/'
     $('#input').show();
     $('#output').hide();
-    $('#input').html('<input type="button" id="close" value="Close">');
-
+    $('#input').html('<h3>Watch out for these sources:</h3>');
+    getSources().then(data => {
+        let counter=0,i=0,j=0,k=0;
+        let max = 0;
+        data['response']['Sources'].forEach(source => {
+            if (parseInt(source['Rating'])>max) {
+                k = j;
+                j = i;
+                i = counter;
+                max = parseInt(source['Rating']);
+            }
+            counter++;
+        });
+        $('#input').html($('#input').html()+'<h4><div class="primeSources">'+
+        '<div class="primeSource first">'+(data['response']['Sources'][i]['Name'])+' ('+(data['response']['Sources'][i]['Rating'])+' FNR)'+'</div>'+
+        '<div class="primeSource second">'+(data['response']['Sources'][j]['Name'])+' ('+(data['response']['Sources'][j]['Rating'])+' FNR)'+'</div>'+
+        '<div class="primeSource third">'+(data['response']['Sources'][k]['Name'])+' ('+(data['response']['Sources'][k]['Rating'])+' FNR)'+'</div></div></h4>'+
+        '<h5>*FNR - Fake News Rating</h5>'+
+        '<input type="button" id="close" value="Close">'
+        );
+    })
     $('#input').on('click', 'span[id="reportSourceSelector"]', function() {
         $('#reportSourceSelector').addClass('active');
         $('#reportStatementSelector').removeClass('active');
