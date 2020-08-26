@@ -27,7 +27,7 @@ input[type=text] {
   box-sizing: border-box;
   border: 2px solid #333;
   border-radius: 4px;
-  background-color: #555555;
+  background-color: #222;
   resize: none;
   color: #DDD;
   margin-bottom: 1em;
@@ -35,7 +35,7 @@ input[type=text] {
 }
 input[type=text]:focus {
   border: 2px solid #333;
-  background-color: #555;
+  background-color: #222;
 }
 input[type=button], input[type=submit], input[type=reset] {
   background-color: #E0115F;
