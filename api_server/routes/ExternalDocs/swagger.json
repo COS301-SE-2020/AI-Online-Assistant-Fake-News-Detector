@@ -20,6 +20,10 @@
     {
       "name": "Neural Network",
       "description": "Neural Network Processing Routes"
+    },
+    {
+      "name": "Stats",
+      "description": "All Stats"
     }
   ],
   "host": "localhost:8080",
@@ -1575,6 +1579,30 @@
           }
         }
       }
+    },
+    "/stats": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Request to fetch stats",
+        "description": "The end point will return all stats used in the page \"Stats For Nerds\"",
+        "operationId": "",
+        "produces": "application/json",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/GET Facts"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {},
@@ -2409,16 +2437,25 @@
           "type": "object",
           "properties": {
             "result": {
-              "type": "double",
-              "example": 0.85
-            },
-            "message": {
-              "type": "string",
-              "example": "Processed Input"
+              "type": "object",
+              "properties": {
+                "prediction": {
+                  "type": "string",
+                  "example": "real"
+                },
+                "confidence": {
+                  "type": "float",
+                  "example": "0.5"
+                }
+              }
             },
             "success": {
               "type": "boolean",
               "example": true
+            },
+            "message": {
+              "type": "string",
+              "example": "Processed Input"
             }
           }
         }
@@ -2690,6 +2727,123 @@
             "success": {
               "type": "boolean",
               "example": true
+            }
+          }
+        }
+      }
+    },
+    "GET Facts": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Retrieved stats successfully"
+            },
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "NeuralNetwork": {
+              "type": "object",
+              "properties": {
+                "Training Time": {
+                  "type": "integer",
+                  "example": 460
+                },
+                "Training Set Count": {
+                  "type": "integer",
+                  "example": 120454
+                }
+              }
+            },
+            "Reports": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "Facts": {
+                    "type": "object",
+                    "properties": {
+                      "Trending": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ID": {
+                              "type": "string",
+                              "example": "5ee08d65b9bd0cd05ed2a352"
+                            },
+                            "Statement": {
+                              "type": "string",
+                              "example": "There is no moon"
+                            },
+                            "Popularity": {
+                              "type": "integer",
+                              "example": 100
+                            },
+                            "Report Count": {
+                              "type": "integer",
+                              "example": 61
+                            },
+                            "Ratio Report": {
+                              "type": "float",
+                              "example": 0.23
+                            }
+                          }
+                        }
+                      },
+                      "End Point Hits": {
+                        "type": "integer",
+                        "example": 41
+                      }
+                    }
+                  },
+                  "Sources": {
+                    "type": "object",
+                    "properties": {
+                      "Trending": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ID": {
+                              "type": "string",
+                              "example": "5ee08d65b9bd0cd05ed2a352"
+                            },
+                            "Name": {
+                              "type": "string",
+                              "example": "Twitter"
+                            },
+                            "Domain Name": {
+                              "type": "string",
+                              "example": "https://www.twitter.com/"
+                            },
+                            "Rating": {
+                              "type": "integer",
+                              "example": 50
+                            },
+                            "Report Count": {
+                              "type": "integer",
+                              "example": 10
+                            },
+                            "Ratio Report": {
+                              "type": "float",
+                              "example": 0.13
+                            }
+                          }
+                        }
+                      },
+                      "End Point Hits": {
+                        "type": "integer",
+                        "example": 39
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
