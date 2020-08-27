@@ -5,7 +5,7 @@ body{
   min-width: 20em;
 }
 h1{
-  color: #E0115F;
+  color: #c72c69;
   text-align: center;
   text-shadow: 2px 2px 5px #222;
   text-decoration-style: solid;
@@ -38,7 +38,7 @@ input[type=text]:focus {
   background-color: #222;
 }
 input[type=button], input[type=submit], input[type=reset] {
-  background-color: #E0115F;
+  background-color: #c72c69;
   border: none;
   color: #DDD;
   padding: 0.5em;
@@ -124,7 +124,7 @@ padding: 0 .5em;
 /* animations */
 @keyframes revealBlock {
   100% {
-    color: #E0115F;
+    color: #c72c69;
   }
 }
 
@@ -164,7 +164,7 @@ padding: 0 .5em;
   margin-bottom: 1em;
 }
 a{
-  color: #E0115F;
+  color: #c72c69;
   text-decoration: none;
 }
 .pluginSelector{
@@ -184,11 +184,11 @@ padding: 0.6em;
 cursor: pointer;
 }
 .selectionOption.active{
-background-color: #E0115F;
+background-color: #c72c69;
 }
 .reportSelector{
 background-color: #222;
-width: 70%;
+width: 95%;
 display: table;
 table-layout: fixed;
 padding: 0.3em;
@@ -205,8 +205,9 @@ margin-bottom: 1em;
 .primeSource{
   text-align: left;
   margin-bottom: 0.5em;
-  background-color: #E0115F;
+  background-color: #c72c69;
   color: #222;
+  padding: 3px;
 }
 .primeSource.first{
   width: 95%;
