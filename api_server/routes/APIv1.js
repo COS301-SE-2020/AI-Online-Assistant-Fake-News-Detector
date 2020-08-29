@@ -1113,6 +1113,78 @@ api.post("/sendEmail", (req, res, next) => {
   );
 });
 
+api.get("/stats", (req, res, next) => {
+  const stats = {};
+  stats["message"] = "Retrieved stats successfully";
+  stats["success"] = true;
+  stats["NeuralNetwork"] = {
+    "Training Time": 460,
+    "Training Set Count": 120454,
+  };
+  stats["Reports"] = [
+    {
+      Facts: {
+        Trending: [
+          {
+            ID: "5ee08d65b9bd0cd05ed2a352",
+            Statement: "There is no moon",
+            Popularity: 100,
+            "Report Count": 61,
+            "Ratio Report": 0.23,
+          },
+          {
+            ID: "5ee08e846d1156d1aaa15a53",
+            Statement: "The earth is flat",
+            Popularity: 100,
+            "Report Count": 34,
+            "Ratio Report": 0.18,
+          },
+          {
+            ID: "5f37567adefb5410f13df476",
+            Statement: "Nigeria is in Europe",
+            Popularity: 60,
+            "Report Count": 21,
+            "Ratio Report": 0.17,
+          },
+        ],
+        "End Point Hits": 41,
+      },
+    },
+    {
+      Sources: {
+        Trending: [
+          {
+            ID: "5f2b3433e7f0660872cc0ad6",
+            Name: "Twitter",
+            "Domain Name": "https://www.twitter.com/",
+            Rating: 50,
+            "Report Count": 18,
+            "Ratio Report": 0.41,
+          },
+          {
+            ID: "5f3d40cbdefb5410f13df488",
+            Name: "New York Times",
+            "Domain Name": "https://www.nytimes.com/",
+            Rating: 94,
+            "Report Count": 16,
+            "Ratio Report": 0.19,
+          },
+          {
+            ID: "5f3e5515b43c0b58165b0c3a",
+            Name: "Github",
+            "Domain Name": "www.github.com",
+            Rating: 30,
+            "Report Count": 10,
+            "Ratio Report": 0.13,
+          },
+        ],
+        "End Point Hits": 39,
+      },
+    },
+  ];
+  res.status(200).json({ response: stats });
+});
+
 /**
  * @description API calls done incorrectly will arrive at this route and be dismissed.
  * @author Stuart Barclay
