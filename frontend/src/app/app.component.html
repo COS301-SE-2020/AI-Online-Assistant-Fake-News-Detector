@@ -1,4 +1,47 @@
-<!-- header -->
-<app-header></app-header>
-<!--router-outlet was here but got put in header-->
-<!--footer-app was here but got put in header-->
+<!-- Responsive navbar-->
+<div class="sticky-bottom">
+
+  <mat-toolbar id="navbar" class="example-toolbar">
+    <mat-toolbar-row>
+      <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <img class="logoHead" id="widelogo" fxShow="true" src="assets/img/5bitslogo.png" />
+      <a mat-button class="logoHead" routerLink="">ArtiFact</a>
+      <span class="menu-spacer"></span>
+      <span fxShow="true" fxHide.lt-md>
+        <span *ngIf="auth.loggedIn"><a mat-button class="nav-link" id="heading_link"
+            routerLink="moderate">Moderate</a></span>
+        <span><a mat-button class="nav-link" id="heading_link" routerLink="">Home</a></span>
+        <span><a mat-button class="nav-link" id="heading_link" routerLink="howto">HowTo</a></span>
+        <span><a mat-button class="nav-link" id="heading_link" routerLink="about">About Us
+          </a></span>
+      </span>
+      <app-download-plugin></app-download-plugin>
+      <app-user-accountbutton></app-user-accountbutton>
+      <app-sharebutton></app-sharebutton>
+      <app-menu [options]="options$ | async" (themeChange)="themeChangeHandler($event)"></app-menu>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>
+
+<router-outlet></router-outlet>
+
+<mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
+  <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'push' : 'push'" [fixedInViewport]="mobileQuery.matches"
+    fixedTopGap="56">
+    <mat-nav-list>
+      <a mat-list-item routerLink="home" (click)="sidenav.toggle()">Home</a>
+      <a *ngIf="auth.loggedIn" mat-list-item routerLink="moderate" (click)="sidenav.toggle()">Moderate</a>
+      <a mat-list-item routerLink="howto" (click)="sidenav.toggle()">HowTo</a>
+      <a mat-list-item routerLink="about" (click)="sidenav.toggle()">About Us</a>
+      <br />
+      <a mat-list-item (click)="sidenav.toggle()">Close</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!--End of responsive navbar-->
