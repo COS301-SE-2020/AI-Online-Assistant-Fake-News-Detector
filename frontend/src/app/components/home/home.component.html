@@ -1,63 +1,59 @@
 <div class="topsection tophero">
 
-<mat-tab-group mat-align-tabs="center">
+  <mat-tab-group mat-align-tabs="center">
 
-  <mat-tab label="URL">
-  <mat-form-field class="example-form-field">
+    <mat-tab label="URL">
+      <mat-form-field class="example-form-field">
         <mat-label>Enter URL</mat-label>
         <input matInput type="text" [(ngModel)]="urlvalue">
         <button mat-button *ngIf="urlvalue" matSuffix mat-icon-button aria-label="Clear" (click)="urlvalue=''">
-        <mat-icon>close</mat-icon>
+          <mat-icon>close</mat-icon>
         </button>
-    </mat-form-field>
+      </mat-form-field>
 
-    <div class="example-button-row">
-        <button mat-raised-button  class="checkBtn">Check</button>
-        <button mat-raised-button color="primary" >Report</button>
+      <div class="example-button-row">
+        <button mat-raised-button class="checkBtn">Check</button>
+        <button mat-raised-button color="primary">Report</button>
         <button mat-raised-button color="accent" (click)="clickTemp()">Analytics</button>
-    </div>
+      </div>
 
-  </mat-tab>
+    </mat-tab>
 
-  <mat-tab label="Text">
-  <mat-form-field class="example-form-field">
+    <mat-tab label="Text">
+      <mat-form-field class="example-form-field">
         <mat-label>Enter some text</mat-label>
 
-    <textarea id="AItext"
-        matInput
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="5"
-        cdkAutosizeMaxRows="10"
-        [(ngModel)]="textvalue">
+        <textarea id="AItext" matInput cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="10"
+          [(ngModel)]="textvalue">
     </textarea>
         <button mat-button *ngIf="textvalue" matSuffix mat-icon-button aria-label="Clear" (click)="textvalue=''">
-        <mat-icon>close</mat-icon>
+          <mat-icon>close</mat-icon>
         </button>
-    </mat-form-field>
+      </mat-form-field>
 
-    <div class="example-button-row">
-        <button mat-raised-button  class="checkBtn">Run text though AI</button>
+      <div class="example-button-row">
+        <button mat-raised-button class="checkBtn">Run text through AI</button>
         <button mat-raised-button color="accent" (click)="paste()">Paste from clipboard</button>
-    </div>
-  </mat-tab>
+      </div>
+    </mat-tab>
 
     <mat-tab label="Fact">
-  <mat-form-field class="example-form-field">
+      <mat-form-field class="example-form-field">
         <mat-label>Enter a fact</mat-label>
         <input matInput type="text" [(ngModel)]="factvalue">
         <button mat-button *ngIf="factvalue" matSuffix mat-icon-button aria-label="Clear" (click)="factvalue=''">
-        <mat-icon>close</mat-icon>
+          <mat-icon>close</mat-icon>
         </button>
-    </mat-form-field>
+      </mat-form-field>
 
-    <div class="example-button-row">
-        <button mat-raised-button  class="checkBtn">Check</button>
-        <button mat-raised-button color="primary" >Report</button>
+      <div class="example-button-row">
+        <button mat-raised-button class="checkBtn">Check</button>
+        <button mat-raised-button color="primary">Report</button>
         <button mat-raised-button color="accent" (click)="clickTemp()">Analytics</button>
-    </div>
-  </mat-tab>
+      </div>
+    </mat-tab>
 
-</mat-tab-group>
+  </mat-tab-group>
 
 
 </div>
