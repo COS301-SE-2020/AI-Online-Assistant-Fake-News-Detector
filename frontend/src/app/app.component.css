@@ -1,12 +1,102 @@
-body {
-	font-family: Roboto, Arial, sans-serif;
-	margin: 0;
+@font-face {
+  font-family: LogoHeading;
+  src: url("/assets/fonts/aquire-font/AquireLight-YzE0o.otf") format("truetype");
 }
 
-.container {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
+#navbar {
+  position: sticky;
+  z-index: 999;
+}
+
+.logoHead {
+  font-family: LogoHeading;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 120%;
+}
+
+#heading_link {
+  font-weight: 400;
+}
+
+img {
+  max-height: 30px;
+}
+
+a {
+  padding-right: 10px;
+  padding-left: 10px;
+  /* padding-right: 30px; */
+  font-size: 1em;
+}
+
+.navbrand {
+  height: 100%;
+  width: 50%;
+  /* margin-left: 12%; */
+  font-size: 2em;
+  text-decoration-color: white;
+}
+
+a,
+a:visited {
+  color: inherit;
+}
+
+.menu-spacer {
+  flex: 1 1 auto;
+}
+
+/* from material */
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.example-is-mobile .example-toolbar {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
+
+.example-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+	   causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+
+.example-is-mobile .example-sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+	   `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+
+@media screen and (max-width: 340px) {
+  app-download-plugin {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  app-menu {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 250px) {
+  app-sharebutton {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #widelogo {
+    display: none;
+  }
 }

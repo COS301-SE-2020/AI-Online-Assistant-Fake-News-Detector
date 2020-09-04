@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { MatBottomSheet } from '@angular/material/bottom-sheet'
-import { ShareSheetComponent } from '../sharesheet/sharesheet.component'
+import { ShareSheetComponent } from './sharesheet.component'
 
 @Component({
 	selector: 'app-sharebutton',

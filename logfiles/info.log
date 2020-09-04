@@ -4188,3 +4188,10 @@
 [20/Aug/2020 04:17:28] - DB_Server listening on port 3000. Environment: dev.
 [20/Aug/2020 04:17:39] - API_Server listening on port 8080. Environment: dev.
 [20/Aug/2020 04:17:39] - DB_Server listening on port 3000. Environment: dev.
+[01/Sep/2020 11:11:23] - API_Server listening on port 8080. Environment: dev.
+[01/Sep/2020 11:11:24] - DB_Server listening on port 3000. Environment: dev.
+[01/Sep/2020 11:55:04] - Cron job for updating reports ran.
+[02/Sep/2020 04:55:29] - API_Server listening on port 8080. Environment: dev.
+[02/Sep/2020 04:55:30] - DB_Server listening on port 3000. Environment: dev.
+[02/Sep/2020 05:52:00] - API_Server listening on port 8080. Environment: dev.
+[02/Sep/2020 05:52:01] - DB_Server listening on port 3000. Environment: dev.

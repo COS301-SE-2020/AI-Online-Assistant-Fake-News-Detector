@@ -1,216 +1,199 @@
-<div class="section hero"> 
-    <div class="container w-container">
-            <h4>We value your contribution </h4>
-            <p id="heading">As a moderator, your input will help improve our AI's accuracy...so please tread carefully.</p>
-            
+<div class="section hero">
+  <div class="container w-container">
+    <h4>We value your contribution</h4>
+    <p id="heading">
+      As a moderator, your input will help improve our AI's accuracy...so please
+      tread carefully.
+    </p>
+  </div>
+
+  <app-togglebutton (click)="ResetResponseCards()" (changed)="checked = $event">
+  </app-togglebutton>
+
+  &nbsp; &nbsp; &nbsp; &nbsp;
+  <div class="container w-container">
+    <!--Form for searching a source-->
+    <form [formGroup]="SourceInputForm" (ngSubmit)="Search()" *ngIf="!checked">
+      <mat-form-field color="primary" id="sourceInput" class="example-form-field">
+        <mat-label>Enter source name (e.g CNN)</mat-label>
+        <input matInput type="text" formControlName="SourceName" [(ngModel)]="clearSearchSourceName" aria-label="Number"
+          matInput [formControl]="myControl" [matAutocomplete]="auto" required />
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.Name">
+            {{ option.Name }}
+          </mat-option>
+        </mat-autocomplete>
+        <button mat-button *ngIf="clearSearchSourceName" matSuffix mat-icon-button aria-label="Clear"
+          (click)="clearSearchSourceName = ''">
+          <mat-icon (click)="ResetResponseCards()">close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div>
+        <button mat-raised-button color="accent">Search Source</button>
+      </div>
+    </form>
+
+    <!--End of Form for searching a source-->
+
+    <!--Form for Inserting a source-->
+    <form [formGroup]="InsertSourceForm" (ngSubmit)="onSourceSubmit()" *ngIf="checked">
+      <mat-form-field id="statement" class="example-form-field">
+        <mat-label>Source Name</mat-label>
+        <input matInput type="text" formControlName="name" [(ngModel)]="clearInsertSourceName" required />
+        <button mat-button *ngIf="clearInsertSourceName" matSuffix mat-icon-button aria-label="Clear"
+          (click)="clearInsertSourceName = ''">
+          <mat-icon (click)="ResetResponseCards()">close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <span></span>
+
+      <mat-form-field id="statement" class="example-form-field">
+        <mat-label>Source URL</mat-label>
+        <input matInput type="url" formControlName="tld" [(ngModel)]="clearUrl" required />
+        <button mat-button *ngIf="clearUrl" matSuffix mat-icon-button aria-label="Clear" (click)="clearUrl = ''">
+          <mat-icon (click)="ResetResponseCards()">close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <span></span>
+
+      <mat-form-field id="popularity" class="example-form-field">
+        <mat-label>Rating between 0-100</mat-label>
+        <input matInput matInput id="popularity" type="number" formControlName="rating" required />
+      </mat-form-field>
+
+      <div>
+        <button mat-raised-button color="accent" type="submit">
+          Insert Source
+        </button>
+      </div>
+    </form>
+
+    <!--End of Form for searching a source-->
+
+    <div class="Response-Cards">
+      <div *ngIf="sourcelist">
+        <mat-card id="SearchResponseCard" class="example-card" *ngIf="dismiss">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image">
+              <img id="cardImg" src="assets/img/5bitslogo.png" />
+            </div>
+            <mat-card-title>{{ sourcelist?.Name }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              <span>Source URL: </span> <i>{{ sourcelist["Domain Name"] }}</i>
+            </p>
+            <p>
+              <span>Popularity Rating: </span><i>{{ sourcelist?.Rating }}</i>
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="accent" (click)="dismiss = false">
+              Dismiss
+            </button>
+            <button mat-raised-button color="accent" (click)="DeleteSource(sourcelist?.ID)">
+              Delete Source
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      <!--Alternate divs that load when specific events occur-->
+      <div *ngIf="sourceDeleteResponse">
+        <mat-card id="SearchResponseCard" class="example-card">
+          <mat-card-content>
+            <p>Source has been deleted...Good riddance.</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div *ngIf="searchNotFound">
+        <mat-card id="SearchResponseCard" class="example-card">
+          <mat-card-content>
+            <p>Unfortunately, we do not know about that source.</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div *ngIf="insertSourceResponse">
+        <mat-card color="primary" id="SearchResponseCard" class="example-card">
+          <mat-card-content>
+            <p>New source has been added.</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <!--End of alternative divs-->
+    </div>
+  </div>
 </div>
 
-    <app-togglebutton (click)="ResetResponseCards()" (changed)="checked=$event">
-    </app-togglebutton>
-    
-    &nbsp; &nbsp; &nbsp; &nbsp; 
-    <div class="container w-container">
+<div class="topsection tophero">
+  <div class="topcontainer w-container">
+    <h4>You believe there is a fact that our AI doesn't know about?</h4>
+    <h4>Our AI engine is always hungry for new information.</h4>
 
-        <!--Form for searching a source-->
-        <form [formGroup]="SourceInputForm" (ngSubmit)="Search()" *ngIf="!checked">
-            
+    <div id="listOfFacts">
+      <ul style="list-style-type: none" *ngFor="let fact of factslist; let i = index">
+        <li *ngIf="7 > i">
+          "{{ fact.statement }}"
 
-                <mat-form-field color="primary" id="sourceInput"  class="example-form-field">
-                    <mat-label>Enter source name (e.g CNN)</mat-label>
-                    <input matInput  type="text" formControlName="SourceName" [(ngModel)]="clearSearchSourceName"
-                    aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" required>
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.Name">
-                          {{option.Name}}
-                        </mat-option>
-                      </mat-autocomplete>
-                    <button mat-button *ngIf="clearSearchSourceName" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchSourceName=''">
-                        <mat-icon (click)="ResetResponseCards()">close</mat-icon>
-                      </button>
-                </mat-form-field>
+          <div class="progress" style="width: 40%; height: 1.5em">
+            <div id="bars" [ngClass]="{
+                'progress-bar bg-success': checkRatingHigh(fact.popularity),
+                'progress-bar bg-warning': checkRatingMed(fact.popularity),
+                'progress-bar bg-danger': checkRatingLow(fact.popularity)
+              }" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+              [style.width]="convertRating(fact.popularity)" style="height: 1.5em"></div>
+          </div>
+        </li>
+      </ul>
+    </div>
 
-                <div>
-                    <button mat-raised-button color="accent" >Search Source</button>
-                </div>
-               
-        </form>
+    <!--Start of fact input form-->
 
-         <!--End of Form for searching a source-->
+    <div class="container-fluid">
+      <form [formGroup]="FactInputForm" (ngSubmit)="onSubmit()">
+        <mat-form-field id="statement" class="example-form-field">
+          <mat-label>Type in a fact</mat-label>
+          <input matInput type="text" formControlName="statement" [(ngModel)]="clearInsertFactStatement" required />
+          <button mat-button *ngIf="clearInsertFactStatement" matSuffix mat-icon-button aria-label="Clear"
+            (click)="clearInsertFactStatement = ''">
+            <mat-icon (click)="ResetResponseCards()">close</mat-icon>
+          </button>
+        </mat-form-field>
 
+        <span></span>
 
-         <!--Form for Inserting a source-->
-        <form [formGroup]="InsertSourceForm" (ngSubmit)="onSourceSubmit()" *ngIf="checked">
-  
-            <mat-form-field id="statement" class="example-form-field">
-                <mat-label>Source Name</mat-label>
-                <input matInput type="text" formControlName="name" [(ngModel)]="clearInsertSourceName" required>
-                <button mat-button *ngIf="clearInsertSourceName" matSuffix mat-icon-button aria-label="Clear" (click)="clearInsertSourceName=''">
-                    <mat-icon (click)="ResetResponseCards()">close</mat-icon>
-                  </button>
-            </mat-form-field>
+        <mat-form-field id="popularity" class="example-form-field">
+          <mat-label>Rating between 0-100</mat-label>
+          <input matInput matInput id="popularity" type="number" formControlName="popularity" required />
+        </mat-form-field>
 
-              <span></span>
-
-              <mat-form-field id="statement" class="example-form-field">
-                <mat-label>Source URL</mat-label>
-                <input matInput type="url" formControlName="tld" [(ngModel)]="clearUrl" required>
-                <button mat-button *ngIf="clearUrl" matSuffix mat-icon-button aria-label="Clear" (click)="clearUrl=''">
-                    <mat-icon (click)="ResetResponseCards()">close</mat-icon>
-                  </button>
-            </mat-form-field>
-
-              <span></span>
-
-              <mat-form-field id="popularity" class="example-form-field">
-                <mat-label>Rating between 0-100</mat-label>
-                <input matInput matInput id="popularity" type="number" formControlName="rating" required>
-              </mat-form-field>
-     
         <div>
-            <button mat-raised-button color="accent" type="submit">Insert Source</button>
+          <a href="#AddedFactBookmark"><button mat-raised-button color="accent" type="submit">
+              Insert Fact
+            </button></a>
         </div>
+      </form>
 
-        </form>
+      <!--End of fact input form-->
 
-        <!--End of Form for searching a source-->
-       
-             <div class="Response-Cards">
-                    <div  *ngIf="sourcelist">
-                        <mat-card id="SearchResponseCard" class="example-card" *ngIf="dismiss">
-                            <mat-card-header>
-                            <div mat-card-avatar class="example-header-image"><img id="cardImg" src="assets/img/5bitslogo.png"/></div>
-                            <mat-card-title>{{sourcelist?.Name}}</mat-card-title>
-                            </mat-card-header>
-                            <mat-card-content>
-                                <p> <span>Source URL: </span> <i>{{sourcelist['Domain Name']}}</i></p>
-                            <p> <span>Popularity Rating: </span><i>{{sourcelist?.Rating}}</i></p> 
-                            </mat-card-content>
-                            <mat-card-actions>
-                            <button mat-raised-button color="accent" (click)="dismiss=false">Dismiss</button>
-                            <button mat-raised-button color="accent" (click)="DeleteSource(sourcelist?.ID)">Delete Source</button>
-                            </mat-card-actions>
-                        </mat-card>
-                    </div>
-                    
-
-                        <!--Alternate divs that load when specific events occur-->
-                        <div *ngIf="sourceDeleteResponse">
-                            <mat-card id="SearchResponseCard" class="example-card">
-                                <mat-card-content>
-                                    <p> Source has been deleted...Good riddance.</p> 
-                                </mat-card-content>
-                            </mat-card>
-
-                        </div>
-
-                        <div *ngIf="searchNotFound">
-                            <mat-card id="SearchResponseCard" class="example-card">
-                                <mat-card-content>
-                                    <p> Unfortunately, we do not know about that source.</p> 
-                                </mat-card-content>
-                            </mat-card>
-
-                        </div>
-
-                        <div *ngIf="insertSourceResponse">
-                            <mat-card color="primary" id="SearchResponseCard" class="example-card">
-                                <mat-card-content>
-                                    <p> New source has been added.</p> 
-                                </mat-card-content>
-                            </mat-card>
-                
-                        </div>
-                
-
-
-                        <!--End of alternative divs-->
-                 </div>                   
-         
-
-    </div>
-
-    
-</div>
-
-<div class="topsection tophero"> 
-    <div class="topcontainer w-container">
-        <h4>You believe there is a fact that our AI doesn't know about?</h4>
-        <h4>Our AI engine is always hungry for new information. </h4>
-
-
-        <div id="listOfFacts">
-            
-            <ul style="list-style-type:none;"  *ngFor="let fact of factslist; let i = index">
-                <li *ngIf="7 > i">"{{fact.Statement}}"
-
-                <div class="progress" style="width: 40%;height: 1.5em">
-                    
-                    <div id="bars" [ngClass]="{
-                        'progress-bar bg-success': checkRatingHigh(fact.Popularity),
-                        'progress-bar bg-warning': checkRatingMed(fact.Popularity),
-                        'progress-bar bg-danger': checkRatingLow(fact.Popularity)
-                    }" 
-                    role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" [style.width]="convertRating(fact.Popularity)" style="height:1.5em">
-                       
-                    </div>
-                    
-                </div>
-                
-                </li>
-                
-            </ul>
-  
-        </div>
-
-        <!--Start of fact input form-->
-
-
-        <div class="container-fluid">
-  
-          
-            <form [formGroup]="FactInputForm" (ngSubmit)="onSubmit()">
-  
-                <mat-form-field id="statement" class="example-form-field">
-                    <mat-label>Type in a fact</mat-label>
-                    <input matInput type="text" formControlName="statement" [(ngModel)]="clearInsertFactStatement" required>
-                    <button mat-button *ngIf="clearInsertFactStatement" matSuffix mat-icon-button aria-label="Clear" (click)="clearInsertFactStatement=''">
-                        <mat-icon (click)="ResetResponseCards()">close</mat-icon>
-                      </button>
-                </mat-form-field>
-
-                  <span></span>
-
-                  <mat-form-field id="popularity" class="example-form-field">
-                    <mat-label>Rating between 0-100</mat-label>
-                    <input matInput matInput id="popularity" type="number" formControlName="popularity" required>
-                  </mat-form-field>
-         
-            <div>
-                <a href="#AddedFactBookmark"><button mat-raised-button color="accent" type="submit">Insert Fact</button></a>
-            </div>
-    
-            </form>
-            
-
-                 <!--End of fact input form-->
-
-     <div class="Response-Cards">
+      <div class="Response-Cards">
         <!--Alternate divs that load when specific events occur-->
-            <div *ngIf="insertFactResponse" id="AddedFactBookmark">
-                <mat-card color="primary" id="SearchResponseCard" class="example-card">
-                    <mat-card-content>
-                        <p> False fact has been added.</p> 
-                    </mat-card-content>
-                </mat-card>
+        <div *ngIf="insertFactResponse" id="AddedFactBookmark">
+          <mat-card color="primary" id="SearchResponseCard" class="example-card">
+            <mat-card-content>
+              <p>False fact has been added.</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
 
-            </div>
-
-            <!--End of alternative divs-->
- </div>
+        <!--End of alternative divs-->
+      </div>
     </div>
-
-
-    
+  </div>
 </div>
-</div>
-

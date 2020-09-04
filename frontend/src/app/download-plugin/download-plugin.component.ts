@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DownloadPluginService } from '../download-plugin.service';
+import { DownloadPluginService } from './download-plugin.service';
 //need this for migrating to svg later
 // import { DomSanitizer } from '@angular/platform-browser';
 // import { MatIconRegistry } from '@angular/material/icon';
