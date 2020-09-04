@@ -1,13 +1,10 @@
-<button mat-icon-button
-        matTooltip="User account"
-        matTooltipPosition ="below"
-        aria-label="Button that displays a tooltip"
-        [matMenuTriggerFor]="login">
-        <mat-icon>account_circle</mat-icon>
+<button mat-icon-button matTooltip="User account" matTooltipPosition="below" aria-label="Button that displays a tooltip"
+  [matMenuTriggerFor]="login">
+  <mat-icon>account_circle</mat-icon>
 </button>
 
-<mat-menu #login="matMenu">
-    <a (click)="$event.stopPropagation();">
+<mat-menu #login="matMenu" xPosition="before">
+  <!-- <a (click)="$event.stopPropagation();">
 
         <div *ngIf="signIn && !signUp">
         <app-login></app-login>
@@ -20,4 +17,28 @@
        </div>
 
     </a>
-  </mat-menu>
+
+   <a (click)="$event.stopPropagation();">
+
+        <div *ngIf="signIn && !signUp">
+        <app-login></app-login>
+        <div class="help-block text-center"><h4 id="signupText">Are You New Here? <a  color="link" (click)="toggleForm()"> Sign Up</a> </h4>  </div>
+       </div>
+
+       <div  *ngIf="signUp && !signIn">
+        <app-sign-up></app-sign-up>
+        <div class="help-block text-center"><h4 id="signupText">Already have one? <a color="link" (click)="toggleForm()"> Login </a> </h4>  </div>
+       </div>
+
+    </a> -->
+
+  <button *ngIf="!auth.loggedIn" mat-raised-button color="primary" [routerLink]="['/login']">
+    <mat-icon>fingerprint</mat-icon>Sign In
+  </button>
+  <button *ngIf="!auth.loggedIn" mat-raised-button color="accent" [routerLink]="['/login']">
+    <mat-icon>account_circle</mat-icon>Sign Up
+  </button>
+
+  <button *ngIf="auth.loggedIn" mat-flat-button color="Warn" (click)="auth.logout()">Sign out</button>
+
+</mat-menu>
