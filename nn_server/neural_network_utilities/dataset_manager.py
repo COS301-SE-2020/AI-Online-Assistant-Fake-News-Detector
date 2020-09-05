@@ -201,7 +201,6 @@ class DatasetManager:
         return tf.data.Dataset.from_generator(self.__preparedTensorGenerator, output_types=(np.int64, np.int64),
                                                  output_shapes=((None, manifest['sampleLength']), (None, manifest['outputUnits'])))
 
-    @property
     def getPreparedDataGenerator(self):
         """
         @author: AlistairPaynUP

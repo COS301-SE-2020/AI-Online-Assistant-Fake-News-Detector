@@ -399,7 +399,7 @@ class RawFakeNewsDataFilterAdapter(FilterAdapter):
         results = []
         for data in filtered:
             results.append(data)
-        label = sample['label']
+        label = [0, 0]
         if sample['label'] == 'real':
             label = [1, 0]
         elif sample['label'] == 'fake':

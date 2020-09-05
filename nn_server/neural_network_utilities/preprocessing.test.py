@@ -2,7 +2,7 @@ import unittest
 import math
 import preprocessing as pp
 
-class TestNNServer(unittest.TestCase):
+class TestPreprocessing(unittest.TestCase):
     def genericFilter(self, filter):
         self.assertGreater(filter.getFeatureCount(), 0, msg="Filter must have > 0 features.")
         for inputLength in range(0, 2000, 137):
@@ -26,31 +26,19 @@ class TestNNServer(unittest.TestCase):
                 self.assertIsInstance(item, list)
                 self.assertEqual(len(item), filter.getSampleLength(), msg="Each vector in result must have length: filter.getSampleLength()")
 
-    def testSimpleFilter(self):
-        '''
-        Unittest SimpleFilter: Test correct output shapes for mocked input.
-        '''
+    def test_SimpleFilter(self):
         print("Unittest SimpleFilter: Test correct output shapes for mocked input.")
         self.genericFilter(pp.SimpleFilter())
 
-    def testLexicalFilter(self):
-        '''
-        Unittest LexicalFilter: Test correct output shapes for mocked input.
-        '''
+    def test_LexicalFilter(self):
         print("Unittest LexicalFilter: Test correct output shapes for mocked input.")
         self.genericFilter(pp.LexicalFilter())
 
-    def testGrammaticalVectorizationFilter(self):
-        '''
-        Unittest GrammaticalFilter: Test correct output shapes for mocked input.
-        '''
+    def test_GrammaticalVectorizationFilter(self):
         print("Unittest GrammaticalFilter: Test correct output shapes for mocked input.")
         self.genericVectorizationFilter(pp.GrammaticalVectorizationFilter())
 
-    def testLexicalVectorizationFilter(self):
-        '''
-        Unittest LexicalVectorizationFilter: Test correct output shapes for mocked input.
-        '''
+    def test_LexicalVectorizationFilter(self):
         print("Unittest LexicalVectorizationFilter: Test correct output shapes for mocked input.")
         self.genericVectorizationFilter(pp.LexicalVectorizationFilter())
 
@@ -64,10 +52,7 @@ class TestNNServer(unittest.TestCase):
         def getFeatureCount(self):
             return 1
 
-    def testRawFakeNewsDataFilterAdapter(self):
-        '''
-        Unittest LexicalFilter: Test correct output shapes for mocked input.
-        '''
+    def test_RawFakeNewsDataFilterAdapter(self):
         print("Unittest RawFakeNewsDataFilterAdapter: Test correct output shapes for mocked input.")
         testFake = {'id': 100, 'text': "test text", 'label': "fake"}
         testReal = {'id': 100, 'text': "test text", 'label': "real"}
@@ -89,47 +74,38 @@ class TestNNServer(unittest.TestCase):
         self.assertEqual(result['label'], [0, 0])
         self.assertEqual(result['data'], [testOther['text']])
 
-    def testParallelPreprocessor(self):
-        '''
-        Unittest ParallelPreprocessor: Test correct output shapes for mocked input.
-        '''
+    def test_ParallelPreprocessor(self):
         print("Unittest ParallelPreprocessor: Test correct output shapes for mocked input.")
         testSize = 137
         data = []
         for i in range(0, testSize):
-            data.append(i)
+            data.append(i * str(i))
         preprocessor = pp.ParallelPreprocessor(filter=self.MockFilter())
         result = preprocessor(data)
         self.assertEqual(testSize, len(result))
         for d in data:
             self.assertIn([d], result)
 
-    def testSequentialPreprocessor(self):
-        '''
-        Unittest SequentialPreprocessor: Test correct output shapes for mocked input.
-        '''
+    def test_SequentialPreprocessor(self):
         print("Unittest SequentialPreprocessor: Test correct output shapes for mocked input.")
         testSize = 137
         data = []
         for i in range(0, testSize):
-            data.append(i)
+            data.append(i * str(i))
         preprocessor = pp.SequentialPreprocessor(filter=self.MockFilter())
         result = preprocessor(data)
         self.assertEqual(testSize, len(result))
         for d in data:
             self.assertIn([d], result)
 
-    def testVectorizationFilter(self):
-        '''
-        Unittest VectorizationPreprocessor: Test correct output shapes for mocked input.
-        '''
+    def test_VectorizationFilter(self):
         print("Unittest VectorizationPreprocessor: Test correct output shapes for mocked input.")
         inputLength = 137
         featureCount = 1
         sampleLength = 11
         data = []
         for i in range(0, inputLength):
-            data.append(str(i))
+            data.append(i * str(i))
         filter = pp.VectorizationFilter(featureCount=featureCount, sampleLength=sampleLength)
         result = filter(data)
         expectedVectors = math.ceil(inputLength * 1 / sampleLength)
