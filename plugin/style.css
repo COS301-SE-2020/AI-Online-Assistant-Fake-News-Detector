@@ -1,169 +1,73 @@
 body{
-    justify-content: center;
-    align-items: center;
-    background-color: #333333;
-    min-width: 20em;
+  justify-content: center;
+  align-items: center;
+  background-color: #333333;
+  min-width: 20em;
 }
 h1{
-    color: #E0115F;
-    text-align: center;
-    text-shadow: 2px 2px 5px #222;
-    text-decoration-style: solid;
+  color: #c72c69;
+  text-align: center;
+  text-shadow: 2px 2px 5px #222;
+  text-decoration-style: solid;
 }
 h3{
-    color: #DDD;
-    text-align: center;
+  color: #DDD;
+  text-align: center;
 }
 h4{
-    color: #AAA;
-    text-align: center;
+  color: #AAA;
+  text-align: center;
+}
+h5{
+  color: #AAA;
+  text-align: center;
 }
 input[type=text] {
-    padding: 5px;
-    box-sizing: border-box;
-    border: 2px solid #333;
-    border-radius: 4px;
-    background-color: #555555;
-    resize: none;
-    color: #DDD;
-    margin-bottom: 1em;
-    width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  border: 2px solid #333;
+  border-radius: 4px;
+  background-color: #222;
+  resize: none;
+  color: #DDD;
+  margin-bottom: 1em;
+  width: 100%;
 }
 input[type=text]:focus {
-    border: 2px solid #333;
-    background-color: #555;
+  border: 2px solid #333;
+  background-color: #222;
 }
 input[type=button], input[type=submit], input[type=reset] {
-    background-color: #E0115F;
-    border: none;
-    color: #DDD;
-    padding: 0.5em;
-    text-decoration: none;
-    cursor: pointer;
-    width: 100%;
-    font-weight: 700;
+  background-color: #c72c69;
+  border: none;
+  color: #DDD;
+  padding: 0.5em;
+  text-decoration: none;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 700;
 }
 label{
-    color: #DDD;
+  color: #DDD;
 }
-  /* Reset Select */
+/* Reset Select */
 select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -ms-appearance: none;
-    appearance: none;
-    outline: 0;
-    box-shadow: none;
-    border: 0 !important;
-    background: #222;
-    background-image: none;
-  }
-  /* Remove IE arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #222;
+  background-image: none;
+}
+/* Remove IE arrow */
 select::-ms-expand {
-    display: none;
+  display: none;
 }
-  /* Custom Select */
+/* Custom Select */
 .pluginOptions {
-    position: relative;
-    display: flex;
-    width: 100%;
-    min-width: 13em;
-    height: 2em;
-    background: #222;
-    overflow: hidden;
-    border-radius: .25em;
-    margin-bottom: 1em;
-}
-select {
-  flex: 1;
-  padding: 0 .5em;
-    color: #fff;
-    cursor: pointer;
-  }
-  #slct option{
-    background-color: #333;
-}
-
-/* block-$ */
-.block-effect {
-    font-size: calc(8px + 6vw);
-  }
-  
-  .block-reveal {
-    --t: calc(var(--td) + var(--d));
-    
-    color: transparent;
-    padding: 4px;
-    
-    position: relative;
-    overflow: hidden;
-    
-    animation: revealBlock 0s var(--t) forwards;
-  }
-  
-  .block-reveal::after {
-    content: '';
-    
-    width: 0%;
-    height: 100%;
-    padding-bottom: 4px;
-  
-    position: absolute;
-    top: 0;
-    left: 0;
-    
-    background: var(--bc);
-    animation: revealingIn var(--td) var(--d) forwards, revealingOut var(--td) var(--t) forwards;
-  }
-  
-  
-  /* animations */
-  @keyframes revealBlock {
-    100% {
-      color: #E0115F;
-    }
-  }
-  
-  @keyframes revealingIn {
-    
-    0% {
-      width: 0;
-    }
-  
-    100% {
-      width: 100%;
-    }
-  }
-  
-  @keyframes revealingOut {
-    
-    0% {
-      transform: translateX(0);
-    }
-    
-    100% {
-      transform: translateX(100%);
-    }
-    
-  }
-  
-  .abs-site-link {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    color: hsla(0, 0%, 0%, .6);
-    font-size: 16px;
-  }
-  .output{
-    background-color: #222;
-    padding: 0.3em;
-    margin-bottom: 1em;
-  }
-  a{
-    color: #E0115F;
-    text-decoration: none;
-  }
-.reportOptions {
   position: relative;
   display: flex;
   width: 100%;
@@ -173,4 +77,150 @@ select {
   overflow: hidden;
   border-radius: .25em;
   margin-bottom: 1em;
+}
+select {
+flex: 1;
+padding: 0 .5em;
+  color: #fff;
+  cursor: pointer;
+}
+#slct option{
+  background-color: #333;
+}
+
+/* block-$ */
+.block-effect {
+  font-size: calc(8px + 6vw);
+}
+
+.block-reveal {
+  --t: calc(var(--td) + var(--d));
+  
+  color: transparent;
+  padding: 4px;
+  
+  position: relative;
+  overflow: hidden;
+  
+  animation: revealBlock 0s var(--t) forwards;
+}
+
+.block-reveal::after {
+  content: '';
+  
+  width: 0%;
+  height: 100%;
+  padding-bottom: 4px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  background: var(--bc);
+  animation: revealingIn var(--td) var(--d) forwards, revealingOut var(--td) var(--t) forwards;
+}
+
+
+/* animations */
+@keyframes revealBlock {
+  100% {
+    color: #c72c69;
+  }
+}
+
+@keyframes revealingIn {
+  
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes revealingOut {
+  
+  0% {
+    transform: translateX(0);
+  }
+  
+  100% {
+    transform: translateX(100%);
+  }
+  
+}
+
+.abs-site-link {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  color: hsla(0, 0%, 0%, .6);
+  font-size: 16px;
+}
+.output{
+  background-color: #222;
+  padding: 0.3em;
+  margin-bottom: 1em;
+}
+a{
+  color: #c72c69;
+  text-decoration: none;
+}
+.pluginSelector{
+background-color: #222;
+width: 94%;
+display: table;
+table-layout: fixed;
+padding: 0.6em;
+margin-bottom: 1em;
+}
+.selectionOption{
+color: #DDD;
+font-weight: 900;
+display: table-cell;
+text-align: center;
+padding: 0.6em;
+cursor: pointer;
+}
+.selectionOption.active{
+background-color: #c72c69;
+}
+.reportSelector{
+background-color: #222;
+width: 95%;
+display: table;
+table-layout: fixed;
+padding: 0.3em;
+margin-bottom: 1em;
+font-size: smaller;
+margin: auto;
+margin-bottom: 1em;
+}
+.primeSources{
+  background-color: #222;
+  text-align: left;
+  padding: 1em;
+}
+.primeSource{
+  text-align: left;
+  margin-bottom: 0.5em;
+  background-color: #c72c69;
+  color: #222;
+  padding: 3px;
+}
+.primeSource.first{
+  width: 95%;
+}
+.primeSource.second{
+  width: 85%;
+}
+.primeSource.third{
+  width: 75%;
+}
+#loading{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 5%;
 }
