@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-sharesheet",
@@ -7,7 +8,10 @@ import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 })
 export class ShareSheetComponent {
   cantshare: boolean;
-  constructor(private _bottomSheetRef: MatBottomSheetRef<ShareSheetComponent>) {
+  constructor(
+    private _bottomSheetRef: MatBottomSheetRef<ShareSheetComponent>,
+    private readonly snackBar: MatSnackBar
+  ) {
     // if (!navigator.share) {
     // 	console.log('Web Share API is not available in your browser.');
     // 	//this.cantshare = true;
@@ -41,7 +45,9 @@ export class ShareSheetComponent {
           url: "https://fakenewsdetector.tech",
         })
         .then(() => {
-          console.log("Successful share");
+          this.snackBar.open(`Thanks for sharing (◠﹏◠)`, "Close", {
+            duration: 4000,
+          });
           this._bottomSheetRef.dismiss();
         })
         .catch((error) => console.log("Error sharing", error));

@@ -1,9 +1,9 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
 import { MediaMatcher } from "@angular/cdk/layout";
 import { Observable } from "rxjs/Observable";
 import { Option } from "./theme/option.model";
 import { ThemeService } from "./theme/theme.service";
-import { AuthService } from "./auth/auth.service";
+import { AuthService } from "./services/auth/auth.service";
 
 @Component({
   selector: "app-root",
@@ -15,6 +15,8 @@ export class AppComponent implements OnDestroy {
   mobileQuery: MediaQueryList;
   options$: Observable<Array<Option>> = this.themeService.getThemeOptions();
   curTheme: string;
+  user$: Observable<firebase.User> = this.auth.user$;
+
   /* isMobile : boolean; */
   private _mobileQueryListener: () => void;
   constructor(

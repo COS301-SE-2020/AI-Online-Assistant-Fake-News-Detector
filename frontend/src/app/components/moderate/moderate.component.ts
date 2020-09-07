@@ -12,7 +12,8 @@ import { Observable, Subscription } from "rxjs";
 import { stringToKeyValue } from "@angular/flex-layout/extended/typings/style/style-transforms";
 import { DeleteSourceService } from "src/app/delete-source.service";
 import { FormBuilder } from "@angular/forms";
-import { AutocompleteService } from "src/app/autocomplete.service";
+import { AutocompleteService } from "../../services/autocomplete.service";
+
 import {
   tap,
   startWith,
@@ -21,7 +22,7 @@ import {
   switchMap,
   map,
 } from "rxjs/operators";
-import { AuthService } from "../../auth/auth.service";
+import { AuthService } from "../../services/auth/auth.service";
 
 @Component({
   selector: "app-moderate",
@@ -120,7 +121,7 @@ export class ModerateComponent implements OnInit {
     // call the service which makes the http-request
     return this.autocompleteService.getData().pipe(
       map((response) =>
-        response.response.Sources.filter((option) => {
+        response.Sources.filter((option) => {
           return option.Name.toLowerCase().indexOf(val.toLowerCase()) === 0;
         })
       )

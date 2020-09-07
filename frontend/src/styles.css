@@ -1,16 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-
-@import "~bootstrap/dist/css/bootstrap.css";
-html,
-body {
+body,
+html {
+  box-sizing: border-box;
   height: 100%;
-}
-
-body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-@keyframes yourAnimation {
+@keyframes pulse {
   0.0% {
     transform: scale(1);
   }
@@ -18,7 +14,25 @@ body {
     transform: scale(1.5);
   }
 }
+.pulse {
+  animation: pulse 1s ease 0.2s 2 normal none;
+}
 
-.elementToAnimate {
-  animation: yourAnimation 1.5s ease 0s 2 normal none;
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-20px);
+  }
+}
+.bounce {
+  animation: bounce 0.8s ease-in 1s 1 normal none;
 }
