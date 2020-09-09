@@ -47,6 +47,43 @@
 
         </div>
 
+        <div id="TrendingStatistics">
+
+            <ngx-charts-pie-chart *ngIf="setFacts"
+              [view]="Fview"
+              [scheme]="FcolorScheme"
+              [results]="this.trendingFacts"
+              [gradient]="Fgradient"
+              [legend]="FshowLegend"
+              [legendPosition]="FlegendPosition"
+              [legendTitle] = 'FlegendTitle'
+              [trimLabels] = "FtrimLabel"
+              [labels]="FshowLabels"
+              [doughnut]="FisDoughnut"
+              (select)="onSelect($event)"
+              (activate)="onActivate($event)"
+              (deactivate)="onDeactivate($event)"
+              >
+            </ngx-charts-pie-chart>
+
+            <ngx-charts-pie-chart  *ngIf="setSources"
+            [view]="Sview"
+            [scheme]="ScolorScheme"
+            [results]="this.trendingSources"
+            [gradient]="Sgradient"
+            [legend]="SshowLegend"
+            [legendPosition]="SlegendPosition"
+            [legendTitle] = 'SlegendTitle'
+            [trimLabels] = "StrimLabel"
+            [labels]="SshowLabels"
+            [doughnut]="SisDoughnut"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)"
+            >
+          </ngx-charts-pie-chart>
+        </div>
+
   </div>
 
 </div>
