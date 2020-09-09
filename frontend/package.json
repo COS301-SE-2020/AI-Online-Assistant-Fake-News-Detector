@@ -29,6 +29,7 @@
     "bootstrap": "^4.5.0",
     "canvasjs": "^1.8.3",
     "firebase": "^7.13.1",
+    "hammerjs": "^2.0.8",
     "jquery": "^3.5.1",
     "ng-http-loader": "^8.0.0",
     "ngx-gauge": "^1.1.0",
