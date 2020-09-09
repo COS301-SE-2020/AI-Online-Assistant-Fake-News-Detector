@@ -1,5 +1,53 @@
-&nbsp;
-<h1>Page under construction</h1>
-<div class="topsection tophero">
-  <img class="elementToAnimate" src="assets/img/construction.svg" alt="under construction">
+<div class="container-fluid">
+  <div class="topsection tophero">
+    <div class="topcontainer">
+      <h3><span class="text-span">Statistics</span></h3>
+    </div>
+
+        <div id="Neural Network Statistics">
+            <ngx-gauge style="font-size:20px"
+            [type]="TTgaugeType" 
+            [value]="TTgaugevalue" 
+            [label]="TTgaugeLabel" 
+            [max] = "maxTT"
+            [thick] = 10
+            [thresholds]="TTthresholdConfig" 
+            
+            >
+            </ngx-gauge>
+
+
+            <ngx-gauge [type]="TDgaugeType" 
+            [value]="TDgaugeValue" 
+            [max] = "maxTD"
+            [thick] = 10
+            [label]="TDgaugeLabel" 
+            [size] = "TDsize"
+            >
+            </ngx-gauge>
+
+            <ngx-gauge [type]="SMgaugeType" 
+            [value]="SMgaugeValue" 
+            [label]="SMgaugeLabel" 
+            [max] = "maxSM"
+            [thick] = 10
+            [thresholds]="SMthresholdConfig"
+            [size] = "SMsize" 
+            >
+            </ngx-gauge>
+
+            <ngx-gauge [type]="TSgaugeType" 
+            [value]="TSgaugevalue" 
+            [label]="TSgaugeLabel" 
+            [max] = "maxTS"
+            [thick] = 10
+            [thresholds]="TSthresholdConfig" 
+            >
+            </ngx-gauge>
+
+        </div>
+
+  </div>
+
 </div>
+
