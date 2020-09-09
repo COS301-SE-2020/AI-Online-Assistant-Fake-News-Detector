@@ -51,6 +51,8 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { AppFirebaseModule } from "./app-firebase.module";
 
 import { ProfileCardComponent } from "./components/profile-card/profile-card.component";
+import { NgxGaugeModule } from 'ngx-gauge';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -88,7 +90,9 @@ import { ProfileCardComponent } from "./components/profile-card/profile-card.com
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatProgressBarModule,
-    AppFirebaseModule,
+	AppFirebaseModule,
+	NgxGaugeModule,
+	NgxChartsModule
   ],
   entryComponents: [ShareButtonComponent, ShareSheetComponent],
   providers: [
