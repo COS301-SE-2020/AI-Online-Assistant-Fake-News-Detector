@@ -1,24 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <base href="/" />
   <title>ARTIFACT</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style type="text/css">
-    body, html {
+    body,
+    html {
       height: 100%;
+      background-color: #303030;
     }
+
     .app-loading .logo {
-    width: 64px;
-    height: 64px;
-    background: url(./assets/img/logo.png) center center no-repeat;
-    background-size: cover;
+      width: 64px;
+      height: 64px;
+      background: url(./assets/img/logo.png) center center no-repeat;
+      background-size: cover;
     }
+
     .app-loading {
       position: relative;
       display: flex;
@@ -27,6 +34,7 @@
       justify-content: center;
       height: 100%;
     }
+
     .app-loading .spinner {
       height: 200px;
       width: 200px;
@@ -39,6 +47,7 @@
       right: 0;
       margin: auto;
     }
+
     .app-loading .spinner .path {
       stroke-dasharray: 1, 200;
       stroke-dashoffset: 0;
@@ -46,20 +55,24 @@
       stroke-linecap: round;
       stroke: #e91e63;
     }
+
     @keyframes rotate {
       100% {
         transform: rotate(360deg);
       }
     }
+
     @keyframes dash {
       0% {
         stroke-dasharray: 1, 200;
         stroke-dashoffset: 0;
       }
+
       50% {
         stroke-dasharray: 89, 200;
         stroke-dashoffset: -35px;
       }
+
       100% {
         stroke-dasharray: 89, 200;
         stroke-dashoffset: -124px;
@@ -73,7 +86,7 @@
     <div class="app-loading">
       <div class="logo">
         <svg class="spinner" viewBox="25 25 50 50">
-          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
         </svg>
       </div>
     </div>

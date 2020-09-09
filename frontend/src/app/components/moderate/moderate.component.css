@@ -1,28 +1,27 @@
 .container {
-	padding-right: 70px;
-	padding-left: 70px;
+  padding-right: 70px;
+  padding-left: 70px;
 }
 
 .section.hero {
-	padding-bottom: 2em;
-	padding-top: 92px;
-	background-color: #c72c69;
-	text-align: center;
+  padding-bottom: 2em;
+  padding-top: 92px;
+  background-color: #c72c69;
+  text-align: center;
 }
 
 .topcontainer {
-	padding-right: 70px;
-	padding-left: 70px;
+  padding-right: 70px;
+  padding-left: 70px;
 }
 
 .topsection {
-	padding-top: 70px;
-	padding-bottom: 2em;
-	/* 
+  padding-top: 70px;
+  padding-bottom: 2em;
+  /*
     moved this to assets/css for dark/light
     background-color: #e7e8ea; */
-	text-align: center;
-
+  text-align: center;
 }
 
 /* .topsection.hero{
@@ -31,101 +30,97 @@
     background-color: #e7e8ea;
     text-align: center;
 } */
-mat-card-title{
-	align-items: center;
+mat-card-title {
+  align-items: center;
 }
-span{
-	font-weight: 500;
+span {
+  font-weight: 500;
 }
 
 h3 {
-	font-size: 3em;
-	font-weight: 300;
-	/* color: black; */
+  font-size: 3em;
+  font-weight: 300;
+  /* color: black; */
 }
 
-h4{
+h4 {
   font-size: 2em;
   font-weight: 100;
-  color: #A9A9A9;
+  color: #a9a9a9;
 }
 
 #heading {
-	margin-top: 2em;
-	font-size: 20px;
-	font-weight: 200;
-	
+  margin-top: 2em;
+  font-size: 20px;
+  font-weight: 200;
 }
 
 img {
-	height: 70%;
-	width: 100%;
+  height: 70%;
+  width: 100%;
 }
 
-#popularity{
+#popularity {
   width: 20%;
   min-width: 190px;
   margin-left: auto;
   margin-right: auto;
 }
 
-#listOfFacts{
+#listOfFacts {
   margin-top: 40px;
   margin-bottom: 40px;
 }
 
-ul{
+ul {
   font-size: 1.5em;
   font-weight: 100;
   text-align: center;
 }
 
-
 @media (max-width: 590px) {
-	#popularity{
-		margin-left: auto;
-		margin-right: auto;
-	}
+  #popularity {
+    margin-left: auto;
+    margin-right: auto;
   }
-
-#statement{
-	margin-right: 1em;
-	width: 20%;
-	min-width: 190px;
-}
-@media (max-width: 590px) {
-	#statement{
-		margin-left: auto;
-		margin-right: auto;
-	}
-  }
-
-  #sourceInput{
-	  width: 40%;
-	  min-width: 220px;
-  }
-
-  #SearchResponseCard{
-	  width: 40%;
-	  margin-left: auto;
-	  margin-right: auto;
-	  margin-top: 3em;
-	  margin-bottom: 2em;
-  }
-
-  #cardImg{
-	  width: 50px;
-  }
-  
-  toggle-button {
-	margin: 0 auto;
-  } 
-
-.progress{
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
-	vertical-align: text-bottom;
 }
 
+#statement {
+  margin-right: 1em;
+  width: 20%;
+  min-width: 190px;
+}
+@media (max-width: 590px) {
+  #statement {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 
+#sourceInput {
+  width: 40%;
+  min-width: 220px;
+}
+
+#SearchResponseCard {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3em;
+  margin-bottom: 2em;
+}
+
+#cardImg {
+  width: 50px;
+}
+
+toggle-button {
+  margin: 0 auto;
+}
+
+.progress {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  vertical-align: text-bottom;
+}

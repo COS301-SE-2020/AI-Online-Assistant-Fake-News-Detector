@@ -1,23 +1,14 @@
-<button mat-icon-button
-        matTooltip="User account"
-        matTooltipPosition ="below"
-        aria-label="Button that displays a tooltip"
-        [matMenuTriggerFor]="login">
-        <mat-icon>account_circle</mat-icon>
-</button>
+<ng-container class="bounce" *ngIf="user$ | async as user; else loginIcon">
 
-<mat-menu #login="matMenu">
-    <a (click)="$event.stopPropagation();">
+  <app-profile-card [user]="user" (logoutClick)="logout()">
+  </app-profile-card>
 
-        <div *ngIf="signIn && !signUp">
-        <app-login></app-login>
-        <div class="help-block text-center"><h4 id="signupText">Are You New Here? <a  color="link" (click)="toggleForm()"> Sign Up</a> </h4>  </div>
-       </div>
+</ng-container>
 
-       <div  *ngIf="signUp && !signIn">
-        <app-sign-up></app-sign-up>
-        <div class="help-block text-center"><h4 id="signupText">Already have one? <a color="link" (click)="toggleForm()"> Login </a> </h4>  </div>
-       </div>
-
-    </a>
-  </mat-menu>
+<ng-template #loginIcon>
+  <button mat-icon-button (click)="login()" matTooltip="Login">
+    <mat-icon aria-hidden="false" aria-label="Login">
+      fingerprint
+    </mat-icon>
+  </button>
+</ng-template>
