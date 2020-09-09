@@ -157,7 +157,7 @@ export class ModerateComponent implements OnInit {
 
   getFacts() {
     this.factslistService.getFactsList().subscribe((data: any) => {
-      console.log(data);
+      //console.log(data);
       this.factslist = data.response.Facts;
     });
   }

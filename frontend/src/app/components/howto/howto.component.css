@@ -25,7 +25,15 @@
     /* color: black; */
   }
   
- 
+#TrendingStatistics{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ngx-charts-outer{
+    margin: 0;
+}
   
   .nowrap {
     white-space: nowrap;
