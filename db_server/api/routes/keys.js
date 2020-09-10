@@ -71,8 +71,8 @@ router.post("/", (req, res, next) => {
  * @author Quinton Coetzee
  */
 router.get("/:keyDescription", (req, res, next) => {
-    const description = decodeURI(req.params.sourceName);
-    Source.findOne({ description: new RegExp(description, "i") })
+    const description = decodeURI(req.params.keyDescription);
+    Key.findOne({ description: new RegExp(description, "i") })
     .select("_id description key")
     .exec()
     .then((doc) => {
