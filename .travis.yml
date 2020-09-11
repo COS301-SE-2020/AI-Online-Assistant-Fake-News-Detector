@@ -1,13 +1,23 @@
-os: linux
-dist: bionic
-before_install:
-  - pyenv global 3.8
-language: node_js
-node_js:
-  - 14
-cache:
-  npm: true
-install: bash build.sh
+matrix:
+  include:
+    - language: python
+      os: linux
+      dist: bionic
+      python: 3.8
+      cache: pip
+      before_script:
+	- bash python_build.sh
+      script:
+        - bash python_test.sh
+
+    - language: node_js
+      os: linux
+      dist: bionic
+      node_js:
+        - 14
+      cache: npm
+      install: npm install
+      
 notifications:
   email:
     recipients:
