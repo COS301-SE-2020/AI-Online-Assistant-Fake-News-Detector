@@ -4,23 +4,22 @@ matrix:
       os: linux
       dist: bionic
       python: 3.8
-      cache: pip
+      cache: pip3
       before_script:
-	- bash python_build.sh
+        - bash python_build.sh
       script:
         - bash python_test.sh
 
     - language: node_js
       os: linux
       dist: bionic
-      node_js:
-        - 14
+      node_js: 14
       cache: npm
       install: npm install
-      
+
 notifications:
   email:
     recipients:
-      - u14272289@tuks.co.za
+    - u14272289@tuks.co.za
     on_success: never # default: change
     on_failure: always # default: always
