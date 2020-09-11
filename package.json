@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "description": "A tool for identifying fake news articles.",
   "scripts": {
-    "install:nn": "cd nn_server && pip3 install -r requirements.txt",
-    "install:classifierUtil": "cd nn_server/classifier_utilities && pip3 install -r requirements.txt",
-    "install:coreNN": "cd nn_server/core_nn && pip3 install -r requirements.txt",
-    "install:spellingNN": "cd nn_server/nn_spelling_input && pip3 install -r requirements.txt",
-    "install:factNN": "cd nn_server/nn_fact_input && pip3 install -r requirements.txt",
     "install:db": "cd db_server && npm install && npm audit fix && npm update",
     "install:api": "cd api_server && npm install && npm audit fix && npm update",
     "postinstall": "run-s install:*",
