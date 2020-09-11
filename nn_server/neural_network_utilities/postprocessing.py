@@ -41,7 +41,7 @@ def overallResults(outputs):
         label = RealOrFakeLabels.outputToLabel(outputSum)
         confidence = RealOrFakeLabels.outputToValue(outputSum) / length
         results['prediction'] = label
-        results['confidence'] = confidence
+        results['confidence'] = str(confidence)
     return results       
                 
 def breakdownResults(outputs, text):
@@ -54,11 +54,11 @@ def breakdownResults(outputs, text):
             label = RealOrFakeLabels.outputToLabel(outputs[i])
             confidence = RealOrFakeLabels.outputToValue(outputs[i])
             subtext = text[(i * subtextStep):((i + 1) * subtextStep)]
-            results.append({'text': ' '.join(subtext), 'prediction': label, 'confidence': confidence})
+            results.append({'text': ' '.join(subtext), 'prediction': label, 'confidence': str(confidence)})
     return results    
 
 def postprocess(outputs, text):
-    weighted = weightedAggregateOutputs(padOutputs(b), [0.5, 0.5])
+    weighted = weightedAggregateOutputs(padOutputs(outputs), [0.2, 0.8])
     overall = overallResults(weighted)
     breakdown = breakdownResults(weighted, text)
-    return {'result': overall, 'breakdown': breakdown}
+    return {'overall': overall, 'breakdown': breakdown}
