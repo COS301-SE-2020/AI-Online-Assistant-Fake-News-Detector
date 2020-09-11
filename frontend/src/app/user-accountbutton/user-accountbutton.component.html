@@ -1,4 +1,4 @@
-<ng-container class="bounce" *ngIf="user$ | async as user; else loginIcon">
+<ng-container *ngIf="user$ | async as user; else loginIcon">
 
   <app-profile-card [user]="user" (logoutClick)="logout()">
   </app-profile-card>
@@ -6,7 +6,7 @@
 </ng-container>
 
 <ng-template #loginIcon>
-  <button mat-icon-button (click)="login()" matTooltip="Login">
+  <button mat-icon-button (click)="login()" matTooltip="Login" class="heartbeat">
     <mat-icon aria-hidden="false" aria-label="Login">
       fingerprint
     </mat-icon>

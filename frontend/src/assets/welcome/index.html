@@ -17,7 +17,8 @@
       <div class="slides">
         <div class="slide slide--current">
           <div class="slide__img" style="background-image: url(img/1.jpg)"></div>
-          <img class="slide__logo" src="img/5bitslogo.png" style="opacity: 1; transform: translateX(0px);" alt="logo"
+          <img class="slide__logo tracking-in-contract-bck " src="img/5bitslogo.png"
+            style="opacity: 1; transform: translateX(0px);" alt="logo"
             width="auto" height="80">
           <h2 class="slide__title logoHead">ArtiFact</h2>
           <p class="slide__desc">Improving Your Relationship With News</p>
@@ -52,11 +53,11 @@
             browse!</p>
           <div class="btn_row" style="display: flex;">
             <a onclick="(getElementById('prevNav').click())" class="slide__link">Back</a>
-            <a onclick="(getElementById('nextNav').click())" class="slide__link">Let's Go</a>
+            <a onclick="parent.document.getElementById('_close').click();" class="slide__link">Let's Go</a>
           </div>
         </div>
       </div>
-      <nav class="slidenav hidden">
+        <nav class="slidenav hidden">
         <button id="prevNav" class="slidenav__item slidenav__item--prev">Previous</button>
         <span>/</span>
         <button id="nextNav" class="slidenav__item slidenav__item--next">Next</button>
