@@ -1,12 +1,49 @@
-body {
-	font-family: Roboto, Arial, sans-serif;
-	margin: 0;
+@font-face {
+  font-family: LogoHeading;
+  src: url("/assets/fonts/aquire-font/AquireLight-YzE0o.otf") format("truetype");
 }
 
-.container {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
+.logoHead {
+  font-family: LogoHeading;
+  text-decoration: none;
+  font-size: 1.7em;
+}
+
+#widelogo {
+  max-height: 30px;
+}
+
+button {
+  padding-right: 10px;
+  padding-left: 10px;
+  font-size: 0.9em;
+}
+
+a,
+a:visited {
+  color: inherit;
+}
+
+@media screen and (max-width: 400px) {
+  app-download-plugin {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  app-menu {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  app-sharebutton {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #widelogo {
+    display: none;
+  }
 }

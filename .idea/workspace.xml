@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="48294fe4-2390-4661-acc7-160416ea591b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/db_server/api/routes/facts.js" beforeDir="false" afterPath="$PROJECT_DIR$/db_server/api/routes/facts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_server/db_server.js" beforeDir="false" afterPath="$PROJECT_DIR$/db_server/db_server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/db_server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/moderate/moderate.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/components/moderate/moderate.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/moderate/moderate.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/components/moderate/moderate.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/moderate/moderate.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/components/moderate/moderate.component.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1ejoizmNdb2x9BrjQYvoBZvMTKg" />
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="48294fe4-2390-4661-acc7-160416ea591b" name="Default Changelist" comment="" />
+      <created>1594844494135</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1594844494135</updated>
+      <workItem from="1594844501192" duration="144000" />
+      <workItem from="1594846055438" duration="613000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="517" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1594846061429">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="517" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1594846061429" />
+  </component>
+</project>
