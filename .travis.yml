@@ -9,6 +9,12 @@ matrix:
         - bash python_build.sh
       script:
         - bash python_test.sh
+      notifications:
+        email:
+          recipients:
+          - u14272289@tuks.co.za
+          on_success: never # default: change
+          on_failure: always # default: always
 
     - language: node_js
       os: linux
@@ -16,10 +22,9 @@ matrix:
       node_js: 14
       cache: npm
       install: npm install
-
-notifications:
-  email:
-    recipients:
-    - u14272289@tuks.co.za
-    on_success: never # default: change
-    on_failure: always # default: always
+      notifications:
+        email:
+          recipients:
+          - u15015069@tuks.co.za
+          on_success: never # default: change
+          on_failure: always # default: always
