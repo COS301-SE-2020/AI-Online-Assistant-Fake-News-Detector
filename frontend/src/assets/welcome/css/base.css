@@ -1,0 +1,440 @@
+@font-face {
+  font-family: LogoHeading;
+  src: url("AquireLight-YzE0o.otf") format("truetype");
+}
+
+.logoHead {
+  font-family: LogoHeading;
+  text-decoration: none;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block;
+}
+
+[hidden] {
+  display: none;
+}
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+}
+a:focus {
+  outline: thin dotted;
+}
+a:active,
+a:hover {
+  outline: 0;
+}
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+b,
+strong {
+  font-weight: bold;
+}
+dfn {
+  font-style: italic;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, serif;
+  font-size: 1em;
+}
+pre {
+  white-space: pre-wrap;
+}
+q {
+  quotes: "\201C""\201D""\2018""\2019";
+}
+small {
+  font-size: 80%;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+img {
+  border: 0;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+figure {
+  margin: 0;
+}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 4 6px;
+  padding: 0.35em 0.625em 0.75em;
+}
+legend {
+  border: 0;
+  padding: 0;
+}
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  margin: 0;
+}
+button,
+input {
+  line-height: normal;
+}
+button,
+select {
+  text-transform: none;
+}
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+textarea {
+  overflow: auto;
+  vertical-align: top;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+html {
+  background: rgb(0, 0, 0);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+    sans-serif;
+  min-height: 100vh;
+  color: #424242;
+  color: var(--color-text);
+  background-color: #424242;
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.demo-3 {
+  --color-text: #fff;
+  --color-bg: #000000;
+  --color-link: #f1f1f1;
+  --color-link-hover: #e91e63;
+  --color-stitle: #f1f1f1;
+  --fontsize-stitle: 12vw;
+  --color-sdesc: #f1f1f1;
+  --color-slink: #f1f1f1;
+  --color-slink-hover: #fff;
+  --color-slink-bg: #424242;
+  --color-slink-hover-bg: #e91e63;
+  --color-nav: #e91e63;
+  --color-nav-hover: #000;
+}
+
+/* Fade effect */
+.js body {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.js body.render {
+  opacity: 1;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-link);
+  outline: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--color-link-hover);
+  outline: none;
+}
+
+.hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+main {
+  position: relative;
+  width: 100%;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.content--fixed a {
+  pointer-events: auto;
+}
+
+.slideshow {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.slides {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide--current {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.slide__img {
+  position: absolute;
+  top: -200px;
+  left: -200px;
+  width: calc(100% + 400px);
+  height: calc(100% + 400px);
+  background-size: cover;
+  background-position: 50% 50%;
+
+  /* Add the blur effect */
+  filter: blur(6px);
+  -webkit-filter: blur(6px);
+}
+
+.slidenav__item {
+  border: 0;
+  background: none;
+  font-weight: bold;
+  color: var(--color-text);
+}
+
+.slidenav__item:focus {
+  outline: none;
+}
+
+.slidenav__item:hover {
+  color: var(--color-nav-hover);
+}
+
+.shape {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  fill: var(--color-shape-fill);
+  top: 0;
+  pointer-events: none;
+}
+
+.slide__title {
+  position: relative;
+  font-size: var(--fontsize-stitle);
+  margin: 0;
+  cursor: default;
+  line-height: 1;
+  color: var(--color-stitle);
+}
+
+.slide__logo {
+  margin-bottom: 1em;
+}
+
+.slide__desc {
+  position: relative;
+  font-size: 1.4em;
+  margin: 2em 0 2em 0;
+  cursor: default;
+  color: var(--color-sdesc);
+  padding: 0 1em;
+  text-align: center;
+}
+
+.slide__link {
+  margin: 5px;
+  position: relative;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 1em 2em;
+  display: flex;
+  color: var(--color-slink);
+  background: var(--color-slink-bg);
+  transition: color 0.3s, background 0.3s;
+}
+
+.slide__link:hover {
+  color: var(--color-slink-hover);
+  background: var(--color-slink-hover-bg);
+}
+
+@media screen and (min-width: 55em) {
+  .demos {
+    display: flex;
+    justify-self: end;
+  }
+  .demo {
+    display: block;
+    width: 17px;
+    height: 17px;
+    margin: 0 4px;
+    border-radius: 50%;
+    background: var(--color-link);
+  }
+  a.demo--current {
+    background: var(--color-link-hover);
+  }
+  .demo span {
+    line-height: 1;
+    position: absolute;
+    right: 100%;
+    display: none;
+    margin: 0 1em 0 0;
+  }
+  .demo--current span {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 55em) {
+  body {
+    padding: 0;
+  }
+  .content {
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    padding-bottom: 0;
+  }
+  .content--fixed {
+    position: relative;
+    z-index: 1000;
+    display: block;
+    padding: 1em;
+  }
+
+  .slide__link {
+    font-size: 0.85em;
+  }
+  .slide__logo {
+    height: 40px;
+  }
+}
+
+/* Github icon */
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out 0s 2;
+}
+
+@keyframes octocat-wave {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+
+@media (max-width: 500px) {
+  .github-corner:hover .octo-arm {
+    animation: none;
+  }
+
+  .github-corner .octo-arm {
+    animation: octocat-wave 560ms ease-in-out 0s 2;
+  }
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* particles.js */
+.background {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
