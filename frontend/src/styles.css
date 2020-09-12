@@ -18,21 +18,46 @@ html {
   animation: pulse 1s ease 0.2s 2 normal none;
 }
 
-@keyframes bounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-30px);
-  }
-  60% {
-    transform: translateY(-20px);
-  }
+@keyframes heartbeat {
+        from {
+          transform: scale(1);
+          transform-origin: center center;
+          animation-timing-function: ease-out;
+        }
+        10% {
+          transform: scale(0.91);
+          animation-timing-function: ease-in;
+        }
+        17% {
+          transform: scale(0.98);
+          animation-timing-function: ease-out;
+        }
+        33% {
+          transform: scale(0.87);
+          animation-timing-function: ease-in;
+        }
+        45% {
+          transform: scale(1);
+          animation-timing-function: ease-out;
+        }
+      }   
+
+.heartbeat {
+        animation: heartbeat 1.3s cubic-bezier(0.680, -0.550, 0.265, 1.550) 1s 2 alternate-reverse both;
 }
-.bounce {
-  animation: bounce 0.8s ease-in 1s 1 normal none;
+
+@keyframes slide-in-bottom {
+        0% {
+          transform: translateY(1000px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      
+
+.slide-in-bottom {
+	animation: slide-in-bottom 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.4s both;
 }
