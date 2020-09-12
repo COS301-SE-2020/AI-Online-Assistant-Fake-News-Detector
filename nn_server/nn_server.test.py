@@ -1,7 +1,6 @@
 import unittest
 import json
 from nn_server import app
-import pytest
 
 
 class TestNNServer(unittest.TestCase):
@@ -137,7 +136,7 @@ class TestNNServer(unittest.TestCase):
         rv = self.app.post('/verify', data=json.dumps(
             {"type": "text", "content": "A body of text to test."}), headers={'Content-Type': 'application/json'})
         body = rv.get_json(force=True, silent=True)
-        if isinstance(body['response']['result'], float):
+        if isinstance(body['response']['result'], dict):
             pass
         else:
             raise ValueError('Testing valid POST Request - Test 4 failed')

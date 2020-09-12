@@ -56,7 +56,7 @@ def check():
     if body:
         if 'type' in body.keys():
             if 'content' in body.keys():
-                if body['type'] == 'text' and isinstance(body['content'], str):
+                if body['type'] == 'text' and isinstance(body['content'], str) and len(body['content']):
                     text = body['content'].lower()
                     grammaticalOutput = grammaticalLSTM.process(
                         preparedData=grammaticalFilter(text))
