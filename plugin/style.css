@@ -231,7 +231,7 @@ a{
   color: #DDD;
 }
 .reviewOutput{
-  font-size: 1em;
+  font-size: 1.1em;
   background-color: #222;
   padding: 0.6em;
   margin-bottom: 1em;
@@ -243,4 +243,10 @@ a{
   color: #c72c69;
   text-shadow: 2px 2px 5px #222;
   text-decoration-style: solid;
+}
+.reviewOutput>b>a{
+  font-size: 1.2em;
+}
+#analysisLink{
+  font-size: 1.1em;
 }

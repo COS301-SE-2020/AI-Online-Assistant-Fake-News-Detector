@@ -8,6 +8,9 @@ $(() => {
     $('#input').show();
     $('#output').hide();
     $('#input').html('<h3>Watch out for these sources:</h3>');
+//////////////////////////////////////////////////////   
+//////////////POPULATE PLUGIN LANDING PAGE////////////
+//////////////////////////////////////////////////////   
     getSources().then(data => {
         let counter=0,i=0,j=0,k=0;
         let max = 0;
@@ -104,9 +107,30 @@ $('#input').on('click', 'input[value="Analyse Article"]', function() {
         $('#checkArticle').val("Required*");
     } else {
         let content = $('#checkArticle').val();
-        analyzeArticle(content).then(data=>{
-
-        });
+        $('#input').hide();
+        $('#loading').show();
+        let data = {
+            "response":{
+                "result":{
+                    "overall":{
+                        "prediction": "real"
+                    }
+                },
+                "success": true
+            }
+        }
+        // analyzeArticle(content).then(data=>{
+            $('#input').show();
+            $('#loading').hide();
+            if (data['response']['success']) {
+                $('#input').html('<h3>The article has been analysed</h3>'+
+                    '<div class="reviewOutput">According to our <b>Neural Network</b> this news article containts mostly <b>'+ data['response']['result']['overall']['prediction'] +'</b> news!<br/><br/>'+
+                    'Head to <b><a id="analysisLink" target="_blank" rel="noopener noreferrer" href="https://artifacts.live">Our Website</a></b> for an in depth analysis.</div>'+
+                    '<input type="button" id="close" value="Close">');
+            } else {
+                
+            }
+        // });
     }
 });
 //////////////////////////////////////////////////////   
@@ -161,7 +185,11 @@ $('#input').on('click', 'input[value="Check Source"]', function() {
                     }
                 }
                 let statement = $('#checkArticle').val();
+                $('#input').hide();
+                $('#loading').show();
                 // postFactCheck(statement).then(data=>{
+                    $('#loading').hide();
+                    $('#input').show();
                     if (data['response']['success'] && data['response']['message']==="Review completed successfully.") {
                         data['response']['text'] = data['response']['text'].split('“').join('"').split('”').join('"').split('…').join('...');
                         $('#input').html('<h3>The Closest Statement We Found:</h3>'+
