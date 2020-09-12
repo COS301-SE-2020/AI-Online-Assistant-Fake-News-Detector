@@ -137,7 +137,7 @@ router.get("/:factId", (req, res, next) => {
  * @description post request to check a fact on the Google Check API
  * @author Quinton Coetzee
  */
-router.post("/fackCheck/", (req, res, next) => {
+router.post("/factCheck/", (req, res, next) => {
   const statement = req.body.statement;
   if (statement==="") {
     res.status(500).json({ response: { message: "err", success: false } });
@@ -156,17 +156,17 @@ router.post("/fackCheck/", (req, res, next) => {
       const {body} = await got.get(googleURL, {
           responseType: 'json'
       });
-      console.log(body);
-        if (body.claims) {
-          res.status(200).json({
-            response: {
-              message: "Review completed successfully.",
-              text: body.claims[0].text,
-              reviewer: body.claims[0].claimReview[0].publisher.name,
-              review: body.claims[0].claimReview[0].textualRating,
-              reviewSource: body.claims[0].claimReview[0].url,
-              success: true,
-            },
+      if (body.claims) {
+        console.log(body.claims[0].text);
+        res.status(200).json({
+          response: {
+            message: "Review completed successfully.",
+            text: body.claims[0].text,
+            reviewer: body.claims[0].claimReview[0].publisher.name,
+            review: body.claims[0].claimReview[0].textualRating,
+            reviewSource: body.claims[0].claimReview[0].url,
+            success: true,
+          },
           });
         } else {
           res.status(404).json({
