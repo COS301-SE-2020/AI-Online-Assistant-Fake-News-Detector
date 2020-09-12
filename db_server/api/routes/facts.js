@@ -157,7 +157,6 @@ router.post("/factCheck/", (req, res, next) => {
           responseType: 'json'
       });
       if (body.claims) {
-        console.log(body.claims[0].text);
         res.status(200).json({
           response: {
             message: "Review completed successfully.",
