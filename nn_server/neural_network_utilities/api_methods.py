@@ -1,6 +1,8 @@
 import requests
+import os
+import errno
 
-API = "http://54.172.96.111:8080/api"
+API = "https://artifacts.live/API/"
 
 def uploadModel(id, model):
     return 0
@@ -15,12 +17,67 @@ def downloadTrainingDataset():
                 trainingData = data['response']['TrainingData']
     return trainingData
 
-def downloadModels():
-    request = requests.get(url=API + "/nnmodels")
+def downloadTrainingDatasetRange(start, amount):
+    request = requests.post(url=API + "/training/range", data={'start': start, 'amount': amount})
     data = request.json()
-    models = []
-    if 'request' in data:
-        if 'success' in data['request']:
-            if data['request']['success'] == True:
-                models = data['request']['Models']
-    return models
+    trainingData = []
+    if 'response' in data:
+        if 'success' in data['response']:
+            if data['response']['success'] == True:
+                trainingData = data['response']['trainingData']
+    return trainingData
+
+def downloadModels(downloadPath):
+    try:
+        os.makedirs(downloadPath)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            print("Error creating directory: " + str(e))
+    request = requests.get(url=API + "/nnModels")
+    data = request.json()
+    print(data)
+    modelNames = []
+    if 'response' in data:
+        if 'success' in data['response']:
+            if data['response']['success'] == True:
+                models = data['response']['Models']
+                for model in models:
+                    modelNames.append(model['Name'])
+                    file = open(os.path.join(downloadPath, model['Name']), 'w')
+                    file.write(model['Model'])
+    return modelNames
+
+def downloadModel(modelName, downloadPath):
+    try:
+        os.makedirs(downloadPath)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            print("Error creating directory: " + str(e))
+    request = requests.get(url=API + "/nnModels/" + modelName)
+    data = request.json()
+    print(data)
+    modelNames = []
+    if 'response' in data:
+        if 'success' in data['response']:
+            if data['response']['success'] == True:
+                model = data['response']['Model']
+                modelNames.append(model['Name'])
+                file = open(os.path.join(downloadPath, model['Name']), 'w')
+                file.write(model['Model'])
+    return modelNames
+
+def uploadModel(modelName, modelPath):
+    file = open(modelPath, 'rb')
+    model = file.read()
+    data = {
+        'name': modelName,
+        'model': model
+    }
+    requests.post(url=API + "/nnModels", data=data)
+
+if __name__ == '__main__':
+    print(downloadTrainingDataset())
+    print(downloadTrainingDatasetRange(0, 2))
+    uploadModel('test.txt', 'uploadTest/test.txt')
+    print(downloadModels('downloadTest'))
+    print(downloadModel('test.txt', 'downloadTest'))

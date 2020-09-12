@@ -2,6 +2,7 @@ import unittest
 import math
 import preprocessing as pp
 
+
 class TestPreprocessing(unittest.TestCase):
     def genericFilter(self, filter):
         self.assertGreater(filter.getFeatureCount(), 0, msg="Filter must have > 0 features.")
@@ -71,7 +72,7 @@ class TestPreprocessing(unittest.TestCase):
         result = adapter(testOther)
         self.assertIsInstance(result, dict)
         self.assertEqual(result['id'], testOther['id'])
-        self.assertEqual(result['label'], [0, 0])
+        self.assertEqual(result['label'], [0, 1])
         self.assertEqual(result['data'], [testOther['text']])
 
     def test_ParallelPreprocessor(self):
