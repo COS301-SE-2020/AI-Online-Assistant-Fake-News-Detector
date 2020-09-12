@@ -1,16 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-
-@import "~bootstrap/dist/css/bootstrap.css";
-html,
-body {
+body,
+html {
+  box-sizing: border-box;
   height: 100%;
-}
-
-body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-@keyframes yourAnimation {
+@keyframes pulse {
   0.0% {
     transform: scale(1);
   }
@@ -18,7 +14,50 @@ body {
     transform: scale(1.5);
   }
 }
+.pulse {
+  animation: pulse 1s ease 0.2s 2 normal none;
+}
 
-.elementToAnimate {
-  animation: yourAnimation 1.5s ease 0s 2 normal none;
+@keyframes heartbeat {
+        from {
+          transform: scale(1);
+          transform-origin: center center;
+          animation-timing-function: ease-out;
+        }
+        10% {
+          transform: scale(0.91);
+          animation-timing-function: ease-in;
+        }
+        17% {
+          transform: scale(0.98);
+          animation-timing-function: ease-out;
+        }
+        33% {
+          transform: scale(0.87);
+          animation-timing-function: ease-in;
+        }
+        45% {
+          transform: scale(1);
+          animation-timing-function: ease-out;
+        }
+      }   
+
+.heartbeat {
+        animation: heartbeat 1.3s cubic-bezier(0.680, -0.550, 0.265, 1.550) 1s 2 alternate-reverse both;
+}
+
+@keyframes slide-in-bottom {
+        0% {
+          transform: translateY(1000px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      
+
+.slide-in-bottom {
+	animation: slide-in-bottom 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.4s both;
 }

@@ -1,44 +1,14 @@
-<button mat-icon-button matTooltip="User account" matTooltipPosition="below" aria-label="Button that displays a tooltip"
-  [matMenuTriggerFor]="login">
-  <mat-icon>account_circle</mat-icon>
-</button>
+<ng-container *ngIf="user$ | async as user; else loginIcon">
 
-<mat-menu #login="matMenu" xPosition="before">
-  <!-- <a (click)="$event.stopPropagation();">
+  <app-profile-card [user]="user" (logoutClick)="logout()">
+  </app-profile-card>
 
-        <div *ngIf="signIn && !signUp">
-        <app-login></app-login>
-        <div class="help-block text-center"><h4 id="signupText">Are You New Here? <a  color="link" (click)="toggleForm()"> Sign Up</a> </h4>  </div>
-       </div>
+</ng-container>
 
-       <div  *ngIf="signUp && !signIn">
-        <app-sign-up></app-sign-up>
-        <div class="help-block text-center"><h4 id="signupText">Already have one? <a color="link" (click)="toggleForm()"> Login </a> </h4>  </div>
-       </div>
-
-    </a>
-
-   <a (click)="$event.stopPropagation();">
-
-        <div *ngIf="signIn && !signUp">
-        <app-login></app-login>
-        <div class="help-block text-center"><h4 id="signupText">Are You New Here? <a  color="link" (click)="toggleForm()"> Sign Up</a> </h4>  </div>
-       </div>
-
-       <div  *ngIf="signUp && !signIn">
-        <app-sign-up></app-sign-up>
-        <div class="help-block text-center"><h4 id="signupText">Already have one? <a color="link" (click)="toggleForm()"> Login </a> </h4>  </div>
-       </div>
-
-    </a> -->
-
-  <button *ngIf="!auth.loggedIn" mat-raised-button color="primary" [routerLink]="['/login']">
-    <mat-icon>fingerprint</mat-icon>Sign In
+<ng-template #loginIcon>
+  <button mat-icon-button (click)="login()" matTooltip="Login" class="heartbeat">
+    <mat-icon aria-hidden="false" aria-label="Login">
+      fingerprint
+    </mat-icon>
   </button>
-  <button *ngIf="!auth.loggedIn" mat-raised-button color="accent" [routerLink]="['/login']">
-    <mat-icon>account_circle</mat-icon>Sign Up
-  </button>
-
-  <button *ngIf="auth.loggedIn" mat-flat-button color="Warn" (click)="auth.logout()">Sign out</button>
-
-</mat-menu>
+</ng-template>

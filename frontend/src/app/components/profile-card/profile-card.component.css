@@ -1,0 +1,37 @@
+.avatar {
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  border: 1px solid #c83a69;
+}
+
+.big-avatar {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  border: 5px solid #c83a69;
+}
+
+.profile-card {
+  text-align: center;
+  min-width: 240px;
+  padding: 15px 20px 0px;
+  -webkit-box-shadow: 2 2 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 2 2 10px rgba(0, 0, 0, 0.5);
+}
+
+mat-divider {
+  margin: 15px 15px;
+}
+
+.mat-mini-fab {
+  box-shadow: none;
+}
+
+::ng-deep .mat-button-wrapper {
+  padding: 0 !important;
+}
+
+mat-chip{
+  align-items: center;
+}

@@ -109,16 +109,7 @@ class StackedBidirectionalLSTM(Filter):
         """
         if self.__model is None:
             raise Exception("Cannot use uninitialized model.")
-        results = self.__model.predict(preparedData)
-        sums = []
-        for i in range(len(results[0])):
-            sums.append(0)
-        for result in results:
-            for i in range(len(result)):
-                sums[i] += result[i]
-        for i in range(len(sums)):
-            sums[i] /= len(results)
-        return sums
+        return self.__model.predict(preparedData)
 
     def __call__(self, preparedDataList):
         """
@@ -142,3 +133,6 @@ class StackedBidirectionalLSTM(Filter):
 
     def getFeatureCount(self):
         return self.__outputUnits
+
+    def getSampleLength(self):
+        return self.__sampleLength

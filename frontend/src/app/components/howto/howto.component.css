@@ -1,11 +1,59 @@
-.tophero {
-    width: 50%;
-    margin: auto;
-    margin-top: 10em;
+.section.hero {
+    padding-bottom: 92px;
+    padding-top: 92px;
+    background-color: #c72c69;
+    text-align: center;
+    min-width: 70px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  
+  .topcontainer {
+    padding-right: 70px;
+    padding-left: 70px;
+  }
+  
+  .topsection {
+    padding-top: 70px;
+    padding-bottom: 0px;
+    text-align: center;
+  }
+  
+  h3 {
+    font-size: 3em;
+    font-weight: 300;
+    /* color: black; */
+  }
+  
+#TrendingStatistics{
+    text-align: center;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2%;
 }
 
-h1 {
-    width: 50%;
-    margin: auto;
-    white-space: nowrap;
+#NeuralNetworkStatistics{
+    margin-bottom: 5%;
+    margin-top: 5%;
 }
+
+#PopularityRatings{
+    margin-bottom: 5%;
+}
+
+.fxLayout{
+    margin-right: auto;
+    margin-left: auto;
+}
+  
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  .chart-parent{
+    min-height: 350px;
+}
+
+#pie-chart-parent { display: grid; }
+  

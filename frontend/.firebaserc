@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "artifact-5ee3c": {
+      "hosting": {
+        "AiNews": [
+          "artifact-5ee3c"
+        ]
+      }
+    }
+  }
+}
