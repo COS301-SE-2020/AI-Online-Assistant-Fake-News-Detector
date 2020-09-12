@@ -12,7 +12,7 @@ $(() => {
         let counter=0,i=0,j=0,k=0;
         let max = 0;
         data['response']['Sources'].forEach(source => {
-            if (parseInt(source['Rating'])>max) {
+            if (parseInt(source['Rating'])>=max) {
                 k = j;
                 j = i;
                 i = counter;
