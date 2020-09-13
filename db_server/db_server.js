@@ -6,17 +6,11 @@ const path = require("path");
 const root = require("../Util/path");
 const config = require(path.join(root, "Util", "config"));
 const port = config.db_server_port;
-require("dotenv").config({ path: path.join(root, ".env") });
-const production = process.env.NODE_ENV === "production" ? true : false;
-let http = "";
-if (production) http = require("https");
-else http = require("http");
-
 const server = http.createServer(app);
 
 let listener = server.listen(port, () => {
   logger.info(
-    "HTTP DB_Server listening on port " +
+    "DB_Server listening on port " +
       listener.address().port +
       ". Environment: " +
       process.env.NODE_ENV +
