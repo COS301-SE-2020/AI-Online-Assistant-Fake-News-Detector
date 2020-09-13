@@ -17,13 +17,14 @@ const root = require("../Util/path");
 const config = require(path.join(root, "Util", "config"));
 const port = config.api_server_port;
 const cron = require("node-cron");
-const http = require("http");
-const https = require("https");
 const morganFormat =
   "[:date] :remote-addr - :remote-user :method :url HTTP/:http-version :status :response-time ms";
 
 require("dotenv").config({ path: path.join(root, ".env") });
 const production = process.env.NODE_ENV === "production" ? true : false;
+let http = "";
+if (production) http = require("https");
+else http = require("http");
 
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
@@ -166,7 +167,7 @@ server.use("*", (req, res, next) => {
 if (production) {
   // Certificate
   try {
-    const httpsServer = https.createServer(
+    const httpsServer = http.createServer(
       {
         key: fs.readFileSync(
           "/etc/letsencrypt/live/artifacts.live/privkey.pem",
