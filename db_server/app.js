@@ -12,9 +12,8 @@ const nnModelRoutes = require("./api/routes/nnModels");
 const trainingRoutes = require("./api/routes/training");
 const path = require("path");
 const root = require("../Util/path");
-const production = process.env.NODE_ENV == "production" ? true : false;
 require("dotenv").config({ path: path.join(root, ".env") });
-
+const production = process.env.NODE_ENV == "production" ? true : false;
 if (production) {
   mongoose.connect(
     "mongodb+srv://FakeNewsAdmin:murrIq-xytbud-2wubjo@fake-news-detector-vastj.mongodb.net/fake_news_detector?retryWrites=true&w=majority",
