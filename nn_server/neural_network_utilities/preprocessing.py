@@ -3,10 +3,13 @@ import spacy as sp
 import tensorflow.keras as ks
 import multiprocessing as mp
 import nltk
+import numpy as np
+from  labels import RealOrFakeLabels
 
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 sp.prefer_gpu()
+
 
 DEFAULT_SAMPLE_LENGTH = 360
 DEFAULT_MAX_WORDS = 1200000
@@ -399,11 +402,10 @@ class RawFakeNewsDataFilterAdapter(FilterAdapter):
         results = []
         for data in filtered:
             results.append(data)
-        label = sample['label']
         if sample['label'] == 'real':
-            label = [1, 0]
-        elif sample['label'] == 'fake':
-            label = [0, 1]
+            label = RealOrFakeLabels.labelToOutput('real')
+        else:
+            label = RealOrFakeLabels.labelToOutput('fake')
         return {'id': sample['id'], 'data': results, 'label': label}
 
 

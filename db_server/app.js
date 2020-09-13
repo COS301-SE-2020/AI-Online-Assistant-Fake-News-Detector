@@ -3,6 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const keyRoutes = require("./api/routes/keys");
 const sourceRoutes = require("./api/routes/sources");
 const factRoutes = require("./api/routes/facts");
 const moderatorRoutes = require("./api/routes/moderators");
@@ -11,8 +12,8 @@ const nnModelRoutes = require("./api/routes/nnModels");
 const trainingRoutes = require("./api/routes/training");
 const path = require("path");
 const root = require("../Util/path");
-const production = process.env.NODE_ENV == "production" ? true : false;
 require("dotenv").config({ path: path.join(root, ".env") });
+const production = process.env.NODE_ENV == "production" ? true : false;
 
 if (production) {
   mongoose.connect(
@@ -50,6 +51,7 @@ app.use((res, req, next) => {
 });
 
 //Routes which should handle requests
+app.use("/keys", keyRoutes);
 app.use("/sources", sourceRoutes);
 app.use("/facts", factRoutes);
 app.use("/Users", moderatorRoutes);

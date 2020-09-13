@@ -18,3 +18,12 @@
 [10/Aug/2020 10:19:26] ::1 - - GET /assets/pink-bluegrey.css HTTP/1.1 200 0.806 ms
 [10/Aug/2020 10:19:26] ::1 - - GET /assets/options.json HTTP/1.1 200 0.840 ms
 [10/Aug/2020 10:19:26] ::1 - - GET /assets/img/5bitslogo.png HTTP/1.1 200 0.889 ms
+[13/Sep/2020 22:48:58] ::ffff:127.0.0.1 - - GET / HTTP/1.1 200 6.643 ms
+[13/Sep/2020 22:48:59] ::ffff:127.0.0.1 - - GET /assets/img/logo.png HTTP/1.1 200 36.529 ms
+[13/Sep/2020 22:48:59] ::ffff:127.0.0.1 - - GET /favicon.ico HTTP/1.1 200 1.356 ms
+[13/Sep/2020 22:49:22] ::1 - - GET / HTTP/1.1 200 0.764 ms
+[13/Sep/2020 22:49:22] ::1 - - GET /assets/img/logo.png HTTP/1.1 200 2.401 ms
+[13/Sep/2020 22:49:22] ::1 - - GET /favicon.ico HTTP/1.1 200 1.694 ms
+[13/Sep/2020 22:51:05] ::ffff:127.0.0.1 - - GET /api/reports HTTP/1.1 200 909.010 ms
+[13/Sep/2020 22:51:09] ::ffff:127.0.0.1 - - GET / HTTP/1.1 200 0.769 ms
+[13/Sep/2020 22:51:09] ::ffff:127.0.0.1 - - GET /assets/img/logo.png HTTP/1.1 200 0.708 ms

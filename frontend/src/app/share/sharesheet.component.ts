@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-sharesheet",
@@ -7,31 +8,15 @@ import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 })
 export class ShareSheetComponent {
   cantshare: boolean;
-  constructor(private _bottomSheetRef: MatBottomSheetRef<ShareSheetComponent>) {
-    // if (!navigator.share) {
-    // 	console.log('Web Share API is not available in your browser.');
-    // 	//this.cantshare = true;
-    // } else {
-    // 	this.cantshare = false;
-    // }
-  }
-
+  constructor(
+    private _bottomSheetRef: MatBottomSheetRef<ShareSheetComponent>,
+    private readonly snackBar: MatSnackBar
+  ) { }
   openLink(event: MouseEvent, link: string): void {
     this._bottomSheetRef.dismiss();
-    // enabling this will open links in a new tab
     event.preventDefault();
-    // below does not open new tab
-    // window.location.href = link;
-    // this does new tab too if mouse event is ignored
     window.open(link);
   }
-
-  mail(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-    window.open("mailto:5bits301@gmail.com?subject=Artifact [x__O]");
-  }
-
   share(event: MouseEvent) {
     event.preventDefault();
     if (navigator.share) {
@@ -41,7 +26,9 @@ export class ShareSheetComponent {
           url: "https://fakenewsdetector.tech",
         })
         .then(() => {
-          console.log("Successful share");
+          this.snackBar.open(`Thanks for sharing (◠﹏◠)`, "Close", {
+            duration: 4000,
+          });
           this._bottomSheetRef.dismiss();
         })
         .catch((error) => console.log("Error sharing", error));
@@ -51,7 +38,6 @@ export class ShareSheetComponent {
       this.cantshare = true;
     }
   }
-
   async copy(event: MouseEvent) {
     try {
       await navigator.clipboard.writeText("https://ArtiFact.me");

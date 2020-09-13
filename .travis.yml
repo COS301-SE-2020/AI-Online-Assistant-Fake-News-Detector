@@ -1,16 +1,30 @@
-os: linux
-dist: bionic
-before_install:
-  - pyenv global 3.8
-language: node_js
-node_js:
-  - 14
-cache:
-  npm: true
-install: npm install
-notifications:
-  email:
-    recipients:
-      - u14272289@tuks.co.za
-    on_success: never # default: change
-    on_failure: always # default: always
+matrix:
+  include:
+    - language: python
+      os: linux
+      dist: bionic
+      python: 3.8
+      cache: pip3
+      before_script:
+        - bash python_build.sh
+      script:
+        - bash python_test.sh
+      notifications:
+        email:
+          recipients:
+          - u14272289@tuks.co.za
+          on_success: never # default: change
+          on_failure: always # default: always
+
+    - language: node_js
+      os: linux
+      dist: bionic
+      node_js: 14
+      cache: npm
+      install: npm install
+      notifications:
+        email:
+          recipients:
+          - u15015069@tuks.co.za
+          on_success: never # default: change
+          on_failure: always # default: always
