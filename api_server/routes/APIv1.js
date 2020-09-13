@@ -1,5 +1,4 @@
 const api = require("express").Router();
-const http = require("http");
 const morgan = require("morgan");
 const jwt = require("jsonwebtoken");
 const path = require("path");
@@ -9,6 +8,10 @@ const Logger = require(path.join(root, "winston"));
 const logger = new Logger(api);
 const fs = require("fs");
 const shell = require("shelljs");
+require("dotenv").config({ path: path.join(root, ".env") });
+let http = "";
+if (process.env.NODE_ENV === "production") http = require("https");
+else http = require("http");
 const nn_server = [];
 
 const getRequest = (_host, _path, _port, callBack) => {
@@ -170,7 +173,7 @@ const validateUser = (token, callBack) => {
       }
 
       getRequest(
-        "localhost",
+        "artifacts.live",
         "/Users/id/" + decode.id,
         config.db_server_port,
         (statusCode, response) => {

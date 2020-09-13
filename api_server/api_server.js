@@ -24,6 +24,9 @@ const morganFormat =
 
 require("dotenv").config({ path: path.join(root, ".env") });
 const production = process.env.NODE_ENV === "production" ? true : false;
+let http = "";
+if (production) http = require("https");
+else http = require("http");
 
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());

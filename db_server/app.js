@@ -14,6 +14,7 @@ const path = require("path");
 const root = require("../Util/path");
 require("dotenv").config({ path: path.join(root, ".env") });
 const production = process.env.NODE_ENV == "production" ? true : false;
+
 if (production) {
   mongoose.connect(
     "mongodb+srv://FakeNewsAdmin:murrIq-xytbud-2wubjo@fake-news-detector-vastj.mongodb.net/fake_news_detector?retryWrites=true&w=majority",
