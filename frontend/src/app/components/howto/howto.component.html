@@ -4,7 +4,7 @@
       <h3><span class="text-span">Statistics</span></h3>
     </div>
 
-        <div id="Neural Network Statistics">
+        <div id="NeuralNetworkStatistics">
             <ngx-gauge style="font-size:20px"
             [type]="TTgaugeType" 
             [value]="TTgaugevalue" 
@@ -44,6 +44,128 @@
             [thresholds]="TSthresholdConfig" 
             >
             </ngx-gauge>
+
+        </div>
+
+        <div id="TrendingStatistics">
+
+            <div fxLayout="auto" fxLayoutAlign="space-evenly center" fxFlexOffset="10" fxLayout.lt-sm="column" fxLayoutGap="20px">
+                <div fxFlex="50%">
+                  <ngx-charts-pie-chart *ngIf="setFacts"
+                
+                  [view]="Fview"
+                  [scheme]="FcolorScheme"
+                  [results]="this.trendingFacts"
+                  [gradient]="Fgradient"
+                  [legend]="FshowLegend"
+                  [legendPosition]="FlegendPosition"
+                  [legendTitle] = 'FlegendTitle'
+                  [trimLabels] = "FtrimLabel"
+                  [labels]="FshowLabels"
+                  [doughnut]="FisDoughnut"
+                  (select)="onSelect($event)"
+                  (activate)="onActivate($event)"
+                  (deactivate)="onDeactivate($event)"
+                  >
+                </ngx-charts-pie-chart>
+
+                </div>
+    
+              <div fxFlex="50%">
+                <ngx-charts-pie-chart  *ngIf="setSources"
+            
+                [view]="Sview"
+                [scheme]="ScolorScheme"
+                [results]="this.trendingSources"
+                [gradient]="Sgradient"
+                [legend]="SshowLegend"
+                [legendPosition]="SlegendPosition"
+                [legendTitle] = 'SlegendTitle'
+                [trimLabels] = "StrimLabel"
+                [labels]="SshowLabels"
+                [doughnut]="SisDoughnut"
+                (select)="onSelect($event)"
+                (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)"
+                >
+              </ngx-charts-pie-chart>
+
+              </div>
+                
+
+            </div>
+ 
+        </div>
+
+        
+        <div id="PopularityRatings">
+          
+          <div fxLayout="auto" fxLayoutAlign="space-evenly center" fxFlexOffset="15" fxLayout.lt-sm="column" fxLayoutGap="40px">
+                <ngx-charts-bar-vertical  *ngIf="setSources"
+                [view]="FPview"
+                [scheme]="FPcolorScheme"
+                [results]="this.factsPopularity"
+                [gradient]="FPgradient"
+                [xAxis]="FPshowXAxis"
+                [yAxis]="FPshowYAxis"
+                [legend]="FPshowLegend"
+                [showXAxisLabel]="FPshowXAxisLabel"
+                [showYAxisLabel]="FPshowYAxisLabel"
+                [legendTitle] = 'FPlegendTitle'
+                [xAxisLabel]="FPxAxisLabel"
+                [yAxisLabel]="FPyAxisLabel"
+                [legendPosition] = "SPlegendPosition"
+                (select)="onSelect($event)">
+              </ngx-charts-bar-vertical>
+
+              <ngx-charts-bar-vertical  *ngIf="setSources"
+              [view]="SPview"
+              [scheme]="SPcolorScheme"
+              [results]="this.sourcesPopularity"
+              [gradient]="SPgradient"
+              [xAxis]="SPshowXAxis"
+              [yAxis]="SPshowYAxis"
+              [legend]="SPshowLegend"
+              [showXAxisLabel]="SPshowXAxisLabel"
+              [showYAxisLabel]="SPshowYAxisLabel"
+              [legendTitle] = 'SPlegendTitle'
+              [xAxisLabel]="SPxAxisLabel"
+              [yAxisLabel]="SPyAxisLabel"
+              [legendPosition]= "SPlegendPosition"
+              (select)="onSelect($event)">
+            </ngx-charts-bar-vertical>
+
+          </div>
+
+      </div>
+
+
+
+        <div id="EndpointHitRates">
+
+          <div fxLayout="auto" fxLayoutAlign="space-evenly center" fxLayout.lt-sm="column" fxFlexOffset="25">
+
+            <ngx-charts-bar-horizontal *ngIf="setEndpoint"
+            [view]="Eview"
+            [scheme]="EcolorScheme"
+            [results]="endpointHits"
+            [gradient]="Egradient"
+            [xAxis]="EshowXAxis"
+            [yAxis]="EshowYAxis"
+            [legend]="EshowLegend"
+            [showXAxisLabel]="EshowXAxisLabel"
+            [showYAxisLabel]="EshowYAxisLabel"
+            [legendTitle] = 'ElegendTitle'
+            [xAxisLabel]="ExAxisLabel"
+            [yAxisLabel]="EyAxisLabel"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)">
+          </ngx-charts-bar-horizontal>
+
+          </div>
+
+  
 
         </div>
 

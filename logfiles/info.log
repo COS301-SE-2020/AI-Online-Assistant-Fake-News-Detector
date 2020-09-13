@@ -5,92 +5,9 @@
 [08/Sep/2020 11:07:20] - HTTP API_Server listening on port 8080. Environment: dev.
 [08/Sep/2020 11:07:20] - HTTP DB_Server listening on port 3000. Environment: dev.
 [08/Sep/2020 11:55:05] - Cron job for updating reports ran.
-[10/Sep/2020 03:59:51] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 03:59:57] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 08:51:14] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 08:51:24] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 08:59:09] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 08:59:10] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 08:59:52] - undefined
-[10/Sep/2020 08:59:53] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:01:32] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:03:20] - undefined
-[10/Sep/2020 09:03:20] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:03:49] - undefined
-[10/Sep/2020 09:03:50] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:04:02] - undefined
-[10/Sep/2020 09:04:03] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:04:32] - undefined
-[10/Sep/2020 09:04:33] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:05:09] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:05:16] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:05:22] - undefined
-[10/Sep/2020 09:05:22] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:06:40] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:07:25] - undefined
-[10/Sep/2020 09:07:25] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:07:44] - undefined
-[10/Sep/2020 09:07:45] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:08:08] - undefined
-[10/Sep/2020 09:08:08] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:08:21] - undefined
-[10/Sep/2020 09:08:21] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:08:27] - undefined
-[10/Sep/2020 09:08:28] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:08:49] - undefined
-[10/Sep/2020 09:08:50] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:08:55] - undefined
-[10/Sep/2020 09:08:56] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 09:09:28] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:09:28] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:10:19] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:10:19] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:10:31] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:10:53] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:10:53] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:13:47] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:13:47] - undefined
-[10/Sep/2020 09:13:48] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:14:14] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:14:13] - undefined
-[10/Sep/2020 09:14:14] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:14:41] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:14:41] - dev
-[10/Sep/2020 09:14:41] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:14:53] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:14:53] - undefined
-[10/Sep/2020 09:14:53] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:15:03] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:15:03] - dev
-[10/Sep/2020 09:15:03] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:15:35] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:15:35] - undefined
-[10/Sep/2020 09:15:36] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:15:58] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:15:58] - undefined
-[10/Sep/2020 09:15:59] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:16:09] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:16:09] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:16:27] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:16:27] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:16:34] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:16:35] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:19:02] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:19:03] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 09:31:37] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 09:31:37] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 10:19:48] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 10:19:52] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 10:20:03] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 10:20:03] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 10:22:46] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 10:23:00] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 10:23:00] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 10:23:23] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 10:23:23] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 10:24:07] - HTTP API_Server listening on port 8080. Environment: dev.
-[10/Sep/2020 10:24:07] - HTTP DB_Server listening on port 3000. Environment: dev.
-[10/Sep/2020 10:24:24] - undefined
-[10/Sep/2020 10:24:24] - HTTP DB_Server listening on port 3000. Environment: production.
-[10/Sep/2020 10:37:25] - HTTP DB_Server listening on port 3000. Environment: undefined.
-[10/Sep/2020 10:37:29] - HTTP API_Server listening on port 8080. Environment: undefined.
+[11/Sep/2020 05:26:41] - HTTP API_Server listening on port 8080. Environment: dev.
+[11/Sep/2020 05:26:41] - HTTP DB_Server listening on port 3000. Environment: dev.
+[11/Sep/2020 06:27:56] - HTTP API_Server listening on port 8080. Environment: dev.
+[11/Sep/2020 06:27:58] - HTTP DB_Server listening on port 3000. Environment: dev.
+[11/Sep/2020 07:25:08] - HTTP API_Server listening on port 8080. Environment: dev.
+[11/Sep/2020 07:25:08] - HTTP DB_Server listening on port 3000. Environment: dev.

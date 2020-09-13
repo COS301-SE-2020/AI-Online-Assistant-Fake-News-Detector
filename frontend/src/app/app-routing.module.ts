@@ -10,7 +10,6 @@ import { AboutComponent } from "./components/about/about.component";
 import { ModerateComponent } from "./components/moderate/moderate.component";
 import { HowtoComponent } from "./components/howto/howto.component";
 import { NotfoundComponent } from "./notfound/notfound.component";
-import { LoginComponent } from "../app/components/login/login.component";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(["home"]);
 
@@ -41,12 +40,6 @@ const routes: Routes = [
     path: "howto",
     component: HowtoComponent,
     data: { state: "howto" },
-  },
-  {
-    path: "login",
-    component: LoginComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { state: "notfound" },
   },
   {
     path: "**",

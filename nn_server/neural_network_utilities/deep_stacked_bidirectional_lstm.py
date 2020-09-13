@@ -35,7 +35,7 @@ class DeepStackedBidirectionalLSTM(Filter):
         """
         self.clear()
         ks.backend.clear_session()
-        inputs = ks.Input(shape=(self.__sampleLength,), dtype="int64")
+        inputs = ks.Input(shape=(self.__sampleLength,), dtype="int64") # look into shape=(self.__sampleLength, featureCount)
         layers = ks.layers.Embedding(input_dim=self.__maxWords, input_length=self.__sampleLength, output_dim=128, mask_zero=True)(inputs)
         # Stack bidirectional LSTMs
         layers = ks.layers.Bidirectional(ks.layers.LSTM(units=128, dropout=0.2, return_sequences=True))(layers)
@@ -112,16 +112,7 @@ class DeepStackedBidirectionalLSTM(Filter):
         """
         if self.__model is None:
             raise Exception("Cannot use uninitialized model.")
-        results = self.__model.predict(preparedData)
-        sums = []
-        for i in range(len(results[0])):
-            sums.append(0)
-        for result in results:
-            for i in range(len(result)):
-                sums[i] += result[i]
-        for i in range(len(sums)):
-            sums[i] /= len(results)
-        return sums
+        return self.__model.predict(preparedData)
 
     def __call__(self, preparedDataList):
         """
@@ -133,7 +124,6 @@ class DeepStackedBidirectionalLSTM(Filter):
         results = []
         dataList = []
         for data in preparedDataList:
-            print(data)
             dataList.append(data['data'])
         predictedList = self.__model.predict(dataList)
         resultList = []
@@ -145,3 +135,6 @@ class DeepStackedBidirectionalLSTM(Filter):
 
     def getFeatureCount(self):
         return self.__outputUnits
+
+    def getSampleLength(self):
+        return self.__sampleLength

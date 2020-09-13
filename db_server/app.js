@@ -3,6 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const keyRoutes = require("./api/routes/keys");
 const sourceRoutes = require("./api/routes/sources");
 const factRoutes = require("./api/routes/facts");
 const moderatorRoutes = require("./api/routes/moderators");
@@ -50,6 +51,7 @@ app.use((res, req, next) => {
 });
 
 //Routes which should handle requests
+app.use("/keys", keyRoutes);
 app.use("/sources", sourceRoutes);
 app.use("/facts", factRoutes);
 app.use("/Users", moderatorRoutes);

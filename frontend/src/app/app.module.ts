@@ -12,9 +12,6 @@ import { MatListModule } from "@angular/material/list";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { FormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { ReportService } from "./report.service";
-import { FindService } from "./find.service";
-import { CheckService } from "./check.service";
 import { MatCardModule } from "@angular/material/card";
 import { FlexLayoutModule } from "@angular/flex-layout";
 
@@ -37,22 +34,18 @@ import { ShareSheetComponent } from "./share/sharesheet.component";
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 import { NotfoundComponent } from "./notfound/notfound.component";
 import { ReactiveFormsModule } from "@angular/forms";
-import {
-  MatBottomSheet,
-  MatBottomSheetRef,
-} from "@angular/material/bottom-sheet";
+
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { TogglebuttonComponent } from "src/app/components/moderate/togglebutton/togglebutton.component";
 import { UserAccountbuttonComponent } from "src/app/user-accountbutton/user-accountbutton.component";
-// import { LoginComponent } from "src/app/user-accountbutton/login/login.component";
-// import { SignUpComponent } from "src/app/user-accountbutton/sign-up/sign-up.component";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 import { AppFirebaseModule } from "./app-firebase.module";
 
 import { ProfileCardComponent } from "./components/profile-card/profile-card.component";
 import { NgxGaugeModule } from 'ngx-gauge';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { WelcomeService } from './services/welcome.service';
 
 @NgModule({
   declarations: [
@@ -75,7 +68,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -90,20 +82,18 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatProgressBarModule,
-	AppFirebaseModule,
-	NgxGaugeModule,
-	NgxChartsModule
+    AppFirebaseModule,
+    NgxGaugeModule,
+    NgxChartsModule,
   ],
   entryComponents: [ShareButtonComponent, ShareSheetComponent],
   providers: [
-    ReportService,
-    FindService,
-    CheckService,
     HttpClientModule,
     StyleManagerService,
     ThemeService,
     SearchSourceService,
     AutocompleteService,
+    WelcomeService,
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: "fill" },

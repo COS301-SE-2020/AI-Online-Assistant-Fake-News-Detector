@@ -11,31 +11,12 @@ export class ShareSheetComponent {
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<ShareSheetComponent>,
     private readonly snackBar: MatSnackBar
-  ) {
-    // if (!navigator.share) {
-    // 	console.log('Web Share API is not available in your browser.');
-    // 	//this.cantshare = true;
-    // } else {
-    // 	this.cantshare = false;
-    // }
-  }
-
+  ) { }
   openLink(event: MouseEvent, link: string): void {
     this._bottomSheetRef.dismiss();
-    // enabling this will open links in a new tab
     event.preventDefault();
-    // below does not open new tab
-    // window.location.href = link;
-    // this does new tab too if mouse event is ignored
     window.open(link);
   }
-
-  mail(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-    window.open("mailto:5bits301@gmail.com?subject=Artifact [x__O]");
-  }
-
   share(event: MouseEvent) {
     event.preventDefault();
     if (navigator.share) {
@@ -57,7 +38,6 @@ export class ShareSheetComponent {
       this.cantshare = true;
     }
   }
-
   async copy(event: MouseEvent) {
     try {
       await navigator.clipboard.writeText("https://ArtiFact.me");
