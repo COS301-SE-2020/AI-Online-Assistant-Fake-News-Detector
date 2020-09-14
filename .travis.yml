@@ -4,7 +4,10 @@ matrix:
       os: linux
       dist: bionic
       python: 3.8
-      cache: pip3
+      cache: 
+        - pip3
+        - directories:
+          - /home/travis/virtualenv/python3.8.1/lib/python3.8/site-packages
       before_script:
         - bash python_build.sh
       script:
