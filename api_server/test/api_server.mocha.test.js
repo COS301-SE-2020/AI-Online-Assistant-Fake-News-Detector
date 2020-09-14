@@ -249,6 +249,7 @@ describe("Users", () => {
         password: "5Bits@@",
       })
       .end((err, res) => {
+        if(err) console.log(err);
         res.should.be.json;
         res.body.should.be.a("object");
         res.body.response.should.have.property("message");
