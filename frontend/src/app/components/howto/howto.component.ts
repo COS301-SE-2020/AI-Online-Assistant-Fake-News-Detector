@@ -220,7 +220,6 @@ export class HowtoComponent implements OnInit {
   onDeactivate(data): void {
     // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
-<<<<<<< Updated upstream
 
   onResize(event) {
     this.Fview = [event.target.innerWidth / 1.35, 400];
@@ -231,6 +230,4 @@ export class HowtoComponent implements OnInit {
 }
 
 
-=======
->>>>>>> Stashed changes
 }
