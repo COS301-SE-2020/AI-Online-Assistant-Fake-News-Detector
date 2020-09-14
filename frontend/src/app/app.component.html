@@ -10,9 +10,9 @@
         <a mat-button class="logoHead" routerLink="" (click)="drawer.close()">ArtiFact</a>
         <span fxFlex></span>
         <div fxLayout="row" fxShow="false" fxShow.gt-sm (click)="drawer.close()">
+          <button mat-button routerLink="" routerLinkActive="router-link-active">Home</button>
           <button *ngIf="user$ | async as user;" mat-button routerLink="moderate"
             routerLinkActive="router-link-active">Moderate</button>
-          <button mat-button routerLink="" routerLinkActive="router-link-active">Home</button>
           <button mat-button routerLink="howto">Statistics</button>
           <button mat-button routerLink="about">About Us</button>
         </div>
