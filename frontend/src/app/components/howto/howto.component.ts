@@ -138,7 +138,7 @@ export class HowtoComponent implements OnInit {
     EshowXAxisLabel = true;
     ExAxisLabel = 'Hits';
     EshowYAxisLabel = true;
-    ElegendPosition: string = 'below';
+    ElegendPosition: string = 'right';
     EyAxisLabel = 'Endpoint';
     ElegendTitle: string = 'Endpoints';
   
@@ -152,6 +152,7 @@ export class HowtoComponent implements OnInit {
     this.setFacts = false;
     this.setSources = false;
     this.setEndpoint = false;
+
 
     //Object.assign(this.trendingFacts, this.trendingFacts);
   
@@ -236,7 +237,13 @@ export class HowtoComponent implements OnInit {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
-
+  onResize(event) {
+    this.Fview = [event.target.innerWidth / 1.35, 400];
+    this.Sview = [event.target.innerWidth / 1.35, 400];
+    this.SPview = [event.target.innerWidth / 1.35, 400];
+    this.FPview = [event.target.innerWidth / 1.35, 400];
+    this.Eview = [event.target.innerWidth / 1.35, 400];
+}
 
 
 }

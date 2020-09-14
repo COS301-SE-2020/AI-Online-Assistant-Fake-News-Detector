@@ -707,3 +707,5 @@
 [14/Sep/2020 01:10:47] - API_Server listening on port 8080. Environment: dev.
 [14/Sep/2020 01:19:37] - DB_Server listening on port 3000. Environment: dev.
 [14/Sep/2020 01:19:42] - API_Server listening on port 8080. Environment: dev.
+[14/Sep/2020 04:27:55] - API_Server listening on port 8080. Environment: dev.
+[14/Sep/2020 04:27:55] - DB_Server listening on port 3000. Environment: dev.

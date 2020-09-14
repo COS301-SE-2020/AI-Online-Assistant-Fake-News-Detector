@@ -1,3 +1,15 @@
+ngx-charts-pie-chart{
+	fill: black;
+}
+
+ngx-charts-bar-vertical{
+  fill: black;
+}
+
+ngx-charts-bar-horizontal{
+	fill: black;
+}
+
 .profile-card{
 color:black;
 }

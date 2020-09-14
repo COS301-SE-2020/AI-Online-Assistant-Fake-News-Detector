@@ -1,58 +1,69 @@
 <div class="container-fluid">
   <div class="topsection tophero">
     <div class="topcontainer">
-      <h3><span class="text-span">Statistics</span></h3>
+      
     </div>
 
+        <span class="text-span"> <p id="heading">
+         Transparency is next to Fact-<i>arency </i>! <br> Have a look at what happens in the backend of <b>Artifact</b>.
+        </p></span>
+
+        <div id="nnStatsHeading"><i><b>Neural Network Figures</b></i></div>
         <div id="NeuralNetworkStatistics">
-            <ngx-gauge style="font-size:20px"
-            [type]="TTgaugeType" 
-            [value]="TTgaugevalue" 
-            [label]="TTgaugeLabel" 
-            [max] = "maxTT"
-            [thick] = 10
-            [thresholds]="TTthresholdConfig" 
-            
-            >
-            </ngx-gauge>
+
+      
+              
+                <ngx-gauge class="gauge-width" style="overflow: visible !important;"
+                [type]="TTgaugeType" 
+                [value]="TTgaugevalue" 
+                [label]="TTgaugeLabel" 
+                [max] = "maxTT"
+                [thick] = 10
+                [thresholds]="TTthresholdConfig" 
+                size = 200
+                
+                >
+                </ngx-gauge>
 
 
-            <ngx-gauge [type]="TDgaugeType" 
-            [value]="TDgaugeValue" 
-            [max] = "maxTD"
-            [thick] = 10
-            [label]="TDgaugeLabel" 
-            [size] = "TDsize"
-            >
-            </ngx-gauge>
+                <ngx-gauge [type]="TDgaugeType" 
+                [value]="TDgaugeValue" 
+                [max] = "maxTD"
+                [thick] = 10
+                [label]="TDgaugeLabel" 
+                [size] = "TDsize"
+                >
+                </ngx-gauge>
 
-            <ngx-gauge [type]="SMgaugeType" 
-            [value]="SMgaugeValue" 
-            [label]="SMgaugeLabel" 
-            [max] = "maxSM"
-            [thick] = 10
-            [thresholds]="SMthresholdConfig"
-            [size] = "SMsize" 
-            >
-            </ngx-gauge>
+                <ngx-gauge [type]="SMgaugeType" 
+                [value]="SMgaugeValue" 
+                [label]="SMgaugeLabel" 
+                [max] = "maxSM"
+                [thick] = 10
+                [thresholds]="SMthresholdConfig"
+                [size] = "SMsize" 
+                >
+                </ngx-gauge>
 
-            <ngx-gauge [type]="TSgaugeType" 
-            [value]="TSgaugevalue" 
-            [label]="TSgaugeLabel" 
-            [max] = "maxTS"
-            [thick] = 10
-            [thresholds]="TSthresholdConfig" 
-            >
-            </ngx-gauge>
-
+                <ngx-gauge [type]="TSgaugeType" 
+                [value]="TSgaugevalue" 
+                [label]="TSgaugeLabel" 
+                [max] = "maxTS"
+                [thick] = 10
+                [thresholds]="TSthresholdConfig" 
+                size = 200
+                >
+                </ngx-gauge>
         </div>
 
         <div id="TrendingStatistics">
 
-            <div fxLayout="auto" fxLayoutAlign="space-evenly center" fxFlexOffset="10" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                <div fxFlex="50%">
+            <div fxLayout="auto wrap" fxLayoutAlign="space-evenly center" fxFlexOffset.lg="12" fxFlexOffset.xs="5" fxLayout.lt-sm="column" fxLayoutGap="20px">
+
+                <div fxFlex.xs="50%" fxFlex.md="50%">
+                  <i><b>Trending Fact vs Report Count</b></i>
                   <ngx-charts-pie-chart *ngIf="setFacts"
-                
+                  (window:resize)="onResize($event)"
                   [view]="Fview"
                   [scheme]="FcolorScheme"
                   [results]="this.trendingFacts"
@@ -71,9 +82,10 @@
 
                 </div>
     
-              <div fxFlex="50%">
+              <div fxFlex.xs="50%" fxFlex.md="50%">
+                <i><b>Trending Source vs Report Count</b></i>
                 <ngx-charts-pie-chart  *ngIf="setSources"
-            
+                (window:resize)="onResize($event)"
                 [view]="Sview"
                 [scheme]="ScolorScheme"
                 [results]="this.trendingSources"
@@ -100,8 +112,12 @@
         
         <div id="PopularityRatings">
           
-          <div fxLayout="auto" fxLayoutAlign="space-evenly center" fxFlexOffset="15" fxLayout.lt-sm="column" fxLayoutGap="40px">
+          <div fxLayout="auto wrap" fxLayoutAlign="space-evenly center" fxFlexOffset.lg="15" fxFlexOffset.xs="5" fxLayout.lt-sm="column" fxLayoutGap="40px">
+
+            <div fxFlex.xs="50%" fxFlex.md="50%">
+              <i><b>Trending Fact vs Popularity Rating</b></i>
                 <ngx-charts-bar-vertical  *ngIf="setSources"
+                (window:resize)="onResize($event)"
                 [view]="FPview"
                 [scheme]="FPcolorScheme"
                 [results]="this.factsPopularity"
@@ -117,8 +133,12 @@
                 [legendPosition] = "SPlegendPosition"
                 (select)="onSelect($event)">
               </ngx-charts-bar-vertical>
+            </div>
 
+            <div fxFlex.xs="50%" fxFlex.md="50%">
+              <i><b>Trending Source vs Popularity Rating</b></i>
               <ngx-charts-bar-vertical  *ngIf="setSources"
+              (window:resize)="onResize($event)"
               [view]="SPview"
               [scheme]="SPcolorScheme"
               [results]="this.sourcesPopularity"
@@ -133,7 +153,8 @@
               [yAxisLabel]="SPyAxisLabel"
               [legendPosition]= "SPlegendPosition"
               (select)="onSelect($event)">
-            </ngx-charts-bar-vertical>
+              </ngx-charts-bar-vertical>
+            </div>
 
           </div>
 
@@ -143,25 +164,31 @@
 
         <div id="EndpointHitRates">
 
-          <div fxLayout="auto" fxLayoutAlign="space-evenly center" fxLayout.lt-sm="column" fxFlexOffset="25">
-
-            <ngx-charts-bar-horizontal *ngIf="setEndpoint"
-            [view]="Eview"
-            [scheme]="EcolorScheme"
-            [results]="endpointHits"
-            [gradient]="Egradient"
-            [xAxis]="EshowXAxis"
-            [yAxis]="EshowYAxis"
-            [legend]="EshowLegend"
-            [showXAxisLabel]="EshowXAxisLabel"
-            [showYAxisLabel]="EshowYAxisLabel"
-            [legendTitle] = 'ElegendTitle'
-            [xAxisLabel]="ExAxisLabel"
-            [yAxisLabel]="EyAxisLabel"
-            (select)="onSelect($event)"
-            (activate)="onActivate($event)"
-            (deactivate)="onDeactivate($event)">
-          </ngx-charts-bar-horizontal>
+          <div fxLayout="auto wrap" fxLayoutAlign="space-evenly center" fxLayout.lt-xs="column" fxFlexOffset.lg="27">
+            
+            <div fxFlex.xs="50%" fxFlex.md="50%">
+              <i><b>Endpoint vs Hit</b></i>
+                <ngx-charts-bar-horizontal *ngIf="setEndpoint"
+                (window:resize)="onResize($event)"
+                [view]="Eview"
+                [scheme]="EcolorScheme"
+                [results]="endpointHits"
+                [gradient]="Egradient"
+                [xAxis]="EshowXAxis"
+                [yAxis]="EshowYAxis"
+                [legend]="EshowLegend"
+                [showXAxisLabel]="EshowXAxisLabel"
+                [showYAxisLabel]="EshowYAxisLabel"
+                [legendTitle] = 'ElegendTitle'
+                [xAxisLabel]="ExAxisLabel"
+                [yAxisLabel]="EyAxisLabel"
+                [legendPosition]= "ElegendPosition"
+                (select)="onSelect($event)"
+                (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)">
+               </ngx-charts-bar-horizontal>
+            </div>
+          
 
           </div>
 
