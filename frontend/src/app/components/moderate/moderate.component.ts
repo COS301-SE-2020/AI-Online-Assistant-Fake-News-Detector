@@ -147,7 +147,7 @@ export class ModerateComponent implements OnInit {
           this.searchNotFound = true;
         }
 
-        console.log("HTTP error ", error);
+        // console.log("HTTP error ", error);
       }
     );
   }
@@ -166,7 +166,7 @@ export class ModerateComponent implements OnInit {
   /* function that submits source*/
 
   onSourceSubmit() {
-    console.log(this.InsertSourceForm.value);
+    // console.log(this.InsertSourceForm.value);
     this._sourceinputService
       .SubmitSource(this.InsertSourceForm.value)
       .subscribe(
@@ -174,7 +174,7 @@ export class ModerateComponent implements OnInit {
           if (this.InsertSourceForm.valid) {
             this.insertSourceResponse = true;
           }
-          console.log("Success!", response);
+          // console.log("Success!", response);
         },
         (error) => {
           if (this.InsertSourceForm.valid) {
@@ -189,13 +189,13 @@ export class ModerateComponent implements OnInit {
   /* function that submits fact*/
 
   onSubmit() {
-    console.log(this.FactInputForm.value);
+    // console.log(this.FactInputForm.value);
     this._factinputService.SubmitFact(this.FactInputForm.value).subscribe(
       (response) => {
         if (this.FactInputForm.valid) {
           this.insertFactResponse = true;
         }
-        console.log("Success!", response);
+        // console.log("Success!", response);
       },
       (error) => {
         if (this.FactInputForm.valid) {

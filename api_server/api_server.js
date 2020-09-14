@@ -179,7 +179,7 @@ try {
       "utf8"
     ),
     cert: fs.readFileSync(
-      path.join(root, "Util", "ProductionCertificates", "fullchain.pem"),
+      path.join(root, "Util", "ProductionCertificates", "cert.pem"),
       "utf8"
     ),
   };
