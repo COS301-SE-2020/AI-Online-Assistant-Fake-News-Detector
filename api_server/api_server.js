@@ -151,14 +151,18 @@ if (production) {
       stream: accessLog,
     })
   );
+
+  cron.schedule("55 * * * * *", () => {
+    getRequest("localhost", "/api/active", 8080, (statusCode, response) => {
+      logger.info(response);
+    });
+  });
 } else server.use(morgan("dev"));
 if (production)
   server.use("*", (req, res, next) => {
     if (req.secure) {
-      // request was via https, so do no special handling
       next();
     } else {
-      // request was via http, so redirect to https
       res.redirect("https://" + req.headers.host + req.url);
     }
   });
@@ -186,6 +190,7 @@ try {
   const httpsServer = production
     ? https.createServer(Certificates, server)
     : http.createServer(server);
+
   httpsServer.listen(port, () => {
     logger.info(
       "API_Server listening on port " +
@@ -195,14 +200,14 @@ try {
         "."
     );
     if (production)
-      [8090, 8091, 8092].forEach((e) =>
+      [8090, 8091, 8092].forEach((e) => {
         getRequest(
           "localhost",
           "/api/start/" + e,
           8080,
           (statusCode, response) => {}
-        )
-      );
+        );
+      });
   });
 } catch (error) {
   logger.info(error);
