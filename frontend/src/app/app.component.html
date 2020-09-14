@@ -10,16 +10,16 @@
         <a mat-button class="logoHead" routerLink="" (click)="drawer.close()">ArtiFact</a>
         <span fxFlex></span>
         <div fxLayout="row" fxShow="false" fxShow.gt-sm (click)="drawer.close()">
+          <button mat-button routerLink="" routerLinkActive="router-link-active">Home</button>
           <button *ngIf="user$ | async as user;" mat-button routerLink="moderate"
             routerLinkActive="router-link-active">Moderate</button>
-          <button mat-button routerLink="" routerLinkActive="router-link-active">Home</button>
           <button mat-button routerLink="howto">Statistics</button>
           <button mat-button routerLink="about">About Us</button>
         </div>
         <app-sharebutton></app-sharebutton>
         <app-download-plugin></app-download-plugin>
         <app-menu [options]="options$ | async" (themeChange)="themeChangeHandler($event)"></app-menu>
-        <app-user-accountbutton class="heartbeat"></app-user-accountbutton>
+        <app-user-accountbutton class="bounce-in-right"></app-user-accountbutton>
       </mat-toolbar-row>
     </mat-toolbar>
   

@@ -601,7 +601,7 @@ describe("Training Api", () => {
           done();
         });
     });  
-    it("It should fail to get a range due to going over the top bound", function (done) {
+    it("It should not fail, even though we go over the top bound, this is handeled", function (done) {
       const range = {
         start: 0,
         amount: 20,
@@ -611,7 +611,7 @@ describe("Training Api", () => {
         .post("/Training/range/")
         .send(range)
         .end(function (err, res) {
-          res.should.have.status(404);
+          res.should.have.status(200);
           res.should.be.json;
           res.body.should.be.a("object");
           res.body.response.should.have.property("message");
