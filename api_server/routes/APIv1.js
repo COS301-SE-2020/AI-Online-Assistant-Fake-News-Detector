@@ -173,7 +173,7 @@ const validateUser = (token, callBack) => {
       }
 
       getRequest(
-        "artifacts.live",
+        "localhost",
         "/Users/id/" + decode.id,
         config.db_server_port,
         (statusCode, response) => {
