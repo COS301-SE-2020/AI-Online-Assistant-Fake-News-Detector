@@ -11,7 +11,7 @@ import { FactsList } from "./factslist";
 export class FactslistService {
   constructor(private http: HttpClient) {}
 
-  url = "http://54.172.96.111:8080/api/facts/";
+  url = "https://artifacts.live/api/facts/";
 
   getFactsList() {
     return this.http.get(this.url).pipe(

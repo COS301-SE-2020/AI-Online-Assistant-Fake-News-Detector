@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-
+import { HomeSearchSourceService } from "./home-search-source.service";
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
@@ -9,12 +9,12 @@ export class HomeComponent implements OnInit {
   urlvalue: string;
   textvalue: string;
   factvalue: string;
-  constructor() {}
+  constructor(search: HomeSearchSourceService) {}
 
   ngOnInit(): void {}
 
   clickTemp() {
-    alert("coming soon o__X");
+    alert("coming soon [o_o]");
   }
 
   paste() {
