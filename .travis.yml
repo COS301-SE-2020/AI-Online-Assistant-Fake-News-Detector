@@ -7,8 +7,8 @@ matrix:
       cache: 
         - pip3
         - directories:
-	  - $HOME
           - $USR/lib/python3.8/site-packages/
+          - $HOME/
       before_script:
         - bash python_build.sh
       script:
