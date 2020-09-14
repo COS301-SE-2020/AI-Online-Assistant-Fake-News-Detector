@@ -28,7 +28,7 @@ export class AppComponent {
     this.title = "ArtiFact";
     this.showWelcome = !welcome.hasBeenHere();
     if (!this.showWelcome) {
-      this.snackBar.open(`Welcome back (ᵔᵕᵔ)`, "Close", {
+      this.snackBar.open(`Welcome back (° ͜ʖ͡°)`, "Close", {
         duration: 4000,
       });
     }

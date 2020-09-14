@@ -8,10 +8,8 @@ const Logger = require(path.join(root, "winston"));
 const logger = new Logger(api);
 const fs = require("fs");
 const shell = require("shelljs");
+const http = require("http");
 require("dotenv").config({ path: path.join(root, ".env") });
-let http = "";
-if (process.env.NODE_ENV === "production") http = require("https");
-else http = require("http");
 const nn_server = [];
 
 const getRequest = (_host, _path, _port, callBack) => {
@@ -1095,8 +1093,19 @@ api.get("/start/:port", (req, res, next) => {
     );
     nn_server.push({ port: Number(req.params.port), busy: false });
   } catch (err) {
+    logger.info(
+      "New nn_server image created on port " +
+        req.params.port +
+        " with errors. (" +
+        err.toString() +
+        ")"
+    );
     next(err);
   }
+});
+
+api.get("/active", (req, res, next) => {
+  res.sendStatus(200).json(nn_server);
 });
 
 api.get("/close/:port", (req, res, next) => {
