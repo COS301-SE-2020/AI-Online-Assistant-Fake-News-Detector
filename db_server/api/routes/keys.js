@@ -8,7 +8,7 @@ const Key = require("../models/key");
 /**
  * @description get request for all keys
  * @author Quinton Coetzee
-*/
+ */
 router.get("/", (req, res, next) => {
   Key.find()
     .select("_id description key")
@@ -46,24 +46,24 @@ router.post("/", (req, res, next) => {
     key: req.body.key,
   });
   key
-  .save()
-  .then((result) => {
-    logger.info("Key was created.");
-    res.status(201).json({
-      response: {
-        message: "Key created successfully",
-        success: true,
-        Fact: {
-          ID: result.id,
-          Description: result.description,
-          Key: result.key,
+    .save()
+    .then((result) => {
+      logger.info("Key was created.");
+      res.status(201).json({
+        response: {
+          message: "Key created successfully",
+          success: true,
+          Fact: {
+            ID: result.id,
+            Description: result.description,
+            Key: result.key,
+          },
         },
-      },
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({ response: { message: err, success: false } });
     });
-  })
-  .catch((err) => {
-    res.status(500).json({ response: { message: err, success: false } });
-  });
 });
 
 /**
@@ -71,8 +71,8 @@ router.post("/", (req, res, next) => {
  * @author Quinton Coetzee
  */
 router.get("/:keyDescription", (req, res, next) => {
-    const description = decodeURI(req.params.keyDescription);
-    Key.findOne({ description: new RegExp(description, "i") })
+  const description = decodeURI(req.params.keyDescription);
+  Key.findOne({ description: new RegExp(description, "i") })
     .select("_id description key")
     .exec()
     .then((doc) => {
@@ -100,5 +100,6 @@ router.get("/:keyDescription", (req, res, next) => {
     .catch((err) => {
       res.status(500).json({ response: { message: err, success: false } });
     });
-  });
+});
+
 module.exports = router;

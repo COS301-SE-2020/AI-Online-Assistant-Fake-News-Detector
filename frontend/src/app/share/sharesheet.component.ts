@@ -11,7 +11,7 @@ export class ShareSheetComponent {
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<ShareSheetComponent>,
     private readonly snackBar: MatSnackBar
-  ) { }
+  ) {}
   openLink(event: MouseEvent, link: string): void {
     this._bottomSheetRef.dismiss();
     event.preventDefault();
@@ -31,7 +31,7 @@ export class ShareSheetComponent {
           });
           this._bottomSheetRef.dismiss();
         })
-        .catch((error) => console.log("Error sharing", error));
+        .catch((error) => {} /*console.log("Error sharing", error)*/);
     } else {
       document.getElementById("other").innerHTML =
         "Web Share API not supported";
@@ -41,7 +41,7 @@ export class ShareSheetComponent {
   async copy(event: MouseEvent) {
     try {
       await navigator.clipboard.writeText("https://ArtiFact.me");
-      console.log("Page URL copied to clipboard");
+      // console.log("Page URL copied to clipboard");
       document.getElementById("copy").innerHTML = "Link copied to clipboard";
       document.getElementById("copyicon").innerHTML = "tag_faces";
     } catch (err) {

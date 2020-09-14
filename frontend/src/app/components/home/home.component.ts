@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
         // (<HTMLInputElement>document.getElementById('AItext')).value = text;
         this.textvalue = text;
         // document.getElementById('AItext').value = text;
-        console.log("Text pasted.");
+        // console.log("Text pasted.");
       })
       .catch(() => {
         alert("Failed to read from clipboard.");

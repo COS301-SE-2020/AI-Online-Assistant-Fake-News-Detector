@@ -1,22 +1,6 @@
 <div class="container">
   <mat-tab-group mat-align-tabs="center">
-    <mat-tab label="URL">
-      <mat-form-field class="example-form-field">
-        <mat-label>Enter URL</mat-label>
-        <input matInput type="text" [(ngModel)]="urlvalue" />
-        <button mat-button *ngIf="urlvalue" matSuffix mat-icon-button aria-label="Clear" (click)="urlvalue = ''">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
 
-      <div class="example-button-row">
-        <button mat-raised-button class="checkBtn">Check</button>
-        <button mat-raised-button color="primary">Report</button>
-        <button mat-raised-button color="accent" (click)="clickTemp()">
-          Analytics
-        </button>
-      </div>
-    </mat-tab>
 
     <mat-tab label="Text">
       <mat-form-field class="example-form-field">
@@ -34,6 +18,24 @@
         <button mat-raised-button class="checkBtn">Run text through AI</button>
         <button mat-raised-button color="accent" (click)="paste()">
           Paste from clipboard
+        </button>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="URL">
+      <mat-form-field class="example-form-field">
+        <mat-label>Enter URL</mat-label>
+        <input matInput type="text" [(ngModel)]="urlvalue" />
+        <button mat-button *ngIf="urlvalue" matSuffix mat-icon-button aria-label="Clear" (click)="urlvalue = ''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    
+      <div class="example-button-row">
+        <button mat-raised-button class="checkBtn">Check</button>
+        <button mat-raised-button color="primary">Report</button>
+        <button mat-raised-button color="accent" (click)="clickTemp()">
+          Analytics
         </button>
       </div>
     </mat-tab>

@@ -173,7 +173,7 @@ const validateUser = (token, callBack) => {
       }
 
       getRequest(
-        "artifacts.live",
+        "localhost",
         "/Users/id/" + decode.id,
         config.db_server_port,
         (statusCode, response) => {
@@ -365,6 +365,31 @@ api.post("/facts", (req, res, next) => {
   postRequest(
     "localhost",
     "/facts",
+    config.db_server_port,
+    requestBody,
+    (statusCode, response) => {
+      res.status(statusCode).json(response);
+    }
+  );
+});
+
+/**
+ * @description base post request route. Reroutes the api call to the api server. adds new fact to db.
+ * @author Stuart Barclay
+ */
+
+api.post("/facts/factCheck", (req, res, next) => {
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  }
+  postRequest(
+    "localhost",
+    "/facts/factCheck",
     config.db_server_port,
     requestBody,
     (statusCode, response) => {
@@ -1112,6 +1137,50 @@ api.post("/sendEmail", (req, res, next) => {
         logger.info("Email sent: " + info.response);
         res.sendStatus(204);
       }
+    }
+  );
+});
+
+api.get("/keys", (req, res, next) => {
+  getRequest(
+    "localhost",
+    "/keys",
+    config.db_server_port,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    }
+  );
+});
+
+api.post("/keys", (req, res, next) => {
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  }
+  postRequest(
+    "localhost",
+    "/keys",
+    config.db_server_port,
+    requestBody,
+    (statusCode, response) => {
+      res.status(statusCode).json(response);
+    }
+  );
+});
+
+api.get("/keys/:keyDescription", (req, res, next) => {
+  getRequest(
+    "localhost",
+    "/keys/" + encodeURI(req.params.keyDescription),
+    config.db_server_port,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
     }
   );
 });

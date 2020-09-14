@@ -27,15 +27,16 @@
   
 #TrendingStatistics{
     text-align: center;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
     margin-bottom: 2%;
 }
 
-#NeuralNetworkStatistics{
-    margin-bottom: 5%;
+#nnStatsHeading{
     margin-top: 5%;
+}
+
+#NeuralNetworkStatistics{
+    margin-bottom: 10%;
+    margin-top: 0%;
 }
 
 #PopularityRatings{
@@ -56,4 +57,15 @@
 }
 
 #pie-chart-parent { display: grid; }
+
+#heading {
+  
+    font-size: 22px;
+    font-weight: 200;
+    
+  }
+
+  p{
+    line-height:1.6;
+  }
   

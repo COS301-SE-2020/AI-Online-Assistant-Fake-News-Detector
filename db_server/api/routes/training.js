@@ -48,7 +48,17 @@ router.post("/range/", (req, res, next) => {
     .select("_id article fake")
     .exec()
     .then((docs) => {
-      if (total <= docs.length && req.body.start >= 0 && req.body.amount > 0) {
+      if (req.body.start > docs.length || req.body.start < 0 || req.body.amount <= 0){
+        res.status(404).json({
+          response: {
+            success: false,
+            message: "Range requested is out of bounds. Record count: " + docs.length,
+            count: 0,
+            trainingData: []
+          },
+        });
+      }
+      else if (total <= docs.length) {
         for (let i = req.body.start; i < total; i++) {
           returnArray.push(docs[i]);
         }
@@ -67,11 +77,21 @@ router.post("/range/", (req, res, next) => {
           },
         });
       } else {
-        res.status(404).json({
+        for (let i = req.body.start; i < docs.length; i++) {
+          returnArray.push(docs[i]);
+        }
+        res.status(200).json({
           response: {
-            success: false,
-            message:
-              "Range requested is out of bounds. Record count: " + docs.length,
+            success: true,
+            message: "Training range retrieved successfully",
+            count: docs.length-req.body.start,
+            trainingData: returnArray.map((i) => {
+              return {
+                ID: i._id,
+                Article: i.article,
+                Fake: i.fake,
+              };
+            }),
           },
         });
       }
