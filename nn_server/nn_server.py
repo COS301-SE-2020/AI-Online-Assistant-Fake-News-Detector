@@ -3,6 +3,7 @@ import sys
 import os
 import json
 import urllib.parse
+import requests
 from flask import request, jsonify
 from flask_api import status
 import math
@@ -50,6 +51,17 @@ def shutdown():
     return jsonify({"response": {"success": True, "message": "Server Shutting Down"}}), status.HTTP_200_OK
 
 
+@app.route('/living', methods=['POST'])
+def living():
+    return jsonify({"response": {"success": True, "message": "Server Running On " + sys.argv[1]}}), status.HTTP_200_OK
+
+
+@app.route("/register", methods=['POST'])
+def register():
+    requests.post("https://artifacts.live/api/register",
+                  params={'port': sys.argv[1]})
+
+
 @app.route('/verify', methods=['POST'])
 def check():
     body = request.get_json(force=True, silent=True)
@@ -62,7 +74,8 @@ def check():
                         preparedData=grammaticalFilter(text))
                     lexicalOutput = lexicalLSTM.process(
                         preparedData=lexicalFilter(text))
-                    result = postprocess([lexicalOutput, grammaticalOutput], text)
+                    result = postprocess(
+                        [lexicalOutput, grammaticalOutput], text)
                     return jsonify({"response": {"result": result, "success": True, "message": "Processed Input"}}), status.HTTP_200_OK
     return jsonify({"response": {"message": "Bad request body.", "success": False}}), status.HTTP_400_BAD_REQUEST
 
@@ -81,3 +94,4 @@ if __name__ == '__main__':
     print("Initialize lexical. " +
           str(lexicalLSTM.process(preparedData=lexicalFilter("Initialize."))))
     app.run(port=sys.argv[1])
+    register()

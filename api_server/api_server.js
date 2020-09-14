@@ -24,7 +24,9 @@ const morganFormat =
 
 require("dotenv").config({ path: path.join(root, ".env") });
 const production = process.env.NODE_ENV === "production" ? true : false;
-
+const hostURL = production
+  ? process.env.productionURI
+  : process.env.devlopmentURI;
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 server.use(bodyParser.text());
@@ -33,7 +35,7 @@ server.use(helmet());
 server.use(cors());
 
 const getRequest = (_host, _path, _port, callBack) => {
-  const request = http
+  const request = https
     .request(
       {
         host: _host,
@@ -67,23 +69,18 @@ const getRequest = (_host, _path, _port, callBack) => {
 };
 
 cron.schedule("55 23 * * *", () => {
-  getRequest("localhost", "/api/reports/update", 8080, () =>
+  getRequest(hostURL, "/api/reports/update", 8080, () =>
     logger.info("Cron job for updating reports ran.")
   );
 });
 
 cron.schedule("58 23 * * 0", () => {
   // cron.schedule("55 * * * * * ", () => {
-  getRequest(
-    "localhost",
-    "/api/reports/active/1",
-    8080,
-    (statusCode, response) => {
-      response.response.Reports.forEach((ele) => {
-        console.log(ele.Type);
-      });
-    }
-  );
+  getRequest(hostURL, "/api/reports/active/1", 8080, (statusCode, response) => {
+    response.response.Reports.forEach((ele) => {
+      console.log(ele.Type);
+    });
+  });
   /**
    * 1. Fetch all active reports
    * 2. Send email to notification all provided emails
@@ -153,19 +150,19 @@ if (production) {
   );
 
   cron.schedule("55 * * * * *", () => {
-    getRequest("localhost", "/api/active", 8080, (statusCode, response) => {
-      logger.info(response);
+    getRequest(hostURL, "/api/active", 8080, (statusCode, response) => {
+      if (response.servers > 0) {
+        let active = "Active Servers - ";
+        response.servers.forEach((e) => {
+          active += "Port " + e.port + ", ";
+        });
+        active = active.substring(0, active.length - 2);
+        logger.info(active);
+      }
     });
   });
 } else server.use(morgan("dev"));
-if (production)
-  server.use("*", (req, res, next) => {
-    if (req.secure) {
-      next();
-    } else {
-      res.redirect("https://" + req.headers.host + req.url);
-    }
-  });
+
 server.use("/API-Documents", express.static(ExternalDocs));
 server.use("/API-Internal-Documents", express.static(InternalDocs));
 server.use("/API", API);
@@ -199,15 +196,20 @@ try {
         process.env.NODE_ENV +
         "."
     );
-    if (production)
-      [8090, 8091, 8092].forEach((e) => {
+
+    if (production) {
+      [8090].forEach((e) => {
         getRequest(
-          "localhost",
+          "artifacts.live",
           "/api/start/" + e,
           8080,
-          (statusCode, response) => {}
+          (statusCode, response) => {
+            if (statusCode === 500)
+              logger.info("S - " + statusCode + ", R - " + response);
+          }
         );
       });
+    }
   });
 } catch (error) {
   logger.info(error);

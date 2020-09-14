@@ -1243,3 +1243,335 @@
 [14/Sep/2020 09:34:46] - DB_Server listening on port 3000. Environment: dev.
 [14/Sep/2020 09:34:56] - API_Server listening on port 8080. Environment: dev.
 [14/Sep/2020 09:34:57] - DB_Server listening on port 3000. Environment: dev.
+[14/Sep/2020 09:51:27] - API_Server listening on port 8080. Environment: dev.
+[14/Sep/2020 09:51:28] - DB_Server listening on port 3000. Environment: dev.
+[14/Sep/2020 10:04:24] - API_Server listening on port 8080. Environment: dev.
+[14/Sep/2020 10:04:25] - DB_Server listening on port 3000. Environment: dev.
+[14/Sep/2020 10:23:27] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:23:30] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:23:55] - undefined
+[14/Sep/2020 10:24:55] - undefined
+[14/Sep/2020 10:25:08] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:25:09] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:25:38] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:25:38] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:27:00] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:27:01] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:27:17] - New nn_server image created on port 8090
+[14/Sep/2020 10:27:17] - New nn_server image created on port 8092
+[14/Sep/2020 10:27:17] - New nn_server image created on port 8091
+[14/Sep/2020 10:30:08] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:30:08] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:30:28] - New nn_server image created on port 8091
+[14/Sep/2020 10:30:28] - New nn_server image created on port 8092
+[14/Sep/2020 10:30:28] - New nn_server image created on port 8090
+[14/Sep/2020 10:30:48] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:30:50] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:30:55] - undefined
+[14/Sep/2020 10:31:08] - New nn_server image created on port 8090
+[14/Sep/2020 10:31:08] - New nn_server image created on port 8091
+[14/Sep/2020 10:31:08] - New nn_server image created on port 8092
+[14/Sep/2020 10:31:55] - undefined
+[14/Sep/2020 10:32:55] - undefined
+[14/Sep/2020 10:33:55] - undefined
+[14/Sep/2020 10:34:55] - undefined
+[14/Sep/2020 10:35:55] - undefined
+[14/Sep/2020 10:36:55] - undefined
+[14/Sep/2020 10:36:59] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:36:59] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:37:16] - New nn_server image created on port 8090
+[14/Sep/2020 10:37:19] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:37:20] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:37:36] - New nn_server image created on port 8090
+[14/Sep/2020 10:39:49] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:39:49] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:39:55] - undefined
+[14/Sep/2020 10:40:04] - New nn_server image created on port 8090
+[14/Sep/2020 10:40:04] - New nn_server image created on port 8092
+[14/Sep/2020 10:40:04] - New nn_server image created on port 8091
+[14/Sep/2020 10:40:19] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:40:19] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:40:31] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:40:31] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:40:45] - New nn_server image created on port 8090
+[14/Sep/2020 10:40:45] - New nn_server image created on port 8091
+[14/Sep/2020 10:40:46] - New nn_server image created on port 8092
+[14/Sep/2020 10:40:55] - undefined
+[14/Sep/2020 10:41:19] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:41:20] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:41:33] - New nn_server image created on port 8090
+[14/Sep/2020 10:41:33] - New nn_server image created on port 8092
+[14/Sep/2020 10:41:33] - New nn_server image created on port 8091
+[14/Sep/2020 10:41:55] - undefined
+[14/Sep/2020 10:42:55] - undefined
+[14/Sep/2020 10:43:51] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:43:52] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:43:55] - undefined
+[14/Sep/2020 10:44:05] - New nn_server image created on port 8090
+[14/Sep/2020 10:44:05] - New nn_server image created on port 8091
+[14/Sep/2020 10:44:05] - New nn_server image created on port 8092
+[14/Sep/2020 10:44:41] - Closing nn_server image on port 8091
+[14/Sep/2020 10:44:55] - undefined
+[14/Sep/2020 10:45:55] - undefined
+[14/Sep/2020 10:45:58] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:46:05] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:46:38] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:46:39] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:46:53] - New nn_server image created on port 8092
+[14/Sep/2020 10:46:53] - New nn_server image created on port 8091
+[14/Sep/2020 10:46:53] - New nn_server image created on port 8090
+[14/Sep/2020 10:46:55] - undefined
+[14/Sep/2020 10:46:59] - Closing nn_server image on port 8091
+[14/Sep/2020 10:47:55] - undefined
+[14/Sep/2020 10:48:27] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:48:29] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:48:39] - Closing nn_server image on port 8091
+[14/Sep/2020 10:48:43] - New nn_server image created on port 8092
+[14/Sep/2020 10:48:44] - New nn_server image created on port 8091
+[14/Sep/2020 10:48:44] - New nn_server image created on port 8090
+[14/Sep/2020 10:48:55] - undefined
+[14/Sep/2020 10:49:49] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:49:50] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:49:55] - undefined
+[14/Sep/2020 10:50:03] - Closing nn_server image on port 8091
+[14/Sep/2020 10:50:06] - New nn_server image created on port 8090
+[14/Sep/2020 10:50:06] - New nn_server image created on port 8091
+[14/Sep/2020 10:50:06] - New nn_server image created on port 8092
+[14/Sep/2020 10:51:00] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:51:01] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:51:15] - New nn_server image created on port 8091
+[14/Sep/2020 10:51:15] - New nn_server image created on port 8090
+[14/Sep/2020 10:51:15] - New nn_server image created on port 8092
+[14/Sep/2020 10:51:55] - undefined
+[14/Sep/2020 10:51:57] - Closing nn_server image on port 8091
+[14/Sep/2020 10:52:55] - undefined
+[14/Sep/2020 10:54:18] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:54:19] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:54:32] - New nn_server image created on port 8092
+[14/Sep/2020 10:54:41] - New nn_server image created on port 8090
+[14/Sep/2020 10:54:42] - New nn_server image created on port 8091
+[14/Sep/2020 10:54:48] - Closing nn_server image on port 8091
+[14/Sep/2020 10:54:55] - undefined
+[14/Sep/2020 10:55:14] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:55:15] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:55:28] - Closing nn_server image on port 8091
+[14/Sep/2020 10:55:29] - New nn_server image created on port 8092
+[14/Sep/2020 10:55:37] - New nn_server image created on port 8090
+[14/Sep/2020 10:55:38] - New nn_server image created on port 8091
+[14/Sep/2020 10:56:12] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 10:56:14] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 10:56:20] - Closing nn_server image on port 8091
+[14/Sep/2020 10:56:28] - New nn_server image created on port 8090
+[14/Sep/2020 10:56:32] - New nn_server image created on port 8092
+[14/Sep/2020 10:56:32] - New nn_server image created on port 8091
+[14/Sep/2020 10:56:55] - undefined
+[14/Sep/2020 10:58:09] - undefined
+[14/Sep/2020 10:58:57] - undefined
+[14/Sep/2020 11:00:00] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:00:02] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:00:04] - New nn_server image created on port 8091
+[14/Sep/2020 11:00:04] - New nn_server image created on port 8092
+[14/Sep/2020 11:00:04] - New nn_server image created on port 8090
+[14/Sep/2020 11:00:07] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:00:09] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:00:22] - New nn_server image created on port 8092
+[14/Sep/2020 11:00:22] - New nn_server image created on port 8091
+[14/Sep/2020 11:00:22] - New nn_server image created on port 8090
+[14/Sep/2020 11:00:50] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:00:52] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:00:53] - New nn_server image created on port 8090
+[14/Sep/2020 11:00:53] - New nn_server image created on port 8092
+[14/Sep/2020 11:00:53] - New nn_server image created on port 8091
+[14/Sep/2020 11:00:56] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:00:57] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:01:11] - Active Servers - undefined
+[14/Sep/2020 11:01:11] - New nn_server image created on port 8091
+[14/Sep/2020 11:01:11] - New nn_server image created on port 8092
+[14/Sep/2020 11:01:11] - New nn_server image created on port 8090
+[14/Sep/2020 11:01:23] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:01:25] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:01:27] - New nn_server image created on port 8092
+[14/Sep/2020 11:01:29] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:01:31] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:01:44] - New nn_server image created on port 8091
+[14/Sep/2020 11:01:44] - New nn_server image created on port 8090
+[14/Sep/2020 11:01:44] - New nn_server image created on port 8092
+[14/Sep/2020 11:02:01] - Active Servers - Port 8090, Port 8091, Port 8092
+[14/Sep/2020 11:02:16] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:02:18] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:02:32] - New nn_server image created on port 8091
+[14/Sep/2020 11:02:32] - New nn_server image created on port 8090
+[14/Sep/2020 11:02:32] - New nn_server image created on port 8092
+[14/Sep/2020 11:03:00] - 
+[14/Sep/2020 11:03:25] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:03:27] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:03:35] - Closing nn_server image on port 8091
+[14/Sep/2020 11:03:41] - New nn_server image created on port 8092
+[14/Sep/2020 11:03:41] - New nn_server image created on port 8091
+[14/Sep/2020 11:03:45] - New nn_server image created on port 8090
+[14/Sep/2020 11:03:59] - 
+[14/Sep/2020 11:04:15] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:04:17] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:04:26] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:04:28] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:04:39] - Active Servers - Port 8091, Port 8090, Port 8092
+[14/Sep/2020 11:04:43] - New nn_server image created on port 8091
+[14/Sep/2020 11:04:43] - New nn_server image created on port 8090
+[14/Sep/2020 11:04:43] - New nn_server image created on port 8092
+[14/Sep/2020 11:15:57] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:15:58] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:16:41] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:16:42] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:17:20] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:17:21] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:17:57] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:17:59] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:18:26] - New nn_server image created on port 8090
+[14/Sep/2020 11:18:42] - New nn_server image created on port 8091
+[14/Sep/2020 11:18:47] - New nn_server image created on port 8092
+[14/Sep/2020 11:23:35] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:23:36] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:23:48] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:23:48] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:25:57] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:25:56] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:27:23] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:27:22] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:28:44] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:28:43] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:29:23] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:29:22] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:29:42] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:30:03] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:30:02] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:30:54] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:30:52] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:31:35] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:31:34] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:34:15] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:34:14] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:34:30] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:34:31] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:37:35] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:37:36] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:38:12] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:38:13] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:38:50] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:38:51] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:39:05] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:39:06] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:39:13] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:39:14] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:39:26] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:39:27] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:40:23] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:40:24] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:40:38] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:40:39] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:40:43] - undefined
+[14/Sep/2020 11:40:43] - undefined
+[14/Sep/2020 11:40:43] - undefined
+[14/Sep/2020 11:41:48] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:41:49] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:41:53] - S - 500R - Error: socket hang up
+[14/Sep/2020 11:41:53] - S - 500R - Error: socket hang up
+[14/Sep/2020 11:41:53] - S - 500R - Error: socket hang up
+[14/Sep/2020 11:44:15] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:44:16] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:44:20] - S - 500R - Error: socket hang up
+[14/Sep/2020 11:44:20] - S - 500R - Error: socket hang up
+[14/Sep/2020 11:44:20] - S - 500R - Error: socket hang up
+[14/Sep/2020 11:44:48] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:44:49] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:44:53] - S - 500, R - Error: socket hang up
+[14/Sep/2020 11:44:53] - S - 500, R - Error: socket hang up
+[14/Sep/2020 11:44:53] - S - 500, R - Error: socket hang up
+[14/Sep/2020 11:51:12] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:51:12] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:51:25] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:51:25] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:52:01] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:52:02] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:52:22] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:52:53] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:53:09] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:53:10] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:54:25] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:54:26] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:54:30] - S - 500, R - Error: getaddrinfo ENOTFOUND http://127.0.0.1
+[14/Sep/2020 11:54:30] - S - 500, R - Error: getaddrinfo ENOTFOUND http://127.0.0.1
+[14/Sep/2020 11:54:30] - S - 500, R - Error: getaddrinfo ENOTFOUND http://127.0.0.1
+[14/Sep/2020 11:54:47] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:54:47] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:54:52] - S - 500, R - Error: socket hang up
+[14/Sep/2020 11:54:52] - S - 500, R - Error: socket hang up
+[14/Sep/2020 11:54:52] - S - 500, R - Error: socket hang up
+[14/Sep/2020 11:55:00] - Cron job for updating reports ran.
+[14/Sep/2020 11:55:21] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:55:21] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:55:26] - S - 500, R - Error: socket hang up
+[14/Sep/2020 11:55:26] - S - 500, R - Error: socket hang up
+[14/Sep/2020 11:55:26] - S - 500, R - Error: socket hang up
+[14/Sep/2020 11:59:20] - API_Server listening on port 8080. Environment: production.
+[14/Sep/2020 11:59:21] - DB_Server listening on port 3000. Environment: production.
+[14/Sep/2020 11:59:25] - S - 500, R - Error: socket hang up
+[14/Sep/2020 11:59:25] - S - 500, R - Error: socket hang up
+[14/Sep/2020 11:59:25] - S - 500, R - Error: socket hang up
+[15/Sep/2020 12:05:28] - API_Server listening on port 8080. Environment: production.
+[15/Sep/2020 12:05:29] - DB_Server listening on port 3000. Environment: production.
+[15/Sep/2020 12:05:33] - S - 500, R - Error: socket hang up
+[15/Sep/2020 12:05:33] - S - 500, R - Error: socket hang up
+[15/Sep/2020 12:05:33] - S - 500, R - Error: socket hang up
+[15/Sep/2020 12:06:05] - API_Server listening on port 8080. Environment: production.
+[15/Sep/2020 12:06:06] - DB_Server listening on port 3000. Environment: production.
+[15/Sep/2020 12:06:10] - S - 500, R - Error: socket hang up
+[15/Sep/2020 12:06:10] - S - 500, R - Error: socket hang up
+[15/Sep/2020 12:06:10] - S - 500, R - Error: socket hang up
+[15/Sep/2020 12:08:40] - API_Server listening on port 8080. Environment: production.
+[15/Sep/2020 12:08:41] - DB_Server listening on port 3000. Environment: production.
+[15/Sep/2020 12:08:45] - S - 500, R - Error: socket hang up
+[15/Sep/2020 12:19:45] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 12:19:46] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:19:59] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 12:20:00] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:20:16] - New nn_server image created on port 8090
+[15/Sep/2020 12:20:16] - S - 204, R - [object Object]
+[15/Sep/2020 12:23:35] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 12:23:35] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:24:46] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 12:24:46] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:24:50] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 12:24:50] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:25:16] - S - 500, R - Error: connect ETIMEDOUT 217.70.184.38:8080
+[15/Sep/2020 12:25:20] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 12:25:21] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:25:26] - S - 500, R - Error: socket hang up
+[15/Sep/2020 12:25:38] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 12:25:39] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:26:37] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 12:26:37] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:49:48] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 12:49:49] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:49:57] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 12:49:58] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:52:13] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:52:16] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 12:52:21] - S - 500, R - Error: write EPROTO 25240:error:1408F10B:SSL routines:ssl3_get_record:wrong version number:c:\ws\deps\openssl\openssl\ssl\record\ssl3_record.c:332:
+
+[15/Sep/2020 12:52:37] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:52:37] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 12:53:55] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:53:55] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 12:56:21] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:56:21] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 12:56:48] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:57:16] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 12:57:16] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 01:06:49] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 01:06:49] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 01:15:48] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 01:15:48] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 01:22:31] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 01:22:32] - API_Server listening on port 8080. Environment: dev.
+[15/Sep/2020 01:24:35] - DB_Server listening on port 3000. Environment: dev.
+[15/Sep/2020 01:24:35] - API_Server listening on port 8080. Environment: dev.
