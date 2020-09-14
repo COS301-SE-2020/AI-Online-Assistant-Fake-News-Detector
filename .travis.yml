@@ -7,7 +7,7 @@ matrix:
       cache: 
         - pip3
         - directories:
-          - $HOME/.local/lib/python3.8/site-packages/
+          - /home/travis/virtualenv/python3.8.1/lib/python3.8/site-packages
       before_script:
         - bash python_build.sh
       script:
