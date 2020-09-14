@@ -79,7 +79,6 @@ export class HowtoComponent implements OnInit {
     domain: ["#5AA454", "#A10A28", "#C7B42C"],
   };
 
-<<<<<<< Updated upstream
     /* For Sources Report count Statistics Pie Chart*/
     Sview: any[] = [600, 600];
     Sgradient: boolean = true;
@@ -144,71 +143,6 @@ export class HowtoComponent implements OnInit {
       domain: ['#808000', '#FFA500', '#C7B42C']
     };
   
-=======
-  /* For Sources Report count Statistics Pie Chart*/
-  Sview: any[] = [600, 600];
-  Sgradient: boolean = true;
-  SshowLegend: boolean = true;
-  SshowLabels: boolean = true;
-  SisDoughnut: boolean = false;
-  StrimLabel: boolean = false;
-  SlegendPosition: string = "right";
-  SlegendTitle: string = "Sources";
-  ScolorScheme = {
-    domain: ["#5499C7", "#F7DC6F", "#8E44AD"],
-  };
-
-  /* For sources popularity ratings  statistics*/
-  SPview: any[] = [500, 500];
-  SPshowXAxis = true;
-  SPshowYAxis = true;
-  SPgradient = true;
-  SPshowLegend = true;
-  SPshowXAxisLabel = true;
-  SPxAxisLabel = "Facts";
-  SPshowYAxisLabel = true;
-  SPlegendPosition: string = "right";
-  SPyAxisLabel = "Popularity";
-  SPlegendTitle: string = "Sources";
-
-  SPcolorScheme = {
-    domain: ["#5499C7", "#F7DC6F", "#8E44AD"],
-  };
-
-  /* for facts popularity ratings  statistics*/
-  FPview: any[] = [500, 500];
-  FPshowXAxis = true;
-  FPshowYAxis = true;
-  FPgradient = true;
-  FPshowLegend = true;
-  FPshowXAxisLabel = true;
-  FPxAxisLabel = "Sources";
-  FPshowYAxisLabel = true;
-  FPlegendPosition: string = "right";
-  FPyAxisLabel = "Popularity";
-  FPlegendTitle: string = "Facts";
-
-  FPcolorScheme = {
-    domain: ["#5AA454", "#A10A28", "#C7B42C"],
-  };
-
-  /* for endpoints hits statistics*/
-  Eview: any[] = [700, 500];
-  EshowXAxis = true;
-  EshowYAxis = true;
-  Egradient = true;
-  EshowLegend = true;
-  EshowXAxisLabel = true;
-  ExAxisLabel = "Hits";
-  EshowYAxisLabel = true;
-  ElegendPosition: string = "below";
-  EyAxisLabel = "Endpoint";
-  ElegendTitle: string = "Endpoints";
-
-  EcolorScheme = {
-    domain: ["#808000", "#FFA500", "#C7B42C"],
-  };
->>>>>>> Stashed changes
 
   constructor(private stats: StatisticsService) {
     //this.getFacts();

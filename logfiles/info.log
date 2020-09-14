@@ -1040,3 +1040,5 @@
 [14/Sep/2020 10:34:40] - DB_Server listening on port 3000. Environment: dev.
 [14/Sep/2020 10:49:57] - User was deleted.
 >>>>>>> Stashed changes
+[14/Sep/2020 11:54:37] - API_Server listening on port 8080. Environment: dev.
+[14/Sep/2020 11:54:37] - DB_Server listening on port 3000. Environment: dev.
