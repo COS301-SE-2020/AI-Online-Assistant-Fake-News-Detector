@@ -179,7 +179,7 @@ try {
       "utf8"
     ),
     cert: fs.readFileSync(
-      path.join(root, "Util", "ProductionCertificates", "fullchain.pem"),
+      path.join(root, "Util", "ProductionCertificates", "cert.pem"),
       "utf8"
     ),
   };
@@ -194,15 +194,15 @@ try {
         process.env.NODE_ENV +
         "."
     );
-    // if (production)
-    //   [8090, 8091, 8092].forEach((e) =>
-    //     getRequest(
-    //       "localhost",
-    //       "/api/start/" + e,
-    //       8080,
-    //       (statusCode, response) => {}
-    //     )
-    //   );
+    if (production)
+      [8090, 8091, 8092].forEach((e) =>
+        getRequest(
+          "localhost",
+          "/api/start/" + e,
+          8080,
+          (statusCode, response) => {}
+        )
+      );
   });
 } catch (error) {
   logger.info(error);

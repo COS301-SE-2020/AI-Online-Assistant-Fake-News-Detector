@@ -155,30 +155,34 @@ router.post("/factCheck/", (req, res, next) => {
     googleURL += apiKey;
     googleURL += "&pageSize=1&languageCode=enUS&query=";
     googleURL += statement;
-    (async () => {
-      const { body } = await got.get(googleURL, {
-        responseType: "json",
-      });
-      if (body.claims) {
-        res.status(200).json({
-          response: {
-            message: "Review completed successfully.",
-            text: body.claims[0].text,
-            reviewer: body.claims[0].claimReview[0].publisher.name,
-            review: body.claims[0].claimReview[0].textualRating,
-            reviewSource: body.claims[0].claimReview[0].url,
-            success: true,
-          },
+    try {
+      (async () => {
+        const { body } = await got.get(googleURL, {
+          responseType: "json",
         });
-      } else {
-        res.status(404).json({
-          response: {
-            message: "No similar statements found.",
-            success: true,
-          },
-        });
-      }
-    })();
+        if (body.claims) {
+          res.status(200).json({
+            response: {
+              message: "Review completed successfully.",
+              text: body.claims[0].text,
+              reviewer: body.claims[0].claimReview[0].publisher.name,
+              review: body.claims[0].claimReview[0].textualRating,
+              reviewSource: body.claims[0].claimReview[0].url,
+              success: true,
+            },
+          });
+        } else {
+          res.status(404).json({
+            response: {
+              message: "No similar statements found.",
+              success: true,
+            },
+          });
+        }
+      })();
+    } catch (error) {
+      logger.info(error);
+    }
   })();
 });
 
