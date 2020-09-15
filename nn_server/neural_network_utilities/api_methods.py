@@ -4,8 +4,6 @@ import errno
 
 API = "https://artifacts.live/API/"
 
-def uploadModel(id, model):
-    return 0
 
 def downloadTrainingDataset():
     request = requests.get(url=API + "/training")
@@ -15,6 +13,16 @@ def downloadTrainingDataset():
         if 'success' in data['response']:
             if data['response']['success'] == True:
                 trainingData = data['response']['TrainingData']
+                for data in trainingData:
+                    data['text'] = data['Article']
+                    data['id'] = data['ID']
+                    if 'Fake' == True:
+                        data['label'] = 'fake'
+                    else:
+                        data['label'] = 'real'
+                    del data['Fake']
+                    del data['Article']
+                    del data['ID']
     return trainingData
 
 def downloadTrainingDatasetRange(start, amount):
@@ -25,6 +33,16 @@ def downloadTrainingDatasetRange(start, amount):
         if 'success' in data['response']:
             if data['response']['success'] == True:
                 trainingData = data['response']['trainingData']
+                for data in trainingData:
+                    data['text'] = data['Article']
+                    data['id'] = data['ID']
+                    if 'Fake' == True:
+                        data['label'] = 'fake'
+                    else:
+                        data['label'] = 'real'
+                    del data['Fake']
+                    del data['Article']
+                    del data['ID']
     return trainingData
 
 def downloadModels(downloadPath):
@@ -35,7 +53,6 @@ def downloadModels(downloadPath):
             print("Error creating directory: " + str(e))
     request = requests.get(url=API + "/nnModels")
     data = request.json()
-    print(data)
     modelNames = []
     if 'response' in data:
         if 'success' in data['response']:
@@ -55,7 +72,6 @@ def downloadModel(modelName, downloadPath):
             print("Error creating directory: " + str(e))
     request = requests.get(url=API + "/nnModels/" + modelName)
     data = request.json()
-    print(data)
     modelNames = []
     if 'response' in data:
         if 'success' in data['response']:
@@ -77,7 +93,18 @@ def uploadModel(modelName, modelPath):
 
 if __name__ == '__main__':
     print(downloadTrainingDataset())
-    print(downloadTrainingDatasetRange(0, 2))
+    print(downloadTrainingDatasetRange(0, 200))
+    print(downloadTrainingDatasetRange(20, 200))
+    trainingData = []
+    start = 0
+    step = 1
+    while True:
+        data = downloadTrainingDatasetRange(start, start + step)
+        trainingData.extend(data)
+        if len(data) == 0:
+            break
+        start += step
+    print(trainingData)
     uploadModel('test.txt', 'uploadTest/test.txt')
-    print(downloadModels('downloadTest'))
-    print(downloadModel('test.txt', 'downloadTest'))
+    #print(str(downloadModels('downloadTest')))
+    #print(downloadModel('test.txt', 'downloadTest'))

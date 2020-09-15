@@ -19,7 +19,6 @@ def padOutputs(outputs):
         results.append(padded)
     return np.array(results)
 
-
 def weightedAggregateOutputs(outputs, weights): 
     assert len(outputs) == len(weights)
     arr = np.array(outputs)
@@ -28,6 +27,8 @@ def weightedAggregateOutputs(outputs, weights):
         weighted.append(np.array(arr[i] * weights[i]))
     return np.sum(weighted, axis=0)        
 
+def aggregateOutputs(outputs):
+    return np.sum(outputs, axis=0)
 
 def overallResults(outputs):
     results = {'prediction': 'real', 'confidence': 0.0}
@@ -58,7 +59,15 @@ def breakdownResults(outputs, text):
     return results    
 
 def postprocess(outputs, text):
-    weighted = weightedAggregateOutputs(padOutputs(outputs), [0.2, 0.8])
-    overall = overallResults(weighted)
-    breakdown = breakdownResults(weighted, text)
+    aggregate = aggregateOutputs(padOutputs(outputs))
+    overall = overallResults(aggregate)
+    breakdown = breakdownResults(aggregate, text)
     return {'overall': overall, 'breakdown': breakdown}
+
+def mergeOutputs(outputList):
+    mergedResults = [[] for _ in range(len(outputList[0]))]
+    for i in range(0, len(outputList)):
+        for j in range(0, len(outputList[i])):
+            mergedResults[j].extend([val for val in outputList[i][j]])
+    mergedResults = np.array(mergedResults)
+    return mergedResults
