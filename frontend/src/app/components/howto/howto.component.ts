@@ -27,7 +27,7 @@ export class HowtoComponent implements OnInit {
   /* For Sets per minute (SM) */
   SMgaugeType = "full";
   SMgaugeValue = 0;
-  SMgaugeLabel = "Sets / Second";
+  SMgaugeLabel = "Records / Second";
   maxSM = 10;
   SMsize = 250;
   SMthresholdConfig = {

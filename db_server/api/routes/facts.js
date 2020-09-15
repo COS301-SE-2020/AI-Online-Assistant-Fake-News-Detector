@@ -4,37 +4,9 @@ const mongoose = require("mongoose");
 const Logger = require("../../../winston");
 const logger = new Logger(express);
 const Fact = require("../models/fact");
-const got = require("got");
-const http = require("http");
-
-const getRequest = (_host, _path, _port, callBack) => {
-  const request = http
-    .request(
-      {
-        host: _host,
-        port: _port,
-        path: _path,
-        method: "GET",
-      },
-      (response) => {
-        response.setEncoding("utf-8");
-        let responseString = "";
-        response.on("data", (chunk) => {
-          responseString += chunk;
-        });
-
-        response.on("end", () => {
-          if (responseString === "") responseString = "{}";
-          callBack(response.statusCode, JSON.parse(responseString));
-        });
-      }
-    )
-    .on("error", (err) => {
-      callBack(500, err);
-    });
-
-  request.end();
-};
+const path = require("path");
+const root = require(path.join("../", "../", "../", "Util", "path"));
+const config = require(path.join(root, "Util", "config"));
 
 /**
  * @description get request for all known fake facts in the fake facts database
@@ -166,15 +138,15 @@ router.delete("/:factId", (req, res, next) => {
  * @description post request to check a fact on the Google Check API
  * @author Quinton Coetzee
  */
-router.post("/factCheck/", (req, res, next) => {
+router.post("/factCheck", (req, res, next) => {
   const statement = req.body.statement;
   if (statement === "") {
     res.status(500).json({
-      response: { message: "Staetement can't be empty", success: false },
+      response: { message: "Statement can't be empty", success: false },
     });
   }
   try {
-    getRequest(
+    config.HTTPGetRequest(
       "localhost",
       "/api/keys/GoogleFactAPI",
       8080,
@@ -189,30 +161,35 @@ router.post("/factCheck/", (req, res, next) => {
               responses.response.Key.Key +
               "&pageSize=1&languageCode=enUS&query=" +
               encodeURI(statement);
-            (async () => {
-              const { body } = await got.get(googleURL, {
-                responseType: "json",
-              });
-              if (body.claims) {
-                res.status(200).json({
-                  response: {
-                    message: "Review completed successfully.",
-                    text: body.claims[0].text,
-                    reviewer: body.claims[0].claimReview[0].publisher.name,
-                    review: body.claims[0].claimReview[0].textualRating,
-                    reviewSource: body.claims[0].claimReview[0].url,
-                    success: true,
-                  },
-                });
-              } else {
-                res.status(404).json({
-                  response: {
-                    message: "No similar statements found.",
-                    success: true,
-                  },
-                });
+            config.HTTPSGetRequest(
+              "factchecktools.googleapis.com",
+              "/v1alpha1/claims:search?key=" +
+                responses.response.Key.Key +
+                "&pageSize=1&languageCode=enUS&query=" +
+                encodeURI(statement),
+              null,
+              (stat, body) => {
+                if (body.length > 0)
+                  res.status(stat).json({
+                    response: {
+                      message: "Review completed successfully.",
+                      text: body.claims[0].text,
+                      reviewer: body.claims[0].claimReview[0].publisher.name,
+                      review: body.claims[0].claimReview[0].textualRating,
+                      reviewSource: body.claims[0].claimReview[0].url,
+                      success: true,
+                    },
+                  });
+                else {
+                  res.status(404).json({
+                    response: {
+                      message: "No similar statements found.",
+                      success: true,
+                    },
+                  });
+                }
               }
-            })();
+            );
           } catch (error) {
             logger.info(error);
           }
