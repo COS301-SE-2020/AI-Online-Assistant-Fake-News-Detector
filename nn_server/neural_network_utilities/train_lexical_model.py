@@ -1,13 +1,20 @@
 import os
 import gc
+import errno
 import pathlib
 from preprocessing import LexicalVectorizationFilter, RawFakeNewsDataFilterAdapter, ParallelPreprocessor
 from dataset_manager import DatasetManager, downloadAndCreateDatasets
 from stacked_bidirectional_lstm import StackedBidirectionalLSTM
+from default_configs import DEFAULT_DATASETS_PATH, DEFAULT_MODELS_PATH, DEFAULT_LEXICAL_SAMPLE_LENGTH
+from labels import RealOrFakeLabels
 
-def trainLexical(modelName, sampleLength, maxWords, trainDatasetPath, validationDatasetPath, rawTrainFiles=None, rawValidationFiles=None):
+MODEL_PATH = os.path.join(DEFAULT_MODELS_PATH, "lexical_model.hdf5")
+TRAINING_PATH = os.path.join(DEFAULT_DATASETS_PATH, "lexical_train_dataset")
+VALIDATION_PATH = os.path.join(DEFAULT_DATASETS_PATH, "lexical_validation_dataset")
+
+def trainLexical(modelName, trainDatasetPath, validationDatasetPath, rawTrainFiles=None, rawValidationFiles=None):
     # Lexical pipeline
-    filter = LexicalVectorizationFilter(sampleLength=sampleLength, maxWords=maxWords)
+    filter = LexicalVectorizationFilter(sampleLength=DEFAULT_LEXICAL_SAMPLE_LENGTH)
     preprocessor = ParallelPreprocessor(filter=RawFakeNewsDataFilterAdapter(filter=filter))
 
     trainDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), trainDatasetPath))
@@ -23,8 +30,7 @@ def trainLexical(modelName, sampleLength, maxWords, trainDatasetPath, validation
         gc.collect()
     if trainDataset.getPreparedDatasetSize() > 0 and validationDataset.getPreparedDatasetSize() > 0:
         batchSize = 128
-        model = StackedBidirectionalLSTM(sampleLength=filter.getSampleLength(), maxWords=filter.getMaxWords(),
-                                         outputUnits=2)
+        model = StackedBidirectionalLSTM(outputUnits=RealOrFakeLabels.getOutputUnits(), sampleLength=DEFAULT_LEXICAL_SAMPLE_LENGTH, modelName="LexicalNN")
         model.trainModel(trainGenerator=trainDataset.getPreparedTensorGenerator(batchSize=batchSize),
                          validationGenerator=validationDataset.getPreparedTensorGenerator(batchSize=batchSize),
                          trainDatasetSize=trainDataset.getPreparedDatasetSize(),
@@ -33,31 +39,29 @@ def trainLexical(modelName, sampleLength, maxWords, trainDatasetPath, validation
         model.clear()
         gc.collect()
 
-def preprocessDatasets(trainDatasetPath, validationDatasetPath, sampleLength):
+def preprocessDatasets(trainDatasetPath, validationDatasetPath):
     trainDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), trainDatasetPath))
     validationDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), validationDatasetPath))
-    filter = LexicalVectorizationFilter(sampleLength=sampleLength)
+    filter = LexicalVectorizationFilter(sampleLength=DEFAULT_LEXICAL_SAMPLE_LENGTH)
     preprocessor = ParallelPreprocessor(filter=RawFakeNewsDataFilterAdapter(filter=filter))
     trainDataset.prepareRawData(preprocessor)
     validationDataset.prepareRawData(preprocessor)
 
 def runLexicalTrain():
-    #rawTrainFiles = ["training_data.json"]
-    #rawValidationFiles = ["validation_data.json"]
+    rawTrainFiles = ["training_data.json"]
+    rawValidationFiles = ["validation_data.json"]
 
-    maxWords = 80000
-    sampleLength = 360
+    try:
+        os.makedirs(DEFAULT_MODELS_PATH)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            print("Error creating directory: " + str(e))
 
-    model = "lexical_model.hdf5"
-    trainDataset = "lexical_train_dataset"
-    validationDataset = "lexical_validation_dataset"
+    downloadAndCreateDatasets(TRAINING_PATH, VALIDATION_PATH)
 
-    downloadAndCreateDatasets(trainDataset, validationDataset)
+    preprocessDatasets(TRAINING_PATH, VALIDATION_PATH)
 
-    preprocessDatasets(trainDataset, validationDataset, sampleLength)
-
-    trainLexical(modelName=model, sampleLength=sampleLength, maxWords=maxWords,
-                 trainDatasetPath=trainDataset, validationDatasetPath=validationDataset)
+    trainLexical(modelName=MODEL_PATH, trainDatasetPath=TRAINING_PATH, validationDatasetPath=VALIDATION_PATH)
                  #rawTrainFiles=rawTrainFiles, rawValidationFiles=rawValidationFiles)
 
 if __name__ == "__main__":

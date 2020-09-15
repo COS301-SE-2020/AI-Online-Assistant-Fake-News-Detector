@@ -72,7 +72,6 @@ def downloadModel(modelName, downloadPath):
             print("Error creating directory: " + str(e))
     request = requests.get(url=API + "/nnModels/" + modelName)
     data = request.json()
-    print(data)
     modelNames = []
     if 'response' in data:
         if 'success' in data['response']:
