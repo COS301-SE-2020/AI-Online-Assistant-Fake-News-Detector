@@ -1,5 +1,5 @@
 $(() => {
-    const serverTld='http://54.172.96.111:8080/api/'
+    const serverTld='https://artifacts.live/api/'
     const sourcesUrl=serverTld+'Sources/'
     const reportsUrl=serverTld+'Reports/'
     const factCheckUrl=serverTld+'Facts/factCheck/'
@@ -20,6 +20,11 @@ $(() => {
                 j = i;
                 i = counter;
                 max = parseInt(source['Rating']);
+            } else if (data['response']['Sources'][i]['Rating']>=data['response']['Sources'][j]["rating"]) {
+                k = j;
+                j = i;
+            } else if (data['response']['Sources'][j]['Rating']>=data['response']['Sources'][k]["rating"]) {
+                j = i;
             }
             counter++;
         });
@@ -109,28 +114,20 @@ $('#input').on('click', 'input[value="Analyse Article"]', function() {
         let content = $('#checkArticle').val();
         $('#input').hide();
         $('#loading').show();
-        let data = {
-            "response":{
-                "result":{
-                    "overall":{
-                        "prediction": "real"
-                    }
-                },
-                "success": true
-            }
-        }
-        // analyzeArticle(content).then(data=>{
+        content = content.split('"').join('');
+        analyzeArticle(content).then(data=>{
             $('#input').show();
             $('#loading').hide();
             if (data['response']['success']) {
                 $('#input').html('<h3>The article has been analysed</h3>'+
                     '<div class="reviewOutput">According to our <b>Neural Network</b> this news article containts mostly <b>'+ data['response']['result']['overall']['prediction'] +'</b> news!<br/><br/>'+
+                    '<div id="rfDisplay" class="'+ data['response']['result']['overall']['prediction'] +'"> Confidence: '+ Math.floor(data['response']['result']['overall']['confidence']*100) +'% </div>'+
                     'Head to <b><a id="analysisLink" target="_blank" rel="noopener noreferrer" href="https://artifacts.live">Our Website</a></b> for an in depth analysis.</div>'+
                     '<input type="button" id="close" value="Close">');
             } else {
                 
             }
-        // });
+        });
     }
 });
 //////////////////////////////////////////////////////   
@@ -334,6 +331,7 @@ $('#input').on('click', 'input[value="Check Source"]', function() {
             dataType: "json",
             type: "POST",
             data: {
+                "type": "text",
                 "content": article
             }
         });
