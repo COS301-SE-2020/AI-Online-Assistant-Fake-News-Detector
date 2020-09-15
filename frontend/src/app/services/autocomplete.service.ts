@@ -23,7 +23,7 @@ export class AutocompleteService {
     return this.opts.length
       ? of(this.opts)
       : this.http
-          .get<any>("https://artifacts.live/api/sources")
+          .get<any>("https://artifacts.live/api/sources/")
           .pipe(tap((data) => (this.opts = data)));
   }
 }
