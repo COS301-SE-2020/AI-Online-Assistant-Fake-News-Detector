@@ -939,16 +939,58 @@ api.delete("/nnModels/:modelId", (req, res, next) => {
   );
 });
 
-api.post("/register", (req, res, next) => {
-  logger.info("New nn_server image created on port " + req.body.port);
-  if (!nn_server.some((i) => i.port === Number(req.body.port))) {
-    nn_server.push({ port: Number(req.body.port), busy: false });
+api.get("/active", (req, res, next) => {
+  res.status(200).json({ servers: nn_server });
+});
+
+api.get("/register/:port", (req, res, next) => {
+  logger.info("New nn_server image created on port " + req.params.port);
+  if (!nn_server.some((i) => i.port === Number(req.params.port))) {
+    nn_server.push({ port: Number(req.params.port), busy: false });
     nn_server.sort((a, b) => {
       if (a.port > b.port) return 1;
       else return -1;
     });
   }
-  res.send(204);
+  res.status(200).json({
+    response: {
+      success: true,
+      message: "New nn_server image created on port " + req.params.port + ".",
+    },
+  });
+});
+
+api.get("/deregister/:port", (req, res, next) => {
+  logger.info("Closing nn_server image on port " + req.params.port);
+  if (nn_server.some((i) => i.port === Number(req.params.port))) {
+    let index = nn_server.findIndex((ele, i) => {
+      if (ele.port == req.params.port) return i;
+    });
+    nn_server.splice(index, 1);
+    nn_server.sort((a, b) => {
+      if (a.port > b.port) return 1;
+      else return -1;
+    });
+  }
+  res.status(200).json({
+    response: {
+      success: true,
+      message: "nn_server image on port " + req.params.port + " closed.",
+    },
+  });
+});
+
+api.get("/living/:port", (req, res, next) => {
+  logger.info("Checking nn_server image on port " + req.params.port);
+  postRequest(
+    "localhost",
+    "/living",
+    req.params.port,
+    "",
+    (statusCode, response) => {
+      res.status(statusCode).json(response);
+    }
+  );
 });
 
 api.get("/start/:port", (req, res, next) => {
@@ -968,10 +1010,6 @@ api.get("/start/:port", (req, res, next) => {
   }
 });
 
-api.get("/active", (req, res, next) => {
-  res.status(200).json({ servers: nn_server });
-});
-
 api.get("/close/:port", (req, res, next) => {
   logger.info("Closing nn_server image on port " + req.params.port);
   postRequest(
@@ -988,27 +1026,6 @@ api.get("/close/:port", (req, res, next) => {
         if (statusCode == 200) res.sendStatus(statusCode).json(response);
         else next(response);
       } catch (error) {}
-    }
-  );
-});
-
-api.get("/living/:port", (req, res, next) => {
-  logger.info("Checking nn_server image on port " + req.params.port);
-  postRequest(
-    "localhost",
-    "/living",
-    req.params.port,
-    "",
-    (statusCode, response) => {
-      res.status(statusCode).json(response);
-      // let index = nn_server.findIndex((ele, i) => {
-      //   if (ele.port == req.params.port) return i;
-      // });
-      // try {
-      //   nn_server.splice(index, 1);
-      //   if (statusCode == 200) res.sendStatus(statusCode).json(response);
-      //   else next(response);
-      // } catch (error) {}
     }
   );
 });
