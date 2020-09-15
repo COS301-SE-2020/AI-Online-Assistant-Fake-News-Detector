@@ -166,11 +166,11 @@ router.delete("/:factId", (req, res, next) => {
  * @description post request to check a fact on the Google Check API
  * @author Quinton Coetzee
  */
-router.post("/factCheck/", (req, res, next) => {
+router.post("/factCheck", (req, res, next) => {
   const statement = req.body.statement;
   if (statement === "") {
     res.status(500).json({
-      response: { message: "Staetement can't be empty", success: false },
+      response: { message: "Statement can't be empty", success: false },
     });
   }
   try {
@@ -189,30 +189,42 @@ router.post("/factCheck/", (req, res, next) => {
               responses.response.Key.Key +
               "&pageSize=1&languageCode=enUS&query=" +
               encodeURI(statement);
-            (async () => {
-              const { body } = await got.get(googleURL, {
-                responseType: "json",
-              });
-              if (body.claims) {
-                res.status(200).json({
-                  response: {
-                    message: "Review completed successfully.",
-                    text: body.claims[0].text,
-                    reviewer: body.claims[0].claimReview[0].publisher.name,
-                    review: body.claims[0].claimReview[0].textualRating,
-                    reviewSource: body.claims[0].claimReview[0].url,
-                    success: true,
-                  },
-                });
-              } else {
-                res.status(404).json({
-                  response: {
-                    message: "No similar statements found.",
-                    success: true,
-                  },
-                });
+            getRequest(
+              "https://factchecktools.googleapis.com",
+              "/v1alpha1/claims:search?key=" +
+                responses.response.Key.Key +
+                "&pageSize=1&languageCode=enUS&query=" +
+                encodeURI(statement),
+              null,
+              (stat, respo) => {
+                console.log(stat, respo);
+                res.send(stat);
               }
-            })();
+            );
+            // )(async () => {
+            //   const { body } = await got.get(googleURL, {
+            //     responseType: "json",
+            //   });
+            //   if (body.claims) {
+            //     res.status(200).json({
+            //       response: {
+            //         message: "Review completed successfully.",
+            //         text: body.claims[0].text,
+            //         reviewer: body.claims[0].claimReview[0].publisher.name,
+            //         review: body.claims[0].claimReview[0].textualRating,
+            //         reviewSource: body.claims[0].claimReview[0].url,
+            //         success: true,
+            //       },
+            //     });
+            //   } else {
+            //     res.status(404).json({
+            //       response: {
+            //         message: "No similar statements found.",
+            //         success: true,
+            //       },
+            //     });
+            //   }
+            // })();
           } catch (error) {
             logger.info(error);
           }
