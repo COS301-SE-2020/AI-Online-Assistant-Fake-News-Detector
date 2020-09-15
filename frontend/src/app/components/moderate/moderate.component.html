@@ -139,15 +139,15 @@
     <div id="listOfFacts">
       <ul style="list-style-type: none" *ngFor="let fact of factslist; let i = index">
         <li *ngIf="7 > i">
-          "{{ fact.statement }}"
+          "{{ fact.Statement }}"
 
           <div class="progress" style="width: 40%; height: 1.5em">
             <div id="bars" [ngClass]="{
-                'progress-bar bg-success': checkRatingHigh(fact.popularity),
-                'progress-bar bg-warning': checkRatingMed(fact.popularity),
-                'progress-bar bg-danger': checkRatingLow(fact.popularity)
+                'progress-bar bg-success': checkRatingHigh(fact.Popularity),
+                'progress-bar bg-warning': checkRatingMed(fact.Popularity),
+                'progress-bar bg-danger': checkRatingLow(fact.Popularity)
               }" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
-              [style.width]="convertRating(fact.popularity)" style="height: 1.5em"></div>
+              [style.width]="convertRating(fact.Popularity)" style="height: 1.5em"></div>
           </div>
         </li>
       </ul>
