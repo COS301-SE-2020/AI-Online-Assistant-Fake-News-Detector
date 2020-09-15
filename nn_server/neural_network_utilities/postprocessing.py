@@ -21,11 +21,11 @@ def padOutputs(outputs):
 
 def weightedAggregateOutputs(outputs, weights): 
     assert len(outputs) == len(weights)
-    arr = np.array(outputs)
-    weighted = []
-    for i in range(len(arr)):
-        weighted.append(np.array(arr[i] * weights[i]))
-    return np.sum(weighted, axis=0)        
+    weighted = np.sum(np.array(outputs), axis=0)
+    for row in weighted:
+        for i in range(len(row)):
+            row[i] = row[i] * weights[i]
+    return weighted
 
 def aggregateOutputs(outputs):
     return np.sum(outputs, axis=0)
@@ -33,12 +33,8 @@ def aggregateOutputs(outputs):
 def overallResults(outputs):
     results = {'prediction': 'real', 'confidence': 0.0}
     length = len(outputs)
-    if length > 0:        
-        features = len(outputs[0])
-        outputSum = [0.0] * features
-        for i in range(length):
-            for j in range(features):
-                outputSum[j] += outputs[i][j]
+    if length > 0:
+        outputSum = np.sum(outputs, axis=0)
         label = RealOrFakeLabels.outputToLabel(outputSum)
         confidence = RealOrFakeLabels.outputToValue(outputSum) / length
         results['prediction'] = label

@@ -5,6 +5,7 @@ from train_grammatical_model import runGrammaticalTrain
 from train_lexical_model import runLexicalTrain
 from train_core_model import runCoreTrain
 from default_configs import DEFAULT_DATASETS_PATH, DEFAULT_MODELS_PATH
+
 if __name__ == "__main__":
     rawTrainFiles = ["training_data.json"]
     rawValidationFiles = ["validation_data.json"]
