@@ -34,39 +34,7 @@ server.use(bodyParser.json({ type: "application/json" }));
 server.use(helmet());
 server.use(cors());
 
-const getRequest = (_host, _path, _port, callBack) => {
-  const request = https
-    .request(
-      {
-        host: _host,
-        port: _port,
-        path: _path,
-        method: "GET",
-      },
-      (response) => {
-        response.setEncoding("utf-8");
-        let responseString = "";
-        response.on("data", (chunk) => {
-          responseString += chunk;
-        });
-
-        response.on("end", () => {
-          if (responseString === "") responseString = "{}";
-          callBack(response.statusCode, JSON.parse(responseString));
-        });
-      }
-    )
-    .on("error", (err) => {
-      morgan(":date[clf] :method :url :status :response-time ms", {
-        stream: fs.createWriteStream(path.join(root, "logfiles", "error.log"), {
-          flags: "a",
-        }),
-      });
-      callBack(500, err);
-    });
-
-  request.end();
-};
+const getRequest = production ? config.HTTPSGetRequest : config.HTTPGetRequest;
 
 cron.schedule("55 23 * * *", () => {
   getRequest(hostURL, "/api/reports/update", 8080, () =>
@@ -197,7 +165,7 @@ try {
         "."
     );
 
-    if (production) {
+    if (!production) {
       [8090].forEach((e) => {
         getRequest(
           "artifacts.live",

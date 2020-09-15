@@ -1,0 +1,12 @@
+{
+  "name": "helper_functions",
+  "version": "1.0.0",
+  "description": "",
+  "author": "5Bits",
+  "license": "ISC",
+  "dependencies": {
+    "https": "^1.0.0",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7"
+  }
+}
