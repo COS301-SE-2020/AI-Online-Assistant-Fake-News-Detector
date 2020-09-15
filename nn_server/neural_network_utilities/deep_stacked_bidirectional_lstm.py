@@ -1,9 +1,10 @@
 from preprocessing import Filter
 import tensorflow.keras as ks
 import tensorflow as tf
+from default_configs import DEFAULT_SAMPLE_LENGTH, DEFAULT_MAX_WORDS
 
 class DeepStackedBidirectionalLSTM(Filter):
-    def __init__(self, sampleLength, maxWords, outputUnits, modelName="DeepStackedBidirectionalLSTM"):
+    def __init__(self, outputUnits, sampleLength=DEFAULT_SAMPLE_LENGTH, maxWords=DEFAULT_MAX_WORDS, modelName="DeepStackedBidirectionalLSTM"):
         """
         @author: AlistairPaynUP
         @:param sampleLength: The length of a single sample.
@@ -34,7 +35,6 @@ class DeepStackedBidirectionalLSTM(Filter):
         Initializes a new model.
         """
         self.clear()
-        ks.backend.clear_session()
         inputs = ks.Input(shape=(self.__sampleLength,), dtype="int64") # look into shape=(self.__sampleLength, featureCount)
         layers = ks.layers.Embedding(input_dim=self.__maxWords, input_length=self.__sampleLength, output_dim=128, mask_zero=True)(inputs)
         # Stack bidirectional LSTMs
@@ -96,12 +96,12 @@ class DeepStackedBidirectionalLSTM(Filter):
             self.__model.fit(trainGenerator, validation_data=validationGenerator,
                              steps_per_epoch=trainDatasetSize / batchSize,
                              validation_steps=validationDatasetSize / batchSize,
-                             batch_size=batchSize, epochs=epochs, callbacks=[checkpoint])
+                             batch_size=batchSize, epochs=epochs, callbacks=[checkpoint], shuffle=True)
         else:
             self.__model.fit(trainGenerator, validation_data=validationGenerator,
                              steps_per_epoch=trainDatasetSize / batchSize,
                              validation_steps=validationDatasetSize / batchSize,
-                             batch_size=batchSize, epochs=epochs)
+                             batch_size=batchSize, epochs=epochs, shuffle=True)
         self.exportModel(saveFilePath)
 
     def process(self, preparedData):
@@ -114,27 +114,20 @@ class DeepStackedBidirectionalLSTM(Filter):
             raise Exception("Cannot use uninitialized model.")
         return self.__model.predict(preparedData)
 
-    def __call__(self, preparedDataList):
+    def __call__(self, dataList):
         """
         @author: AlistairPaynUP
-        @:param preparedDataList: Data that has been prepared by a preprocessor, or filtered and then vectorized. e.g: {'id': 123, 'data': [123, 456, ...], 'label': [0, 1]}
-        @:return: a list of processed results [{'id': 0, 'data': [[0.2, 0.8]], 'label':[0, 1]}, ...]
-        This is part of the Filter interface since the BDLSTM is used as an input filter to the logistic regression
+        @:param dataList: Data list that has been prepared by a preprocessor, or filtered and then vectorized. e.g: [[123, 456, ...], [789, 1011, ...]]
+        @:return: a list of processed results [[1, 0], [0, 1]]
+        This is part of the Filter interface since the LSTM is used as an input filter to the logistic regression
         """
-        results = []
-        dataList = []
-        for data in preparedDataList:
-            dataList.append(data['data'])
-        predictedList = self.__model.predict(dataList)
-        resultList = []
-        for prediction in predictedList:
-            resultList.append([int(prediction[0] * 1000), int(prediction[1] * 1000)])
-        for i in range(len(resultList)):
-            results.append({'id': preparedDataList[i]['id'], 'data': [list(resultList[i])], 'label': preparedDataList[i]['label']})
-        return results
+        return self.__model.predict(dataList)
 
     def getFeatureCount(self):
         return self.__outputUnits
 
     def getSampleLength(self):
         return self.__sampleLength
+
+    def getMaxWords(self):
+        return self.__maxWords

@@ -44,6 +44,7 @@ class TestDatasetManager(unittest.TestCase):
             self.assertIs(os.path.exists(os.path.join(testDir, file)), True, msg="addRawData(fileList): " + file + " in manifest, but can't be found in dataset directory.")
             fileCount -= 1
         self.assertEqual(fileCount, 0, msg="addRawData(fileList): rawFileCounter in manifest does not correspond with actual count of raw files in dataset directory.")
+        self.assertEqual(manifest['rawDatasetSize'], testSize, msg="addRawData(fileList): rawDatasetSize in manifest does not correspond with actual size of raw dataset in dataset directory.")
         dirPath = Path(testDir)
         if dirPath.exists() and dirPath.is_dir():
             shutil.rmtree(dirPath)
@@ -89,7 +90,7 @@ class TestDatasetManager(unittest.TestCase):
             self.assertIs(os.path.exists(os.path.join(testDir, file)), True, msg="addPreparedData(fileList): " + file + " in manifest, but can't be found in dataset directory.")
             fileCount -= 1
         self.assertEqual(fileCount, 0, msg="addPreparedData(fileList): preparedFileCounter in manifest does not correspond with actual count of prepared files in dataset directory.")
-        self.assertEqual(manifest['datasetSize'], testSize, msg="addPreparedData(fileList): datasetSize in manifest.json is incorrect.")
+        self.assertEqual(manifest['preparedDatasetSize'], testSize, msg="addPreparedData(fileList): datasetSize in manifest.json is incorrect.")
         dirPath = Path(testDir)
         if dirPath.exists() and dirPath.is_dir():
             shutil.rmtree(dirPath)
@@ -126,7 +127,7 @@ class TestDatasetManager(unittest.TestCase):
             self.assertIs(os.path.exists(os.path.join(testDir, file)), True, msg="addPreparedData(fileList): " + file + " in manifest, but can't be found in dataset directory.")
             fileCount -= 1
         self.assertEqual(fileCount, 0, msg="addPreparedData(fileList): preparedFileCounter in manifest does not correspond with actual count of prepared files in dataset directory.")
-        self.assertEqual(manifest['datasetSize'], testSize, msg="addPreparedData(fileList): datasetSize in manifest.json is incorrect.")
+        self.assertEqual(manifest['preparedDatasetSize'], testSize, msg="addPreparedData(fileList): datasetSize in manifest.json is incorrect.")
         dirPath = Path(testDir)
         if dirPath.exists() and dirPath.is_dir():
             shutil.rmtree(dirPath)

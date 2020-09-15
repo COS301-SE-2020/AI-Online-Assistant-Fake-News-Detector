@@ -3,16 +3,12 @@ import spacy as sp
 import tensorflow.keras as ks
 import multiprocessing as mp
 import nltk
-import numpy as np
-from  labels import RealOrFakeLabels
+from labels import RealOrFakeLabels
+from default_configs import DEFAULT_MAX_WORDS, DEFAULT_SAMPLE_LENGTH, DEFAULT_LEXICAL_SAMPLE_LENGTH, DEFAULT_GRAMMATICAL_SAMPLE_LENGTH
 
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 sp.prefer_gpu()
-
-
-DEFAULT_SAMPLE_LENGTH = 360
-DEFAULT_MAX_WORDS = 1200000
 
 
 class Filter:
@@ -219,7 +215,7 @@ class LexicalVectorizationFilter(Filter):
     This filter also vectorizes the dataset.
     """
 
-    def __init__(self, sampleLength=DEFAULT_SAMPLE_LENGTH,
+    def __init__(self, sampleLength=DEFAULT_LEXICAL_SAMPLE_LENGTH,
                  maxWords=DEFAULT_MAX_WORDS):  # sampleLen should be multiple of 3
         super().__init__()
         self.__sampleLength = sampleLength
@@ -281,7 +277,7 @@ class GrammaticalVectorizationFilter(Filter):
     This filter also vectorizes the dataset.
     """
 
-    def __init__(self, sampleLength=DEFAULT_SAMPLE_LENGTH):  # sampleLen should be multiple of 3
+    def __init__(self, sampleLength=DEFAULT_GRAMMATICAL_SAMPLE_LENGTH):  # sampleLen should be multiple of 3
         super().__init__()
         self.__sampleLength = sampleLength
         self.__featureCount = 2
@@ -528,7 +524,27 @@ class VectorizationFilter(Filter):
         return self.__maxWords
 
 
-class FilterMultiplexorAdapter(FilterAdapter):
+class FilterMultiplexorAdapter:
     """
-    Takes multiple filters but returns a single result.
+    Takes multiple filters and corresponding dataLists but returns a single result.
     """
+    def __init__(self, filters):
+        self.__filters = filters
+        if len(filters) < 2:
+            raise Exception("Cannot multiplex less than two filters!")
+
+    def __call__(self, preparedDataLists):
+        filterResults = []
+        for i in range(len(self.__filters)):
+            dataList = []
+            for data in preparedDataLists[i]:
+                dataList.append(data['data'])
+            filterResults.append(self.__filters[i](dataList))
+        mergedResults = [[] for _ in range(len(filterResults[0]))]
+        for i in range(0, len(filterResults)):
+            for j in range(0, len(filterResults[i])):
+                mergedResults[j].extend([str(val) for val in filterResults[i][j]])
+        results = []
+        for i in range(len(mergedResults)):
+            results.append({'id': preparedDataLists[0][i]['id'], 'data': [list(mergedResults[i])], 'label': preparedDataLists[0][i]['label']})
+        return results

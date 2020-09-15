@@ -13,27 +13,29 @@ import pathlib
 dirname = pathlib.Path(__file__).parent.absolute()
 sys.path.append(os.path.join(dirname, 'neural_network_utilities'))
 from preprocessing import LexicalVectorizationFilter, GrammaticalVectorizationFilter, RawFakeNewsDataFilterAdapter, ParallelPreprocessor, RealOrFakeLabels
-from postprocessing import postprocess
+from postprocessing import postprocess, mergeOutputs
 from dataset_manager import DatasetManager
 from stacked_bidirectional_lstm import StackedBidirectionalLSTM
 from deep_stacked_bidirectional_lstm import DeepStackedBidirectionalLSTM
+from shallow_stack_lstm import ShallowStackedBidirectionalLSTM
+from default_configs import DEFAULT_DATASETS_PATH, DEFAULT_MODELS_PATH, DEFAULT_GRAMMATICAL_SAMPLE_LENGTH, DEFAULT_LEXICAL_SAMPLE_LENGTH, DEFAULT_CORE_SAMPLE_LENGTH
+from labels import RealOrFakeLabels
 
 trained_models = os.path.join(dirname, 'trained_models')
-grammaticalModel = os.path.join(trained_models, "deep_grammatical_model.hdf5")
+grammaticalModel = os.path.join(trained_models, "grammatical_model.hdf5")
 lexicalModel = os.path.join(trained_models, "lexical_model.hdf5")
+coreModel = os.path.join(trained_models, "core_model.hdf5")
 
-SAMPLE_LENGTH = 360
-
-grammaticalFilter = GrammaticalVectorizationFilter(sampleLength=SAMPLE_LENGTH)
-grammaticalLSTM = DeepStackedBidirectionalLSTM(sampleLength=grammaticalFilter.getSampleLength(
-), maxWords=grammaticalFilter.getMaxWords(), outputUnits=2)
+grammaticalFilter = GrammaticalVectorizationFilter()
+grammaticalLSTM = DeepStackedBidirectionalLSTM(outputUnits=RealOrFakeLabels.getOutputUnits(), sampleLength=DEFAULT_GRAMMATICAL_SAMPLE_LENGTH, modelName="GrammaticalNN")
 grammaticalLSTM.importModel(grammaticalModel)
 
-lexicalFilter = LexicalVectorizationFilter(
-    sampleLength=SAMPLE_LENGTH, maxWords=80000)
-lexicalLSTM = StackedBidirectionalLSTM(sampleLength=lexicalFilter.getSampleLength(
-), maxWords=lexicalFilter.getMaxWords(), outputUnits=2)
+lexicalFilter = LexicalVectorizationFilter()
+lexicalLSTM = StackedBidirectionalLSTM(outputUnits=RealOrFakeLabels.getOutputUnits(), sampleLength=DEFAULT_LEXICAL_SAMPLE_LENGTH, modelName="LexicalNN")
 lexicalLSTM.importModel(lexicalModel)
+
+coreLSTM = ShallowStackedBidirectionalLSTM(outputUnits=RealOrFakeLabels.getOutputUnits(), sampleLength=DEFAULT_CORE_SAMPLE_LENGTH, modelName="CoreNN")
+coreLSTM.importModel(coreModel)
 
 app = flask.Flask(__name__)
 
@@ -70,12 +72,11 @@ def check():
             if 'content' in body.keys():
                 if body['type'] == 'text' and isinstance(body['content'], str) and len(body['content']):
                     text = body['content'].lower()
-                    grammaticalOutput = grammaticalLSTM.process(
-                        preparedData=grammaticalFilter(text))
-                    lexicalOutput = lexicalLSTM.process(
-                        preparedData=lexicalFilter(text))
-                    result = postprocess(
-                        [lexicalOutput, grammaticalOutput], text)
+
+                    grammaticalOutput = grammaticalLSTM.process(preparedData=grammaticalFilter(text))
+                    lexicalOutput = lexicalLSTM.process(preparedData=lexicalFilter(text))
+                    coreOutput = coreLSTM.process(mergeOutputs([grammaticalOutput, lexicalOutput]))
+                    result = postprocess([coreOutput], text)
                     return jsonify({"response": {"result": result, "success": True, "message": "Processed Input"}}), status.HTTP_200_OK
     return jsonify({"response": {"message": "Bad request body.", "success": False}}), status.HTTP_400_BAD_REQUEST
 
@@ -89,9 +90,11 @@ def catch_all(path):
 
 
 if __name__ == '__main__':
-    print("Initialize grammatical. " +
-          str(grammaticalLSTM.process(preparedData=grammaticalFilter("Initialize."))))
-    print("Initialize lexical. " +
-          str(lexicalLSTM.process(preparedData=lexicalFilter("Initialize."))))
+    grammaticalInit = grammaticalLSTM.process(preparedData=grammaticalFilter("Initialize."))
+    print("Initialize grammatical. " + str(grammaticalInit))
+    lexicalInit = lexicalLSTM.process(preparedData=lexicalFilter("Initialize."))
+    print("Initialize lexical. " + str(lexicalInit))
+    coreInit = coreLSTM.process(mergeOutputs([grammaticalInit, lexicalInit]))
+    print("Initialize core. " + str(coreInit))
     app.run(port=sys.argv[1])
     register()
