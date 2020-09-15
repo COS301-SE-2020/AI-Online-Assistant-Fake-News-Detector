@@ -9,7 +9,10 @@
     "testUC1.8": "mocha --exit --timeout 30000 \"test/usecase1.8_report_source.mocha.test\"",
     "testUC3.3": "mocha --exit --timeout 30000 \"test/usecase3.3_update_reports.mocha.test\"",
     "start": "concurrently \"nodemon api_server.js\" \"nodemon ../db_server/db_server.js\"",
-    "startP": "concurrently \"node api_server.js\" \"node ../db_server/db_server.js\""
+    "startP": "concurrently \"node api_server.js\" \"node ../db_server/db_server.js\"",
+    "testPerformance": "artillery run \"test/api_server_performance.yml\"",
+    "testScalability": "artillery run \"test/api_server_scalability.yml\"",
+    "testSecurity": "artillery run \"test/api_server_security.yml\""
   },
   "author": "5Bits",
   "license": "ISC",
@@ -26,6 +29,7 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "artillery": "^1.6.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "concurrently": "^5.3.0",
