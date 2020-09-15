@@ -165,7 +165,7 @@ try {
         "."
     );
 
-    if (!production) {
+    if (production) {
       [8090].forEach((e) => {
         getRequest(
           "artifacts.live",
