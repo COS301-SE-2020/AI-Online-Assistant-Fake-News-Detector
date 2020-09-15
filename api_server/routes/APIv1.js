@@ -8,152 +8,13 @@ const Logger = require(path.join(root, "winston"));
 const logger = new Logger(api);
 const fs = require("fs");
 const shell = require("shelljs");
-const http = require("http");
 require("dotenv").config({ path: path.join(root, ".env") });
 const nn_server = [];
 
-const getRequest = (_host, _path, _port, callBack) => {
-  const request = http
-    .request(
-      {
-        host: _host,
-        port: _port,
-        path: _path,
-        method: "GET",
-      },
-      (response) => {
-        response.setEncoding("utf-8");
-        let responseString = "";
-        response.on("data", (chunk) => {
-          responseString += chunk;
-        });
-
-        response.on("end", () => {
-          if (responseString === "") responseString = "{}";
-          callBack(response.statusCode, JSON.parse(responseString));
-        });
-      }
-    )
-    .on("error", (err) => {
-      morgan(":date[clf] :method :url :status :response-time ms", {
-        stream: fs.createWriteStream(path.join(root, "logfiles", "error.log"), {
-          flags: "a",
-        }),
-      });
-      callBack(500, err);
-    });
-
-  request.end();
-};
-
-const postRequest = (_host, _path, _port, _params, callBack) => {
-  const request = http.request(
-    {
-      host: _host,
-      port: _port,
-      path: _path,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Content-Length": Buffer.byteLength(_params),
-      },
-    },
-    (response) => {
-      response.setEncoding("utf-8");
-      let responseString = "";
-      response.on("data", (chunk) => {
-        responseString += chunk;
-      });
-      response.on("end", () => {
-        if (responseString === "") responseString = "{}";
-        return callBack(response.statusCode, JSON.parse(responseString));
-      });
-    }
-  );
-  request.on("error", (err) => {
-    morgan(":date[clf] :method :url :status :response-time ms", {
-      stream: fs.createWriteStream(path.join(root, "logfiles", "error.log"), {
-        flags: "a",
-      }),
-    });
-    callBack(500, err);
-  });
-
-  request.write(_params);
-  request.end();
-};
-
-const putRequest = (_host, _path, _port, params, callBack) => {
-  let req = http
-    .request(
-      {
-        host: _host,
-        port: _port,
-        path: _path,
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Content-Length": params.length,
-        },
-      },
-      (response) => {
-        response.setEncoding("utf-8");
-        let responseString = "";
-        response.on("data", (chunk) => {
-          responseString += chunk;
-        });
-        response.on("end", () => {
-          if (responseString === "") responseString = "{}";
-          return callBack(response.statusCode, JSON.parse(responseString));
-        });
-      }
-    )
-    .on("error", (err) => {
-      morgan(":date[clf] :method :url :status :response-time ms", {
-        stream: fs.createWriteStream(path.join(root, "logfiles", "error.log"), {
-          flags: "a",
-        }),
-      });
-      callBack(500, err);
-    });
-
-  req.write(params);
-  req.end();
-};
-
-const deleteRequest = (_host, _path, _port, callBack) => {
-  const request = http.request(
-    {
-      host: _host,
-      port: _port,
-      path: _path,
-      method: "DELETE",
-    },
-    (response) => {
-      response.setEncoding("utf-8");
-      let responseString = "";
-      response.on("data", (chunk) => {
-        responseString += chunk;
-      });
-
-      response.on("end", () => {
-        if (responseString === "") responseString = "{}";
-        return callBack(response.statusCode, JSON.parse(responseString));
-      });
-    }
-  );
-
-  request.on("error", (err) => {
-    morgan(":date[clf] :method :url :status :response-time ms", {
-      stream: fs.createWriteStream(path.join(root, "logfiles", "error.log"), {
-        flags: "a",
-      }),
-    });
-    callBack(500, err);
-  });
-
-  request.end();
-};
+const getRequest = config.HTTPGetRequest;
+const postRequest = config.HTTPPostRequest;
+const putRequest = config.HTTPPutRequest;
+const deleteRequest = config.HTTPDeleteRequest;
 
 const validateUser = (token, callBack) => {
   try {
@@ -1079,33 +940,37 @@ api.delete("/nnModels/:modelId", (req, res, next) => {
   );
 });
 
+api.post("/register", (req, res, next) => {
+  logger.info("New nn_server image created on port " + req.body.port);
+  if (!nn_server.some((i) => i.port === Number(req.body.port))) {
+    nn_server.push({ port: Number(req.body.port), busy: false });
+    nn_server.sort((a, b) => {
+      if (a.port > b.port) return 1;
+      else return -1;
+    });
+  }
+  res.send(204);
+});
+
 api.get("/start/:port", (req, res, next) => {
   try {
+    if (nn_server.some((i) => i.port === Number(req.params.port)))
+      throw new Error("Server already running!");
     shell.cd(path.join(root, "nn_server"));
     shell.exec(
-      "python nn_server.py " + req.params.port,
+      "python nn_server.py " + req.params.port + " &",
       (err, stdout, stderr) => {
         if (err) throw new Error(err);
-        logger.info("New nn_server image created on port " + req.params.port);
-        nn_server.push({ port: Number(req.params.port), busy: false });
         res.sendStatus(204);
       }
     );
-    nn_server.push({ port: Number(req.params.port), busy: false });
   } catch (err) {
-    logger.info(
-      "New nn_server image created on port " +
-        req.params.port +
-        " with errors. (" +
-        err.toString() +
-        ")"
-    );
     next(err);
   }
 });
 
 api.get("/active", (req, res, next) => {
-  res.sendStatus(200).json(nn_server);
+  res.status(200).json({ servers: nn_server });
 });
 
 api.get("/close/:port", (req, res, next) => {
@@ -1116,17 +981,35 @@ api.get("/close/:port", (req, res, next) => {
     req.params.port,
     "",
     (statusCode, response) => {
-      if (statusCode == 200) {
-        let index = nn_server.findIndex((ele, i) => {
-          if (ele.port == req.params.port) return i;
-        });
-        try {
-          nn_server.splice(index, 1);
-          res.sendStatus(statusCode).json(response);
-        } catch (error) {}
-      } else {
-        next(response);
-      }
+      let index = nn_server.findIndex((ele, i) => {
+        if (ele.port == req.params.port) return i;
+      });
+      try {
+        nn_server.splice(index, 1);
+        if (statusCode == 200) res.sendStatus(statusCode).json(response);
+        else next(response);
+      } catch (error) {}
+    }
+  );
+});
+
+api.get("/living/:port", (req, res, next) => {
+  logger.info("Checking nn_server image on port " + req.params.port);
+  postRequest(
+    "localhost",
+    "/living",
+    req.params.port,
+    "",
+    (statusCode, response) => {
+      res.status(statusCode).json(response);
+      // let index = nn_server.findIndex((ele, i) => {
+      //   if (ele.port == req.params.port) return i;
+      // });
+      // try {
+      //   nn_server.splice(index, 1);
+      //   if (statusCode == 200) res.sendStatus(statusCode).json(response);
+      //   else next(response);
+      // } catch (error) {}
     }
   );
 });
