@@ -1,0 +1,22 @@
+config:
+  target: "https://artifacts.live:3000"
+  http:
+    # Responses have to be sent within 10 seconds or the request will be aborted
+    timeout: 6
+  phases:
+    - duration: 2
+      arrivalRate: 2
+      name: Requests to closed endpoints
+scenarios:
+  - name: "Requests should time out as they are not authenticated by API server"
+    flow:
+      - get:
+          url: "/sources"
+      - get:
+          url: "/facts"
+      - get:
+          url: "/reports"
+      - get:
+          url: "/training"
+      - get:
+          url: "/nnmodels"

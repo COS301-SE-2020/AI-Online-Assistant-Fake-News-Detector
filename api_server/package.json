@@ -11,7 +11,8 @@
     "start": "concurrently \"nodemon api_server.js\" \"nodemon ../db_server/db_server.js\"",
     "startP": "concurrently \"node api_server.js\" \"node ../db_server/db_server.js\"",
     "testPerformance": "artillery run \"test/api_server_performance.yml\"",
-    "testScalability": "artillery run \"test/api_server_scalability.yml\""
+    "testScalability": "artillery run \"test/api_server_scalability.yml\"",
+    "testSecurity": "artillery run \"test/api_server_security.yml\""
   },
   "author": "5Bits",
   "license": "ISC",

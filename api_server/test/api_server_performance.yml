@@ -1,5 +1,5 @@
 config:
-  target: "http://localhost:3000"
+  target: "https://artifacts.live/api"
   phases:
     - duration: 10
       arrivalRate: 2
