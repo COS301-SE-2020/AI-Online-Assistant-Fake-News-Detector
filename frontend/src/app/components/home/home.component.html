@@ -1,7 +1,6 @@
-<div class="container">
+<div class="container-fluid">
+
   <mat-tab-group mat-align-tabs="center">
-
-
     <mat-tab label="Text">
       <mat-form-field class="example-form-field">
         <mat-label>Enter some text</mat-label>
@@ -15,7 +14,7 @@
       </mat-form-field>
 
       <div class="example-button-row">
-        <button mat-raised-button class="checkBtn">Run text through AI</button>
+        <button mat-raised-button class="checkBtn" (click)="checkText()">Run text through AI</button>
         <button mat-raised-button color="accent" (click)="paste()">
           Paste from clipboard
         </button>
@@ -59,3 +58,114 @@
     </mat-tab>
   </mat-tab-group>
 </div>
+<!-- neural network response  -->
+<ng-container *ngIf="textHit">
+  &nbsp;
+  <div class="container-fluid">
+    <div class="neuralResponse">
+      <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel [(expanded)]="step1">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Summary
+            </mat-panel-title>
+            <mat-panel-description>
+              TL;DR
+              <mat-icon>speed</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <div class="col-md-6 d-flex justify-content-center">
+              <mat-card>
+                <mat-card-title>This articles is probably {{nnPred}}</mat-card-title>
+                <img mat-card-image [src]="cardImgUrl" alt="404">
+              </mat-card>
+            </div>
+            <div class="col-md-6 d-flex justify-content-center">
+
+              <ngx-gauge type="full" [value]="confidenceGaugeValue" max="100" thick="10" label="Confidence" size="250"
+                [thresholds]="thresholdConfig">
+              </ngx-gauge>
+
+            </div>
+          </div>
+
+          <!-- #docregion action-bar -->
+          <mat-action-row>
+            <button mat-button color="primary" (click)="step2=true">Show Breakdown</button>
+          </mat-action-row>
+          <!-- #enddocregion action-bar -->
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [(expanded)]="step2">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Breakdown
+            </mat-panel-title>
+            <mat-panel-description>
+              Full analysis
+              <mat-icon>analytics</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <app-notfound></app-notfound>
+
+          <mat-action-row>
+            <button mat-button color="primary" (click)="step3=true">Options</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [(expanded)]="step3">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Spread the word
+            </mat-panel-title>
+            <mat-panel-description>
+              Share or let us keep you posted
+              <mat-icon>share</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div class="shareOptions">
+            <mat-card>
+              <mat-list>
+                <ng-container *ngIf="user$ | async as user; else loginIcon">
+                  <mat-list-item>
+                    <mat-icon>notifications</mat-icon>
+                    <h3 mat-line>Enable notifications</h3>
+                    <p mat-line>
+                      <span>Subscribe to updates from this article</span>
+                    </p>
+                  </mat-list-item>
+                </ng-container>
+                <ng-template #loginIcon>
+                  <mat-list-item>
+                    <mat-icon>fingerprint</mat-icon>
+                    <h3 mat-line>Notifications</h3>
+                    <p mat-line>
+                      <span>Please sign in to subscribe to updates</span>
+                    </p>
+                  </mat-list-item>
+                </ng-template>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <mat-icon>share</mat-icon>
+                  <h3 mat-line>Share</h3>
+                  <p mat-line>
+                    <span>Share the result</span>
+                  </p>
+                </mat-list-item>
+              </mat-list>
+            </mat-card>
+          </div>
+
+          <mat-action-row>
+            <button mat-button color="warn" (click)="step1=step2=step3=false;">Collapse All</button>
+            <button mat-button color="primary">Remove Result</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+
+      </mat-accordion>
+    </div>
+  </div>
+</ng-container>

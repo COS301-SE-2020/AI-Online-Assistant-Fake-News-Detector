@@ -46,6 +46,8 @@ import { ProfileCardComponent } from "./components/profile-card/profile-card.com
 import { NgxGaugeModule } from 'ngx-gauge';
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { WelcomeService } from './services/welcome.service';
+import { HomeNeuralService } from './components/home/home-neural.service';
+
 
 @NgModule({
   declarations: [
@@ -94,6 +96,7 @@ import { WelcomeService } from './services/welcome.service';
     SearchSourceService,
     AutocompleteService,
     WelcomeService,
+    HomeNeuralService,
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: "fill" },
