@@ -8,9 +8,6 @@ from stacked_bidirectional_lstm import StackedBidirectionalLSTM
 from default_configs import DEFAULT_DATASETS_PATH, DEFAULT_MODELS_PATH, DEFAULT_LEXICAL_SAMPLE_LENGTH
 from labels import RealOrFakeLabels
 
-MODEL_PATH = os.path.join(DEFAULT_MODELS_PATH, "lexical_model.hdf5")
-TRAINING_PATH = os.path.join(DEFAULT_DATASETS_PATH, "lexical_train_dataset")
-VALIDATION_PATH = os.path.join(DEFAULT_DATASETS_PATH, "lexical_validation_dataset")
 
 def trainLexical(modelName, trainDatasetPath, validationDatasetPath, rawTrainFiles=None, rawValidationFiles=None):
     # Lexical pipeline
@@ -40,6 +37,7 @@ def trainLexical(modelName, trainDatasetPath, validationDatasetPath, rawTrainFil
         gc.collect()
 
 def preprocessDatasets(trainDatasetPath, validationDatasetPath):
+    print("Lexical preprocessing...")
     trainDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), trainDatasetPath))
     validationDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), validationDatasetPath))
     filter = LexicalVectorizationFilter(sampleLength=DEFAULT_LEXICAL_SAMPLE_LENGTH)
@@ -47,22 +45,12 @@ def preprocessDatasets(trainDatasetPath, validationDatasetPath):
     trainDataset.prepareRawData(preprocessor)
     validationDataset.prepareRawData(preprocessor)
 
-def runLexicalTrain():
-    rawTrainFiles = ["training_data.json"]
-    rawValidationFiles = ["validation_data.json"]
+def runLexicalTrain(modelPath, trainingPath, validationPath, rawTrainFiles=None, rawValidationFiles=None):
+    if rawTrainFiles is None and rawValidationFiles is None:
+        downloadAndCreateDatasets(trainingPath, validationPath)
 
-    try:
-        os.makedirs(DEFAULT_MODELS_PATH)
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            print("Error creating directory: " + str(e))
+    preprocessDatasets(trainingPath, validationPath)
 
-    downloadAndCreateDatasets(TRAINING_PATH, VALIDATION_PATH)
+    trainLexical(modelName=modelPath, trainDatasetPath=trainingPath, validationDatasetPath=validationPath,
+                 rawTrainFiles=rawTrainFiles, rawValidationFiles=rawValidationFiles)
 
-    preprocessDatasets(TRAINING_PATH, VALIDATION_PATH)
-
-    trainLexical(modelName=MODEL_PATH, trainDatasetPath=TRAINING_PATH, validationDatasetPath=VALIDATION_PATH)
-                 #rawTrainFiles=rawTrainFiles, rawValidationFiles=rawValidationFiles)
-
-if __name__ == "__main__":
-    runLexicalTrain()
