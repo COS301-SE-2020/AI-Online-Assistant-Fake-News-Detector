@@ -8,7 +8,6 @@ const Logger = require(path.join(root, "winston"));
 const logger = new Logger(api);
 const fs = require("fs");
 const shell = require("shelljs");
-require("dotenv").config({ path: path.join(root, ".env") });
 const nn_server = [];
 
 const getRequest = config.HTTPGetRequest;
