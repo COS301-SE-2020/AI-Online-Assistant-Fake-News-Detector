@@ -265,7 +265,7 @@ class DatasetManager:
         jsonString = jsonFile.read()
         jsonFile.close()
         sampleList = list(json.loads(jsonString.lower()))
-        return sampleList[:20000]
+        return sampleList
 
 def loadJSONFile(filePath):
     """
