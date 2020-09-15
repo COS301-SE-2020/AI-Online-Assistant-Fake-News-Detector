@@ -7,8 +7,21 @@
     <h4>{{ user.displayName }}</h4>
     <p>{{ user.email }}</p>
     <mat-divider></mat-divider>
-    <button mat-stroked-button color="accent" (click)="logout()">
+    <button mat-raised-button color="warn" (click)="logout()">
       Sign Out
     </button>
+    <mat-divider></mat-divider>
+    <mat-chip-list class="mat-chip-list-stacked" aria-label="Chips">
+      <ng-container *ngIf="welcome.hasBeenHere(); else elseTemplate">
+        <mat-chip color="accent" (click)="welcome.store(false)">
+          Show welcome page on next load
+        </mat-chip>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <mat-chip color="primary">
+          Showing welcome on next load
+        </mat-chip>
+      </ng-template>
+    </mat-chip-list>
   </div>
 </mat-menu>

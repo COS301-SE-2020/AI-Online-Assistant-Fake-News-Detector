@@ -21,7 +21,7 @@
     "helmet": "^3.23.3",
     "https": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.3",
+    "mongoose": "^5.10.4",
     "morgan": "^1.10.0",
     "path": "^0.12.7"
   },

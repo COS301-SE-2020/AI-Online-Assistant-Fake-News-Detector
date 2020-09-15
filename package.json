@@ -6,7 +6,7 @@
     "install:db": "cd db_server && npm install && npm audit fix && npm update",
     "install:api": "cd api_server && npm install && npm audit fix && npm update",
     "postinstall": "run-s install:*",
-    "test": "mocha --exit \"**/*.mocha.test.js\" --timeout 30000",
+    "test": "mocha --exit \"**/*.mocha.test.js\" --timeout 100000",
     "start": "cd api_server && npm start",
     "startP": "cd api_server && npm run \"startP\""
   },

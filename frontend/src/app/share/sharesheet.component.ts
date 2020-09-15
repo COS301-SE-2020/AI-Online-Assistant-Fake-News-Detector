@@ -11,38 +11,19 @@ export class ShareSheetComponent {
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<ShareSheetComponent>,
     private readonly snackBar: MatSnackBar
-  ) {
-    // if (!navigator.share) {
-    // 	console.log('Web Share API is not available in your browser.');
-    // 	//this.cantshare = true;
-    // } else {
-    // 	this.cantshare = false;
-    // }
-  }
-
+  ) {}
   openLink(event: MouseEvent, link: string): void {
     this._bottomSheetRef.dismiss();
-    // enabling this will open links in a new tab
     event.preventDefault();
-    // below does not open new tab
-    // window.location.href = link;
-    // this does new tab too if mouse event is ignored
     window.open(link);
   }
-
-  mail(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-    window.open("mailto:5bits301@gmail.com?subject=Artifact [x__O]");
-  }
-
   share(event: MouseEvent) {
     event.preventDefault();
     if (navigator.share) {
       navigator
         .share({
           title: "ArtiFact",
-          url: "https://fakenewsdetector.tech",
+          url: "https://artifacts.live",
         })
         .then(() => {
           this.snackBar.open(`Thanks for sharing (◠﹏◠)`, "Close", {
@@ -50,23 +31,23 @@ export class ShareSheetComponent {
           });
           this._bottomSheetRef.dismiss();
         })
-        .catch((error) => console.log("Error sharing", error));
+        .catch((error) => {} /*console.log("Error sharing", error)*/);
     } else {
       document.getElementById("other").innerHTML =
         "Web Share API not supported";
       this.cantshare = true;
     }
   }
-
   async copy(event: MouseEvent) {
     try {
-      await navigator.clipboard.writeText("https://ArtiFact.me");
-      console.log("Page URL copied to clipboard");
+      await navigator.clipboard.writeText("https://artifacts.live");
+      // console.log("Page URL copied to clipboard");
       document.getElementById("copy").innerHTML = "Link copied to clipboard";
       document.getElementById("copyicon").innerHTML = "tag_faces";
     } catch (err) {
       console.error("Copy to clipboard failed: ", err);
-      document.getElementById("copy").innerHTML = "Failed to copy to clipboard";
+      document.getElementById("copy").innerHTML =
+        "Failed to copy to clipboard (ಥ﹏ಥ)";
       document.getElementById("copyicon").innerHTML = "report";
     }
   }

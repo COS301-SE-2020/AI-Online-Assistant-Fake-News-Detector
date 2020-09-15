@@ -1,14 +1,15 @@
 const api = require("express").Router();
-const http = require("http");
 const morgan = require("morgan");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 const root = require(path.join("../", "../", "Util", "path"));
 const config = require(path.join(root, "Util", "config"));
-const Logger = require("../../winston");
+const Logger = require(path.join(root, "winston"));
 const logger = new Logger(api);
 const fs = require("fs");
 const shell = require("shelljs");
+const http = require("http");
+require("dotenv").config({ path: path.join(root, ".env") });
 const nn_server = [];
 
 const getRequest = (_host, _path, _port, callBack) => {
@@ -362,6 +363,31 @@ api.post("/facts", (req, res, next) => {
   postRequest(
     "localhost",
     "/facts",
+    config.db_server_port,
+    requestBody,
+    (statusCode, response) => {
+      res.status(statusCode).json(response);
+    }
+  );
+});
+
+/**
+ * @description base post request route. Reroutes the api call to the api server. adds new fact to db.
+ * @author Stuart Barclay
+ */
+
+api.post("/facts/factCheck", (req, res, next) => {
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  }
+  postRequest(
+    "localhost",
+    "/facts/factCheck",
     config.db_server_port,
     requestBody,
     (statusCode, response) => {
@@ -1067,8 +1093,19 @@ api.get("/start/:port", (req, res, next) => {
     );
     nn_server.push({ port: Number(req.params.port), busy: false });
   } catch (err) {
+    logger.info(
+      "New nn_server image created on port " +
+        req.params.port +
+        " with errors. (" +
+        err.toString() +
+        ")"
+    );
     next(err);
   }
+});
+
+api.get("/active", (req, res, next) => {
+  res.sendStatus(200).json(nn_server);
 });
 
 api.get("/close/:port", (req, res, next) => {
@@ -1109,6 +1146,50 @@ api.post("/sendEmail", (req, res, next) => {
         logger.info("Email sent: " + info.response);
         res.sendStatus(204);
       }
+    }
+  );
+});
+
+api.get("/keys", (req, res, next) => {
+  getRequest(
+    "localhost",
+    "/keys",
+    config.db_server_port,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    }
+  );
+});
+
+api.post("/keys", (req, res, next) => {
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  }
+  postRequest(
+    "localhost",
+    "/keys",
+    config.db_server_port,
+    requestBody,
+    (statusCode, response) => {
+      res.status(statusCode).json(response);
+    }
+  );
+});
+
+api.get("/keys/:keyDescription", (req, res, next) => {
+  getRequest(
+    "localhost",
+    "/keys/" + encodeURI(req.params.keyDescription),
+    config.db_server_port,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
     }
   );
 });

@@ -1,46 +1,45 @@
-import { ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
-import { MediaMatcher } from "@angular/cdk/layout";
+import { Component } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import { Option } from "./theme/option.model";
 import { ThemeService } from "./theme/theme.service";
 import { AuthService } from "./services/auth/auth.service";
-
+import { WelcomeService } from './services/welcome.service';
+import { MatSnackBar } from "@angular/material/snack-bar";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent {
+  tmp: string;
   title: string;
-  mobileQuery: MediaQueryList;
   options$: Observable<Array<Option>> = this.themeService.getThemeOptions();
   curTheme: string;
+  showWelcome: boolean;
   user$: Observable<firebase.User> = this.auth.user$;
-
-  /* isMobile : boolean; */
-  private _mobileQueryListener: () => void;
   constructor(
     private readonly themeService: ThemeService,
-    changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher,
-    public auth: AuthService
+    public auth: AuthService,
+    public welcome: WelcomeService,
+    private readonly snackBar: MatSnackBar,
   ) {
-    this.mobileQuery = media.matchMedia("(max-width: 600px)");
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
-
     this.themeService.setTheme("pink-bluegrey");
     this.curTheme = "pink-bluegrey";
-
-    this.title = "AiNews";
+    this.title = "ArtiFact";
+    this.showWelcome = !welcome.hasBeenHere();
+    if (!this.showWelcome) {
+      this.snackBar.open(`Welcome back (° ͜ʖ͡°)`, "Close", {
+        duration: 4000,
+      });
+    }
   }
-  // constructor(private readonly themeService: ThemeService) {}
-  ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
-  }
-
-  themeChangeHandler(themeToSet) {
+  themeChangeHandler(themeToSet: string) {
     this.themeService.setTheme(themeToSet);
     this.curTheme = themeToSet;
+  }
+  closeWelcome(): void {
+    this.showWelcome = false;
+    this.welcome.store(true);
+    document.getElementById('main').classList.add('scale-in-ver-bottom');
   }
 }

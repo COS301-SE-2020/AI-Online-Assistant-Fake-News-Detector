@@ -238,195 +238,195 @@ describe("Sources", () => {
   });
 });
 
-describe("Users", () => {
-  let email = "testEmail" + (Math.random() * 100).toFixed(0) + "@gmail.com";
-  it("It should log a Moderator into the system /POST Users/login", (done) => {
-    chai
-      .request(server)
-      .post("/API/Users/login")
-      .send({
-        emailAddress: "5bits@gmail.com",
-        password: "5Bits@@",
-      })
-      .end((err, res) => {
-        res.should.be.json;
-        res.body.should.be.a("object");
-        res.body.response.should.have.property("message");
-        res.body.response.should.have.property("token");
-        done();
-      });
-  });
+// describe("Users", () => {
+//   let email = "testEmail" + (Math.random() * 100).toFixed(0) + "@gmail.com";
+//   it("It should log a Moderator into the system /POST Users/login", (done) => {
+//     chai
+//       .request(server)
+//       .post("/API/Users/login")
+//       .send({
+//         emailAddress: "5bits@gmail.com",
+//         password: "5Bits@@",
+//       })
+//       .end((err, res) => {
+//         res.should.be.json;
+//         res.body.should.be.a("object");
+//         res.body.response.should.have.property("message");
+//         res.body.response.should.have.property("token");
+//         done();
+//       });
+//   });
 
-  it("It should add a Moderator to the database /POST Users", (done) => {
-    chai
-      .request(server)
-      .post("/API/Users/register")
-      .send({
-        emailAddress: email,
-        password: "password",
-        fName: "Stuart" + (Math.random() * 100).toFixed(0),
-        lName: "Barclay",
-        phoneNumber: "0793580784",
-        authenticationLevel: 3,
-      })
-      .end(function (err, res) {
-        res.should.have.status(201);
-        res.should.be.json;
-        res.body.should.be.a("object");
-        res.body.response.should.have.property("message");
-        res.body.response.User.should.be.a("object");
-        res.body.response.User.should.have.property("Name");
-        res.body.response.User.should.have.property("Email Address");
-        res.body.response.User.should.have.property("ID");
-        done();
-      });
-  });
+//   it("It should add a Moderator to the database /POST Users", (done) => {
+//     chai
+//       .request(server)
+//       .post("/API/Users/register")
+//       .send({
+//         emailAddress: email,
+//         password: "password",
+//         fName: "Stuart" + (Math.random() * 100).toFixed(0),
+//         lName: "Barclay",
+//         phoneNumber: "0793580784",
+//         authenticationLevel: 3,
+//       })
+//       .end(function (err, res) {
+//         res.should.have.status(201);
+//         res.should.be.json;
+//         res.body.should.be.a("object");
+//         res.body.response.should.have.property("message");
+//         res.body.response.User.should.be.a("object");
+//         res.body.response.User.should.have.property("Name");
+//         res.body.response.User.should.have.property("Email Address");
+//         res.body.response.User.should.have.property("ID");
+//         done();
+//       });
+//   });
 
-  it("It should retrieve all Users in the database", (done) => {
-    chai
-      .request(server)
-      .post("/API/Users/login")
-      .send({
-        emailAddress: email,
-        password: "password",
-      })
-      .end((err, responsder) => {
-        let token = responsder.body.response.token;
-        chai
-          .request(server)
-          .get("/API/Users")
-          .set("x-access-token", token)
-          .end((err, res) => {
-            expect(err).to.be.null;
-            res.should.have.status(200);
-            res.body.should.be.a("object");
-            res.body.response.Users[0].should.have.property("ID");
-            res.body.response.Users[0].should.have.property("Name");
-            res.body.response.Users[0].should.have.property("Email Address");
-            done();
-          });
-      });
-  });
+//   it("It should retrieve all Users in the database", (done) => {
+//     chai
+//       .request(server)
+//       .post("/API/Users/login")
+//       .send({
+//         emailAddress: email,
+//         password: "password",
+//       })
+//       .end((err, responsder) => {
+//         let token = responsder.body.response.token;
+//         chai
+//           .request(server)
+//           .get("/API/Users")
+//           .set("x-access-token", token)
+//           .end((err, res) => {
+//             expect(err).to.be.null;
+//             res.should.have.status(200);
+//             res.body.should.be.a("object");
+//             res.body.response.Users[0].should.have.property("ID");
+//             res.body.response.Users[0].should.have.property("Name");
+//             res.body.response.Users[0].should.have.property("Email Address");
+//             done();
+//           });
+//       });
+//   });
 
-  it("It should retrieve a specific moderator from the database /GET Users/emailAddress/:emailAddress", (done) => {
-    chai
-      .request(server)
-      .post("/API/Users/login")
-      .send({
-        emailAddress: email,
-        password: "password",
-      })
-      .end((err, responsder) => {
-        let token = responsder.body.response.token;
-        chai
-          .request(server)
-          .get("/API/Users")
-          .set("x-access-token", token)
-          .end((err, responder) => {
-            chai
-              .request(server)
-              .get(
-                "/API/Users/emailAddress/" +
-                  responder.body.response.Users[0]["Email Address"]
-              )
-              .set("x-access-token", token)
-              .end((err, res) => {
-                expect(err).to.be.null;
-                res.should.have.status(200);
-                res.body.should.be.a("object");
-                res.body.response.User.should.have.property("ID");
-                res.body.response.User.should.have.property("Name");
-                res.body.response.User.should.have.property("Email Address");
-                res.body.response.User.should.have.property(
-                  "Authentication Level"
-                );
-                res.body.response.User.Name.should.equal(
-                  responder.body.response.Users[0].Name
-                );
-                done();
-              });
-          });
-      });
-  });
+//   it("It should retrieve a specific moderator from the database /GET Users/emailAddress/:emailAddress", (done) => {
+//     chai
+//       .request(server)
+//       .post("/API/Users/login")
+//       .send({
+//         emailAddress: email,
+//         password: "password",
+//       })
+//       .end((err, responsder) => {
+//         let token = responsder.body.response.token;
+//         chai
+//           .request(server)
+//           .get("/API/Users")
+//           .set("x-access-token", token)
+//           .end((err, responder) => {
+//             chai
+//               .request(server)
+//               .get(
+//                 "/API/Users/emailAddress/" +
+//                   responder.body.response.Users[0]["Email Address"]
+//               )
+//               .set("x-access-token", token)
+//               .end((err, res) => {
+//                 expect(err).to.be.null;
+//                 res.should.have.status(200);
+//                 res.body.should.be.a("object");
+//                 res.body.response.User.should.have.property("ID");
+//                 res.body.response.User.should.have.property("Name");
+//                 res.body.response.User.should.have.property("Email Address");
+//                 res.body.response.User.should.have.property(
+//                   "Authentication Level"
+//                 );
+//                 res.body.response.User.Name.should.equal(
+//                   responder.body.response.Users[0].Name
+//                 );
+//                 done();
+//               });
+//           });
+//       });
+//   });
 
-  it("It should update a moderator in the database /PUT Users/:emailAddress", function (done) {
-    chai
-      .request(server)
-      .post("/API/Users/login")
-      .send({
-        emailAddress: email,
-        password: "password",
-      })
-      .end((err, responsder) => {
-        let token = responsder.body.response.token;
-        chai
-          .request(server)
-          .get("/API/Users")
-          .set("x-access-token", token)
-          .end((err, responder) => {
-            chai
-              .request(server)
-              .put(
-                "/API/Users/" +
-                  responder.body.response.Users[
-                    responder.body.response.count - 1
-                  ]["Email Address"]
-              )
-              .send({ fName: "test" })
-              .set("x-access-token", token)
-              .end(function (error, response) {
-                response.should.have.status(200);
-                response.should.be.json;
-                response.body.should.be.a("object");
-                response.body.response.should.have.property("message");
-                response.body.response.message.should.equal(
-                  "User details updated"
-                );
-                done();
-              });
-          });
-      });
-  });
+//   it("It should update a moderator in the database /PUT Users/:emailAddress", function (done) {
+//     chai
+//       .request(server)
+//       .post("/API/Users/login")
+//       .send({
+//         emailAddress: email,
+//         password: "password",
+//       })
+//       .end((err, responsder) => {
+//         let token = responsder.body.response.token;
+//         chai
+//           .request(server)
+//           .get("/API/Users")
+//           .set("x-access-token", token)
+//           .end((err, responder) => {
+//             chai
+//               .request(server)
+//               .put(
+//                 "/API/Users/" +
+//                   responder.body.response.Users[
+//                     responder.body.response.count - 1
+//                   ]["Email Address"]
+//               )
+//               .send({ fName: "test" })
+//               .set("x-access-token", token)
+//               .end(function (error, response) {
+//                 response.should.have.status(200);
+//                 response.should.be.json;
+//                 response.body.should.be.a("object");
+//                 response.body.response.should.have.property("message");
+//                 response.body.response.message.should.equal(
+//                   "User details updated"
+//                 );
+//                 done();
+//               });
+//           });
+//       });
+//   });
 
-  it("It should delete a single user from the database /DELETE Users/:emailAddress", (done) => {
-    chai
-      .request(server)
-      .post("/API/Users/login")
-      .send({
-        emailAddress: email,
-        password: "password",
-      })
-      .end((err, responsder) => {
-        let token = responsder.body.response.token;
-        chai
-          .request(server)
-          .get("/API/Users")
-          .set("x-access-token", token)
-          .end((err, responder) => {
-            chai
-              .request(server)
-              .delete(
-                "/API/Users/" +
-                  responder.body.response.Users[
-                    responder.body.response.count - 1
-                  ]["Email Address"]
-              )
-              .set("x-access-token", token)
-              .end(function (error, res) {
-                res.should.have.status(200);
-                res.should.be.json;
-                res.body.should.be.a("object");
-                res.body.response.should.have.property("message");
-                res.body.response.message.should.be.a("string");
-                res.body.response.message.should.be.eql(
-                  "User deleted successfully"
-                );
-                done();
-              });
-          });
-      });
-  });
-});
+//   it("It should delete a single user from the database /DELETE Users/:emailAddress", (done) => {
+//     chai
+//       .request(server)
+//       .post("/API/Users/login")
+//       .send({
+//         emailAddress: email,
+//         password: "password",
+//       })
+//       .end((err, responsder) => {
+//         let token = responsder.body.response.token;
+//         chai
+//           .request(server)
+//           .get("/API/Users")
+//           .set("x-access-token", token)
+//           .end((err, responder) => {
+//             chai
+//               .request(server)
+//               .delete(
+//                 "/API/Users/" +
+//                   responder.body.response.Users[
+//                     responder.body.response.count - 1
+//                   ]["Email Address"]
+//               )
+//               .set("x-access-token", token)
+//               .end(function (error, res) {
+//                 res.should.have.status(200);
+//                 res.should.be.json;
+//                 res.body.should.be.a("object");
+//                 res.body.response.should.have.property("message");
+//                 res.body.response.message.should.be.a("string");
+//                 res.body.response.message.should.be.eql(
+//                   "User deleted successfully"
+//                 );
+//                 done();
+//               });
+//           });
+//       });
+//   });
+// });
 
 describe("Reports", () => {
   it("It should add a Report to the database /POST Reports", function (done) {

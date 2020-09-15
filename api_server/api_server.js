@@ -17,8 +17,8 @@ const root = require("../Util/path");
 const config = require(path.join(root, "Util", "config"));
 const port = config.api_server_port;
 const cron = require("node-cron");
-const http = require("http");
 const https = require("https");
+const http = require("http");
 const morganFormat =
   "[:date] :remote-addr - :remote-user :method :url HTTP/:http-version :status :response-time ms";
 
@@ -151,8 +151,21 @@ if (production) {
       stream: accessLog,
     })
   );
-} else server.use(morgan("dev"));
 
+  cron.schedule("55 * * * * *", () => {
+    getRequest("localhost", "/api/active", 8080, (statusCode, response) => {
+      logger.info(response);
+    });
+  });
+} else server.use(morgan("dev"));
+if (production)
+  server.use("*", (req, res, next) => {
+    if (req.secure) {
+      next();
+    } else {
+      res.redirect("https://" + req.headers.host + req.url);
+    }
+  });
 server.use("/API-Documents", express.static(ExternalDocs));
 server.use("/API-Internal-Documents", express.static(InternalDocs));
 server.use("/API", API);
@@ -163,63 +176,41 @@ server.use("*", (req, res, next) => {
     .sendFile(path.join(root, "frontend", "dist", "AiNews", "index.html"));
 });
 
-if (production) {
-  // Certificate
-  try {
-    const httpsServer = https.createServer(
-      {
-        key: fs.readFileSync(
-          "/etc/letsencrypt/live/artifacts.live/privkey.pem",
-          "utf8"
-        ),
-        cert: fs.readFileSync(
-          "/etc/letsencrypt/live/artifacts.live/fullchain.pem",
-          "utf8"
-        ),
-      },
-      server
-    );
-    httpsServer.listen(port, () => {
-      logger.info(
-        "HTTPS API_Server listening on port " +
-          port +
-          ". Environment: " +
-          process.env.NODE_ENV +
-          "."
-      );
-      // if (production)
-      //   [8090, 8091, 8092].forEach((e) =>
-      //     getRequest(
-      //       "localhost",
-      //       "/api/start/" + e,
-      //       8080,
-      //       (statusCode, response) => {}
-      //     )
-      //   );
-    });
-  } catch (error) {
-    logger.info(error);
-  }
-} else {
-  const httpServer = http.createServer(server);
-  httpServer.listen(port, () => {
+try {
+  const Certificates = {
+    key: fs.readFileSync(
+      path.join(root, "Util", "ProductionCertificates", "privkey.pem"),
+      "utf8"
+    ),
+    cert: fs.readFileSync(
+      path.join(root, "Util", "ProductionCertificates", "cert.pem"),
+      "utf8"
+    ),
+  };
+  const httpsServer = production
+    ? https.createServer(Certificates, server)
+    : http.createServer(server);
+
+  httpsServer.listen(port, () => {
     logger.info(
-      "HTTP API_Server listening on port " +
+      "API_Server listening on port " +
         port +
         ". Environment: " +
         process.env.NODE_ENV +
         "."
     );
-    // if (production)
-    //   [8090, 8091, 8092].forEach((e) =>
-    //     getRequest(
-    //       "localhost",
-    //       "/api/start/" + e,
-    //       8080,
-    //       (statusCode, response) => {}
-    //     )
-    //   );
+    if (production)
+      [8090, 8091, 8092].forEach((e) => {
+        getRequest(
+          "localhost",
+          "/api/start/" + e,
+          8080,
+          (statusCode, response) => {}
+        );
+      });
   });
+} catch (error) {
+  logger.info(error);
 }
 
 module.exports = server;

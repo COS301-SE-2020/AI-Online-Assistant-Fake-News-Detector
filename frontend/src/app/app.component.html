@@ -1,63 +1,67 @@
-<div fxLayout="column" fxFlexFill>
-
-  <!-- Responsive navbar-->
-  <mat-toolbar class="mat-elevation-z8 p-0" fxLayout="row" fxLayoutAlign="start stretch">
-    <mat-toolbar-row>
-      <button mat-icon-button (click)="drawer.toggle()" fxShow="true" fxHide.gt-sm>
-        <mat-icon>menu</mat-icon>
-      </button>
-      <img routerLink="" id="widelogo" fxShow="true" src="assets/img/5bitslogo.png" (click)="drawer.close()" />
-      <a mat-button class="logoHead" routerLink="" (click)="drawer.close()">ArtiFact</a>
-      <span fxFlex></span>
-      <div fxLayout="row" fxShow="false" fxShow.gt-sm (click)="drawer.close()">
-        <button *ngIf="user$ | async as user;" mat-button routerLink="moderate"
-          routerLinkActive="router-link-active">Moderate</button>
-        <button mat-button routerLink="" routerLinkActive="router-link-active">Home</button>
-        <button mat-button routerLink="howto">Statistics</button>
-        <button mat-button routerLink="about">About Us</button>
+<ng-container *ngIf="!showWelcome; else elseTemplate">
+  <div class="slide-in-bottom" fxLayout="column" fxFlexFill>
+    <!-- Responsive navbar-->
+    <mat-toolbar class="mat-elevation-z8 p-0" fxLayout="row" fxLayoutAlign="start stretch">
+      <mat-toolbar-row>
+        <button mat-icon-button (click)="drawer.toggle()" fxShow="true" fxHide.gt-sm>
+          <mat-icon>menu</mat-icon>
+        </button>
+        <img routerLink="" id="widelogo" fxShow="true" src="assets/img/5bitslogo.png" (click)="drawer.close()" />
+        <a mat-button class="logoHead" routerLink="" (click)="drawer.close()">ArtiFact</a>
+        <span fxFlex></span>
+        <div fxLayout="row" fxShow="false" fxShow.gt-sm (click)="drawer.close()">
+          <button mat-button routerLink="" routerLinkActive="router-link-active">Home</button>
+          <button *ngIf="user$ | async as user;" mat-button routerLink="moderate"
+            routerLinkActive="router-link-active">Moderate</button>
+          <button mat-button routerLink="howto">Statistics</button>
+          <button mat-button routerLink="about">About Us</button>
+        </div>
+        <app-sharebutton></app-sharebutton>
+        <app-download-plugin></app-download-plugin>
+        <app-menu [options]="options$ | async" (themeChange)="themeChangeHandler($event)"></app-menu>
+        <app-user-accountbutton class="bounce-in-right"></app-user-accountbutton>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  
+    <mat-drawer-container fxFlex autosize class="background" (click)="drawer.close()">
+      <mat-drawer #drawer>
+        <div fxLayout="column">
+          <button mat-button routerLink="" routerLinkActive="router-link-active" fxLayoutAlign="start"
+            class="py-2 pr-4">Home</button>
+          <mat-divider></mat-divider>
+          <button mat-button *ngIf="user$ | async as user;" routerLink="moderate" routerLinkActive="router-link-active"
+            fxLayoutAlign="start" class="py-2 pr-4">
+            Moderate
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-button routerLink="howto" routerLinkActive="router-link-active" fxLayoutAlign="start"
+            class="py-2 pr-4">
+            Statistics
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-button routerLink="about" fxLayoutAlign="start" class="py-2 pr-4">
+            About Us
+          </button>
+          <mat-divider></mat-divider>
+  
+          <button mat-button fxLayoutAlign="start" class="py-2 pr-4">
+            Close
+          </button>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-drawer>
+  
+      <!--content-->
+      <div style="display: inline;">
+        <router-outlet></router-outlet>
       </div>
-      <app-sharebutton></app-sharebutton>
-      <app-download-plugin></app-download-plugin>
-      <app-menu [options]="options$ | async" (themeChange)="themeChangeHandler($event)"></app-menu>
-      <app-user-accountbutton></app-user-accountbutton>
-    </mat-toolbar-row>
-  </mat-toolbar>
-
-  <mat-drawer-container fxFlex autosize class="background" (click)="drawer.close()">
-    <mat-drawer #drawer>
-      <div fxLayout="column">
-        <button mat-button routerLink="" routerLinkActive="router-link-active" fxLayoutAlign="start"
-          class="py-2 pr-4">Home</button>
-        <mat-divider></mat-divider>
-        <button mat-button *ngIf="user$ | async as user;" routerLink="moderate" routerLinkActive="router-link-active"
-          fxLayoutAlign="start" class="py-2 pr-4">
-          Moderate
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-button routerLink="howto" routerLinkActive="router-link-active" fxLayoutAlign="start"
-          class="py-2 pr-4">
-          Statistics
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-button routerLink="about" fxLayoutAlign="start" class="py-2 pr-4">
-          About Us
-        </button>
-        <mat-divider></mat-divider>
-
-        <button mat-button fxLayoutAlign="start" class="py-2 pr-4">
-          Close
-        </button>
-        <mat-divider></mat-divider>
-      </div>
-    </mat-drawer>
-
-    <!--content-->
-    <div style="display: inline;">
-      <router-outlet></router-outlet>
-    </div>
-
-  </mat-drawer-container>
-
-  <!--End of responsive navbar-->
-
-</div>
+  
+    </mat-drawer-container>
+    <!--End of responsive navbar-->
+  </div>
+</ng-container>
+<ng-template #elseTemplate>
+  <iframe style="width:100%;height:100%" src="assets/welcome/index.html">
+    <div hidden id="_close" (click)="closeWelcome()"></div>
+  </iframe>
+</ng-template>

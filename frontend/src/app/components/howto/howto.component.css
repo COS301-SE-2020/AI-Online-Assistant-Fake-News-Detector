@@ -27,15 +27,45 @@
   
 #TrendingStatistics{
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 2%;
 }
 
-.ngx-charts-outer{
-    margin: 0;
+#nnStatsHeading{
+    margin-top: 5%;
+}
+
+#NeuralNetworkStatistics{
+    margin-bottom: 10%;
+    margin-top: 0%;
+}
+
+#PopularityRatings{
+    margin-bottom: 5%;
+}
+
+.fxLayout{
+    margin-right: auto;
+    margin-left: auto;
 }
   
   .nowrap {
     white-space: nowrap;
+  }
+
+  .chart-parent{
+    min-height: 350px;
+}
+
+#pie-chart-parent { display: grid; }
+
+#heading {
+  
+    font-size: 22px;
+    font-weight: 200;
+    
+  }
+
+  p{
+    line-height:1.6;
   }
   

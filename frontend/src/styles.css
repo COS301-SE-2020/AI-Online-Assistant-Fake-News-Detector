@@ -6,6 +6,7 @@ html {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
 @keyframes pulse {
   0.0% {
     transform: scale(1);
@@ -18,21 +19,63 @@ html {
   animation: pulse 1s ease 0.2s 2 normal none;
 }
 
-@keyframes bounce {
-  0%,
-  20%,
-  50%,
-  80%,
+@keyframes bounce-in-right {
+  0% {
+    transform: translateX(600px);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+  38% {
+    transform: translateX(0);
+    animation-timing-function: ease-out;
+    opacity: 1;
+  }
+  55% {
+    transform: translateX(68px);
+    animation-timing-function: ease-in;
+  }
+  72% {
+    transform: translateX(0);
+    animation-timing-function: ease-out;
+  }
+  81% {
+    transform: translateX(32px);
+    animation-timing-function: ease-in;
+  }
+  90% {
+    transform: translateX(0);
+    animation-timing-function: ease-out;
+  }
+  95% {
+    transform: translateX(8px);
+    animation-timing-function: ease-in;
+  }
   100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-30px);
-  }
-  60% {
-    transform: translateY(-20px);
+    transform: translateX(0);
+    animation-timing-function: ease-out;
   }
 }
-.bounce {
-  animation: bounce 0.8s ease-in 1s 1 normal none;
+
+.bounce-in-right {
+	animation: bounce-in-right 1.6s 1.2s both;
+}
+
+@keyframes slide-in-bottom {
+        0% {
+          transform: translateY(1000px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      
+
+.slide-in-bottom {
+	animation: slide-in-bottom 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.4s both;
+}
+
+element.style{
+  overflow: visible;
 }

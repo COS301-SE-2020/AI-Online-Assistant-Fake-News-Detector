@@ -1,21 +1,29 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import { tap, startWith, debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
-import {of, Subscription } from 'rxjs';
-
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import {
+  tap,
+  startWith,
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  map,
+} from "rxjs/operators";
+import { of, Subscription } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AutocompleteService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   opts = [];
 
   getData() {
-    return this.opts.length ?
-      of(this.opts) :
-      this.http.get<any>('http://54.172.96.111:8080/api/sources').pipe(tap(data => this.opts = data))
+    return this.opts.length
+      ? of(this.opts)
+      : this.http
+          .get<any>("https://artifacts.live/api/sources/")
+          .pipe(tap((data) => (this.opts = data)));
   }
 }

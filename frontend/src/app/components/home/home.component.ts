@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-
+import { HomeSearchSourceService } from "./home-search-source.service";
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
@@ -9,12 +9,12 @@ export class HomeComponent implements OnInit {
   urlvalue: string;
   textvalue: string;
   factvalue: string;
-  constructor() {}
+  constructor(search: HomeSearchSourceService) {}
 
   ngOnInit(): void {}
 
   clickTemp() {
-    alert("coming soon o__X");
+    alert("coming soon [o_o]");
   }
 
   paste() {
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
         // (<HTMLInputElement>document.getElementById('AItext')).value = text;
         this.textvalue = text;
         // document.getElementById('AItext').value = text;
-        console.log("Text pasted.");
+        // console.log("Text pasted.");
       })
       .catch(() => {
         alert("Failed to read from clipboard.");

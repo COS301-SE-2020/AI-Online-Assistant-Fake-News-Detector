@@ -120,8 +120,9 @@ export class ModerateComponent implements OnInit {
   filter(val: string): Observable<any[]> {
     // call the service which makes the http-request
     return this.autocompleteService.getData().pipe(
-      map((response) =>
-        response.Sources.filter((option) => {
+      map((data) =>
+        
+        data.response.Sources.filter((option) => {
           return option.Name.toLowerCase().indexOf(val.toLowerCase()) === 0;
         })
       )
@@ -147,7 +148,7 @@ export class ModerateComponent implements OnInit {
           this.searchNotFound = true;
         }
 
-        console.log("HTTP error ", error);
+        // console.log("HTTP error ", error);
       }
     );
   }
@@ -166,7 +167,7 @@ export class ModerateComponent implements OnInit {
   /* function that submits source*/
 
   onSourceSubmit() {
-    console.log(this.InsertSourceForm.value);
+    // console.log(this.InsertSourceForm.value);
     this._sourceinputService
       .SubmitSource(this.InsertSourceForm.value)
       .subscribe(
@@ -174,7 +175,7 @@ export class ModerateComponent implements OnInit {
           if (this.InsertSourceForm.valid) {
             this.insertSourceResponse = true;
           }
-          console.log("Success!", response);
+          // console.log("Success!", response);
         },
         (error) => {
           if (this.InsertSourceForm.valid) {
@@ -189,13 +190,13 @@ export class ModerateComponent implements OnInit {
   /* function that submits fact*/
 
   onSubmit() {
-    console.log(this.FactInputForm.value);
+    // console.log(this.FactInputForm.value);
     this._factinputService.SubmitFact(this.FactInputForm.value).subscribe(
       (response) => {
         if (this.FactInputForm.valid) {
           this.insertFactResponse = true;
         }
-        console.log("Success!", response);
+        // console.log("Success!", response);
       },
       (error) => {
         if (this.FactInputForm.valid) {

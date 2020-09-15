@@ -4,6 +4,37 @@ const mongoose = require("mongoose");
 const Logger = require("../../../winston");
 const logger = new Logger(express);
 const Fact = require("../models/fact");
+const got = require("got");
+const http = require("http");
+
+const getRequest = (_host, _path, _port, callBack) => {
+  const request = http
+    .request(
+      {
+        host: _host,
+        port: _port,
+        path: _path,
+        method: "GET",
+      },
+      (response) => {
+        response.setEncoding("utf-8");
+        let responseString = "";
+        response.on("data", (chunk) => {
+          responseString += chunk;
+        });
+
+        response.on("end", () => {
+          if (responseString === "") responseString = "{}";
+          callBack(response.statusCode, JSON.parse(responseString));
+        });
+      }
+    )
+    .on("error", (err) => {
+      callBack(500, err);
+    });
+
+  request.end();
+};
 
 /**
  * @description get request for all known fake facts in the fake facts database
@@ -46,24 +77,24 @@ router.post("/", (req, res, next) => {
     popularity: req.body.popularity,
   });
   fact
-  .save()
-  .then((result) => {
-    logger.info("Fact was created.");
-    res.status(201).json({
-      response: {
-        message: "Fact created successfully",
-        success: true,
-        Fact: {
-          ID: result.id,
-          Statement: result.statement,
-          Popularity: result.popularity,
+    .save()
+    .then((result) => {
+      logger.info("Fact was created.");
+      res.status(201).json({
+        response: {
+          message: "Fact created successfully",
+          success: true,
+          Fact: {
+            ID: result.id,
+            Statement: result.statement,
+            Popularity: result.popularity,
+          },
         },
-      },
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({ response: { message: err, success: false } });
     });
-  })
-  .catch((err) => {
-    res.status(500).json({ response: { message: err, success: false } });
-  });
 });
 
 /**
@@ -73,16 +104,16 @@ router.post("/", (req, res, next) => {
 router.get("/:factId", (req, res, next) => {
   const id = req.params.factId;
   Fact.findById(id)
-  .exec()
-  .then((doc) => {
-    if (doc) {
-      res.status(200).json({
-        response: {
-          message: "Retrieved fact successfully",
-          success: true,
-          Fact: {
-            ID: doc._id,
-            Statement: doc.statement,
+    .exec()
+    .then((doc) => {
+      if (doc) {
+        res.status(200).json({
+          response: {
+            message: "Retrieved fact successfully",
+            success: true,
+            Fact: {
+              ID: doc._id,
+              Statement: doc.statement,
               Popularity: doc.popularity,
             },
           },
@@ -99,31 +130,31 @@ router.get("/:factId", (req, res, next) => {
     .catch((err) => {
       res.status(500).json({ response: { message: err, success: false } });
     });
-  });
-  
-  /**
-   * @description delete request to remove a fake fact from the database by ID
-   * @author Quinton Coetzee
-   */
-  router.delete("/:factId", (req, res, next) => {
-    const id = req.params.factId;
+});
+
+/**
+ * @description delete request to remove a fake fact from the database by ID
+ * @author Quinton Coetzee
+ */
+router.delete("/:factId", (req, res, next) => {
+  const id = req.params.factId;
   Fact.deleteOne({ _id: id })
-  .exec()
-  .then((result) => {
-    logger.info("Fact was Deleted.");
-    if (result.deletedCount > 0) {
-      res.status(200).json({
-        response: {
-          message: "Fact deleted successfully",
-          success: true,
-        },
-      });
-    } else {
-      res.status(404).json({
-        response: {
-          message: "Fact not deleted",
-          success: false,
-        },
+    .exec()
+    .then((result) => {
+      logger.info("Fact was Deleted.");
+      if (result.deletedCount > 0) {
+        res.status(200).json({
+          response: {
+            message: "Fact deleted successfully",
+            success: true,
+          },
+        });
+      } else {
+        res.status(404).json({
+          response: {
+            message: "Fact not deleted",
+            success: false,
+          },
         });
       }
     })
@@ -131,4 +162,64 @@ router.get("/:factId", (req, res, next) => {
       res.status(500).json({ response: { message: err, success: false } });
     });
 });
+/**
+ * @description post request to check a fact on the Google Check API
+ * @author Quinton Coetzee
+ */
+router.post("/factCheck/", (req, res, next) => {
+  const statement = req.body.statement;
+  if (statement === "") {
+    res.status(500).json({
+      response: { message: "Staetement can't be empty", success: false },
+    });
+  }
+  try {
+    getRequest(
+      "localhost",
+      "/api/keys/GoogleFactAPI",
+      8080,
+      (statusCode, responses) => {
+        if (
+          responses.response.Key.Key !== undefined &&
+          responses.response.Key.Key !== ""
+        ) {
+          try {
+            let googleURL =
+              "https://factchecktools.googleapis.com/v1alpha1/claims:search?key=" +
+              responses.response.Key.Key +
+              "&pageSize=1&languageCode=enUS&query=" +
+              encodeURI(statement);
+            (async () => {
+              const { body } = await got.get(googleURL, {
+                responseType: "json",
+              });
+              if (body.claims) {
+                res.status(200).json({
+                  response: {
+                    message: "Review completed successfully.",
+                    text: body.claims[0].text,
+                    reviewer: body.claims[0].claimReview[0].publisher.name,
+                    review: body.claims[0].claimReview[0].textualRating,
+                    reviewSource: body.claims[0].claimReview[0].url,
+                    success: true,
+                  },
+                });
+              } else {
+                res.status(404).json({
+                  response: {
+                    message: "No similar statements found.",
+                    success: true,
+                  },
+                });
+              }
+            })();
+          } catch (error) {
+            logger.info(error);
+          }
+        }
+      }
+    );
+  } catch (error) {}
+});
+
 module.exports = router;

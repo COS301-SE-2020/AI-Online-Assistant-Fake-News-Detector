@@ -1,17 +1,15 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class DeleteSourceService {
+  url = "https://artifacts.live/api/sources/id/";
 
-  url = 'http://54.172.96.111:8080/api/sources/id/';
-
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {}
 
   SourceDeletion(ID) {
-    return this._http.delete(this.url + ID)
-}
-
+    return this._http.delete(this.url + ID);
+  }
 }
