@@ -24,7 +24,9 @@ const morganFormat =
 
 require("dotenv").config({ path: path.join(root, ".env") });
 const production = process.env.NODE_ENV === "production" ? true : false;
-
+const hostURL = production
+  ? process.env.productionURI
+  : process.env.devlopmentURI;
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 server.use(bodyParser.text());
@@ -32,58 +34,21 @@ server.use(bodyParser.json({ type: "application/json" }));
 server.use(helmet());
 server.use(cors());
 
-const getRequest = (_host, _path, _port, callBack) => {
-  const request = http
-    .request(
-      {
-        host: _host,
-        port: _port,
-        path: _path,
-        method: "GET",
-      },
-      (response) => {
-        response.setEncoding("utf-8");
-        let responseString = "";
-        response.on("data", (chunk) => {
-          responseString += chunk;
-        });
-
-        response.on("end", () => {
-          if (responseString === "") responseString = "{}";
-          callBack(response.statusCode, JSON.parse(responseString));
-        });
-      }
-    )
-    .on("error", (err) => {
-      morgan(":date[clf] :method :url :status :response-time ms", {
-        stream: fs.createWriteStream(path.join(root, "logfiles", "error.log"), {
-          flags: "a",
-        }),
-      });
-      callBack(500, err);
-    });
-
-  request.end();
-};
+const getRequest = production ? config.HTTPSGetRequest : config.HTTPGetRequest;
 
 cron.schedule("55 23 * * *", () => {
-  getRequest("localhost", "/api/reports/update", 8080, () =>
+  getRequest(hostURL, "/api/reports/update", 8080, () =>
     logger.info("Cron job for updating reports ran.")
   );
 });
 
 cron.schedule("58 23 * * 0", () => {
   // cron.schedule("55 * * * * * ", () => {
-  getRequest(
-    "localhost",
-    "/api/reports/active/1",
-    8080,
-    (statusCode, response) => {
-      response.response.Reports.forEach((ele) => {
-        console.log(ele.Type);
-      });
-    }
-  );
+  getRequest(hostURL, "/api/reports/active/1", 8080, (statusCode, response) => {
+    response.response.Reports.forEach((ele) => {
+      console.log(ele.Type);
+    });
+  });
   /**
    * 1. Fetch all active reports
    * 2. Send email to notification all provided emails
@@ -151,17 +116,21 @@ if (production) {
       stream: accessLog,
     })
   );
-} else server.use(morgan("dev"));
-if (production)
-  server.use("*", (req, res, next) => {
-    if (req.secure) {
-      // request was via https, so do no special handling
-      next();
-    } else {
-      // request was via http, so redirect to https
-      res.redirect("https://" + req.headers.host + req.url);
-    }
+
+  cron.schedule("55 * * * * *", () => {
+    getRequest(hostURL, "/api/active", 8080, (statusCode, response) => {
+      if (response.servers > 0) {
+        let active = "Active Servers - ";
+        response.servers.forEach((e) => {
+          active += "Port " + e.port + ", ";
+        });
+        active = active.substring(0, active.length - 2);
+        logger.info(active);
+      }
+    });
   });
+} else server.use(morgan("dev"));
+
 server.use("/API-Documents", express.static(ExternalDocs));
 server.use("/API-Internal-Documents", express.static(InternalDocs));
 server.use("/API", API);
@@ -186,6 +155,7 @@ try {
   const httpsServer = production
     ? https.createServer(Certificates, server)
     : http.createServer(server);
+
   httpsServer.listen(port, () => {
     logger.info(
       "API_Server listening on port " +
@@ -194,15 +164,20 @@ try {
         process.env.NODE_ENV +
         "."
     );
-    if (production)
-      [8090, 8091, 8092].forEach((e) =>
+
+    if (!production) {
+      [8090].forEach((e) => {
         getRequest(
-          "localhost",
+          "artifacts.live",
           "/api/start/" + e,
           8080,
-          (statusCode, response) => {}
-        )
-      );
+          (statusCode, response) => {
+            if (statusCode === 500)
+              logger.info("S - " + statusCode + ", R - " + response);
+          }
+        );
+      });
+    }
   });
 } catch (error) {
   logger.info(error);

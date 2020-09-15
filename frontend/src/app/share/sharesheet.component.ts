@@ -23,7 +23,7 @@ export class ShareSheetComponent {
       navigator
         .share({
           title: "ArtiFact",
-          url: "https://fakenewsdetector.tech",
+          url: "https://artifacts.live",
         })
         .then(() => {
           this.snackBar.open(`Thanks for sharing (◠﹏◠)`, "Close", {
@@ -40,13 +40,14 @@ export class ShareSheetComponent {
   }
   async copy(event: MouseEvent) {
     try {
-      await navigator.clipboard.writeText("https://ArtiFact.me");
+      await navigator.clipboard.writeText("https://artifacts.live");
       // console.log("Page URL copied to clipboard");
       document.getElementById("copy").innerHTML = "Link copied to clipboard";
       document.getElementById("copyicon").innerHTML = "tag_faces";
     } catch (err) {
       console.error("Copy to clipboard failed: ", err);
-      document.getElementById("copy").innerHTML = "Failed to copy to clipboard";
+      document.getElementById("copy").innerHTML =
+        "Failed to copy to clipboard (ಥ﹏ಥ)";
       document.getElementById("copyicon").innerHTML = "report";
     }
   }

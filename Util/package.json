@@ -1,0 +1,18 @@
+{
+  "name": "helper_functions",
+  "version": "1.0.0",
+  "description": "Helper Functions for all servers",
+  "main": "config.js",
+  "dependencies": {
+    "https": "^1.0.0",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "5Bits",
+  "license": "ISC",
+  "repository": {}
+}

@@ -19,3 +19,7 @@ class RealOrFakeLabels:
             return [1, 0]
         else:  # 'fake'
             return [0, 1]
+
+    @staticmethod
+    def getOutputUnits():
+        return 2

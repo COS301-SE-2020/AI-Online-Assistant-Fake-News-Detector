@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 const Logger = require("../../../winston");
 const logger = new Logger(express);
 const Fact = require("../models/fact");
-const got = require("got");
+const path = require("path");
+const root = require(path.join("../", "../", "../", "Util", "path"));
+const config = require(path.join(root, "Util", "config"));
 
 /**
  * @description get request for all known fake facts in the fake facts database
@@ -136,54 +138,65 @@ router.delete("/:factId", (req, res, next) => {
  * @description post request to check a fact on the Google Check API
  * @author Quinton Coetzee
  */
-router.post("/factCheck/", (req, res, next) => {
+router.post("/factCheck", (req, res, next) => {
   const statement = req.body.statement;
   if (statement === "") {
-    res.status(500).json({ response: { message: "err", success: false } });
+    res.status(500).json({
+      response: { message: "Statement can't be empty", success: false },
+    });
   }
-  let apiKey = "";
-  (async () => {
-    const { body } = await got.get(
-      "http://localhost:3000/keys/GoogleFactAPI/",
-      {
-        responseType: "json",
+  try {
+    config.HTTPGetRequest(
+      "localhost",
+      "/api/keys/GoogleFactAPI",
+      8080,
+      (statusCode, responses) => {
+        if (
+          responses.response.Key.Key !== undefined &&
+          responses.response.Key.Key !== ""
+        ) {
+          try {
+            let googleURL =
+              "https://factchecktools.googleapis.com/v1alpha1/claims:search?key=" +
+              responses.response.Key.Key +
+              "&pageSize=1&languageCode=enUS&query=" +
+              encodeURI(statement);
+            config.HTTPSGetRequest(
+              "factchecktools.googleapis.com",
+              "/v1alpha1/claims:search?key=" +
+                responses.response.Key.Key +
+                "&pageSize=1&languageCode=enUS&query=" +
+                encodeURI(statement),
+              null,
+              (stat, body) => {
+                if (body.length > 0)
+                  res.status(stat).json({
+                    response: {
+                      message: "Review completed successfully.",
+                      text: body.claims[0].text,
+                      reviewer: body.claims[0].claimReview[0].publisher.name,
+                      review: body.claims[0].claimReview[0].textualRating,
+                      reviewSource: body.claims[0].claimReview[0].url,
+                      success: true,
+                    },
+                  });
+                else {
+                  res.status(404).json({
+                    response: {
+                      message: "No similar statements found.",
+                      success: true,
+                    },
+                  });
+                }
+              }
+            );
+          } catch (error) {
+            logger.info(error);
+          }
+        }
       }
     );
-    apiKey = body.response.Key.Key;
-    let googleURL =
-      "https://factchecktools.googleapis.com/v1alpha1/claims:search?key=";
-    googleURL += apiKey;
-    googleURL += "&pageSize=1&languageCode=enUS&query=";
-    googleURL += statement;
-    try {
-      (async () => {
-        const { body } = await got.get(googleURL, {
-          responseType: "json",
-        });
-        if (body.claims) {
-          res.status(200).json({
-            response: {
-              message: "Review completed successfully.",
-              text: body.claims[0].text,
-              reviewer: body.claims[0].claimReview[0].publisher.name,
-              review: body.claims[0].claimReview[0].textualRating,
-              reviewSource: body.claims[0].claimReview[0].url,
-              success: true,
-            },
-          });
-        } else {
-          res.status(404).json({
-            response: {
-              message: "No similar statements found.",
-              success: true,
-            },
-          });
-        }
-      })();
-    } catch (error) {
-      logger.info(error);
-    }
-  })();
+  } catch (error) {}
 });
 
 module.exports = router;

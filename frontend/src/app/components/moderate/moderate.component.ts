@@ -120,8 +120,9 @@ export class ModerateComponent implements OnInit {
   filter(val: string): Observable<any[]> {
     // call the service which makes the http-request
     return this.autocompleteService.getData().pipe(
-      map((response) =>
-        response.Sources.filter((option) => {
+      map((data) =>
+        
+        data.response.Sources.filter((option) => {
           return option.Name.toLowerCase().indexOf(val.toLowerCase()) === 0;
         })
       )
