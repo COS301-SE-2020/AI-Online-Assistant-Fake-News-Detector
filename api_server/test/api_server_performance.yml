@@ -1,3 +1,4 @@
+# Test to see that all requests occur within 3 seconds
 config:
   target: "https://artifacts.live/api"
   phases:
@@ -5,7 +6,6 @@ config:
       arrivalRate: 2
       name: Steady Paced Requests
 scenarios:
-  # We define one scenario:
   - name: "2 Users Making Sequential Requests To Test Response Time"
     flow:
       - get:
