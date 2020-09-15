@@ -12,20 +12,7 @@ export class HomeSearchSourceService {
   baseUrl = "https://artifacts.live/api/sources/";
   // queryUrl: string = '?search=';
   allSources: Sources[];
-  constructor(private http: HttpClient) {
-    this.http
-      .get(this.baseUrl)
-      .pipe(
-        map((response: Sources[]) => {
-          return response;
-        }),
-        catchError((error) => {
-          return throwError(/*'Something went wrong'*/ error);
-        })
-      )
-      .subscribe((data) => (this.allSources = data));
-  }
-
+  constructor(private http: HttpClient) { }
   search(term: Observable<string>) {
     return this.http.get(this.baseUrl /*+ this.queryUrl */ + term).pipe(
       map((response: Sources[]) => {
@@ -35,5 +22,18 @@ export class HomeSearchSourceService {
         return throwError(/*'Something went wrong'*/ error);
       })
     );
+  }
+  getAll() {
+    this.http
+      .get(this.baseUrl)
+      .pipe(
+        map((response: Sources[]) => {
+          return response;
+        }),
+        catchError((error) => {
+          return throwError(/*'Something went wrong'*/ error);
+        })
+    )
+      .subscribe((data) => (this.allSources = data));
   }
 }
