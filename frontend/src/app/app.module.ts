@@ -94,7 +94,7 @@ import { HomeNeuralService } from './components/home/home-neural.service';
     SearchSourceService,
     AutocompleteService,
     WelcomeService,
-    HomeNeuralService
+    HomeNeuralService,
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: "fill" },
