@@ -127,6 +127,12 @@ $('#input').on('click', 'input[value="Analyse Article"]', function() {
             } else {
                 
             }
+        }).catch(()=>{
+            $('#loading').hide();
+            $('#input').show();
+            $('#input').html('<h3>Neural Network Server is undergoing a Maintenance Break</h3>'+
+            '<div class="statementOutput"> Watch out for news sources that contain the word "BLOG", these tend to trade opinions rather than facts. :) </div>'+
+            '<input type="button" id="close" value="Close">');
         });
     }
 });
@@ -171,23 +177,13 @@ $('#input').on('click', 'input[value="Check Source"]', function() {
             $('#checkStatement').val("Required*");
         } else {
             if ($('#checkStatement').val()!="Required*") {
-                let data = {
-                    "response": {
-                        "message": "Review completed successfully.",
-                        "text": "“There is no such concentration camp in Xinjiang … People in Xinjiang enjoy a happy life. China is strongly opposed to any torture, persecution and discrimination of people of any ethnic group.”",
-                        "reviewer": "POLYGRAPH.info",
-                        "review": "False",
-                        "reviewSource": "https://www.polygraph.info/a/china-uighurs-fact-check/30748659.html",
-                        "success": true
-                    }
-                }
-                let statement = $('#checkArticle').val();
+                let statement = $('#checkStatement').val();
                 $('#input').hide();
                 $('#loading').show();
-                // postFactCheck(statement).then(data=>{
+                postFactCheck(statement).then(data=>{
                     $('#loading').hide();
                     $('#input').show();
-                    if (data['response']['success'] && data['response']['message']==="Review completed successfully.") {
+                    if (data['response']['success'] && data['response']['message']=="Review completed successfully.") {
                         data['response']['text'] = data['response']['text'].split('“').join('"').split('”').join('"').split('…').join('...');
                         $('#input').html('<h3>The Closest Statement We Found:</h3>'+
                         '<div class="statementOutput">'+ data['response']['text'] +'</div>'+
@@ -195,11 +191,18 @@ $('#input').on('click', 'input[value="Check Source"]', function() {
                         '<b><a target="_blank" rel="noopener noreferrer" href='+ data['response']['reviewSource'] +'>Learn More</a></b></div>'+
                         '<input type="button" id="close" value="Close">');
                     } else {
+                        alert("xd");
                         $('#input').html('<h3>Sorry we found no similar statements</h3>'+
                         '<div class="statementOutput"> We urge you to take the time to do your own research on this topic to help prevent the spread of fake news! :) </div>'+
                         '<input type="button" id="close" value="Close">');
                     }
-                // });
+                }).catch(()=>{
+                    $('#loading').hide();
+                    $('#input').show();
+                    $('#input').html('<h3>Sorry we found no similar statements</h3>'+
+                    '<div class="statementOutput"> We urge you to take the time to do your own research on this topic to help prevent the spread of fake news! :) </div>'+
+                    '<input type="button" id="close" value="Close">');
+                });
             }
         }
     });
