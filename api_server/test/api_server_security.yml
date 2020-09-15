@@ -1,3 +1,4 @@
+# Requests to various DB_Server endpoint, which should fail as this is a closed port
 config:
   target: "https://artifacts.live:3000"
   http:
@@ -5,7 +6,7 @@ config:
     timeout: 6
   phases:
     - duration: 2
-      arrivalRate: 2
+      arrivalRate: 10
       name: Requests to closed endpoints
 scenarios:
   - name: "Requests should time out as they are not authenticated by API server"
