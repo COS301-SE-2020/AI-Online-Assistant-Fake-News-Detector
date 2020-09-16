@@ -83,6 +83,6 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 | [Danré Retief](https://iamdanre.github.io/)          | 14126461    | BScIT student, full-stack developer with a knack for creative problem solving and front-end frameworks.                                                                           |
 | [Thato Tshukudu](https://taydos.github.io/)          | 18010408    | BIT student with core strength in front-end.                                                                                                                                      |
 
-## Start The Server On A Local Environment
+## Build And Start The Server In A Local Environment
 
 `$ npm run-script "production" && npm start`
