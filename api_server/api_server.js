@@ -19,8 +19,7 @@ const port = config.api_server_port;
 const cron = require("node-cron");
 const https = require("https");
 const http = require("http");
-const morganFormat =
-  "[:date] :remote-addr - :remote-user :method :url HTTP/:http-version :status :response-time ms";
+const morganFormat = config.morganFormat;
 
 require("dotenv").config({ path: path.join(root, ".env") });
 const production = process.env.NODE_ENV === "production" ? true : false;

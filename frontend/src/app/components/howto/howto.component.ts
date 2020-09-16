@@ -79,77 +79,75 @@ export class HowtoComponent implements OnInit {
     domain: ["#5AA454", "#A10A28", "#C7B42C"],
   };
 
-    /* For Sources Report count Statistics Pie Chart*/
-    Sview: any[] = [600, 600];
-    Sgradient: boolean = true;
-    SshowLegend: boolean = true;
-    SshowLabels: boolean = true;
-    SisDoughnut: boolean = false;
-    StrimLabel: boolean = false;
-    SlegendPosition: string = 'right';
-    SlegendTitle: string = 'Sources';
-    ScolorScheme = {
-      domain: ['#5499C7', '#F7DC6F', '#8E44AD']
-    };
+  /* For Sources Report count Statistics Pie Chart*/
+  Sview: any[] = [600, 600];
+  Sgradient: boolean = true;
+  SshowLegend: boolean = true;
+  SshowLabels: boolean = true;
+  SisDoughnut: boolean = false;
+  StrimLabel: boolean = false;
+  SlegendPosition: string = "right";
+  SlegendTitle: string = "Sources";
+  ScolorScheme = {
+    domain: ["#5499C7", "#F7DC6F", "#8E44AD"],
+  };
 
-    /* For sources popularity ratings  statistics*/
-    SPview: any[] = [500, 500];
-    SPshowXAxis = true;
-    SPshowYAxis = true;
-    SPgradient = true;
-    SPshowLegend = true;
-    SPshowXAxisLabel = true;
-    SPxAxisLabel = 'Facts';
-    SPshowYAxisLabel = true;
-    SPlegendPosition: string = 'right';
-    SPyAxisLabel = 'Popularity';
-    SPlegendTitle: string = 'Sources';
-  
-    SPcolorScheme = {
-      domain: ['#5499C7', '#F7DC6F', '#8E44AD']
-    };
+  /* For sources popularity ratings  statistics*/
+  SPview: any[] = [500, 500];
+  SPshowXAxis = true;
+  SPshowYAxis = true;
+  SPgradient = true;
+  SPshowLegend = true;
+  SPshowXAxisLabel = true;
+  SPxAxisLabel = "Facts";
+  SPshowYAxisLabel = true;
+  SPlegendPosition: string = "right";
+  SPyAxisLabel = "Popularity";
+  SPlegendTitle: string = "Sources";
 
-    /* for facts popularity ratings  statistics*/
-    FPview: any[] = [500, 500];
-    FPshowXAxis = true;
-    FPshowYAxis = true;
-    FPgradient = true;
-    FPshowLegend = true;
-    FPshowXAxisLabel = true;
-    FPxAxisLabel = 'Sources';
-    FPshowYAxisLabel = true;
-    FPlegendPosition: string = 'right';
-    FPyAxisLabel = 'Popularity';
-    FPlegendTitle: string = 'Facts';
-  
-    FPcolorScheme = {
-      domain: ['#5AA454', '#A10A28', '#C7B42C']
-    };
+  SPcolorScheme = {
+    domain: ["#5499C7", "#F7DC6F", "#8E44AD"],
+  };
 
-    /* for endpoints hits statistics*/
-    Eview: any[] = [700, 500];
-    EshowXAxis = true;
-    EshowYAxis = true;
-    Egradient = true;
-    EshowLegend = true;
-    EshowXAxisLabel = true;
-    ExAxisLabel = 'Hits';
-    EshowYAxisLabel = true;
-    ElegendPosition: string = 'right';
-    EyAxisLabel = 'Endpoint';
-    ElegendTitle: string = 'Endpoints';
-  
-    EcolorScheme = {
-      domain: ['#808000', '#FFA500', '#C7B42C']
-    };
-  
+  /* for facts popularity ratings  statistics*/
+  FPview: any[] = [500, 500];
+  FPshowXAxis = true;
+  FPshowYAxis = true;
+  FPgradient = true;
+  FPshowLegend = true;
+  FPshowXAxisLabel = true;
+  FPxAxisLabel = "Sources";
+  FPshowYAxisLabel = true;
+  FPlegendPosition: string = "right";
+  FPyAxisLabel = "Popularity";
+  FPlegendTitle: string = "Facts";
+
+  FPcolorScheme = {
+    domain: ["#5AA454", "#A10A28", "#C7B42C"],
+  };
+
+  /* for endpoints hits statistics*/
+  Eview: any[] = [700, 500];
+  EshowXAxis = true;
+  EshowYAxis = true;
+  Egradient = true;
+  EshowLegend = true;
+  EshowXAxisLabel = true;
+  ExAxisLabel = "Hits";
+  EshowYAxisLabel = true;
+  ElegendPosition: string = "right";
+  EyAxisLabel = "Endpoint";
+  ElegendTitle: string = "Endpoints";
+
+  EcolorScheme = {
+    domain: ["#808000", "#FFA500", "#C7B42C"],
+  };
 
   constructor(private stats: StatisticsService) {
     //this.getFacts();
     this.setFacts = false;
     this.setSources = false;
     this.setEndpoint = false;
-
 
     //Object.assign(this.trendingFacts, this.trendingFacts);
   }
@@ -227,7 +225,5 @@ export class HowtoComponent implements OnInit {
     this.SPview = [event.target.innerWidth / 1.35, 400];
     this.FPview = [event.target.innerWidth / 1.35, 400];
     this.Eview = [event.target.innerWidth / 1.35, 400];
-}
-
-
+  }
 }
