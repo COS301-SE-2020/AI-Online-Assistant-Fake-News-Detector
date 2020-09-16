@@ -24,7 +24,7 @@
 
 <div align="center">
   <h5>
-    <a target="_blank" href="http://142.93.251.101/">
+    <a target="_blank" href="https://artifacts.live">
       Website
     </a>
     <span> | </span>
@@ -83,6 +83,6 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 | [Danré Retief](https://iamdanre.github.io/)          | 14126461    | BScIT student, full-stack developer with a knack for creative problem solving and front-end frameworks.                                                                           |
 | [Thato Tshukudu](https://taydos.github.io/)          | 18010408    | BIT student with core strength in front-end.                                                                                                                                      |
 
-## Start The Server
+## Start The Server On A Local Environment
 
-`$ npm install && npm start`
+`$ npm run-script "production" && npm start`
