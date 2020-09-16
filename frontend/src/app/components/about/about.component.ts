@@ -11,5 +11,8 @@ export class AboutComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  openLink(event: MouseEvent, link: string): void {
+    event.preventDefault();
+    window.open(link);
+  }
 }
