@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { HomeSourceService } from "./home-source.service";
 import { HomeNeuralService } from "./home-neural.service";
 import { AuthService } from "../../services/auth/auth.service";
 import { Observable } from "rxjs";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { SearchSourceService } from "../../search-source.service";
+
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
@@ -29,10 +30,10 @@ export class HomeComponent implements OnInit {
   urlHit: boolean;
   factHit: boolean;
   constructor(
-    private search: HomeSourceService,
     private nn: HomeNeuralService,
     private readonly auth: AuthService,
-    private readonly snackBar: MatSnackBar
+    private readonly snackBar: MatSnackBar,
+    private readonly searchSource:  SearchSourceService
   ) {}
   ngOnInit(): void {
     this.step1 = true;
@@ -66,7 +67,6 @@ export class HomeComponent implements OnInit {
   checkText() {
     this.nn.verify(this.textvalue).subscribe((data) => {
       const message = data.message;
-      console.log(data);
       const result = data.result;
       this.breakdown = result.breakdown;
       const overall = result.overall;
@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit {
           (Math.floor(Math.random() * 8) + 1).toString() +
           ".svg";
       }
-      this.confidenceGaugeValue = overall.confidence * 100;
+      this.confidenceGaugeValue = Math.round(overall.confidence * 100);
       this.textHit = true;
     });
   }

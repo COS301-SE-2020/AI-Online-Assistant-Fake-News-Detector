@@ -32,7 +32,7 @@
     
       <div class="example-button-row">
         <button mat-raised-button class="checkBtn">Check</button>
-        <button mat-raised-button color="primary">Report</button>
+        <button mat-raised-button color="primary" (click)="clickTemp()">Report</button>
       </div>
     </mat-tab>
 
@@ -47,7 +47,7 @@
 
       <div class="example-button-row">
         <button mat-raised-button class="checkBtn">Check</button>
-        <button mat-raised-button color="primary">Report</button>
+        <button mat-raised-button color="primary" (click)="clickTemp()">Report</button>
       </div>
     </mat-tab>
   </mat-tab-group>
@@ -70,7 +70,7 @@
           </mat-expansion-panel-header>
           <div class="row">
             <div class="col-md-6 d-flex justify-content-center">
-              <ngx-gauge type="full" [value]="confidenceGaugeValue" max="100" thick="10" label="Confidence" size="250"
+              <ngx-gauge type="full" [value]="confidenceGaugeValue" max="100" thick="10" label="% Confidence" size="250"
                 [thresholds]="thresholdConfig" duration="2200">
               </ngx-gauge>
               </div>
@@ -100,10 +100,14 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <ul>
-            <li *ngFor="let break of breakdown">{{ break.text }}
+            <li *ngFor="let break of breakdown">
+              {{ break.text }}
+              <span>
               <mat-progress-bar class="example-margin" color="color" mode="mode" value="{{ break.confidence }}"
                 bufferValue="bufferValue">
               </mat-progress-bar>
+              {{break.confidence}}%
+              </span>
             </li>
           </ul>
           <mat-action-row>
