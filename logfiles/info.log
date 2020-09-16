@@ -1346,3 +1346,4 @@
 [16/Sep/2020 11:16:44] - {"message":"Retrieved stats successfully","success":true,"NeuralNetwork":{"Training Time":460,"Training Set Count":120454},"Reports":[{"Facts":{"Trending":[{"ID":"5f61be497389bd3058c09972","Statement":"Covid 19 cannot be spread between humans","Popularity":95,"Report Count":1}],"End Point Hits":41}},{"Sources":{"Trending":[],"End Point Hits":39}}]}
 [16/Sep/2020 11:18:14] - API_Server listening on port 8080. Environment: dev.
 [16/Sep/2020 11:18:14] - DB_Server listening on port 3000. Environment: dev.
+

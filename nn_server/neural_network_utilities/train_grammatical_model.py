@@ -5,14 +5,11 @@ import pathlib
 from preprocessing import GrammaticalVectorizationFilter, RawFakeNewsDataFilterAdapter, ParallelPreprocessor
 from dataset_manager import DatasetManager, downloadAndCreateDatasets
 from deep_stacked_bidirectional_lstm import DeepStackedBidirectionalLSTM
-from default_configs import DEFAULT_DATASETS_PATH, DEFAULT_MODELS_PATH, DEFAULT_GRAMMATICAL_SAMPLE_LENGTH
+from default_configs import DEFAULT_GRAMMATICAL_SAMPLE_LENGTH
 from labels import RealOrFakeLabels
 
-MODEL_PATH = os.path.join(DEFAULT_MODELS_PATH, "grammatical_model.hdf5")
-TRAINING_PATH = os.path.join(DEFAULT_DATASETS_PATH, "grammatical_train_dataset")
-VALIDATION_PATH = os.path.join(DEFAULT_DATASETS_PATH, "grammatical_validation_dataset")
 
-def trainGrammar(modelName, trainDatasetPath, validationDatasetPath, rawTrainFiles=None, rawValidationFiles=None):
+def trainGrammatical(modelName, trainDatasetPath, validationDatasetPath, rawTrainFiles=None, rawValidationFiles=None):
     # grammar pipeline
     filter = GrammaticalVectorizationFilter(sampleLength=DEFAULT_GRAMMATICAL_SAMPLE_LENGTH)
     preprocessor = ParallelPreprocessor(filter=RawFakeNewsDataFilterAdapter(filter=filter))
@@ -39,6 +36,7 @@ def trainGrammar(modelName, trainDatasetPath, validationDatasetPath, rawTrainFil
     gc.collect()
 
 def preprocessDatasets(trainDatasetPath, validationDatasetPath):
+    print("Grammatical preprocessing...")
     trainDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), trainDatasetPath))
     validationDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), validationDatasetPath))
     filter = GrammaticalVectorizationFilter(sampleLength=DEFAULT_GRAMMATICAL_SAMPLE_LENGTH)
@@ -46,22 +44,11 @@ def preprocessDatasets(trainDatasetPath, validationDatasetPath):
     trainDataset.prepareRawData(preprocessor)
     validationDataset.prepareRawData(preprocessor)
 
-def runGrammarTrain():
-    rawTrainFiles = ["training_data.json"]
-    rawValidationFiles = ["validation_data.json"]
+def runGrammaticalTrain(modelPath, trainingPath, validationPath, rawTrainFiles=None, rawValidationFiles=None):
+    if rawTrainFiles is None and rawValidationFiles is None:
+        downloadAndCreateDatasets(trainingPath, validationPath)
 
-    try:
-        os.makedirs(DEFAULT_MODELS_PATH)
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            print("Error creating directory: " + str(e))
+    preprocessDatasets(trainingPath, validationPath)
 
-    downloadAndCreateDatasets(TRAINING_PATH, VALIDATION_PATH)
-
-    preprocessDatasets(TRAINING_PATH, VALIDATION_PATH)
-
-    trainGrammar(modelName=MODEL_PATH, trainDatasetPath=TRAINING_PATH, validationDatasetPath=VALIDATION_PATH)
-                 #rawTrainFiles=rawTrainFiles, rawValidationFiles=rawValidationFiles)
-
-if __name__ == "__main__":
-    runGrammarTrain()
+    trainGrammatical(modelName=modelPath, trainDatasetPath=trainingPath, validationDatasetPath=validationPath,
+                 rawTrainFiles=rawTrainFiles, rawValidationFiles=rawValidationFiles)

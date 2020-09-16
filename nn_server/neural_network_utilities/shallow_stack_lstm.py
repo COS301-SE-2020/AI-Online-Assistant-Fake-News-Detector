@@ -36,9 +36,9 @@ class ShallowStackedBidirectionalLSTM(Filter):
         """
         self.clear()
         inputs = ks.Input(shape=(self.__sampleLength, 1), dtype="float32")
-        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=128, dropout=0.2, return_sequences=True))(inputs)
-        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=64, return_sequences=True))(layers)
-        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=32))(layers)
+        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=128, return_sequences=True))(inputs)
+        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=128, return_sequences=True))(layers)
+        layers = ks.layers.Bidirectional(ks.layers.LSTM(units=64))(layers)
         # Add a classifier
         outputs = ks.layers.Dense(units=self.__outputUnits, activation="softmax")(layers)
         self.__model = ks.Model(inputs=inputs, outputs=outputs, name=self.__modelName)

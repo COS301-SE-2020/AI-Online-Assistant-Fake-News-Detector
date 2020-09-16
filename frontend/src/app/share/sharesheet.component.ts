@@ -23,7 +23,8 @@ export class ShareSheetComponent {
       navigator
         .share({
           title: "ArtiFact",
-          url: "https://artifacts.live",
+          text: "Improve your relationship with news (=^ ◡ ^=)",
+          url: "https://artifacts.live/",
         })
         .then(() => {
           this.snackBar.open(`Thanks for sharing (◠﹏◠)`, "Close", {

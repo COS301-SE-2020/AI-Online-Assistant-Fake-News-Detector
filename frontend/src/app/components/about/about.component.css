@@ -1,5 +1,5 @@
 .section.hero {
-  padding-bottom: 92px;
+  padding-bottom: 72px;
   padding-top: 92px;
   background-color: #c72c69;
   text-align: center;
@@ -27,11 +27,34 @@ h3 {
 
 p {
   margin-top: 2em;
-  font-size: 20px;
-  font-weight: 300;
+  font-size: 22px;
+  font-weight: 2em;
   color: black;
+  line-height: 1.6;
 }
 
 .nowrap {
   white-space: nowrap;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.octocat {
+  cursor: pointer;
+}
+
+svg,
+h3,
+a {
+  filter: drop-shadow(0.8px 0.8px 0.8px #111) drop-shadow(1px 1px 1px #111) drop-shadow(1px 1px 1px #111) drop-shadow(1px 1px 1px #111);
 }
