@@ -1,0 +1,24 @@
+# Stress test to see that API can scale to support up to 50 concurrent requests
+config:
+  target: "https://artifacts.live/api"
+  phases:
+    - duration: 5
+      arrivalRate: 2
+      name: Warm Up
+    - duration: 5
+      arrivalRate: 5
+      rampTo: 10
+      name: Ramp up load
+    - duration: 10
+      arrivalRate: 10
+      name: Sustained Maximum Load
+      maxVusers: 50
+scenarios:
+  - name: "Gradually increase load to test scalability"
+    flow:
+      - get:
+          url: "/sources"
+      - get:
+          url: "/facts"
+      - get:
+          url: "/reports"

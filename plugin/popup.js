@@ -1,5 +1,5 @@
 $(() => {
-    const serverTld='http://54.172.96.111:8080/api/'
+    const serverTld='https://artifacts.live/api/'
     const sourcesUrl=serverTld+'Sources/'
     const reportsUrl=serverTld+'Reports/'
     const factCheckUrl=serverTld+'Facts/factCheck/'
@@ -20,6 +20,11 @@ $(() => {
                 j = i;
                 i = counter;
                 max = parseInt(source['Rating']);
+            } else if (data['response']['Sources'][i]['Rating']>=data['response']['Sources'][j]["rating"]) {
+                k = j;
+                j = i;
+            } else if (data['response']['Sources'][j]['Rating']>=data['response']['Sources'][k]["rating"]) {
+                j = i;
             }
             counter++;
         });
@@ -109,28 +114,26 @@ $('#input').on('click', 'input[value="Analyse Article"]', function() {
         let content = $('#checkArticle').val();
         $('#input').hide();
         $('#loading').show();
-        let data = {
-            "response":{
-                "result":{
-                    "overall":{
-                        "prediction": "real"
-                    }
-                },
-                "success": true
-            }
-        }
-        // analyzeArticle(content).then(data=>{
+        content = content.split('"').join('');
+        analyzeArticle(content).then(data=>{
             $('#input').show();
             $('#loading').hide();
             if (data['response']['success']) {
                 $('#input').html('<h3>The article has been analysed</h3>'+
                     '<div class="reviewOutput">According to our <b>Neural Network</b> this news article containts mostly <b>'+ data['response']['result']['overall']['prediction'] +'</b> news!<br/><br/>'+
+                    '<div id="rfDisplay" class="'+ data['response']['result']['overall']['prediction'] +'"> Confidence: '+ Math.floor(data['response']['result']['overall']['confidence']*100) +'% </div>'+
                     'Head to <b><a id="analysisLink" target="_blank" rel="noopener noreferrer" href="https://artifacts.live">Our Website</a></b> for an in depth analysis.</div>'+
                     '<input type="button" id="close" value="Close">');
             } else {
                 
             }
-        // });
+        }).catch(()=>{
+            $('#loading').hide();
+            $('#input').show();
+            $('#input').html('<h3>Neural Network Server is undergoing a Maintenance Break</h3>'+
+            '<div class="statementOutput"> Watch out for news sources that contain the word "BLOG", these tend to trade opinions rather than facts. :) </div>'+
+            '<input type="button" id="close" value="Close">');
+        });
     }
 });
 //////////////////////////////////////////////////////   
@@ -174,23 +177,13 @@ $('#input').on('click', 'input[value="Check Source"]', function() {
             $('#checkStatement').val("Required*");
         } else {
             if ($('#checkStatement').val()!="Required*") {
-                let data = {
-                    "response": {
-                        "message": "Review completed successfully.",
-                        "text": "“There is no such concentration camp in Xinjiang … People in Xinjiang enjoy a happy life. China is strongly opposed to any torture, persecution and discrimination of people of any ethnic group.”",
-                        "reviewer": "POLYGRAPH.info",
-                        "review": "False",
-                        "reviewSource": "https://www.polygraph.info/a/china-uighurs-fact-check/30748659.html",
-                        "success": true
-                    }
-                }
-                let statement = $('#checkArticle').val();
+                let statement = $('#checkStatement').val();
                 $('#input').hide();
                 $('#loading').show();
-                // postFactCheck(statement).then(data=>{
+                postFactCheck(statement).then(data=>{
                     $('#loading').hide();
                     $('#input').show();
-                    if (data['response']['success'] && data['response']['message']==="Review completed successfully.") {
+                    if (data['response']['success'] && data['response']['message']=="Review completed successfully.") {
                         data['response']['text'] = data['response']['text'].split('“').join('"').split('”').join('"').split('…').join('...');
                         $('#input').html('<h3>The Closest Statement We Found:</h3>'+
                         '<div class="statementOutput">'+ data['response']['text'] +'</div>'+
@@ -198,11 +191,18 @@ $('#input').on('click', 'input[value="Check Source"]', function() {
                         '<b><a target="_blank" rel="noopener noreferrer" href='+ data['response']['reviewSource'] +'>Learn More</a></b></div>'+
                         '<input type="button" id="close" value="Close">');
                     } else {
+                        alert("xd");
                         $('#input').html('<h3>Sorry we found no similar statements</h3>'+
                         '<div class="statementOutput"> We urge you to take the time to do your own research on this topic to help prevent the spread of fake news! :) </div>'+
                         '<input type="button" id="close" value="Close">');
                     }
-                // });
+                }).catch(()=>{
+                    $('#loading').hide();
+                    $('#input').show();
+                    $('#input').html('<h3>Sorry we found no similar statements</h3>'+
+                    '<div class="statementOutput"> We urge you to take the time to do your own research on this topic to help prevent the spread of fake news! :) </div>'+
+                    '<input type="button" id="close" value="Close">');
+                });
             }
         }
     });
@@ -334,6 +334,7 @@ $('#input').on('click', 'input[value="Check Source"]', function() {
             dataType: "json",
             type: "POST",
             data: {
+                "type": "text",
                 "content": article
             }
         });
