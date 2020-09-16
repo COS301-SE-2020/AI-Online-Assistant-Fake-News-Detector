@@ -13,17 +13,15 @@ from shallow_stack_lstm import ShallowStackedBidirectionalLSTM
 from default_configs import DEFAULT_DATASETS_PATH, DEFAULT_MODELS_PATH, DEFAULT_GRAMMATICAL_SAMPLE_LENGTH, DEFAULT_LEXICAL_SAMPLE_LENGTH, DEFAULT_CORE_SAMPLE_LENGTH
 from labels import RealOrFakeLabels
 
-CORE_MODEL_PATH = os.path.join(DEFAULT_MODELS_PATH, "core_model.hdf5")
-CORE_TRAINING_PATH = os.path.join(DEFAULT_DATASETS_PATH, "core_train_dataset")
-CORE_VALIDATION_PATH = os.path.join(DEFAULT_DATASETS_PATH, "core_validation_dataset")
+
 
 LEXICAL_MODEL_PATH = os.path.join(DEFAULT_MODELS_PATH, "lexical_model.hdf5")
-LEXICAL_TRAINING_PATH = os.path.join(DEFAULT_DATASETS_PATH, "lexical_train_dataset")
-LEXICAL_VALIDATION_PATH = os.path.join(DEFAULT_DATASETS_PATH, "lexical_validation_dataset")
+lexicalTrainingPath = os.path.join(DEFAULT_DATASETS_PATH, "lexical_train_dataset")
+lexicalValidationPath = os.path.join(DEFAULT_DATASETS_PATH, "lexical_validation_dataset")
 
 GRAMMATICAL_MODEL_PATH = os.path.join(DEFAULT_MODELS_PATH, "grammatical_model.hdf5")
-GRAMMATICAL_TRAINING_PATH = os.path.join(DEFAULT_DATASETS_PATH, "grammatical_train_dataset")
-GRAMMARATICAL_VALIDATION_PATH = os.path.join(DEFAULT_DATASETS_PATH, "grammatical_validation_dataset")
+grammaticalTrainingPath = os.path.join(DEFAULT_DATASETS_PATH, "grammatical_train_dataset")
+grammaticalValidationPath = os.path.join(DEFAULT_DATASETS_PATH, "grammatical_validation_dataset")
 
 def trainCore(modelName, trainDatasetPath, validationDatasetPath):
     trainDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), trainDatasetPath))
@@ -34,26 +32,29 @@ def trainCore(modelName, trainDatasetPath, validationDatasetPath):
                      validationGenerator=validationDataset.getPreparedTensorGenerator(batchSize=batchSize, tensorType=np.float32),
                      trainDatasetSize=trainDataset.getPreparedDatasetSize(),
                      validationDatasetSize=validationDataset.getPreparedDatasetSize(),
-                     batchSize=batchSize, epochs=16, saveFilePath=modelName, saveCheckpoints=False)
+                     batchSize=batchSize, epochs=64, saveFilePath=modelName, saveCheckpoints=False)
     model.clear()
     gc.collect()
 
-def preprocessDatasets(trainDatasetPath, validationDatasetPath):
+def preprocessDatasets(trainDatasetPath, validationDatasetPath,
+                       grammaticalModel, grammaticalTrainingPath, grammaticalValidationPath,
+                       lexicalModel, lexicalTrainingPath, lexicalValidationPath):
+    print("Core preprocessing...")
     grammaticalLSTM = DeepStackedBidirectionalLSTM(outputUnits=RealOrFakeLabels.getOutputUnits(),
                                                    sampleLength=DEFAULT_GRAMMATICAL_SAMPLE_LENGTH)
-    grammaticalLSTM.importModel(GRAMMATICAL_MODEL_PATH)
+    grammaticalLSTM.importModel(grammaticalModel)
 
     lexicalLSTM = StackedBidirectionalLSTM(outputUnits=RealOrFakeLabels.getOutputUnits(),
                                            sampleLength=DEFAULT_LEXICAL_SAMPLE_LENGTH)
-    lexicalLSTM.importModel(LEXICAL_MODEL_PATH)
+    lexicalLSTM.importModel(lexicalModel)
 
     multiplexedFilter = FilterMultiplexorAdapter([grammaticalLSTM, lexicalLSTM])
 
-    grammaticalTrainingDataset = DatasetManager(GRAMMATICAL_TRAINING_PATH)
-    grammaticalValidationDataset = DatasetManager(GRAMMARATICAL_VALIDATION_PATH)
+    grammaticalTrainingDataset = DatasetManager(grammaticalTrainingPath)
+    grammaticalValidationDataset = DatasetManager(grammaticalValidationPath)
 
-    lexicalTrainingDataset = DatasetManager(LEXICAL_TRAINING_PATH)
-    lexicalValidationDataset = DatasetManager(LEXICAL_VALIDATION_PATH)
+    lexicalTrainingDataset = DatasetManager(lexicalTrainingPath)
+    lexicalValidationDataset = DatasetManager(lexicalValidationPath)
 
     trainDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), trainDatasetPath))
     validationDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), validationDatasetPath))
@@ -72,10 +73,12 @@ def preprocessDatasets(trainDatasetPath, validationDatasetPath):
         validationDataset.addRawData([grammaPrep, lexicalPrep])
     validationDataset.prepareRawData(multiplexedFilter)
 
-def runCoreTrain():
-    preprocessDatasets(CORE_TRAINING_PATH, CORE_VALIDATION_PATH)
+def runCoreTrain(modelPath, trainingPath, validationPath,
+                 grammaticalModel, grammaticalTrainingPath, grammaticalValidationPath,
+                 lexicalModel, lexicalTrainingPath, lexicalValidationPath):
 
-    trainCore(CORE_MODEL_PATH, CORE_VALIDATION_PATH, CORE_TRAINING_PATH)
+    preprocessDatasets(trainingPath, validationPath,
+                       grammaticalModel, grammaticalTrainingPath, grammaticalValidationPath,
+                       lexicalModel, lexicalTrainingPath, lexicalValidationPath)
 
-if __name__ == "__main__":
-    runCoreTrain()
+    trainCore(modelPath, validationPath, trainingPath)

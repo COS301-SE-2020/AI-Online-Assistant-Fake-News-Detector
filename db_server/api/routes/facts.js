@@ -146,8 +146,8 @@ router.post("/factCheck", (req, res, next) => {
     });
   }
   try {
-    config.HTTPGetRequest(
-      "localhost",
+    config.HTTPSGetRequest(
+      "artifacts.live",
       "/api/keys/GoogleFactAPI",
       8080,
       (statusCode, responses) => {
@@ -156,11 +156,6 @@ router.post("/factCheck", (req, res, next) => {
           responses.response.Key.Key !== ""
         ) {
           try {
-            let googleURL =
-              "https://factchecktools.googleapis.com/v1alpha1/claims:search?key=" +
-              responses.response.Key.Key +
-              "&pageSize=1&languageCode=enUS&query=" +
-              encodeURI(statement);
             config.HTTPSGetRequest(
               "factchecktools.googleapis.com",
               "/v1alpha1/claims:search?key=" +
@@ -169,7 +164,7 @@ router.post("/factCheck", (req, res, next) => {
                 encodeURI(statement),
               null,
               (stat, body) => {
-                if (body.length > 0)
+                if (body !== undefined && body.claims !== undefined)
                   res.status(stat).json({
                     response: {
                       message: "Review completed successfully.",

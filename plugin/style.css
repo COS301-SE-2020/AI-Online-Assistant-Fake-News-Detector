@@ -250,3 +250,17 @@ a{
 #analysisLink{
   font-size: 1.1em;
 }
+#rfDisplay{
+  color: #DDD;
+  padding: 5px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 1em;
+  font-weight: 900;
+}
+#rfDisplay.real{
+  background-color: #388E3C;
+}
+#rfDisplay.fake{
+  background-color: #F44336;
+}

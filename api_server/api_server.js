@@ -19,14 +19,13 @@ const port = config.api_server_port;
 const cron = require("node-cron");
 const https = require("https");
 const http = require("http");
-const morganFormat =
-  "[:date] :remote-addr - :remote-user :method :url HTTP/:http-version :status :response-time ms";
+const morganFormat = config.morganFormat;
 
 require("dotenv").config({ path: path.join(root, ".env") });
 const production = process.env.NODE_ENV === "production" ? true : false;
 const hostURL = production
   ? process.env.productionURI
-  : process.env.devlopmentURI;
+  : process.env.developmentURI;
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 server.use(bodyParser.text());
@@ -118,6 +117,64 @@ if (production) {
   );
 
   cron.schedule("55 * * * * *", () => {
+    // Fetch servers that are registered to api server
+    getRequest(hostURL, "/api/active", null, (callStatus, servers) => {
+      try {
+        if (servers.errno !== undefined)
+          throw new Error("Error Retrieving Active Servers " + servers.message);
+        if (servers.servers !== undefined && servers.servers.length > 0) {
+          // Check that server is accepting requests
+          servers.servers.forEach((e) => {
+            getRequest(
+              hostURL,
+              "/api/living/" + e.port,
+              null,
+              (statusCode, response) => {
+                // If not accepting requests remove from active list
+                if (statusCode === 500) {
+                  getRequest(
+                    hostURL,
+                    "/api/deregister/" + e.port,
+                    null,
+                    (status, resp) => {
+                      logger.info("CRON - " + resp.response.message);
+                    }
+                  );
+                }
+              }
+            );
+          });
+        }
+        // If no servers registered
+        else {
+          [8090, 8091, 8092].forEach((e) => {
+            getRequest(
+              hostURL,
+              "/api/living/" + e,
+              null,
+              (statusCode, response) => {
+                // If accepting requests remove from active list
+                if (statusCode === 200) {
+                  getRequest(
+                    hostURL,
+                    "/api/register/" + e,
+                    null,
+                    (status, resp) => {
+                      logger.info("CRON - " + resp.response.message);
+                    }
+                  );
+                }
+              }
+            );
+          });
+        }
+      } catch (error) {
+        logger.info(error.message);
+      }
+    });
+  });
+
+  cron.schedule("55 * * * * *", () => {
     getRequest(hostURL, "/api/active", 8080, (statusCode, response) => {
       if (response.servers > 0) {
         let active = "Active Servers - ";
@@ -164,20 +221,6 @@ try {
         process.env.NODE_ENV +
         "."
     );
-
-    if (!production) {
-      [8090].forEach((e) => {
-        getRequest(
-          "artifacts.live",
-          "/api/start/" + e,
-          8080,
-          (statusCode, response) => {
-            if (statusCode === 500)
-              logger.info("S - " + statusCode + ", R - " + response);
-          }
-        );
-      });
-    }
   });
 } catch (error) {
   logger.info(error);

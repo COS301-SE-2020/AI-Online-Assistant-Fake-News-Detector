@@ -1,0 +1,20 @@
+# Test to see that all requests occur within 3 seconds
+config:
+  target: "https://artifacts.live/api"
+  phases:
+    - duration: 10
+      arrivalRate: 2
+      name: Steady Paced Requests
+scenarios:
+  - name: "2 Users Making Sequential Requests To Test Response Time"
+    flow:
+      - get:
+          url: "/sources"
+      - get:
+          url: "/facts"
+      - get:
+          url: "/reports"
+      - get:
+          url: "/training"
+      - get:
+          url: "/nnmodels"

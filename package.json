@@ -6,10 +6,12 @@
     "install:db": "cd db_server && npm install && npm audit fix && npm update",
     "install:api": "cd api_server && npm install && npm audit fix && npm update",
     "install:utils": "cd Util && npm install && npm audit fix && npm update",
+    "frontend": "cd frontend && npm install && npm audit fix && npm update && npm run-script \"ng prod\"",
     "postinstall": "run-s install:*",
     "test": "mocha --exit \"**/*.mocha.test.js\" --timeout 100000",
     "start": "cd api_server && npm start",
-    "startP": "cd api_server && npm run \"startP\""
+    "startP": "cd api_server && npm run \"startP\"",
+    "production": "npm install && bash python_build.sh && npm run-script \"frontend\""
   },
   "repository": {
     "type": "git",

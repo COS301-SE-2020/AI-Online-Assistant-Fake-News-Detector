@@ -8,7 +8,6 @@ const Logger = require(path.join(root, "winston"));
 const logger = new Logger(api);
 const fs = require("fs");
 const shell = require("shelljs");
-require("dotenv").config({ path: path.join(root, ".env") });
 const nn_server = [];
 
 const getRequest = config.HTTPGetRequest;
@@ -940,16 +939,58 @@ api.delete("/nnModels/:modelId", (req, res, next) => {
   );
 });
 
-api.post("/register", (req, res, next) => {
-  logger.info("New nn_server image created on port " + req.body.port);
-  if (!nn_server.some((i) => i.port === Number(req.body.port))) {
-    nn_server.push({ port: Number(req.body.port), busy: false });
+api.get("/active", (req, res, next) => {
+  res.status(200).json({ servers: nn_server });
+});
+
+api.get("/register/:port", (req, res, next) => {
+  logger.info("New nn_server image created on port " + req.params.port);
+  if (!nn_server.some((i) => i.port === Number(req.params.port))) {
+    nn_server.push({ port: Number(req.params.port), busy: false });
     nn_server.sort((a, b) => {
       if (a.port > b.port) return 1;
       else return -1;
     });
   }
-  res.send(204);
+  res.status(200).json({
+    response: {
+      success: true,
+      message: "New nn_server image created on port " + req.params.port + ".",
+    },
+  });
+});
+
+api.get("/deregister/:port", (req, res, next) => {
+  logger.info("Closing nn_server image on port " + req.params.port);
+  if (nn_server.some((i) => i.port === Number(req.params.port))) {
+    let index = nn_server.findIndex((ele, i) => {
+      if (ele.port == req.params.port) return i;
+    });
+    nn_server.splice(index, 1);
+    nn_server.sort((a, b) => {
+      if (a.port > b.port) return 1;
+      else return -1;
+    });
+  }
+  res.status(200).json({
+    response: {
+      success: true,
+      message: "nn_server image on port " + req.params.port + " closed.",
+    },
+  });
+});
+
+api.get("/living/:port", (req, res, next) => {
+  logger.info("Checking nn_server image on port " + req.params.port);
+  postRequest(
+    "localhost",
+    "/living",
+    req.params.port,
+    "",
+    (statusCode, response) => {
+      res.status(statusCode).json(response);
+    }
+  );
 });
 
 api.get("/start/:port", (req, res, next) => {
@@ -969,10 +1010,6 @@ api.get("/start/:port", (req, res, next) => {
   }
 });
 
-api.get("/active", (req, res, next) => {
-  res.status(200).json({ servers: nn_server });
-});
-
 api.get("/close/:port", (req, res, next) => {
   logger.info("Closing nn_server image on port " + req.params.port);
   postRequest(
@@ -989,27 +1026,6 @@ api.get("/close/:port", (req, res, next) => {
         if (statusCode == 200) res.sendStatus(statusCode).json(response);
         else next(response);
       } catch (error) {}
-    }
-  );
-});
-
-api.get("/living/:port", (req, res, next) => {
-  logger.info("Checking nn_server image on port " + req.params.port);
-  postRequest(
-    "localhost",
-    "/living",
-    req.params.port,
-    "",
-    (statusCode, response) => {
-      res.status(statusCode).json(response);
-      // let index = nn_server.findIndex((ele, i) => {
-      //   if (ele.port == req.params.port) return i;
-      // });
-      // try {
-      //   nn_server.splice(index, 1);
-      //   if (statusCode == 200) res.sendStatus(statusCode).json(response);
-      //   else next(response);
-      // } catch (error) {}
     }
   );
 });
@@ -1079,74 +1095,101 @@ api.get("/keys/:keyDescription", (req, res, next) => {
 
 api.get("/stats", (req, res, next) => {
   const stats = {};
-  stats["message"] = "Retrieved stats successfully";
-  stats["success"] = true;
-  stats["NeuralNetwork"] = {
-    "Training Time": 460,
-    "Training Set Count": 120454,
-  };
-  stats["Reports"] = [
-    {
-      Facts: {
-        Trending: [
-          {
-            ID: "5ee08d65b9bd0cd05ed2a352",
-            Statement: "There is no moon",
-            Popularity: 100,
-            "Report Count": 61,
-            "Ratio Report": 0.23,
-          },
-          {
-            ID: "5ee08e846d1156d1aaa15a53",
-            Statement: "The earth is flat",
-            Popularity: 100,
-            "Report Count": 34,
-            "Ratio Report": 0.18,
-          },
-          {
-            ID: "5f37567adefb5410f13df476",
-            Statement: "Nigeria is in Europe",
-            Popularity: 60,
-            "Report Count": 21,
-            "Ratio Report": 0.17,
-          },
-        ],
-        "End Point Hits": 41,
-      },
-    },
-    {
-      Sources: {
-        Trending: [
-          {
-            ID: "5f2b3433e7f0660872cc0ad6",
-            Name: "Twitter",
-            "Domain Name": "https://www.twitter.com/",
-            Rating: 50,
-            "Report Count": 18,
-            "Ratio Report": 0.41,
-          },
-          {
-            ID: "5f3d40cbdefb5410f13df488",
-            Name: "New York Times",
-            "Domain Name": "https://www.nytimes.com/",
-            Rating: 94,
-            "Report Count": 16,
-            "Ratio Report": 0.19,
-          },
-          {
-            ID: "5f3e5515b43c0b58165b0c3a",
-            Name: "Github",
-            "Domain Name": "www.github.com",
-            Rating: 30,
-            "Report Count": 10,
-            "Ratio Report": 0.13,
-          },
-        ],
-        "End Point Hits": 39,
-      },
-    },
-  ];
-  res.status(200).json({ response: stats });
+  const reportRecords = [];
+  const facts = [];
+  const sources = [];
+  config.HTTPSGetRequest(
+    "artifacts.live",
+    "/api/reports/type/1",
+    config.api_server_port,
+    (statusCode, response) => {
+      if (statusCode === 200) {
+        config.HTTPSGetRequest(
+          "artifacts.live",
+          "/api/reports/type/2",
+          config.api_server_port,
+          (status, responses) => {
+            if (status === 200) {
+              for (let i = 0; i < 3; i++) {
+                reportRecords.push(response.response.Reports[i]);
+              }
+              for (let i = 0; i < 3; i++) {
+                reportRecords.push(responses.response.Reports[i]);
+              }
+              config.HTTPSGetRequest(
+                "artifacts.live",
+                "/api/sources/",
+                config.api_server_port,
+                (codeStatus, respo) => {
+                  if (codeStatus === 200) {
+                    sources.push(
+                      respo.response.Sources.filter((e) => {
+                        return reportRecords.some(
+                          (ele) =>
+                            ele["Report Data"].trim() ===
+                            e["Domain Name"].trim()
+                        );
+                      })
+                    );
+                    let j = 0;
+                    for (let i = 3; j < 3; i++, j++) {
+                      if (sources[0][j] !== undefined)
+                        sources[0][j]["Report Count"] =
+                          reportRecords[i]["Report Count"];
+                    }
+                    config.HTTPSGetRequest(
+                      "artifacts.live",
+                      "/api/facts/",
+                      config.api_server_port,
+                      (codeStatus, respo) => {
+                        if (codeStatus === 200) {
+                          facts.push(
+                            respo.response.Facts.filter((e) => {
+                              return reportRecords.some(
+                                (ele) =>
+                                  ele["Report Data"].trim() ===
+                                  e.Statement.trim()
+                              );
+                            })
+                          );
+                          for (let i = 0; i < 3; i++) {
+                            if (facts[0][i] !== undefined)
+                              facts[0][i]["Report Count"] =
+                                reportRecords[i]["Report Count"];
+                          }
+                          stats["message"] = "Retrieved stats successfully";
+                          stats["success"] = true;
+                          stats["NeuralNetwork"] = {
+                            "Training Time": 460,
+                            "Training Set Count": 120454,
+                          };
+                          stats["Reports"] = [
+                            {
+                              Facts: {
+                                Trending: facts[0],
+                                "End Point Hits": 41,
+                              },
+                            },
+                            {
+                              Sources: {
+                                Trending: sources[0],
+                                "End Point Hits": 39,
+                              },
+                            },
+                          ];
+                          res.status(200).json({ response: stats });
+                        }
+                      }
+                    );
+                  }
+                }
+              );
+            }
+          }
+        );
+      }
+    }
+  );
 });
 
 /**
