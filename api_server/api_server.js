@@ -186,7 +186,6 @@ if (production) {
       }
     });
   });
-  server.use(morgan("dev"));
 } else server.use(morgan("dev"));
 
 server.use("/API-Documents", express.static(ExternalDocs));
