@@ -31,18 +31,18 @@ if __name__ == "__main__":
     if True:
         tfProcess = mp.Process(target=runGrammaticalTrain, args=(GRAMMATICAL_MODEL_PATH,
                                                              GRAMMATICAL_TRAINING_PATH,
-                                                             GRAMMATICAL_VALIDATION_PATH,
-                                                             rawTrainFiles,
-                                                             rawValidationFiles))
+                                                             GRAMMATICAL_VALIDATION_PATH))
+                                                             #rawTrainFiles,
+                                                             #rawValidationFiles))
         tfProcess.start()
         tfProcess.join()
 
     if True:
         tfProcess = mp.Process(target=runLexicalTrain, args=(LEXICAL_MODEL_PATH,
                                                              LEXICAL_TRAINING_PATH,
-                                                             LEXICAL_VALIDATION_PATH,
-                                                             rawTrainFiles,
-                                                             rawValidationFiles))
+                                                             LEXICAL_VALIDATION_PATH))
+                                                             #rawTrainFiles,
+                                                             #rawValidationFiles))
         tfProcess.start()
         tfProcess.join()
 
