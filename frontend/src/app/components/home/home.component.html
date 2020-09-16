@@ -14,7 +14,7 @@
       </mat-form-field>
 
       <div class="example-button-row">
-        <button mat-raised-button class="checkBtn" (click)="checkText()">Run text through AI</button>
+        <button mat-raised-button class="checkBtn" (click)="checkText()">Check text with AI</button>
         <button mat-raised-button color="accent" (click)="paste()">
           Paste from clipboard
         </button>
@@ -33,9 +33,6 @@
       <div class="example-button-row">
         <button mat-raised-button class="checkBtn">Check</button>
         <button mat-raised-button color="primary">Report</button>
-        <button mat-raised-button color="accent" (click)="clickTemp()">
-          Analytics
-        </button>
       </div>
     </mat-tab>
 
@@ -51,9 +48,6 @@
       <div class="example-button-row">
         <button mat-raised-button class="checkBtn">Check</button>
         <button mat-raised-button color="primary">Report</button>
-        <button mat-raised-button color="accent" (click)="clickTemp()">
-          Analytics
-        </button>
       </div>
     </mat-tab>
   </mat-tab-group>
@@ -76,17 +70,15 @@
           </mat-expansion-panel-header>
           <div class="row">
             <div class="col-md-6 d-flex justify-content-center">
+              <ngx-gauge type="full" [value]="confidenceGaugeValue" max="100" thick="10" label="Confidence" size="250"
+                [thresholds]="thresholdConfig" duration="2200">
+              </ngx-gauge>
+              </div>
+              <div class="col-md-6 d-flex justify-content-center">
               <mat-card>
-                <mat-card-title>This articles is probably {{nnPred}}</mat-card-title>
+                <mat-card-title>This article is probably {{nnPred}}</mat-card-title>
                 <img mat-card-image [src]="cardImgUrl" alt="404">
               </mat-card>
-            </div>
-            <div class="col-md-6 d-flex justify-content-center">
-
-              <ngx-gauge type="full" [value]="confidenceGaugeValue" max="100" thick="10" label="Confidence" size="250"
-                [thresholds]="thresholdConfig">
-              </ngx-gauge>
-
             </div>
           </div>
 

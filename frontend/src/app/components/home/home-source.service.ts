@@ -10,9 +10,9 @@ import { Sources } from "../../sources";
 })
 export class HomeSourceService {
   baseUrl = "https://artifacts.live/api/sources/";
-  // queryUrl: string = '?search=';
+  // queryUrl: string = '?se  arch=';
   allSources: Sources[];
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   search(term: Observable<string>) {
     return this.http.get(this.baseUrl /*+ this.queryUrl */ + term).pipe(
       map((response: Sources[]) => {
