@@ -28,8 +28,8 @@
       Website
     </a>
     <span> | </span>
-    <a target="_blank" href="https://youtu.be/MFLxKsOJi-U">
-      Demo 3
+    <a target="_blank" href="https://youtu.be/78GiV0ON9g0">
+      Demo 4
     </a>
   </h5>
 </div>
@@ -65,10 +65,11 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 - [Demo 1 Recording - 12 June 2020](https://youtu.be/cnF3ivkuhQc)
 - [Demo 2 Recording - 24 July 2020](https://youtu.be/xQSGfRS1p_s)
 - [Demo 3 Recording - 20 August 2020](https://youtu.be/MFLxKsOJi-U)
+- [Demo 4 Recording - 17 September 2020](https://youtu.be/78GiV0ON9g0)
 
 ### Link to our Website
 
-- [ArtiFact](http://142.93.251.101/)
+- [ArtiFact](https://artifacts.live)
 
 <a name="team"></a>
 
