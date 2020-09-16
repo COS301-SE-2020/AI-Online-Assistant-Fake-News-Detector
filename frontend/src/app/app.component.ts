@@ -29,7 +29,7 @@ export class AppComponent {
     this.showWelcome = !welcome.hasBeenHere();
     if (!this.showWelcome) {
       this.snackBar.open(`Welcome back (° ͜ʖ͡°)`, "Close", {
-        duration: 4000,
+        duration: 1500,
       });
     }
   }
@@ -40,6 +40,5 @@ export class AppComponent {
   closeWelcome(): void {
     this.showWelcome = false;
     this.welcome.store(true);
-    document.getElementById('main').classList.add('scale-in-ver-bottom');
   }
 }

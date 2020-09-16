@@ -10,6 +10,9 @@ import { MatDividerModule } from "@angular/material/divider";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatChipsModule } from '@angular/material/chips';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   exports: [
@@ -23,7 +26,10 @@ import { MatChipsModule } from '@angular/material/chips';
     MatDividerModule,
     MatTooltipModule,
     MatSnackBarModule,
-    MatChipsModule
+    MatChipsModule,
+    MatGridListModule,
+    MatExpansionModule,
+    MatProgressBarModule
   ],
 })
 export class AiMaterialModule {}
