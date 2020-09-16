@@ -11,7 +11,7 @@ const logger = new Logger(router);
 router.get("/", (req, res, next) => {
   Report.find()
     .select("_id type description reportCount dCaptured bActive reportedBy")
-    .sort("type description")
+    .sort("type -reportCount description")
     .exec()
     .then((reports) => {
       const response = {
@@ -183,7 +183,7 @@ router.get("/type/:type", (req, res, next) => {
     { type: req.params.type },
     "_id type description reportCount dCaptured bActive reportedBy"
   )
-    .sort("type description")
+    .sort("type -reportCount description")
     .exec()
     .then((reports) => {
       if (reports.length > 0) {
