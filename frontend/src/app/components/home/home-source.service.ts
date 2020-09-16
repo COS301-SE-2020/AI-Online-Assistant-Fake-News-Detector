@@ -3,12 +3,12 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import { throwError } from "rxjs";
 import { map, catchError } from "rxjs/operators";
-import { Sources } from ".././../sources";
+import { Sources } from "../../sources";
 
 @Injectable({
   providedIn: "root",
 })
-export class HomeSearchSourceService {
+export class HomeSourceService {
   baseUrl = "https://artifacts.live/api/sources/";
   // queryUrl: string = '?search=';
   allSources: Sources[];
@@ -33,7 +33,7 @@ export class HomeSearchSourceService {
         catchError((error) => {
           return throwError(/*'Something went wrong'*/ error);
         })
-    )
+      )
       .subscribe((data) => (this.allSources = data));
   }
 }

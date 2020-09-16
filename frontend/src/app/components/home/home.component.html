@@ -107,11 +107,15 @@
               <mat-icon>analytics</mat-icon>
             </mat-panel-description>
           </mat-expansion-panel-header>
-
-          <app-notfound></app-notfound>
-
+          <ul>
+            <li *ngFor="let break of breakdown">{{ break.text }}
+              <mat-progress-bar class="example-margin" color="color" mode="mode" value="{{ break.confidence }}"
+                bufferValue="bufferValue">
+              </mat-progress-bar>
+            </li>
+          </ul>
           <mat-action-row>
-            <button mat-button color="primary" (click)="step3=true">Options</button>
+            <button mat-button color="primary" (click)="step3=true">Spread the word</button>
           </mat-action-row>
         </mat-expansion-panel>
 
@@ -148,7 +152,7 @@
                   </mat-list-item>
                 </ng-template>
                 <mat-divider></mat-divider>
-                <mat-list-item>
+                <mat-list-item (click)="share($event)">
                   <mat-icon>share</mat-icon>
                   <h3 mat-line>Share</h3>
                   <p mat-line>

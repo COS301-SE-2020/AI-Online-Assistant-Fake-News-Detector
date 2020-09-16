@@ -968,3 +968,5 @@
 [15/Sep/2020 06:38:49] - Training Record was Deleted.
 [15/Sep/2020 06:38:49] - Training Record was Deleted.
 [15/Sep/2020 06:38:50] - Training Record was Deleted.
+[16/Sep/2020 04:50:31] - API_Server listening on port 8080. Environment: dev.
+[16/Sep/2020 04:50:32] - DB_Server listening on port 3000. Environment: dev.

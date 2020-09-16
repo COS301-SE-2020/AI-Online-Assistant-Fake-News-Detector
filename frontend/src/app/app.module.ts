@@ -36,8 +36,8 @@ import { NotfoundComponent } from "./notfound/notfound.component";
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
-import { TogglebuttonComponent } from "src/app/components/moderate/togglebutton/togglebutton.component";
-import { UserAccountbuttonComponent } from "src/app/user-accountbutton/user-accountbutton.component";
+import { TogglebuttonComponent } from "../app/components/moderate/togglebutton/togglebutton.component";
+import { UserAccountbuttonComponent } from "../app/user-accountbutton/user-accountbutton.component";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 import { AppFirebaseModule } from "./app-firebase.module";
@@ -47,6 +47,8 @@ import { NgxGaugeModule } from 'ngx-gauge';
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { WelcomeService } from './services/welcome.service';
 import { HomeNeuralService } from './components/home/home-neural.service';
+import { HomeSourceService } from './components/home/home-source.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,6 +97,7 @@ import { HomeNeuralService } from './components/home/home-neural.service';
     AutocompleteService,
     WelcomeService,
     HomeNeuralService,
+    HomeSourceService,
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: "fill" },

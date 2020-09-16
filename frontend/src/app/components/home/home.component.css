@@ -29,3 +29,11 @@
   margin-left: 8px;
 }
 
+mat-card{
+  margin: 2px;
+}
+
+ngx-gauge{
+  margin-top: 5px;
+}
+

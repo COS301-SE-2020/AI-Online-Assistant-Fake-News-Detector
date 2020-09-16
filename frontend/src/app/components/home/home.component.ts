@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { HomeSearchSourceService } from "./home-search-source.service";
+import { HomeSourceService } from "./home-source.service";
 import { HomeNeuralService } from "./home-neural.service";
 import { AuthService } from "../../services/auth/auth.service";
 import { Observable } from "rxjs";
-import { stringify } from "querystring";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-home",
@@ -26,22 +26,24 @@ export class HomeComponent implements OnInit {
   //   "90": { color: "red" },
   // };
   thresholdConfig = {
-    "0": { color: "purple" },
-    "50": { color: "pink" },
+    0: { color: "purple" },
+    50: { color: "pink" },
   };
   nnPred: string;
   cardImgUrl: string;
+  breakdown;
   user$: Observable<firebase.User> = this.auth.user$;
   textHit:boolean;
   urlHit:boolean;
   factHit:boolean;
   constructor(
-    private search: HomeSearchSourceService,
+    private search: HomeSourceService,
     private nn: HomeNeuralService,
-    private readonly auth: AuthService
+    private readonly auth: AuthService,
+    private readonly snackBar: MatSnackBar,
   ) {}
   ngOnInit(): void {
-    this.step1 = false;
+    this.step1 = true;
     this.step2 = false;
     this.step3 = false;
     this.confidenceGaugeValue = 0;
@@ -54,7 +56,9 @@ export class HomeComponent implements OnInit {
     this.factHit=false;
   }
   clickTemp() {
-    alert("coming soon [o_o]");
+    this.snackBar.open(`Source reported ( ಥ ʖ̫ ಥ)`, "Close", {
+      duration: 4000,
+    });
   }
   paste() {
     navigator.clipboard
@@ -71,18 +75,14 @@ export class HomeComponent implements OnInit {
   }
   checkText() {
     this.nn.verify(this.textvalue).subscribe((data) => {
-      console.log(data);
       const message = data.message;
-      console.log("message :", message);
+      console.log(data);
       const result = data.result;
-      console.log("result :", result);
-      const breakdown = result.breakdown;
-      console.log("breakdown :", breakdown);
+      this.breakdown = result.breakdown;
       const overall = result.overall;
-      console.log("overall :", overall);
       // set up gauge
       this.nnPred = overall.prediction;
-      if(this.nnPred=="real"){
+      if (this.nnPred === "real") {
         this.cardImgUrl =
       "assets/img/unDraw/real/" +
       (Math.floor(Math.random() * 8) + 1).toString() +
@@ -97,5 +97,25 @@ export class HomeComponent implements OnInit {
       this.confidenceGaugeValue = overall.confidence * 100;
       this.textHit=true;
     });
+  }
+  share(event: MouseEvent) {
+    event.preventDefault();
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "ArtiFact",
+          url: "https://artifacts.live",
+        })
+        .then(() => {
+          this.snackBar.open(`Thanks for sharing (◠﹏◠)`, "Close", {
+            duration: 4000,
+          });
+        })
+        .catch((error) => { } /*console.log("Error sharing", error)*/);
+    } else {
+      this.snackBar.open(`Web Share API not supported ( ಥ ʖ̫ ಥ)`, "Close", {
+        duration: 4000,
+      });
+    }
   }
 }
