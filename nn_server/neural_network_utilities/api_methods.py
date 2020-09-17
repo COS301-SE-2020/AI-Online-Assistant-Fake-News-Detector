@@ -91,3 +91,11 @@ def uploadModel(modelName, modelPath):
         'model': model
     }
     requests.post(url=API + "/nnModels", data=data)
+
+def updateStats(totalTime, totalRecords, trainingRate):
+    totalTimeHrs = totalTime / 3600
+    #data = {
+    #    'name': modelName,
+    #    'model': model
+    #}
+    #requests.post(url=API + "/nnstats", data=data)
