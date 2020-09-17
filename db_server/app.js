@@ -10,6 +10,7 @@ const moderatorRoutes = require("./api/routes/moderators");
 const reportRoutes = require("./api/routes/reports");
 const nnModelRoutes = require("./api/routes/nnModels");
 const trainingRoutes = require("./api/routes/training");
+const nnStatsRoutes = require("./api/routes/nnStats");
 const path = require("path");
 const root = require("../Util/path");
 require("dotenv").config({ path: path.join(root, ".env") });
@@ -20,7 +21,7 @@ if (production) {
     "mongodb+srv://FakeNewsAdmin:murrIq-xytbud-2wubjo@fake-news-detector-vastj.mongodb.net/fake_news_detector?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
-      useUnifiedTopology: true,
+      useUnifiedTopology: true
     }
   );
 } else {
@@ -28,7 +29,7 @@ if (production) {
     "mongodb+srv://FakeNewsAdmin:murrIq-xytbud-2wubjo@fake-news-detector-vastj.mongodb.net/fnd_test?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
-      useUnifiedTopology: true,
+      useUnifiedTopology: true
     }
   );
 }
@@ -58,6 +59,7 @@ app.use("/Users", moderatorRoutes);
 app.use("/reports", reportRoutes);
 app.use("/nnModels", nnModelRoutes);
 app.use("/training", trainingRoutes);
+app.use("/nnStats", nnStatsRoutes);
 
 //Requests that passed the routes above are not supported and therefore seen as errors.
 app.use((req, res, next) => {
@@ -70,8 +72,8 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
     error: {
-      message: error.message,
-    },
+      message: error.message
+    }
   });
 });
 
