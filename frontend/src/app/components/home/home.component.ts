@@ -119,14 +119,14 @@ export class HomeComponent implements OnInit {
   reportSource() {
     this.reports.reportSource(this.urlvalue).subscribe(data =>
       this.snackBar.open(`Sourece reported! ಠ_ಠ`, "Close", {
-        duration: 3000,
+        duration: 4000,
       })
     );
   }
   reportFact() {
     this.reports.reportFact(this.factvalue).subscribe(data =>
       this.snackBar.open(`Fact reported! ʘ̅ㅈʘ̅`, "Close", {
-        duration: 3000,
+        duration: 4000,
       })
     );
   }
