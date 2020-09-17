@@ -28,7 +28,7 @@ h3 {
 p {
   margin-top: 2em;
   font-size: 22px;
-  font-weight: 2em;
+  font-weight: 5em;
   color: black;
   line-height: 1.6;
 }
@@ -40,6 +40,7 @@ p {
 a {
   color: white;
   text-decoration: none;
+
 }
 
 .example-button-container {
@@ -53,8 +54,6 @@ a {
   cursor: pointer;
 }
 
-svg,
-h3,
-a {
+svg,h3{
   filter: drop-shadow(0.8px 0.8px 0.8px #111) drop-shadow(1px 1px 1px #111) drop-shadow(1px 1px 1px #111) drop-shadow(1px 1px 1px #111);
 }
