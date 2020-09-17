@@ -30,10 +30,21 @@
 }
 
 mat-card{
-  margin: 2px;
+  margin: 5px;
 }
 
-ngx-gauge{
-  margin-top: 5px;
+.example-h2 {
+  margin: 10px;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 0 10px;
 }
 
