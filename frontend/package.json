@@ -48,7 +48,7 @@
     "@schematics/angular": "^10.1.1",
     "@types/jasmine": "^3.5.13",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^12.12.58",
+    "@types/node": "^12.12.59",
     "codelyzer": "^5.1.2",
     "firebase-tools": "^8.0.0",
     "fuzzy": "^0.1.3",

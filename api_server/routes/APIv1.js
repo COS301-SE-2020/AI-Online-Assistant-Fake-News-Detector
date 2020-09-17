@@ -1131,11 +1131,19 @@ api.get("/stats", (req, res, next) => {
                         );
                       })
                     );
-                    let j = 0;
-                    for (let i = 3; j < 3; i++, j++) {
-                      if (sources[0][j] !== undefined)
-                        sources[0][j]["Report Count"] =
-                          reportRecords[i]["Report Count"];
+                    for (let j = 0; j < 3; j++) {
+                      if (sources[0][j] !== undefined) {
+                        for (let i = 3; i < 6; i++) {
+                          if (
+                            reportRecords[i]["Report Data"].trim() ===
+                            sources[0][j]["Domain Name"]
+                          ) {
+                            sources[0][j]["Report Count"] =
+                              reportRecords[i]["Report Count"];
+                            break;
+                          }
+                        }
+                      }
                     }
                     config.HTTPSGetRequest(
                       "artifacts.live",
@@ -1153,9 +1161,18 @@ api.get("/stats", (req, res, next) => {
                             })
                           );
                           for (let i = 0; i < 3; i++) {
-                            if (facts[0][i] !== undefined)
-                              facts[0][i]["Report Count"] =
-                                reportRecords[i]["Report Count"];
+                            if (facts[0][i] !== undefined) {
+                              for (let j = 0; j < 3; j++) {
+                                if (
+                                  reportRecords[j]["Report Data"].trim() ===
+                                  facts[0][i].Statement
+                                ) {
+                                  facts[0][i]["Report Count"] =
+                                    reportRecords[j]["Report Count"];
+                                  break;
+                                }
+                              }
+                            }
                           }
                           stats["message"] = "Retrieved stats successfully";
                           stats["success"] = true;
