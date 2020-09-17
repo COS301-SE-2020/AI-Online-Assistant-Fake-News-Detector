@@ -1,13 +1,12 @@
 import os
 import gc
-import errno
 import pathlib
 from preprocessing import LexicalVectorizationFilter, RawFakeNewsDataFilterAdapter, ParallelPreprocessor
 from dataset_manager import DatasetManager, downloadAndCreateDatasets
 from stacked_bidirectional_lstm import StackedBidirectionalLSTM
 from default_configs import DEFAULT_DATASETS_PATH, DEFAULT_MODELS_PATH, DEFAULT_LEXICAL_SAMPLE_LENGTH
 from labels import RealOrFakeLabels
-
+from api_methods import uploadModel
 
 def trainLexical(modelName, trainDatasetPath, validationDatasetPath, rawTrainFiles=None, rawValidationFiles=None):
     # Lexical pipeline
@@ -54,3 +53,4 @@ def runLexicalTrain(modelPath, trainingPath, validationPath, rawTrainFiles=None,
     trainLexical(modelName=modelPath, trainDatasetPath=trainingPath, validationDatasetPath=validationPath,
                  rawTrainFiles=rawTrainFiles, rawValidationFiles=rawValidationFiles)
 
+    uploadModel("lexical_model.hdf5", modelPath)

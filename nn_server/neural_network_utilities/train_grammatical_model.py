@@ -1,12 +1,12 @@
 import os
 import gc
-import errno
 import pathlib
 from preprocessing import GrammaticalVectorizationFilter, RawFakeNewsDataFilterAdapter, ParallelPreprocessor
 from dataset_manager import DatasetManager, downloadAndCreateDatasets
 from deep_stacked_bidirectional_lstm import DeepStackedBidirectionalLSTM
 from default_configs import DEFAULT_GRAMMATICAL_SAMPLE_LENGTH
 from labels import RealOrFakeLabels
+from api_methods import uploadModel
 
 
 def trainGrammatical(modelName, trainDatasetPath, validationDatasetPath, rawTrainFiles=None, rawValidationFiles=None):
@@ -52,3 +52,5 @@ def runGrammaticalTrain(modelPath, trainingPath, validationPath, rawTrainFiles=N
 
     trainGrammatical(modelName=modelPath, trainDatasetPath=trainingPath, validationDatasetPath=validationPath,
                  rawTrainFiles=rawTrainFiles, rawValidationFiles=rawValidationFiles)
+
+    uploadModel("grammatical_model.hdf5", modelPath)
