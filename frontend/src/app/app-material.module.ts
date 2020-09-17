@@ -29,7 +29,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatChipsModule,
     MatGridListModule,
     MatExpansionModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ],
 })
 export class AiMaterialModule {}

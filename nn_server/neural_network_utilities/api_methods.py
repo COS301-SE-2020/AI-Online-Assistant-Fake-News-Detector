@@ -1,6 +1,7 @@
 import requests
 import os
 import errno
+import base64
 
 API = "https://artifacts.live/API/"
 
@@ -78,33 +79,15 @@ def downloadModel(modelName, downloadPath):
             if data['response']['success'] == True:
                 model = data['response']['Model']
                 modelNames.append(model['Name'])
-                file = open(os.path.join(downloadPath, model['Name']), 'w')
-                file.write(model['Model'])
+                file = open(os.path.join(downloadPath, model['Name']), 'wb')
+                file.write(base64.b64decode(model['Model']))
     return modelNames
 
 def uploadModel(modelName, modelPath):
     file = open(modelPath, 'rb')
-    model = file.read()
+    model = base64.b64encode(file.read())
     data = {
         'name': modelName,
         'model': model
     }
     requests.post(url=API + "/nnModels", data=data)
-
-if __name__ == '__main__':
-    print(downloadTrainingDataset())
-    print(downloadTrainingDatasetRange(0, 200))
-    print(downloadTrainingDatasetRange(20, 200))
-    trainingData = []
-    start = 0
-    step = 1
-    while True:
-        data = downloadTrainingDatasetRange(start, start + step)
-        trainingData.extend(data)
-        if len(data) == 0:
-            break
-        start += step
-    print(trainingData)
-    uploadModel('test.txt', 'uploadTest/test.txt')
-    #print(str(downloadModels('downloadTest')))
-    #print(downloadModel('test.txt', 'downloadTest'))

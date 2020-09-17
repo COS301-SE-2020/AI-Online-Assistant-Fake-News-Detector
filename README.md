@@ -24,12 +24,12 @@
 
 <div align="center">
   <h5>
-    <a target="_blank" href="http://142.93.251.101/">
+    <a target="_blank" href="https://artifacts.live">
       Website
     </a>
     <span> | </span>
-    <a target="_blank" href="https://youtu.be/MFLxKsOJi-U">
-      Demo 3
+    <a target="_blank" href="https://youtu.be/78GiV0ON9g0">
+      Demo 4
     </a>
   </h5>
 </div>
@@ -54,6 +54,7 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 
 - [User Manual](https://www.overleaf.com/read/ptwsspcycjpf)
 - [Architectural Design Documentation](https://www.overleaf.com/read/gzztzhjkvvyj)
+- [Testing Policy Documentation](https://www.overleaf.com/read/sswnnyygkwgq)
 - [Coding Standard](https://www.overleaf.com/read/yhjjwykzjqpk)
 - [Project Management (Trello)](https://trello.com/invite/b/zb3DjGQ1/aa7c49e51f99044974cd1ade64787fc7/capstone-project)
 - [Software Requirement Specification](https://www.overleaf.com/read/rrhpmydtbkhr)
@@ -65,10 +66,11 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 - [Demo 1 Recording - 12 June 2020](https://youtu.be/cnF3ivkuhQc)
 - [Demo 2 Recording - 24 July 2020](https://youtu.be/xQSGfRS1p_s)
 - [Demo 3 Recording - 20 August 2020](https://youtu.be/MFLxKsOJi-U)
+- [Demo 4 Recording - 17 September 2020](https://youtu.be/78GiV0ON9g0)
 
 ### Link to our Website
 
-- [ArtiFact](http://142.93.251.101/)
+- [ArtiFact](https://artifacts.live)
 
 <a name="team"></a>
 
@@ -82,6 +84,6 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 | [Danré Retief](https://iamdanre.github.io/)          | 14126461    | BScIT student, full-stack developer with a knack for creative problem solving and front-end frameworks.                                                                           |
 | [Thato Tshukudu](https://taydos.github.io/)          | 18010408    | BIT student with core strength in front-end.                                                                                                                                      |
 
-## Start The Server
+## Build And Start The Server In A Local Environment
 
-`$ npm install && npm start`
+`$ npm run-script "production" && npm start`
