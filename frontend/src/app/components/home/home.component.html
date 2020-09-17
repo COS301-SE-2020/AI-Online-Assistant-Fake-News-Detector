@@ -5,7 +5,7 @@
       <mat-form-field class="example-form-field">
         <mat-label>Enter some text</mat-label>
 
-        <textarea id="AItext" matInput cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="10"
+        <textarea id="AItext" matInput cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="15"
           [(ngModel)]="textvalue">
         </textarea>
         <button mat-button *ngIf="textvalue" matSuffix mat-icon-button aria-label="Clear" (click)="textvalue = ''">
@@ -19,40 +19,8 @@
           Paste from clipboard
         </button>
       </div>
-    </mat-tab>
 
-    <mat-tab label="URL">
-      <mat-form-field class="example-form-field">
-        <mat-label>Enter URL</mat-label>
-        <input matInput type="text" [(ngModel)]="urlvalue" />
-        <button mat-button *ngIf="urlvalue" matSuffix mat-icon-button aria-label="Clear" (click)="urlvalue = ''">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-    
-      <div class="example-button-row">
-        <button mat-raised-button class="checkBtn">Check</button>
-        <button mat-raised-button color="primary" (click)="clickTemp()">Report</button>
-      </div>
-    </mat-tab>
-
-    <mat-tab label="Fact">
-      <mat-form-field class="example-form-field">
-        <mat-label>Enter a fact</mat-label>
-        <input matInput type="text" [(ngModel)]="factvalue" />
-        <button mat-button *ngIf="factvalue" matSuffix mat-icon-button aria-label="Clear" (click)="factvalue = ''">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-
-      <div class="example-button-row">
-        <button mat-raised-button class="checkBtn">Check</button>
-        <button mat-raised-button color="primary" (click)="clickTemp()">Report</button>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
-</div>
-<!-- neural network response  -->
+<!-- neural network response begin -->
 <ng-container *ngIf="textHit">
   &nbsp;
   <div class="container-fluid">
@@ -61,20 +29,20 @@
         <mat-expansion-panel [(expanded)]="step1">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Summary
+              Summary:
             </mat-panel-title>
             <mat-panel-description>
-              TL;DR
+              <div color="primary">[ TL;DR ]</div>
               <mat-icon>speed</mat-icon>
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="row">
-            <div class="col-md-6 d-flex justify-content-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-center" class.mat-elevation-z12>
               <ngx-gauge type="full" [value]="confidenceGaugeValue" max="100" thick="10" label="% Confidence" size="250"
                 [thresholds]="thresholdConfig" duration="2200">
               </ngx-gauge>
               </div>
-              <div class="col-md-6 d-flex justify-content-center">
+              <div class="col-md-6 d-flex align-items-center justify-content-center">
               <mat-card>
                 <mat-card-title>This article is probably {{nnPred}}</mat-card-title>
                 <img mat-card-image [src]="cardImgUrl" alt="404">
@@ -84,7 +52,7 @@
 
           <!-- #docregion action-bar -->
           <mat-action-row>
-            <button mat-button color="primary" (click)="step2=true">Show Breakdown</button>
+            <button mat-flat-button color="primary" (click)="step2=true">Show Breakdown</button>
           </mat-action-row>
           <!-- #enddocregion action-bar -->
         </mat-expansion-panel>
@@ -92,7 +60,7 @@
         <mat-expansion-panel [(expanded)]="step2">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Breakdown
+              Breakdown:
             </mat-panel-title>
             <mat-panel-description>
               Full analysis
@@ -100,28 +68,29 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <ul>
-            <li *ngFor="let break of breakdown">
-              {{ break.text }}
-              <span>
-              <mat-progress-bar class="example-margin" color="color" mode="mode" value="{{ break.confidence }}"
-                bufferValue="bufferValue">
-              </mat-progress-bar>
-              {{break.confidence}}%
-              </span>
-            </li>
+            <li *ngFor="let item of breakdown">
+              {{ item.text }}
+            <span>
+            <mat-progress-bar class="example-margin" color="color" mode="mode" value="{{ item.confidence }}"
+              bufferValue="bufferValue">
+            </mat-progress-bar>
+            <div>Confidence: {{fix(item.confidence)}}%</div>
+            <div>Prediction: {{item.prediction}}</div>
+            </span>
+          </li>
           </ul>
           <mat-action-row>
-            <button mat-button color="primary" (click)="step3=true">Spread the word</button>
+            <button mat-flat-button color="primary" (click)="step3=true">Share / Subscribe</button>
           </mat-action-row>
         </mat-expansion-panel>
 
         <mat-expansion-panel [(expanded)]="step3">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Spread the word
+              More:
             </mat-panel-title>
             <mat-panel-description>
-              Share or let us keep you posted
+              [ Notifications / Share ]
               <mat-icon>share</mat-icon>
             </mat-panel-description>
           </mat-expansion-panel-header>
@@ -130,7 +99,7 @@
             <mat-card>
               <mat-list>
                 <ng-container *ngIf="user$ | async as user; else loginIcon">
-                  <mat-list-item>
+                  <mat-list-item class.mat-elevation-z10>
                     <mat-icon>notifications</mat-icon>
                     <h3 mat-line>Enable notifications</h3>
                     <p mat-line>
@@ -139,7 +108,7 @@
                   </mat-list-item>
                 </ng-container>
                 <ng-template #loginIcon>
-                  <mat-list-item>
+                  <mat-list-item class.mat-elevation-z12>
                     <mat-icon>fingerprint</mat-icon>
                     <h3 mat-line>Notifications</h3>
                     <p mat-line>
@@ -148,7 +117,7 @@
                   </mat-list-item>
                 </ng-template>
                 <mat-divider></mat-divider>
-                <mat-list-item (click)="share($event)">
+                <mat-list-item class.mat-elevation-z12 (click)="share($event)">
                   <mat-icon>share</mat-icon>
                   <h3 mat-line>Share</h3>
                   <p mat-line>
@@ -160,8 +129,8 @@
           </div>
 
           <mat-action-row>
-            <button mat-button color="warn" (click)="step1=step2=step3=false;">Collapse All</button>
-            <button mat-button color="primary" (click)="textHit=false;">Remove Result</button>
+            <button mat-flat-button color="warn" (click)="step1=step2=step3=false;">Collapse All</button>
+            <button mat-flat-button color="primary" (click)="textHit=false;">Remove Result</button>
           </mat-action-row>
         </mat-expansion-panel>
 
@@ -169,6 +138,43 @@
     </div>
   </div>
 </ng-container>
+<!-- neural network response end -->
+
+
+</mat-tab>
+
+<mat-tab label="URL">
+  <mat-form-field class="example-form-field">
+    <mat-label>Enter URL</mat-label>
+    <input matInput type="text" [(ngModel)]="urlvalue" />
+    <button mat-button *ngIf="urlvalue" matSuffix mat-icon-button aria-label="Clear" (click)="urlvalue = ''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <div class="example-button-row">
+    <!-- <button mat-raised-button class="checkBtn" (click)="checkURL()">Check</button> -->
+    <button mat-raised-button color="primary" (click)="reportSource()">Report</button>
+  </div>
+</mat-tab>
+
+<mat-tab label="Fact">
+  <mat-form-field class="example-form-field">
+    <mat-label>Enter a fact</mat-label>
+    <input matInput type="text" [(ngModel)]="factvalue" />
+    <button mat-button *ngIf="factvalue" matSuffix mat-icon-button aria-label="Clear" (click)="factvalue = ''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <div class="example-button-row">
+   <!-- <button mat-raised-button class="checkBtn">Check</button> -->
+    <button mat-raised-button color="primary" (click)="reportFact()">Report</button>
+  </div>
+</mat-tab>
+</mat-tab-group>
+</div>
+
 <!-- sources response  -->
 <ng-container *ngIf="textHit">
   &nbsp;

@@ -23,9 +23,9 @@ const validateUser = (token, callBack) => {
           stream: fs.createWriteStream(
             path.join(root, "logfiles", "error.log"),
             {
-              flags: "a",
+              flags: "a"
             }
-          ),
+          )
         });
         callBack(false, 500, err);
       }
@@ -55,8 +55,8 @@ const validateUser = (token, callBack) => {
   } catch (error) {
     morgan(":date[clf] :method :url :status :response-time ms", {
       stream: fs.createWriteStream(path.join(root, "logfiles", "error.log"), {
-        flags: "a",
-      }),
+        flags: "a"
+      })
     });
     callBack(false, 500, "Internal Server Error");
   }
@@ -300,8 +300,8 @@ api.get("/Users", (req, res, next) => {
     return res.status(401).json({
       response: {
         message: "Not authorised",
-        success: false,
-      },
+        success: false
+      }
     });
 
   validateUser(token, (valid, statusCode, response) => {
@@ -310,8 +310,8 @@ api.get("/Users", (req, res, next) => {
       return res.status(401).json({
         response: {
           message: "Not authorised",
-          success: false,
-        },
+          success: false
+        }
       });
 
     getRequest(
@@ -399,7 +399,7 @@ api.post("/Users/login", (req, res, next) => {
     (statusCode, response) => {
       if (response.response.success == true) {
         let token = jwt.sign({ id: response.response.id }, config.secretKey, {
-          expiresIn: 10800,
+          expiresIn: 10800
         });
         response.response.token = token;
         res.status(statusCode).json(response);
@@ -414,8 +414,8 @@ api.get("/Users/emailAddress/:emailAddress", (req, res, next) => {
     return res.status(401).json({
       response: {
         message: "Not authorised",
-        success: false,
-      },
+        success: false
+      }
     });
 
   validateUser(token, (valid, statusCode, response) => {
@@ -424,8 +424,8 @@ api.get("/Users/emailAddress/:emailAddress", (req, res, next) => {
       return res.status(401).json({
         response: {
           message: "Not authorised",
-          success: false,
-        },
+          success: false
+        }
       });
 
     getRequest(
@@ -446,8 +446,8 @@ api.get("/Users/id/:moderatorId", (req, res, next) => {
     return res.status(401).json({
       response: {
         message: "Not authorised",
-        success: false,
-      },
+        success: false
+      }
     });
 
   validateUser(token, (valid, statusCode, response) => {
@@ -456,8 +456,8 @@ api.get("/Users/id/:moderatorId", (req, res, next) => {
       return res.status(401).json({
         response: {
           message: "Not authorised",
-          success: false,
-        },
+          success: false
+        }
       });
 
     getRequest(
@@ -499,8 +499,8 @@ api.delete("/Users/:emailAddress", (req, res, next) => {
     return res.status(401).json({
       response: {
         message: "Not authorised",
-        success: false,
-      },
+        success: false
+      }
     });
 
   validateUser(token, (valid, statusCode, response) => {
@@ -509,8 +509,8 @@ api.delete("/Users/:emailAddress", (req, res, next) => {
       return res.status(401).json({
         response: {
           message: "Not authorised",
-          success: false,
-        },
+          success: false
+        }
       });
     deleteRequest(
       "localhost",
@@ -559,7 +559,7 @@ api.get("/reports/update", (req, res, next) => {
               config.api_server_port,
               JSON.stringify({
                 reportCount: prevReport["Report Count"],
-                reportedBy: prevReport["reportedBy"],
+                reportedBy: prevReport["reportedBy"]
               }),
               (statusCode, _data) => {}
             );
@@ -568,7 +568,7 @@ api.get("/reports/update", (req, res, next) => {
               "/api/reports/id/" + report["ID"],
               config.api_server_port,
               JSON.stringify({
-                bActive: 0,
+                bActive: 0
               }),
               (statusCode, _data) => {}
             );
@@ -602,7 +602,7 @@ api.post("/reports", (req, res, next) => {
   try {
     req.body.description = req.body.description
       .split(" ")
-      .filter((e) => e != "")
+      .filter(e => e != "")
       .join(" ");
     requestBody = JSON.stringify(req.body);
   } catch (e) {
@@ -752,12 +752,12 @@ api.post("/verify", (req, res, next) => {
     next(error);
   }
   // Checks if there is an idle server
-  let freeServerIndex = nn_server.findIndex((server) => server.busy === false);
+  let freeServerIndex = nn_server.findIndex(server => server.busy === false);
 
   // There is an idle instance
   if (freeServerIndex !== -1) {
     nn_server[freeServerIndex].busy = true;
-    let freeCount = nn_server.filter((e) => e.busy === false).length;
+    let freeCount = nn_server.filter(e => e.busy === false).length;
 
     // Start new instance async if no free servers
     if (freeCount === 0)
@@ -945,7 +945,7 @@ api.get("/active", (req, res, next) => {
 
 api.get("/register/:port", (req, res, next) => {
   logger.info("New nn_server image created on port " + req.params.port);
-  if (!nn_server.some((i) => i.port === Number(req.params.port))) {
+  if (!nn_server.some(i => i.port === Number(req.params.port))) {
     nn_server.push({ port: Number(req.params.port), busy: false });
     nn_server.sort((a, b) => {
       if (a.port > b.port) return 1;
@@ -955,14 +955,14 @@ api.get("/register/:port", (req, res, next) => {
   res.status(200).json({
     response: {
       success: true,
-      message: "New nn_server image created on port " + req.params.port + ".",
-    },
+      message: "New nn_server image created on port " + req.params.port + "."
+    }
   });
 });
 
 api.get("/deregister/:port", (req, res, next) => {
   logger.info("Closing nn_server image on port " + req.params.port);
-  if (nn_server.some((i) => i.port === Number(req.params.port))) {
+  if (nn_server.some(i => i.port === Number(req.params.port))) {
     let index = nn_server.findIndex((ele, i) => {
       if (ele.port == req.params.port) return i;
     });
@@ -975,8 +975,8 @@ api.get("/deregister/:port", (req, res, next) => {
   res.status(200).json({
     response: {
       success: true,
-      message: "nn_server image on port " + req.params.port + " closed.",
-    },
+      message: "nn_server image on port " + req.params.port + " closed."
+    }
   });
 });
 
@@ -995,7 +995,7 @@ api.get("/living/:port", (req, res, next) => {
 
 api.get("/start/:port", (req, res, next) => {
   try {
-    if (nn_server.some((i) => i.port === Number(req.params.port)))
+    if (nn_server.some(i => i.port === Number(req.params.port)))
       throw new Error("Server already running!");
     shell.cd(path.join(root, "nn_server"));
     shell.exec(
@@ -1036,7 +1036,7 @@ api.post("/sendEmail", (req, res, next) => {
       from: "Artifact<" + config.emailAddress + ">",
       to: req.body.to,
       subject: req.body.subject,
-      text: req.body.body,
+      text: req.body.body
     },
     (error, info) => {
       if (error) {
@@ -1123,19 +1123,27 @@ api.get("/stats", (req, res, next) => {
                 (codeStatus, respo) => {
                   if (codeStatus === 200) {
                     sources.push(
-                      respo.response.Sources.filter((e) => {
+                      respo.response.Sources.filter(e => {
                         return reportRecords.some(
-                          (ele) =>
+                          ele =>
                             ele["Report Data"].trim() ===
                             e["Domain Name"].trim()
                         );
                       })
                     );
-                    let j = 0;
-                    for (let i = 3; j < 3; i++, j++) {
-                      if (sources[0][j] !== undefined)
-                        sources[0][j]["Report Count"] =
-                          reportRecords[i]["Report Count"];
+                    for (let j = 0; j < 3; j++) {
+                      if (sources[0][j] !== undefined) {
+                        for (let i = 3; i < 6; i++) {
+                          if (
+                            reportRecords[i]["Report Data"].trim() ===
+                            sources[0][j]["Domain Name"]
+                          ) {
+                            sources[0][j]["Report Count"] =
+                              reportRecords[i]["Report Count"];
+                            break;
+                          }
+                        }
+                      }
                     }
                     config.HTTPSGetRequest(
                       "artifacts.live",
@@ -1144,38 +1152,47 @@ api.get("/stats", (req, res, next) => {
                       (codeStatus, respo) => {
                         if (codeStatus === 200) {
                           facts.push(
-                            respo.response.Facts.filter((e) => {
+                            respo.response.Facts.filter(e => {
                               return reportRecords.some(
-                                (ele) =>
+                                ele =>
                                   ele["Report Data"].trim() ===
                                   e.Statement.trim()
                               );
                             })
                           );
                           for (let i = 0; i < 3; i++) {
-                            if (facts[0][i] !== undefined)
-                              facts[0][i]["Report Count"] =
-                                reportRecords[i]["Report Count"];
+                            if (facts[0][i] !== undefined) {
+                              for (let j = 0; j < 3; j++) {
+                                if (
+                                  reportRecords[j]["Report Data"].trim() ===
+                                  facts[0][i].Statement
+                                ) {
+                                  facts[0][i]["Report Count"] =
+                                    reportRecords[j]["Report Count"];
+                                  break;
+                                }
+                              }
+                            }
                           }
                           stats["message"] = "Retrieved stats successfully";
                           stats["success"] = true;
                           stats["NeuralNetwork"] = {
                             "Training Time": 460,
-                            "Training Set Count": 120454,
+                            "Training Set Count": 120454
                           };
                           stats["Reports"] = [
                             {
                               Facts: {
                                 Trending: facts[0],
-                                "End Point Hits": 41,
-                              },
+                                "End Point Hits": 41
+                              }
                             },
                             {
                               Sources: {
                                 Trending: sources[0],
-                                "End Point Hits": 39,
-                              },
-                            },
+                                "End Point Hits": 39
+                              }
+                            }
                           ];
                           res.status(200).json({ response: stats });
                         }
@@ -1188,6 +1205,98 @@ api.get("/stats", (req, res, next) => {
           }
         );
       }
+    }
+  );
+});
+
+/**
+ * @description base get request route. Reroutes the api call to the api server, gets all facts in the db
+ * @author Stuart Barclay
+ */
+
+api.get("/nnStats", (req, res, next) => {
+  getRequest(
+    "localhost",
+    "/nnStats",
+    config.db_server_port,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    }
+  );
+});
+
+/**
+ * @description base post request route. Reroutes the api call to the api server. adds new fact to db.
+ * @author Stuart Barclay
+ */
+
+api.post("/nnStats", (req, res, next) => {
+  let requestBody = "";
+  try {
+    requestBody = JSON.stringify(req.body);
+  } catch (e) {
+    let error = new Error(e.message);
+    error.status = 500;
+    next(error);
+  }
+  postRequest(
+    "localhost",
+    "/nnStats",
+    config.db_server_port,
+    requestBody,
+    (statusCode, response) => {
+      res.status(statusCode).json(response);
+    }
+  );
+});
+
+/**
+ * @description base get request route. Reroutes the api call to the api server, gets specific fact from the db
+ * @author Stuart Barclay
+ */
+
+api.get("/nnStats/id/:nnStatId", (req, res, next) => {
+  getRequest(
+    "localhost",
+    "/nnStats/id/" + req.params.nnStatId,
+    config.db_server_port,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    }
+  );
+});
+
+/**
+ * @description base get request route. Reroutes the api call to the api server, gets specific fact from the db
+ * @author Stuart Barclay
+ */
+
+api.get("/nnStats/last", (req, res, next) => {
+  getRequest(
+    "localhost",
+    "/nnStats/last/",
+    config.db_server_port,
+    (statusCode, response) => {
+      if (statusCode == 500) next(response);
+      else res.status(statusCode).json(response);
+    }
+  );
+});
+
+/**
+ * @description API call to delete a source with the given id.
+ * @author Stuart Barclay
+ */
+
+api.delete("/nnStats/:nnStatId", (req, res, next) => {
+  deleteRequest(
+    "localhost",
+    "/nnStats/" + req.params.nnStatId,
+    config.db_server_port,
+    (statusCode, response) => {
+      res.status(statusCode).json(response);
     }
   );
 });
@@ -1207,8 +1316,8 @@ api.use((req, res, next) => {
 api.use((error, req, res, next) => {
   res.status(error.status || 500).json({
     error: {
-      message: error.message,
-    },
+      message: error.message
+    }
   });
 });
 

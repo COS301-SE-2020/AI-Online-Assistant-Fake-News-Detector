@@ -12,7 +12,7 @@ from stacked_bidirectional_lstm import StackedBidirectionalLSTM
 from shallow_stack_lstm import ShallowStackedBidirectionalLSTM
 from default_configs import DEFAULT_DATASETS_PATH, DEFAULT_MODELS_PATH, DEFAULT_GRAMMATICAL_SAMPLE_LENGTH, DEFAULT_LEXICAL_SAMPLE_LENGTH, DEFAULT_CORE_SAMPLE_LENGTH
 from labels import RealOrFakeLabels
-
+from api_methods import uploadModel
 
 
 LEXICAL_MODEL_PATH = os.path.join(DEFAULT_MODELS_PATH, "lexical_model.hdf5")
@@ -82,3 +82,5 @@ def runCoreTrain(modelPath, trainingPath, validationPath,
                        lexicalModel, lexicalTrainingPath, lexicalValidationPath)
 
     trainCore(modelPath, validationPath, trainingPath)
+
+    uploadModel("core_model.hdf5", modelPath)

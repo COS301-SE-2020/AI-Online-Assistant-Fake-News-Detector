@@ -3,7 +3,12 @@ import { HomeNeuralService } from "./home-neural.service";
 import { AuthService } from "../../services/auth/auth.service";
 import { Observable } from "rxjs";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { SearchSourceService } from "../../search-source.service";
+import { HomeSourceService } from "./home-source.service";
+import { FactslistService } from '../../factslist.service';
+import { ReportService } from '../../services/report.service';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: "app-home",
@@ -24,7 +29,7 @@ export class HomeComponent implements OnInit {
   };
   nnPred: string;
   cardImgUrl: string;
-  breakdown;
+  breakdown: any;
   user$: Observable<firebase.User> = this.auth.user$;
   textHit: boolean;
   urlHit: boolean;
@@ -33,7 +38,9 @@ export class HomeComponent implements OnInit {
     private nn: HomeNeuralService,
     private readonly auth: AuthService,
     private readonly snackBar: MatSnackBar,
-    private readonly searchSource:  SearchSourceService
+    private readonly sources: HomeSourceService,
+    private readonly facts: FactslistService,
+    private readonly reports: ReportService
   ) {}
   ngOnInit(): void {
     this.step1 = true;
@@ -48,11 +55,6 @@ export class HomeComponent implements OnInit {
     this.textHit = false;
     this.urlHit = false;
     this.factHit = false;
-  }
-  clickTemp() {
-    this.snackBar.open(`Source reported ( ಥ ʖ̫ ಥ)`, "Close", {
-      duration: 4000,
-    });
   }
   paste() {
     navigator.clipboard
@@ -107,5 +109,28 @@ export class HomeComponent implements OnInit {
         duration: 3000,
       });
     }
+  }
+  checkURL() {
+
+  }
+  checkFact() {
+
+  }
+  reportSource() {
+    this.reports.reportSource(this.urlvalue).subscribe(data =>
+      this.snackBar.open(`Sourece reported! ಠ_ಠ`, "Close", {
+        duration: 4000,
+      })
+    );
+  }
+  reportFact() {
+    this.reports.reportFact(this.factvalue).subscribe(data =>
+      this.snackBar.open(`Fact reported! ʘ̅ㅈʘ̅`, "Close", {
+        duration: 4000,
+      })
+    );
+  }
+  fix(val: number): number {
+    return Math.floor(val * 100);
   }
 }
