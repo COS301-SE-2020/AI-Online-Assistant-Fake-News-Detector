@@ -54,6 +54,7 @@ The Fake News Detector is a tool to be used by both _News Consumers_ and _News D
 
 - [User Manual](https://www.overleaf.com/read/ptwsspcycjpf)
 - [Architectural Design Documentation](https://www.overleaf.com/read/gzztzhjkvvyj)
+- [Testing Policy Documentation](https://www.overleaf.com/read/sswnnyygkwgq)
 - [Coding Standard](https://www.overleaf.com/read/yhjjwykzjqpk)
 - [Project Management (Trello)](https://trello.com/invite/b/zb3DjGQ1/aa7c49e51f99044974cd1ade64787fc7/capstone-project)
 - [Software Requirement Specification](https://www.overleaf.com/read/rrhpmydtbkhr)
