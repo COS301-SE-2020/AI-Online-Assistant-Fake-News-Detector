@@ -42,6 +42,8 @@ import { WelcomeService } from './services/welcome.service';
 import { HomeNeuralService } from "./components/home/home-neural.service";
 import { ReportService } from "./services/report.service";
 import { HomeSourceService } from "./components/home/home-source.service";
+import { AnimateOnScrollModule } from 'ng2-animate-on-scroll'
+
 
 @NgModule({
   declarations: [
@@ -81,6 +83,7 @@ import { HomeSourceService } from "./components/home/home-source.service";
     AppFirebaseModule,
     NgxGaugeModule,
     NgxChartsModule,
+    AnimateOnScrollModule.forRoot()
   ],
   entryComponents: [ShareButtonComponent, ShareSheetComponent],
   providers: [
@@ -100,4 +103,4 @@ import { HomeSourceService } from "./components/home/home-source.service";
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

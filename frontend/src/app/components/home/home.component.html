@@ -37,15 +37,18 @@
                   </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="row">
-                  <div class="col-md-6 d-flex align-items-center justify-content-center" class.mat-elevation-z12>
+                  <div class="col-md-6 d-flex align-items-center justify-content-center hide-on-init"
+                    class.mat-elevation-z12>
                     <ngx-gauge type="full" [value]="confidenceGaugeValue" max="100" thick="10" label="% Confidence"
-                      size="250" [thresholds]="thresholdConfig" duration="2200">
+                      size="250" [thresholds]="thresholdConfig" duration="2200" animateOnScroll
+                      animationName="animated slideInLeft">
                     </ngx-gauge>
                   </div>
                   <div class="col-md-6 d-flex align-items-center justify-content-center">
                     <mat-card>
                       <mat-card-title>This article is probably {{nnPred}}</mat-card-title>
-                      <img mat-card-image [src]="cardImgUrl" alt="404">
+                      <img class="hide-on-init" mat-card-image [src]="cardImgUrl" alt="404" animateOnScroll
+                        animationName="animated slideInRight">
                     </mat-card>
                   </div>
                 </div>
