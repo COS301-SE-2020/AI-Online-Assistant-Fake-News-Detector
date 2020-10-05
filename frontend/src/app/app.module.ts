@@ -42,7 +42,9 @@ import { WelcomeService } from './services/welcome.service';
 import { HomeNeuralService } from "./components/home/home-neural.service";
 import { ReportService } from "./services/report.service";
 import { HomeSourceService } from "./components/home/home-source.service";
-import { AnimateOnScrollModule } from 'ng2-animate-on-scroll'
+import { AnimateOnScrollModule } from 'ng2-animate-on-scroll';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment'
 
 
 @NgModule({
@@ -83,7 +85,8 @@ import { AnimateOnScrollModule } from 'ng2-animate-on-scroll'
     AppFirebaseModule,
     NgxGaugeModule,
     NgxChartsModule,
-    AnimateOnScrollModule.forRoot()
+    AnimateOnScrollModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   entryComponents: [ShareButtonComponent, ShareSheetComponent],
   providers: [
