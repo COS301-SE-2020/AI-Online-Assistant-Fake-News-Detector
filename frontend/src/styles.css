@@ -1,88 +1,96 @@
 /* You can add global styles to this file, and also import other style files */
+
 @import './assets/animate.css';
+@font-face {
+    font-family: LogoHeading;
+    src: url("/assets/fonts/aquire-font/AquireLight-YzE0o.otf") format("truetype");
+    font-weight: 400;
+}
 
 body,
 html {
-  box-sizing: border-box;
-  height: 100%;
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+    box-sizing: border-box;
+    height: 100%;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 @keyframes pulse {
-  0.0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
-  }
+    0.0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5);
+    }
 }
+
 .pulse {
-  animation: pulse 1s ease 0.2s 2 normal none;
+    animation: pulse 1s ease 0.2s 2 normal none;
 }
 
 @keyframes bounce-in-right {
-  0% {
-    transform: translateX(600px);
-    animation-timing-function: ease-in;
-    opacity: 0;
-  }
-  38% {
-    transform: translateX(0);
-    animation-timing-function: ease-out;
-    opacity: 1;
-  }
-  55% {
-    transform: translateX(68px);
-    animation-timing-function: ease-in;
-  }
-  72% {
-    transform: translateX(0);
-    animation-timing-function: ease-out;
-  }
-  81% {
-    transform: translateX(32px);
-    animation-timing-function: ease-in;
-  }
-  90% {
-    transform: translateX(0);
-    animation-timing-function: ease-out;
-  }
-  95% {
-    transform: translateX(8px);
-    animation-timing-function: ease-in;
-  }
-  100% {
-    transform: translateX(0);
-    animation-timing-function: ease-out;
-  }
+    0% {
+        transform: translateX(600px);
+        animation-timing-function: ease-in;
+        opacity: 0;
+    }
+    38% {
+        transform: translateX(0);
+        animation-timing-function: ease-out;
+        opacity: 1;
+    }
+    55% {
+        transform: translateX(68px);
+        animation-timing-function: ease-in;
+    }
+    72% {
+        transform: translateX(0);
+        animation-timing-function: ease-out;
+    }
+    81% {
+        transform: translateX(32px);
+        animation-timing-function: ease-in;
+    }
+    90% {
+        transform: translateX(0);
+        animation-timing-function: ease-out;
+    }
+    95% {
+        transform: translateX(8px);
+        animation-timing-function: ease-in;
+    }
+    100% {
+        transform: translateX(0);
+        animation-timing-function: ease-out;
+    }
 }
 
 .bounce-in-right {
-	animation: bounce-in-right 1.6s 1.2s both;
+    animation: bounce-in-right 1.6s 1.2s both;
 }
 
 @keyframes slide-in-bottom {
-        0% {
-          transform: translateY(1000px);
-          opacity: 0;
-        }
-        100% {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
-
+    0% {
+        transform: translateY(1000px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
 
 .slide-in-bottom {
-	animation: slide-in-bottom 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.4s both;
+    animation: slide-in-bottom 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.4s both;
 }
 
-element.style{
-  overflow: visible;
+element.style {
+    overflow: visible;
 }
+
 
 /* AOS */
+
 .animated-delay-1 {
     animation-delay: 1s;
     -webkit-animation-delay: 1s;
@@ -100,6 +108,7 @@ element.style{
 .animated {
     visibility: visible !important;
 }
+
 .hide-on-init {
     visibility: hidden;
 }
