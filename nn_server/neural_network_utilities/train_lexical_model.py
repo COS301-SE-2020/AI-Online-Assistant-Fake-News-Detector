@@ -1,56 +1,50 @@
-import os
 import gc
-import pathlib
 from preprocessing import LexicalVectorizationFilter, RawFakeNewsDataFilterAdapter, ParallelPreprocessor
-from dataset_manager import DatasetManager, downloadAndCreateDatasets
+from dataset_manager import DatasetManager
 from stacked_bidirectional_lstm import StackedBidirectionalLSTM
-from default_configs import DEFAULT_DATASETS_PATH, DEFAULT_MODELS_PATH, DEFAULT_LEXICAL_SAMPLE_LENGTH
+from default_configs import DEFAULT_LEXICAL_SAMPLE_LENGTH
 from labels import RealOrFakeLabels
-from api_methods import uploadModel
 
-def trainLexical(modelName, trainDatasetPath, validationDatasetPath, rawTrainFiles=None, rawValidationFiles=None):
+def trainLexical(modelName, trainDatasetPath, validationDatasetPath):
     # Lexical pipeline
-    filter = LexicalVectorizationFilter(sampleLength=DEFAULT_LEXICAL_SAMPLE_LENGTH)
-    preprocessor = ParallelPreprocessor(filter=RawFakeNewsDataFilterAdapter(filter=filter))
+    trainDataset = DatasetManager(trainDatasetPath)
+    validationDataset = DatasetManager(validationDatasetPath)
 
-    trainDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), trainDatasetPath))
-    if rawTrainFiles is not None:
-        trainDataset.addRawDataFiles(rawTrainFiles)
-        trainDataset.prepareRawData(preprocessor)
-        gc.collect()
-    validationDataset = DatasetManager(
-        os.path.join(pathlib.Path(__file__).parent.absolute(), validationDatasetPath))
-    if rawValidationFiles is not None:
-        validationDataset.addRawDataFiles(rawValidationFiles)
-        validationDataset.prepareRawData(preprocessor)
-        gc.collect()
-    if trainDataset.getPreparedDatasetSize() > 0 and validationDataset.getPreparedDatasetSize() > 0:
-        batchSize = 128
-        model = StackedBidirectionalLSTM(outputUnits=RealOrFakeLabels.getOutputUnits(), sampleLength=DEFAULT_LEXICAL_SAMPLE_LENGTH, modelName="LexicalNN")
-        model.trainModel(trainGenerator=trainDataset.getPreparedTensorGenerator(batchSize=batchSize),
-                         validationGenerator=validationDataset.getPreparedTensorGenerator(batchSize=batchSize),
-                         trainDatasetSize=trainDataset.getPreparedDatasetSize(),
-                         validationDatasetSize=validationDataset.getPreparedDatasetSize(),
-                         batchSize=batchSize, epochs=2, saveFilePath=modelName, saveCheckpoints=False)
-        model.clear()
-        gc.collect()
+    assert trainDataset.getPreparedDatasetSize() > 0, "Training dataset must not be empty."
+    assert validationDataset.getPreparedDatasetSize() > 0, "Validation dataset must not be empty."
 
-def preprocessDatasets(trainDatasetPath, validationDatasetPath):
+    batchSize = 128
+    model = StackedBidirectionalLSTM(outputUnits=RealOrFakeLabels.getOutputUnits(), sampleLength=DEFAULT_LEXICAL_SAMPLE_LENGTH, modelName="LexicalNN")
+
+    model.trainModel(trainGenerator=trainDataset.getPreparedTensorGenerator(batchSize=batchSize),
+                     validationGenerator=validationDataset.getPreparedTensorGenerator(batchSize=batchSize),
+                     trainDatasetSize=trainDataset.getPreparedDatasetSize(),
+                     validationDatasetSize=validationDataset.getPreparedDatasetSize(),
+                     batchSize=batchSize, epochs=2, saveFilePath=modelName, saveCheckpoints=False)
+
+    model.clear()
+    gc.collect()
+
+def preprocessDataset(preparedDatasetPath, rawDatasetPath):
     print("Lexical preprocessing...")
-    trainDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), trainDatasetPath))
-    validationDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), validationDatasetPath))
+    rawDataset = DatasetManager(rawDatasetPath)
+    preparedDataset = DatasetManager(preparedDatasetPath)
+
     filter = LexicalVectorizationFilter(sampleLength=DEFAULT_LEXICAL_SAMPLE_LENGTH)
     preprocessor = ParallelPreprocessor(filter=RawFakeNewsDataFilterAdapter(filter=filter))
-    trainDataset.prepareRawData(preprocessor)
-    validationDataset.prepareRawData(preprocessor)
 
-def runLexicalTrain(modelPath, trainingPath, validationPath, rawTrainFiles=None, rawValidationFiles=None):
-    if rawTrainFiles is None and rawValidationFiles is None:
-        downloadAndCreateDatasets(trainingPath, validationPath)
+    preparedDataset.prepareRawDataFromGenerator(preprocessor, rawDataset.getRawDataGenerator())
+    gc.collect()
 
-    preprocessDatasets(trainingPath, validationPath)
+def runLexicalTrain(modelPath, trainingPath, validationPath, rawTrainingPath=None, rawValidationPath=None):
+    if rawTrainingPath is not None:
+        print("Preprocessing " + rawTrainingPath)
+        preprocessDataset(trainingPath, rawTrainingPath)
 
-    trainLexical(modelName=modelPath, trainDatasetPath=trainingPath, validationDatasetPath=validationPath,
-                 rawTrainFiles=rawTrainFiles, rawValidationFiles=rawValidationFiles)
+    if rawValidationPath is not None:
+        print("Preprocessing " + rawValidationPath)
+        preprocessDataset(validationPath, rawValidationPath)
 
-    uploadModel("lexical_model.hdf5", modelPath)
+    trainLexical(modelName=modelPath, trainDatasetPath=trainingPath, validationDatasetPath=validationPath)
+
+    #uploadModel("lexical_model.hdf5", modelPath)
