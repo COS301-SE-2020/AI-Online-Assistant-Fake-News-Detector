@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import './assets/animate.css';
+
 body,
 html {
   box-sizing: border-box;
@@ -70,7 +72,7 @@ html {
           opacity: 1;
         }
       }
-      
+
 
 .slide-in-bottom {
 	animation: slide-in-bottom 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.4s both;
@@ -78,4 +80,26 @@ html {
 
 element.style{
   overflow: visible;
+}
+
+/* AOS */
+.animated-delay-1 {
+    animation-delay: 1s;
+    -webkit-animation-delay: 1s;
+    -moz-animation-delay: 1s;
+    -o-animation-delay: 1s;
+}
+
+.animated-delay-2 {
+    animation-delay: 2s;
+    -webkit-animation-delay: 2s;
+    -moz-animation-delay: 2s;
+    -o-animation-delay: 2s;
+}
+
+.animated {
+    visibility: visible !important;
+}
+.hide-on-init {
+    visibility: hidden;
 }
