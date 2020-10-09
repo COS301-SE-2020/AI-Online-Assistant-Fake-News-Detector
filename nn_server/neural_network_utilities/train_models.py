@@ -1,10 +1,14 @@
 import os
 import errno
+import time
+import math
 import multiprocessing as mp
+from dataset_manager import DatasetManager
 from train_grammatical_model import runGrammaticalTrain
 from train_lexical_model import runLexicalTrain
 from train_core_model import runCoreTrain
 from default_configs import DEFAULT_DATASETS_PATH, DEFAULT_MODELS_PATH
+from api_methods import updateStats
 
 if __name__ == "__main__":
     rawTrainFiles = ["training_data.json"]
@@ -27,6 +31,8 @@ if __name__ == "__main__":
     except OSError as e:
         if e.errno != errno.EEXIST:
             print("Error creating directory: " + str(e))
+
+    startTime = time.time()
 
     if True:
         tfProcess = mp.Process(target=runGrammaticalTrain, args=(GRAMMATICAL_MODEL_PATH,
@@ -58,3 +64,15 @@ if __name__ == "__main__":
                                                           LEXICAL_VALIDATION_PATH))
         tfProcess.start()
         tfProcess.join()
+
+    endTime = time.time()
+    totalTime = math.floor(endTime - startTime)
+
+    trainingDataset = DatasetManager(GRAMMATICAL_TRAINING_PATH)
+    validationDataset = DatasetManager(GRAMMATICAL_VALIDATION_PATH)
+    totalRecords = trainingDataset.getRawDatasetSize() + validationDataset.getRawDatasetSize()
+
+    trainingRate = totalRecords / totalTime
+    trainingRate = math.floor(trainingRate * 10000) / 10000.0
+
+    updateStats(totalTime, totalRecords, trainingRate)
