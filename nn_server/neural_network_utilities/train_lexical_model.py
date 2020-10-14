@@ -4,6 +4,7 @@ from dataset_manager import DatasetManager
 from stacked_bidirectional_lstm import StackedBidirectionalLSTM
 from default_configs import DEFAULT_LEXICAL_SAMPLE_LENGTH
 from labels import RealOrFakeLabels
+from callbacks import Callbacks
 
 def trainLexical(modelName, trainDatasetPath, validationDatasetPath):
     # Lexical pipeline
@@ -20,7 +21,7 @@ def trainLexical(modelName, trainDatasetPath, validationDatasetPath):
                      validationGenerator=validationDataset.getPreparedTensorGenerator(batchSize=batchSize),
                      trainDatasetSize=trainDataset.getPreparedDatasetSize(),
                      validationDatasetSize=validationDataset.getPreparedDatasetSize(),
-                     batchSize=batchSize, epochs=2, saveFilePath=modelName, saveCheckpoints=False)
+                     batchSize=batchSize, epochs=8, saveFilePath=modelName, callbacks=Callbacks(name="lexical_nn", patience=4).getCallbacks())
 
     model.clear()
     gc.collect()
@@ -47,4 +48,4 @@ def runLexicalTrain(modelPath, trainingPath, validationPath, rawTrainingPath=Non
 
     trainLexical(modelName=modelPath, trainDatasetPath=trainingPath, validationDatasetPath=validationPath)
 
-    #uploadModel("lexical_model.hdf5", modelPath)
+

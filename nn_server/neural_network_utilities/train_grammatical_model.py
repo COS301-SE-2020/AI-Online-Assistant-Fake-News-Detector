@@ -4,6 +4,7 @@ from dataset_manager import DatasetManager
 from deep_stacked_bidirectional_lstm import DeepStackedBidirectionalLSTM
 from default_configs import DEFAULT_GRAMMATICAL_SAMPLE_LENGTH
 from labels import RealOrFakeLabels
+from callbacks import Callbacks
 
 def trainGrammatical(modelName, trainDatasetPath, validationDatasetPath):
     # grammar pipeline
@@ -19,7 +20,7 @@ def trainGrammatical(modelName, trainDatasetPath, validationDatasetPath):
     model.trainModel(trainGenerator=trainDataset.getPreparedTensorGenerator(batchSize=batchSize),
                      validationGenerator=validationDataset.getPreparedTensorGenerator(batchSize=batchSize),
                      trainDatasetSize=trainDataset.getPreparedDatasetSize(), validationDatasetSize=validationDataset.getPreparedDatasetSize(),
-                     batchSize=batchSize, epochs=8, saveFilePath=modelName, saveCheckpoints=False)
+                     batchSize=batchSize, epochs=16, saveFilePath=modelName, callbacks=Callbacks(name="grammatical_nn", patience=8).getCallbacks())
 
     model.clear()
     gc.collect()
