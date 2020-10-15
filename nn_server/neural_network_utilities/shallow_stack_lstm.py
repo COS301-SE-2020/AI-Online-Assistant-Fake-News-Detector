@@ -78,7 +78,7 @@ class ShallowStackedBidirectionalLSTM(Filter):
         latest = tf.train.latest_checkpoint(fileDir)
         self.__model.load_weights(latest)
 
-    def trainModel(self, trainGenerator, validationGenerator, trainDatasetSize, validationDatasetSize, epochs, batchSize, saveFilePath, saveCheckpoints = False):
+    def trainModel(self, trainGenerator, validationGenerator, trainDatasetSize, validationDatasetSize, epochs, batchSize, saveFilePath, callbacks):
         """
         @author: AlistairPaynUP
         @:param generator: A generator for training data.
@@ -86,17 +86,10 @@ class ShallowStackedBidirectionalLSTM(Filter):
         """
         self.__initialize()
         self.__model.compile("adam", "binary_crossentropy", metrics=["accuracy"])
-        if saveCheckpoints:
-            checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath=saveFilePath + ".ckpt", save_weights_only=True, verbose=1)
-            self.__model.fit(trainGenerator, validation_data=validationGenerator,
-                             steps_per_epoch=trainDatasetSize / batchSize,
-                             validation_steps=validationDatasetSize / batchSize,
-                             batch_size=batchSize, epochs=epochs, callbacks=[checkpoint], shuffle=True)
-        else:
-            self.__model.fit(trainGenerator, validation_data=validationGenerator,
-                             steps_per_epoch=trainDatasetSize / batchSize,
-                             validation_steps=validationDatasetSize / batchSize,
-                             batch_size=batchSize, epochs=epochs, shuffle=True)
+        self.__model.fit(trainGenerator, validation_data=validationGenerator,
+                         steps_per_epoch=trainDatasetSize / batchSize,
+                         validation_steps=validationDatasetSize / batchSize,
+                         batch_size=batchSize, epochs=epochs, shuffle=True, callbacks=callbacks)
         self.exportModel(saveFilePath)
 
     def process(self, preparedData):

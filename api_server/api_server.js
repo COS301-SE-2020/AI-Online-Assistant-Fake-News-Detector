@@ -9,9 +9,9 @@ const cors = require("cors");
 const API = require("./routes/APIv1");
 const fs = require("fs");
 const ExternalDocs = require(__dirname +
-  "/routes/ExternalDocs").getAbsoluteFSPath();
+   "/routes/ExternalDocs").getAbsoluteFSPath();
 const InternalDocs = require(__dirname +
-  "/routes/InternalDocs").getAbsoluteFSPath();
+   "/routes/InternalDocs").getAbsoluteFSPath();
 const path = require("path");
 const root = require("../Util/path");
 const config = require(path.join(root, "Util", "config"));
@@ -44,7 +44,7 @@ cron.schedule("55 23 * * *", () => {
 cron.schedule("58 23 * * 0", () => {
   // cron.schedule("55 * * * * * ", () => {
   getRequest(hostURL, "/api/reports/active/1", 8080, (statusCode, response) => {
-    response.response.Reports.forEach((ele) => {
+    response.response.Reports.forEach(ele => {
       console.log(ele.Type);
     });
   });
@@ -65,7 +65,7 @@ morgan.token("date", (req, res, tz) => {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
-    hour12: false,
+    hour12: false
   });
   const [
     { value: month },
@@ -78,7 +78,7 @@ morgan.token("date", (req, res, tz) => {
     ,
     { value: minute },
     ,
-    { value: second },
+    { value: second }
   ] = format.formatToParts(date);
   return `${day}/${month}/${year} ${hour}:${minute}:${second}`;
 });
@@ -87,14 +87,14 @@ if (production) {
   const accessLog = fs.createWriteStream(
     path.join(root, "logfiles", "access.log"),
     {
-      flags: "a",
+      flags: "a"
     }
   );
 
   const errorLog = fs.createWriteStream(
     path.join(root, "logfiles", "error.log"),
     {
-      flags: "a",
+      flags: "a"
     }
   );
 
@@ -103,7 +103,7 @@ if (production) {
       skip: (req, res) => {
         return res.statusCode < 400;
       },
-      stream: errorLog,
+      stream: errorLog
     })
   );
 
@@ -112,7 +112,7 @@ if (production) {
       skip: (req, res) => {
         return res.statusCode >= 400;
       },
-      stream: accessLog,
+      stream: accessLog
     })
   );
 
@@ -124,7 +124,7 @@ if (production) {
           throw new Error("Error Retrieving Active Servers " + servers.message);
         if (servers.servers !== undefined && servers.servers.length > 0) {
           // Check that server is accepting requests
-          servers.servers.forEach((e) => {
+          servers.servers.forEach(e => {
             getRequest(
               hostURL,
               "/api/living/" + e.port,
@@ -147,7 +147,7 @@ if (production) {
         }
         // If no servers registered
         else {
-          [8090, 8091, 8092].forEach((e) => {
+          [8090, 8091, 8092].forEach(e => {
             getRequest(
               hostURL,
               "/api/living/" + e,
@@ -178,7 +178,7 @@ if (production) {
     getRequest(hostURL, "/api/active", 8080, (statusCode, response) => {
       if (response.servers > 0) {
         let active = "Active Servers - ";
-        response.servers.forEach((e) => {
+        response.servers.forEach(e => {
           active += "Port " + e.port + ", ";
         });
         active = active.substring(0, active.length - 2);
@@ -207,7 +207,7 @@ try {
     cert: fs.readFileSync(
       path.join(root, "Util", "ProductionCertificates", "cert.pem"),
       "utf8"
-    ),
+    )
   };
   const httpsServer = production
     ? https.createServer(Certificates, server)

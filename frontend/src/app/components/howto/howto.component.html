@@ -1,202 +1,124 @@
 <div class="container-fluid">
   <div class="topsection tophero">
     <div class="topcontainer">
-      
+
     </div>
 
-        <span class="text-span"> <p id="heading">
-         Transparency is next to Fact-<i>arency </i>! <br> Have a look at what happens in the backend of <b>Artifact</b>.
-        </p></span>
+    <span class="text-span">
+      <p id="heading">
+        Transparency is next to Fact-<i>arency </i>! <br> Have a look at what happens in the backend of <b>Artifact</b>.
+      </p>
+    </span>
 
-        <div id="nnStatsHeading"><i><b>Neural Network Figures</b></i></div>
-        <div id="NeuralNetworkStatistics">
-
-      
-              
-                <ngx-gauge class="gauge-width" style="overflow: visible !important;"
-                [type]="TTgaugeType" 
-                [value]="TTgaugevalue" 
-                [label]="TTgaugeLabel" 
-                [max] = "maxTT"
-                [thick] = 10
-                [thresholds]="TTthresholdConfig" 
-                size = 200
-                
-                >
-                </ngx-gauge>
+    <div id="nnStatsHeading"><i><b>Neural Network Figures</b></i></div>
+    <div id="NeuralNetworkStatistics">
 
 
-                <ngx-gauge [type]="TDgaugeType" 
-                [value]="TDgaugeValue" 
-                [max] = "maxTD"
-                [thick] = 10
-                [label]="TDgaugeLabel" 
-                [size] = "TDsize"
-                >
-                </ngx-gauge>
 
-                <ngx-gauge [type]="SMgaugeType" 
-                [value]="SMgaugeValue" 
-                [label]="SMgaugeLabel" 
-                [max] = "maxSM"
-                [thick] = 10
-                [thresholds]="SMthresholdConfig"
-                [size] = "SMsize" 
-                >
-                </ngx-gauge>
+      <ngx-gauge class="gauge-width" style="overflow: visible !important;" [type]="TTgaugeType" [value]="TTgaugevalue"
+        [label]="TTgaugeLabel" [max]="maxTT" [thick]=10 [thresholds]="TTthresholdConfig" size=200>
+      </ngx-gauge>
 
-                <ngx-gauge [type]="TSgaugeType" 
-                [value]="TSgaugevalue" 
-                [label]="TSgaugeLabel" 
-                [max] = "maxTS"
-                [thick] = 10
-                [thresholds]="TSthresholdConfig" 
-                size = 200
-                >
-                </ngx-gauge>
+
+      <ngx-gauge [type]="TDgaugeType" [value]="TDgaugeValue" [max]="maxTD" [thick]=10 [label]="TDgaugeLabel"
+        [size]="TDsize">
+      </ngx-gauge>
+
+      <ngx-gauge [type]="SMgaugeType" [value]="SMgaugeValue" [label]="SMgaugeLabel" [max]="maxSM" [thick]=10
+        [thresholds]="SMthresholdConfig" [size]="SMsize">
+      </ngx-gauge>
+
+      <ngx-gauge [type]="TSgaugeType" [value]="TSgaugevalue" [label]="TSgaugeLabel" [max]="maxTS" [thick]=10
+        [thresholds]="TSthresholdConfig" size=200>
+      </ngx-gauge>
+    </div>
+
+    <div id="TrendingStatistics">
+
+      <div fxLayout="auto wrap" fxLayoutAlign="space-evenly center" fxFlexOffset.lg="12" fxFlexOffset.xs="5"
+        fxLayout.lt-sm="column" fxLayoutGap="20px">
+
+        <div fxFlex.xs="50%" fxFlex.md="50%">
+          <i><b>Trending Fact vs Report Count</b></i>
+          <ngx-charts-pie-chart *ngIf="setFacts" (window:resize)="onResize($event)" [view]="Fview"
+            [scheme]="FcolorScheme" [results]="this.trendingFacts" [gradient]="Fgradient" [legend]="FshowLegend"
+            [legendPosition]="FlegendPosition" [legendTitle]='FlegendTitle' [trimLabels]="FtrimLabel"
+            [labels]="FshowLabels" [doughnut]="FisDoughnut" (select)="onSelect($event)" (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)">
+          </ngx-charts-pie-chart>
+
         </div>
 
-        <div id="TrendingStatistics">
+        <div fxFlex.xs="50%" fxFlex.md="50%">
+          <i><b>Trending Source vs Report Count</b></i>
+          <ngx-charts-pie-chart *ngIf="setSources" (window:resize)="onResize($event)" [view]="Sview"
+            [scheme]="ScolorScheme" [results]="this.trendingSources" [gradient]="Sgradient" [legend]="SshowLegend"
+            [legendPosition]="SlegendPosition" [legendTitle]='SlegendTitle' [trimLabels]="StrimLabel"
+            [labels]="SshowLabels" [doughnut]="SisDoughnut" (select)="onSelect($event)" (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)">
+          </ngx-charts-pie-chart>
 
-            <div fxLayout="auto wrap" fxLayoutAlign="space-evenly center" fxFlexOffset.lg="12" fxFlexOffset.xs="5" fxLayout.lt-sm="column" fxLayoutGap="20px">
-
-                <div fxFlex.xs="50%" fxFlex.md="50%">
-                  <i><b>Trending Fact vs Report Count</b></i>
-                  <ngx-charts-pie-chart *ngIf="setFacts"
-                  (window:resize)="onResize($event)"
-                  [view]="Fview"
-                  [scheme]="FcolorScheme"
-                  [results]="this.trendingFacts"
-                  [gradient]="Fgradient"
-                  [legend]="FshowLegend"
-                  [legendPosition]="FlegendPosition"
-                  [legendTitle] = 'FlegendTitle'
-                  [trimLabels] = "FtrimLabel"
-                  [labels]="FshowLabels"
-                  [doughnut]="FisDoughnut"
-                  (select)="onSelect($event)"
-                  (activate)="onActivate($event)"
-                  (deactivate)="onDeactivate($event)"
-                  >
-                </ngx-charts-pie-chart>
-
-                </div>
-    
-              <div fxFlex.xs="50%" fxFlex.md="50%">
-                <i><b>Trending Source vs Report Count</b></i>
-                <ngx-charts-pie-chart  *ngIf="setSources"
-                (window:resize)="onResize($event)"
-                [view]="Sview"
-                [scheme]="ScolorScheme"
-                [results]="this.trendingSources"
-                [gradient]="Sgradient"
-                [legend]="SshowLegend"
-                [legendPosition]="SlegendPosition"
-                [legendTitle] = 'SlegendTitle'
-                [trimLabels] = "StrimLabel"
-                [labels]="SshowLabels"
-                [doughnut]="SisDoughnut"
-                (select)="onSelect($event)"
-                (activate)="onActivate($event)"
-                (deactivate)="onDeactivate($event)"
-                >
-              </ngx-charts-pie-chart>
-
-              </div>
-                
-
-            </div>
- 
         </div>
 
-        
-        <div id="PopularityRatings">
-          
-          <div fxLayout="auto wrap" fxLayoutAlign="space-evenly center" fxFlexOffset.lg="15" fxFlexOffset.xs="5" fxLayout.lt-sm="column" fxLayoutGap="40px">
 
-            <div fxFlex.xs="50%" fxFlex.md="50%">
-              <i><b>Trending Fact vs Popularity Rating</b></i>
-                <ngx-charts-bar-vertical  *ngIf="setSources"
-                (window:resize)="onResize($event)"
-                [view]="FPview"
-                [scheme]="FPcolorScheme"
-                [results]="this.factsPopularity"
-                [gradient]="FPgradient"
-                [xAxis]="FPshowXAxis"
-                [yAxis]="FPshowYAxis"
-                [legend]="FPshowLegend"
-                [showXAxisLabel]="FPshowXAxisLabel"
-                [showYAxisLabel]="FPshowYAxisLabel"
-                [legendTitle] = 'FPlegendTitle'
-                [xAxisLabel]="FPxAxisLabel"
-                [yAxisLabel]="FPyAxisLabel"
-                [legendPosition] = "SPlegendPosition"
-                (select)="onSelect($event)">
-              </ngx-charts-bar-vertical>
-            </div>
+      </div>
 
-            <div fxFlex.xs="50%" fxFlex.md="50%">
-              <i><b>Trending Source vs Popularity Rating</b></i>
-              <ngx-charts-bar-vertical  *ngIf="setSources"
-              (window:resize)="onResize($event)"
-              [view]="SPview"
-              [scheme]="SPcolorScheme"
-              [results]="this.sourcesPopularity"
-              [gradient]="SPgradient"
-              [xAxis]="SPshowXAxis"
-              [yAxis]="SPshowYAxis"
-              [legend]="SPshowLegend"
-              [showXAxisLabel]="SPshowXAxisLabel"
-              [showYAxisLabel]="SPshowYAxisLabel"
-              [legendTitle] = 'SPlegendTitle'
-              [xAxisLabel]="SPxAxisLabel"
-              [yAxisLabel]="SPyAxisLabel"
-              [legendPosition]= "SPlegendPosition"
-              (select)="onSelect($event)">
-              </ngx-charts-bar-vertical>
-            </div>
+    </div>
 
-          </div>
+
+    <div id="PopularityRatings">
+
+      <div fxLayout="auto wrap" fxLayoutAlign="space-evenly center" fxFlexOffset.lg="15" fxFlexOffset.xs="5"
+        fxLayout.lt-sm="column" fxLayoutGap="40px">
+
+        <div fxFlex.xs="50%" fxFlex.md="50%">
+          <i><b>Trending Fact vs Popularity Rating</b></i>
+          <ngx-charts-bar-vertical *ngIf="setSources" (window:resize)="onResize($event)" [view]="FPview"
+            [scheme]="FPcolorScheme" [results]="this.factsPopularity" [gradient]="FPgradient" [xAxis]="FPshowXAxis"
+            [yAxis]="FPshowYAxis" [legend]="FPshowLegend" [showXAxisLabel]="FPshowXAxisLabel"
+            [showYAxisLabel]="FPshowYAxisLabel" [legendTitle]='FPlegendTitle' [xAxisLabel]="FPxAxisLabel"
+            [yAxisLabel]="FPyAxisLabel" [legendPosition]="SPlegendPosition" (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+        </div>
+
+        <div fxFlex.xs="50%" fxFlex.md="50%">
+          <i><b>Trending Source vs Popularity Rating</b></i>
+          <ngx-charts-bar-vertical *ngIf="setSources" (window:resize)="onResize($event)" [view]="SPview"
+            [scheme]="SPcolorScheme" [results]="this.sourcesPopularity" [gradient]="SPgradient" [xAxis]="SPshowXAxis"
+            [yAxis]="SPshowYAxis" [legend]="SPshowLegend" [showXAxisLabel]="SPshowXAxisLabel"
+            [showYAxisLabel]="SPshowYAxisLabel" [legendTitle]='SPlegendTitle' [xAxisLabel]="SPxAxisLabel"
+            [yAxisLabel]="SPyAxisLabel" [legendPosition]="SPlegendPosition" (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <div id="EndpointHitRates">
+
+      <div fxLayout="auto wrap" fxLayoutAlign="space-evenly center" fxLayout.lt-xs="column" fxFlexOffset.lg="27">
+
+        <div fxFlex.xs="50%" fxFlex.md="50%">
+          <i><b>Endpoint vs Hit</b></i>
+          <ngx-charts-bar-horizontal *ngIf="setEndpoint" (window:resize)="onResize($event)" [view]="Eview"
+            [scheme]="EcolorScheme" [results]="endpointHits" [gradient]="Egradient" [xAxis]="EshowXAxis"
+            [yAxis]="EshowYAxis" [legend]="EshowLegend" [showXAxisLabel]="EshowXAxisLabel"
+            [showYAxisLabel]="EshowYAxisLabel" [legendTitle]='ElegendTitle' [xAxisLabel]="ExAxisLabel"
+            [yAxisLabel]="EyAxisLabel" [legendPosition]="ElegendPosition" (select)="onSelect($event)"
+            (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+          </ngx-charts-bar-horizontal>
+        </div>
+
 
       </div>
 
 
 
-        <div id="EndpointHitRates">
-
-          <div fxLayout="auto wrap" fxLayoutAlign="space-evenly center" fxLayout.lt-xs="column" fxFlexOffset.lg="27">
-            
-            <div fxFlex.xs="50%" fxFlex.md="50%">
-              <i><b>Endpoint vs Hit</b></i>
-                <ngx-charts-bar-horizontal *ngIf="setEndpoint"
-                (window:resize)="onResize($event)"
-                [view]="Eview"
-                [scheme]="EcolorScheme"
-                [results]="endpointHits"
-                [gradient]="Egradient"
-                [xAxis]="EshowXAxis"
-                [yAxis]="EshowYAxis"
-                [legend]="EshowLegend"
-                [showXAxisLabel]="EshowXAxisLabel"
-                [showYAxisLabel]="EshowYAxisLabel"
-                [legendTitle] = 'ElegendTitle'
-                [xAxisLabel]="ExAxisLabel"
-                [yAxisLabel]="EyAxisLabel"
-                [legendPosition]= "ElegendPosition"
-                (select)="onSelect($event)"
-                (activate)="onActivate($event)"
-                (deactivate)="onDeactivate($event)">
-               </ngx-charts-bar-horizontal>
-            </div>
-          
-
-          </div>
-
-  
-
-        </div>
+    </div>
 
   </div>
 
 </div>
-

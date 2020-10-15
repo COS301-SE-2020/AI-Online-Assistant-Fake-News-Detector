@@ -1,12 +1,9 @@
 import os
 import errno
 import json
-import math
 import random
-import pathlib
 import numpy as np
 import tensorflow as tf
-from api_methods import downloadTrainingDatasetRange
 from default_configs import DEFAULT_MAX_FILE_SIZE, DEFAULT_BATCH_SIZE
 
 class DatasetManager:
@@ -131,6 +128,15 @@ class DatasetManager:
         for dataList in self.getRawDataGenerator():
             self.addPreparedData(preprocessor(dataList))
 
+    def prepareRawDataFromGenerator(self, preprocessor, generator):
+        """
+        @author: AlistairPaynUP
+        @:param preprocessor: The preprocessor to use to prepare each of the raw data files.
+        @:param generator: The generator which is used to source the raw data files instead of those that may be in this dataset.
+        """
+        for dataList in generator:
+            self.addPreparedData(preprocessor(dataList))
+
     def addPreparedData(self, sampleList):
         """
         @author: AlistairPaynUP
@@ -158,7 +164,7 @@ class DatasetManager:
                             manifest['preparedFileCounter'] += 1
                             manifest['preparedFiles'].append(newFile)
                             fileSizeCounter = 0
-                        datasetFile.write(json.dumps({'id': id, 'data': data, 'label': label}))
+                        datasetFile.write(json.dumps({'data': data, 'id': id, 'label': label}))
                         manifest['preparedDatasetSize'] += 1
                         datasetFile.write('\n')
                         fileSizeCounter += 1
@@ -262,10 +268,11 @@ class DatasetManager:
         @return: The list of items in loaded file.
         """
         jsonFile = open(filePath, 'r', encoding="utf8")
-        jsonString = jsonFile.read()
+        jsonData = []
+        for jsonLine in jsonFile:
+            jsonData.append(json.loads(jsonLine.lower()))
         jsonFile.close()
-        sampleList = list(json.loads(jsonString.lower()))
-        return sampleList
+        return jsonData
 
 def loadJSONFile(filePath):
     """
@@ -277,18 +284,3 @@ def loadJSONFile(filePath):
     jsonString = jsonFile.read()
     jsonFile.close()
     return json.loads(jsonString)
-
-def downloadAndCreateDatasets(trainDatasetPath, validationDatasetPath):
-    trainDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), trainDatasetPath))
-    validationDataset = DatasetManager(os.path.join(pathlib.Path(__file__).parent.absolute(), validationDatasetPath))
-    start = 0
-    step = 10000
-    while True:
-        dataList = downloadTrainingDatasetRange(start, start + step)
-        parition = math.floor(len(dataList) * 0.8)
-        if len(dataList) == 0:
-            break
-        else:
-            trainDataset.addRawData(dataList[:parition])
-            validationDataset.addRawData(dataList[parition:])
-        start += step

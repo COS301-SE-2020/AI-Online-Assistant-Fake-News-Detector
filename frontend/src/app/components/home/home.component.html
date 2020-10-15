@@ -20,159 +20,162 @@
         </button>
       </div>
 
-<!-- neural network response begin -->
-<ng-container *ngIf="textHit">
-  &nbsp;
-  <div class="container-fluid">
-    <div class="neuralResponse">
-      <mat-accordion class="example-headers-align" multi>
-        <mat-expansion-panel [(expanded)]="step1">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Summary:
-            </mat-panel-title>
-            <mat-panel-description>
-              <div color="primary">[ TL;DR ]</div>
-              <mat-icon>speed</mat-icon>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <div class="row">
-            <div class="col-md-6 d-flex align-items-center justify-content-center" class.mat-elevation-z12>
-              <ngx-gauge type="full" [value]="confidenceGaugeValue" max="100" thick="10" label="% Confidence" size="250"
-                [thresholds]="thresholdConfig" duration="2200">
-              </ngx-gauge>
-              </div>
-              <div class="col-md-6 d-flex align-items-center justify-content-center">
-              <mat-card>
-                <mat-card-title>This article is probably {{nnPred}}</mat-card-title>
-                <img mat-card-image [src]="cardImgUrl" alt="404">
-              </mat-card>
-            </div>
+      <!-- neural network response begin -->
+      <ng-container *ngIf="textHit">
+        &nbsp;
+        <div class="container-fluid">
+          <div class="neuralResponse">
+            <mat-accordion class="example-headers-align" multi>
+              <mat-expansion-panel [(expanded)]="step1">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Summary:
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <div color="primary">[ TL;DR ]</div>
+                    <mat-icon>speed</mat-icon>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="row">
+                  <div class="col-md-6 d-flex align-items-center justify-content-center hide-on-init"
+                    class.mat-elevation-z12>
+                    <ngx-gauge type="full" [value]="confidenceGaugeValue" max="100" thick="10" label="% Confidence"
+                      size="250" [thresholds]="thresholdConfig" duration="2200" animateOnScroll
+                      animationName="animated slideInLeft">
+                    </ngx-gauge>
+                  </div>
+                  <div class="col-md-6 d-flex align-items-center justify-content-center">
+                    <mat-card>
+                      <mat-card-title>This article is probably {{nnPred}}</mat-card-title>
+                      <img class="hide-on-init" mat-card-image [src]="cardImgUrl" alt="404" animateOnScroll
+                        animationName="animated slideInRight">
+                    </mat-card>
+                  </div>
+                </div>
+
+                <!-- #docregion action-bar -->
+                <mat-action-row>
+                  <button mat-flat-button color="primary" (click)="step2=true">Show Breakdown</button>
+                </mat-action-row>
+                <!-- #enddocregion action-bar -->
+              </mat-expansion-panel>
+
+              <mat-expansion-panel [(expanded)]="step2">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Breakdown:
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Full analysis
+                    <mat-icon>analytics</mat-icon>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ul>
+                  <li *ngFor="let item of breakdown">
+                    {{ item.text }}
+                    <span>
+                      <mat-progress-bar class="example-margin" color="color" mode="mode"
+                        value="{{ fix(item.confidence) }}" bufferValue="bufferValue">
+                      </mat-progress-bar>
+                      <div>Confidence: {{fix(item.confidence)}}%</div>
+                      <div>Prediction: {{item.prediction}}</div>
+                    </span>
+                  </li>
+                </ul>
+                <mat-action-row>
+                  <button mat-flat-button color="primary" (click)="step3=true">Share / Subscribe</button>
+                </mat-action-row>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel [(expanded)]="step3">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    More:
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    [ Notifications / Share ]
+                    <mat-icon>share</mat-icon>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div class="shareOptions">
+                  <mat-card>
+                    <mat-list>
+                      <ng-container *ngIf="user$ | async as user; else loginIcon">
+                        <mat-list-item class.mat-elevation-z10>
+                          <mat-icon>notifications</mat-icon>
+                          <h3 mat-line>Enable notifications</h3>
+                          <p mat-line>
+                            <span>Subscribe to updates from this article</span>
+                          </p>
+                        </mat-list-item>
+                      </ng-container>
+                      <ng-template #loginIcon>
+                        <mat-list-item class.mat-elevation-z12>
+                          <mat-icon>fingerprint</mat-icon>
+                          <h3 mat-line>Notifications</h3>
+                          <p mat-line>
+                            <span>Please sign in to subscribe to updates</span>
+                          </p>
+                        </mat-list-item>
+                      </ng-template>
+                      <mat-divider></mat-divider>
+                      <mat-list-item class.mat-elevation-z12 (click)="share($event)">
+                        <mat-icon>share</mat-icon>
+                        <h3 mat-line>Share</h3>
+                        <p mat-line>
+                          <span>Share the result</span>
+                        </p>
+                      </mat-list-item>
+                    </mat-list>
+                  </mat-card>
+                </div>
+
+                <mat-action-row>
+                  <button mat-flat-button color="warn" (click)="step1=step2=step3=false;">Collapse All</button>
+                  <button mat-flat-button color="primary" (click)="textHit=false;">Remove Result</button>
+                </mat-action-row>
+              </mat-expansion-panel>
+
+            </mat-accordion>
           </div>
-
-          <!-- #docregion action-bar -->
-          <mat-action-row>
-            <button mat-flat-button color="primary" (click)="step2=true">Show Breakdown</button>
-          </mat-action-row>
-          <!-- #enddocregion action-bar -->
-        </mat-expansion-panel>
-
-        <mat-expansion-panel [(expanded)]="step2">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Breakdown:
-            </mat-panel-title>
-            <mat-panel-description>
-              Full analysis
-              <mat-icon>analytics</mat-icon>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <ul>
-            <li *ngFor="let item of breakdown">
-              {{ item.text }}
-            <span>
-            <mat-progress-bar class="example-margin" color="color" mode="mode" value="{{ item.confidence }}"
-              bufferValue="bufferValue">
-            </mat-progress-bar>
-            <div>Confidence: {{fix(item.confidence)}}%</div>
-            <div>Prediction: {{item.prediction}}</div>
-            </span>
-          </li>
-          </ul>
-          <mat-action-row>
-            <button mat-flat-button color="primary" (click)="step3=true">Share / Subscribe</button>
-          </mat-action-row>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel [(expanded)]="step3">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              More:
-            </mat-panel-title>
-            <mat-panel-description>
-              [ Notifications / Share ]
-              <mat-icon>share</mat-icon>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-
-          <div class="shareOptions">
-            <mat-card>
-              <mat-list>
-                <ng-container *ngIf="user$ | async as user; else loginIcon">
-                  <mat-list-item class.mat-elevation-z10>
-                    <mat-icon>notifications</mat-icon>
-                    <h3 mat-line>Enable notifications</h3>
-                    <p mat-line>
-                      <span>Subscribe to updates from this article</span>
-                    </p>
-                  </mat-list-item>
-                </ng-container>
-                <ng-template #loginIcon>
-                  <mat-list-item class.mat-elevation-z12>
-                    <mat-icon>fingerprint</mat-icon>
-                    <h3 mat-line>Notifications</h3>
-                    <p mat-line>
-                      <span>Please sign in to subscribe to updates</span>
-                    </p>
-                  </mat-list-item>
-                </ng-template>
-                <mat-divider></mat-divider>
-                <mat-list-item class.mat-elevation-z12 (click)="share($event)">
-                  <mat-icon>share</mat-icon>
-                  <h3 mat-line>Share</h3>
-                  <p mat-line>
-                    <span>Share the result</span>
-                  </p>
-                </mat-list-item>
-              </mat-list>
-            </mat-card>
-          </div>
-
-          <mat-action-row>
-            <button mat-flat-button color="warn" (click)="step1=step2=step3=false;">Collapse All</button>
-            <button mat-flat-button color="primary" (click)="textHit=false;">Remove Result</button>
-          </mat-action-row>
-        </mat-expansion-panel>
-
-      </mat-accordion>
-    </div>
-  </div>
-</ng-container>
-<!-- neural network response end -->
+        </div>
+      </ng-container>
+      <!-- neural network response end -->
 
 
-</mat-tab>
+    </mat-tab>
 
-<mat-tab label="URL">
-  <mat-form-field class="example-form-field">
-    <mat-label>Enter URL</mat-label>
-    <input matInput type="text" [(ngModel)]="urlvalue" />
-    <button mat-button *ngIf="urlvalue" matSuffix mat-icon-button aria-label="Clear" (click)="urlvalue = ''">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
+    <mat-tab label="URL">
+      <mat-form-field class="example-form-field">
+        <mat-label>Enter URL</mat-label>
+        <input matInput type="text" [(ngModel)]="urlvalue" />
+        <button mat-button *ngIf="urlvalue" matSuffix mat-icon-button aria-label="Clear" (click)="urlvalue = ''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
 
-  <div class="example-button-row">
-    <!-- <button mat-raised-button class="checkBtn" (click)="checkURL()">Check</button> -->
-    <button mat-raised-button color="primary" (click)="reportSource()">Report</button>
-  </div>
-</mat-tab>
+      <div class="example-button-row">
+        <!-- <button mat-raised-button class="checkBtn" (click)="checkURL()">Check</button> -->
+        <button mat-raised-button color="primary" (click)="reportSource()">Report</button>
+      </div>
+    </mat-tab>
 
-<mat-tab label="Fact">
-  <mat-form-field class="example-form-field">
-    <mat-label>Enter a fact</mat-label>
-    <input matInput type="text" [(ngModel)]="factvalue" />
-    <button mat-button *ngIf="factvalue" matSuffix mat-icon-button aria-label="Clear" (click)="factvalue = ''">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
+    <mat-tab label="Fact">
+      <mat-form-field class="example-form-field">
+        <mat-label>Enter a fact</mat-label>
+        <input matInput type="text" [(ngModel)]="factvalue" />
+        <button mat-button *ngIf="factvalue" matSuffix mat-icon-button aria-label="Clear" (click)="factvalue = ''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
 
-  <div class="example-button-row">
-   <!-- <button mat-raised-button class="checkBtn">Check</button> -->
-    <button mat-raised-button color="primary" (click)="reportFact()">Report</button>
-  </div>
-</mat-tab>
-</mat-tab-group>
+      <div class="example-button-row">
+        <!-- <button mat-raised-button class="checkBtn">Check</button> -->
+        <button mat-raised-button color="primary" (click)="reportFact()">Report</button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>
 
 <!-- sources response  -->
