@@ -6,9 +6,6 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { HomeSourceService } from "./home-source.service";
 import { FactslistService } from '../../factslist.service';
 import { ReportService } from '../../services/report.service';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: "app-home",
@@ -16,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
+  found: boolean;
   urlvalue: string;
   textvalue: string;
   factvalue: string;
@@ -41,7 +39,7 @@ export class HomeComponent implements OnInit {
     private readonly sources: HomeSourceService,
     private readonly facts: FactslistService,
     private readonly reports: ReportService
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.step1 = true;
     this.step2 = false;
@@ -96,14 +94,15 @@ export class HomeComponent implements OnInit {
         .share({
           title: "ArtiFact Result",
           // prettier-ignore
-          text: "Article: {"+this.textvalue+"}\n\n"+"Result: "+this.confidenceGaugeValue+"% confident, AI verdict: "+this.nnPred,
+          // tslint:disable-next-line: max-line-length
+          text: "Article: {" + this.textvalue + "}\n\n" + "Result: " + this.confidenceGaugeValue + "% confident, AI verdict: " + this.nnPred,
         })
         .then(() => {
           this.snackBar.open(`Thanks for sharing (◠﹏◠)`, "Close", {
             duration: 3000,
           });
         })
-        .catch((error) => {} /*console.log("Error sharing", error)*/);
+        .catch((error) => { 'Could not share :( ' } /*console.log("Error sharing", error)*/);
     } else {
       this.snackBar.open(`Web Share API not supported ( ಥ ʖ̫ ಥ)`, "Close", {
         duration: 3000,
@@ -111,6 +110,31 @@ export class HomeComponent implements OnInit {
     }
   }
   checkURL() {
+    const tld = this.urlvalue.substring(0, this.urlvalue.indexOf('/', 8) + 1);
+    const forwardSlashCount = (tld.match(/\//g) || []).length;
+    if (forwardSlashCount === 0) {
+      this.snackBar.open(`Please enter a valid URL ಠ_ಠ`, "Close", {
+        duration: 3000,
+      });
+    } else {
+      this.sources.getSources().subscribe(data => {
+        /* tslint:disable:no-string-literal */
+        data['response']['Sources'].forEach(source => {
+          if (source['Domain Name'] === tld) {
+            if (this.found === false) {
+              this.snackBar.open(`Probably fake ಥ_ಥ`, "Close", {
+                duration: 3000,
+              });
+            }
+          }
+        });
+        if (this.found === false) {
+          this.snackBar.open(`This source seems reputable V•ᴥ•V`, "Close", {
+            duration: 3000,
+          });
+        }
+      });
+    }
 
   }
   checkFact() {

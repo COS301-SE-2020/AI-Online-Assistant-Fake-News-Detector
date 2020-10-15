@@ -9,10 +9,12 @@ import { Sources } from "../../sources";
   providedIn: "root",
 })
 export class HomeSourceService {
-  baseUrl = "https://artifacts.live/api/sources/";
+  baseUrl = "http://54.172.96.111:8080/api/Sources/";
   allSources: Sources[];
-  constructor(private http: HttpClient) { }
-  search(term: Observable<string>) {
+  constructor(private http: HttpClient) {
+    this.getAll();
+  }
+  search(term: string) {
     return this.http.get(this.baseUrl + term).pipe(
       map((response: Sources[]) => {
         return response;
@@ -34,5 +36,22 @@ export class HomeSourceService {
         })
       )
       .subscribe((data) => (this.allSources = data));
+  }
+  // q from plug
+  // getSources() {
+  //   return this.http
+  //     .get(this.baseUrl)
+  //     .pipe(
+  //       map((response: Sources[]) => {
+  //         return response;
+  //       }),
+  //       catchError((error) => {
+  //         return throwError(error);
+  //       })
+  //     );
+  // }
+
+  getSources() {
+    return this.http.get(this.baseUrl);
   }
 }
