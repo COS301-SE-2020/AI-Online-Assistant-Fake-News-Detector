@@ -12,7 +12,7 @@ from stacked_bidirectional_lstm import StackedBidirectionalLSTM
 from shallow_stack_lstm import ShallowStackedBidirectionalLSTM
 from default_configs import DEFAULT_GRAMMATICAL_SAMPLE_LENGTH, DEFAULT_LEXICAL_SAMPLE_LENGTH, DEFAULT_CORE_SAMPLE_LENGTH
 from labels import RealOrFakeLabels
-
+from callbacks import Callbacks
 
 def trainCore(modelName, trainDatasetPath, validationDatasetPath):
     #core pipeline
@@ -29,7 +29,7 @@ def trainCore(modelName, trainDatasetPath, validationDatasetPath):
                      validationGenerator=validationDataset.getPreparedTensorGenerator(batchSize=batchSize, tensorType=np.float32),
                      trainDatasetSize=trainDataset.getPreparedDatasetSize(),
                      validationDatasetSize=validationDataset.getPreparedDatasetSize(),
-                     batchSize=batchSize, epochs=64, saveFilePath=modelName, saveCheckpoints=False)
+                     batchSize=batchSize, epochs=64, saveFilePath=modelName, callbacks=Callbacks(name="core_nn", patience=32).getCallbacks())
 
     model.clear()
     gc.collect()

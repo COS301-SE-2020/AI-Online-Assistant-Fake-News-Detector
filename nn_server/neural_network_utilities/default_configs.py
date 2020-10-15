@@ -7,3 +7,5 @@ DEFAULT_MAX_FILE_SIZE = 2560
 DEFAULT_BATCH_SIZE = 128
 DEFAULT_MODELS_PATH = "trained_models"
 DEFAULT_DATASETS_PATH = "training_datasets"
+DEFAULT_CHECKPOINT_PATH = "training_checkpoints"
+DEFAULT_TRAINING_LOG_PATH = "training_logs"
