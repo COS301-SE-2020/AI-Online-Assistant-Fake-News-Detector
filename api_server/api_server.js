@@ -8,10 +8,10 @@ const logger = new Logger(server);
 const cors = require("cors");
 const API = require("./routes/APIv1");
 const fs = require("fs");
-// const ExternalDocs = require(__dirname +
-//   "/routes/ExternalDocs").getAbsoluteFSPath();
-// const InternalDocs = require(__dirname +
-//   "/routes/InternalDocs").getAbsoluteFSPath();
+const ExternalDocs = require(__dirname +
+   "/routes/ExternalDocs").getAbsoluteFSPath();
+const InternalDocs = require(__dirname +
+   "/routes/InternalDocs").getAbsoluteFSPath();
 const path = require("path");
 const root = require("../Util/path");
 const config = require(path.join(root, "Util", "config"));
