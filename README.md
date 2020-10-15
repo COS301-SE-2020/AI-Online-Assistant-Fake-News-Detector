@@ -31,6 +31,10 @@
     <a target="_blank" href="https://youtu.be/78GiV0ON9g0">
       Demo 4
     </a>
+    <span> | </span>
+    <a target="_blank" href="mailto:5bits301@gmail.com">
+      Email
+    </a>
   </h5>
 </div>
 
@@ -49,6 +53,8 @@
 The Fake News Detector is a tool to be used by both _News Consumers_ and _News Distributors_ to act against the spread of fake news. Machine Learning will be used to detect fake news and make users aware of its presence. We will also maintain databases of known fake news distributors as well as the common fake facts that they spread.
 
 <a name="links"></a>
+### Contact Us
+- [Email](mailto:5bits301@gmail.com)
 
 ### Links to External Content
 
