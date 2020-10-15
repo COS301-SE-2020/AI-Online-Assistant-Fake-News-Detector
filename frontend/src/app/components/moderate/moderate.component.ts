@@ -278,3 +278,6 @@ export class ModerateComponent implements OnInit {
   }
   /* end of rating conversion */
 }
+
+
+// (^[0-9]{1,2}$){1}|(^100$)

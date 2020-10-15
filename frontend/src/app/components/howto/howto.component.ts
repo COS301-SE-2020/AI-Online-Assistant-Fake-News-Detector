@@ -9,7 +9,7 @@ import { TOUCH_BUFFER_MS } from "@angular/cdk/a11y";
 @Component({
   selector: "app-howto",
   templateUrl: "./howto.component.html",
-  styleUrls: ["./howto.component.css"],
+  styleUrls: ["./howto.component.css"]
 })
 export class HowtoComponent implements OnInit {
   nnTrainingTime: number;
@@ -33,7 +33,7 @@ export class HowtoComponent implements OnInit {
   SMthresholdConfig = {
     "0": { color: "" },
     "4": { color: "orange" },
-    "7.5": { color: "red" },
+    "7.5": { color: "red" }
   };
 
   /* For training time per day (TD)*/
@@ -52,7 +52,7 @@ export class HowtoComponent implements OnInit {
   TTthresholdConfig = {
     "0": { color: "green" },
     "475.5": { color: "orange" },
-    "950.4": { color: "red" },
+    "950.4": { color: "red" }
   };
 
   /* For training sets  (TS) exclusively */
@@ -63,7 +63,7 @@ export class HowtoComponent implements OnInit {
   TSthresholdConfig = {
     "0": { color: "red" },
     "333333": { color: "orange" },
-    "666666": { color: "green" },
+    "666666": { color: "green" }
   };
 
   /* For Facts report count Statistics Pie Chart*/
@@ -76,7 +76,7 @@ export class HowtoComponent implements OnInit {
   FlegendPosition: string = "right";
   FlegendTitle: string = "Facts";
   FcolorScheme = {
-    domain: ["#5AA454", "#A10A28", "#C7B42C"],
+    domain: ["#5AA454", "#A10A28", "#C7B42C"]
   };
 
   /* For Sources Report count Statistics Pie Chart*/
@@ -89,7 +89,7 @@ export class HowtoComponent implements OnInit {
   SlegendPosition: string = "right";
   SlegendTitle: string = "Sources";
   ScolorScheme = {
-    domain: ["#5499C7", "#F7DC6F", "#8E44AD"],
+    domain: ["#5499C7", "#F7DC6F", "#8E44AD"]
   };
 
   /* For sources popularity ratings  statistics*/
@@ -99,14 +99,14 @@ export class HowtoComponent implements OnInit {
   SPgradient = true;
   SPshowLegend = true;
   SPshowXAxisLabel = true;
-  SPxAxisLabel = "Facts";
+  SPxAxisLabel = "Sources";
   SPshowYAxisLabel = true;
   SPlegendPosition: string = "right";
   SPyAxisLabel = "Popularity";
   SPlegendTitle: string = "Sources";
 
   SPcolorScheme = {
-    domain: ["#5499C7", "#F7DC6F", "#8E44AD"],
+    domain: ["#5499C7", "#F7DC6F", "#8E44AD"]
   };
 
   /* for facts popularity ratings  statistics*/
@@ -116,14 +116,14 @@ export class HowtoComponent implements OnInit {
   FPgradient = true;
   FPshowLegend = true;
   FPshowXAxisLabel = true;
-  FPxAxisLabel = "Sources";
+  FPxAxisLabel = "Facts";
   FPshowYAxisLabel = true;
   FPlegendPosition: string = "right";
   FPyAxisLabel = "Popularity";
   FPlegendTitle: string = "Facts";
 
   FPcolorScheme = {
-    domain: ["#5AA454", "#A10A28", "#C7B42C"],
+    domain: ["#5AA454", "#A10A28", "#C7B42C"]
   };
 
   /* for endpoints hits statistics*/
@@ -140,7 +140,7 @@ export class HowtoComponent implements OnInit {
   ElegendTitle: string = "Endpoints";
 
   EcolorScheme = {
-    domain: ["#808000", "#FFA500", "#C7B42C"],
+    domain: ["#808000", "#FFA500", "#C7B42C"]
   };
 
   constructor(private stats: StatisticsService) {
@@ -168,12 +168,12 @@ export class HowtoComponent implements OnInit {
       for (let i = 0; i < data.response.Reports[0].Facts.Trending.length; i++) {
         this.trendingFacts.push({
           name: data.response.Reports[0].Facts.Trending[i].Statement,
-          value: data.response.Reports[0].Facts.Trending[i]["Report Count"],
+          value: data.response.Reports[0].Facts.Trending[i]["Report Count"]
         });
 
         this.factsPopularity.push({
           name: data.response.Reports[0].Facts.Trending[i].Statement,
-          value: data.response.Reports[0].Facts.Trending[i].Popularity,
+          value: data.response.Reports[0].Facts.Trending[i].Popularity
         });
       }
       this.setFacts = true;
@@ -185,23 +185,23 @@ export class HowtoComponent implements OnInit {
       ) {
         this.trendingSources.push({
           name: data.response.Reports[1].Sources.Trending[i].Name,
-          value: data.response.Reports[1].Sources.Trending[i]["Report Count"],
+          value: data.response.Reports[1].Sources.Trending[i]["Report Count"]
         });
 
         this.sourcesPopularity.push({
           name: data.response.Reports[1].Sources.Trending[i].Name,
-          value: data.response.Reports[1].Sources.Trending[i].Rating,
+          value: data.response.Reports[1].Sources.Trending[i].Rating
         });
       }
       this.setSources = true;
 
       this.endpointHits.push({
         name: "Facts",
-        value: data.response.Reports[0].Facts["End Point Hits"],
+        value: data.response.Reports[0].Facts["End Point Hits"]
       });
       this.endpointHits.push({
         name: "Sources",
-        value: data.response.Reports[1].Sources["End Point Hits"],
+        value: data.response.Reports[1].Sources["End Point Hits"]
       });
       this.setEndpoint = true;
     });
