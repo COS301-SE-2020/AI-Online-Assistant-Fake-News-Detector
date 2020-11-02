@@ -1,8 +1,3 @@
-@font-face {
-  font-family: LogoHeading;
-  src: url("/assets/fonts/aquire-font/AquireLight-YzE0o.otf") format("truetype");
-}
-
 .logoHead {
   font-family: LogoHeading;
   text-decoration: none;

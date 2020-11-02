@@ -32,4 +32,4 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatProgressBarModule,
   ],
 })
-export class AiMaterialModule {}
+export class AiMaterialModule { }
